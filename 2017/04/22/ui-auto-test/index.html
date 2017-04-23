@@ -1,0 +1,942 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="自动化测试,前端,Node.js,WebdriverIO,Mocha,Chai," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="有没有那么一刻，看到自动模拟用户操作界面感觉好神奇。  关于什么叫UI自动化测试就不解释了，基本上是你刚才脑海里想到什么就是什么。 在分层自动化测试中包括：UI测试、集成/接口测试、单元测试。大神告诉我：UI自动化测试在自动化测试中占比只有10%。先不用在乎具体这个比例是什么，我们关注的是实际价值，这个需要根据实际项目来判断。不过对于UI自动化，基本上做冒烟测试用例的自动化就差不多了，从UI上来验">
+<meta name="keywords" content="自动化测试,前端,Node.js,WebdriverIO,Mocha,Chai">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分分钟玩转UI自动化测试">
+<meta property="og:url" content="http://www.beckjin.com/2017/04/22/ui-auto-test/index.html">
+<meta property="og:site_name" content="Beck's Blog">
+<meta property="og:description" content="有没有那么一刻，看到自动模拟用户操作界面感觉好神奇。  关于什么叫UI自动化测试就不解释了，基本上是你刚才脑海里想到什么就是什么。 在分层自动化测试中包括：UI测试、集成/接口测试、单元测试。大神告诉我：UI自动化测试在自动化测试中占比只有10%。先不用在乎具体这个比例是什么，我们关注的是实际价值，这个需要根据实际项目来判断。不过对于UI自动化，基本上做冒烟测试用例的自动化就差不多了，从UI上来验">
+<meta property="og:image" content="http://www.beckjin.com/img/ui-auto-test/timg.jpg">
+<meta property="og:image" content="http://www.beckjin.com/img/ui-auto-test/structure.png">
+<meta property="og:image" content="http://www.beckjin.com/img/ui-auto-test/testResult.png">
+<meta property="og:updated_time" content="2017-04-23T13:29:22.766Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分分钟玩转UI自动化测试">
+<meta name="twitter:description" content="有没有那么一刻，看到自动模拟用户操作界面感觉好神奇。  关于什么叫UI自动化测试就不解释了，基本上是你刚才脑海里想到什么就是什么。 在分层自动化测试中包括：UI测试、集成/接口测试、单元测试。大神告诉我：UI自动化测试在自动化测试中占比只有10%。先不用在乎具体这个比例是什么，我们关注的是实际价值，这个需要根据实际项目来判断。不过对于UI自动化，基本上做冒烟测试用例的自动化就差不多了，从UI上来验">
+<meta name="twitter:image" content="http://www.beckjin.com/img/ui-auto-test/timg.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.beckjin.com/2017/04/22/ui-auto-test/"/>
+
+
+
+
+
+  <meta name="wumiiVerification" content="9c0f45c7-25e2-468d-9df0-8b3af4c615ac" />
+  <title>分分钟玩转UI自动化测试 | Beck's Blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Beck's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2017/04/22/ui-auto-test/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Beck Jin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beck's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                分分钟玩转UI自动化测试
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-22T23:44:15+08:00">
+                2017-04-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/04/22/ui-auto-test/" class="leancloud_visitors" data-flag-title="分分钟玩转UI自动化测试">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>有没有那么一刻，看到自动模拟用户操作界面感觉好神奇。</p>
+<p><img src="/img/ui-auto-test/timg.jpg" alt="timg.jpg"></p>
+<p>关于什么叫UI自动化测试就不解释了，基本上是你刚才脑海里想到什么就是什么。</p>
+<p>在分层自动化测试中包括：UI测试、集成/接口测试、单元测试。大神告诉我：UI自动化测试在自动化测试中占比只有10%。先不用在乎具体这个比例是什么，我们关注的是实际价值，这个需要根据实际项目来判断。不过对于UI自动化，基本上做冒烟测试用例的自动化就差不多了，从UI上来验证主业务流程的稳定性，同时降低一些维护成本。</p>
+<p>今天我们来聊聊WebdriverIO，WebdriverIO是Webdriver Node.js模块，API非常丰富，同时支持Mobile，不过说到Webdriver那就需要先了解一下Selenuim的发展过程，这里就不装逼了，有兴趣的可以到官方网站瞅瞅。</p>
+<p>WebdriverIO有两种使用模式，一种是Standalone Mode，一种是WDIO。官方其实是推荐使用WDIO，大概几个原因：</p>
+<ol>
+<li><p>调试方便</p>
+</li>
+<li><p>多模块并行测试</p>
+</li>
+<li><p>命令的执行都是同步的，直接通过变量接收结果，不用像Standalone Mode执行一个异步操作然后then…then…</p>
+</li>
+<li><p>提供配置文件，使测试参数的配置更简单</p>
+</li>
+</ol>
+<p>##下面开始我们的项目：</p>
+<h5 id="项目搭建条件："><a href="#项目搭建条件：" class="headerlink" title="项目搭建条件："></a>项目搭建条件：</h5><ol>
+<li>安装JDK</li>
+<li>安装Node.js</li>
+<li>安装webdriverio</li>
+<li>安装selenium-standalone</li>
+<li>安装wdio</li>
+<li>安装mocha，测试框架</li>
+<li>安装chai，诊断库</li>
+</ol>
+<h5 id="目录结构："><a href="#目录结构：" class="headerlink" title="目录结构："></a>目录结构：</h5><p><img src="/img/ui-auto-test/structure.png" alt="测试项目目录结构.png"></p>
+<h5 id="package-json："><a href="#package-json：" class="headerlink" title="package.json："></a>package.json：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&quot;devDependencies&quot;: &#123;</div><div class="line">   &quot;webdriverio&quot;: &quot;^4.6.2&quot;,  // webdriverio 库</div><div class="line">   &quot;selenium-standalone&quot;: &quot;^6.2.0&quot;,  // selenium standalone server、浏览器driver安装</div><div class="line">   &quot;wdio&quot;: &quot;^0.3.3&quot;,  // wdio测试运行器</div><div class="line">   &quot;wdio-mocha-framework&quot;: &quot;^0.5.9&quot;,  // 摩卡测试框架</div><div class="line">   &quot;chai&quot;: &quot;^3.5.0&quot;,  // 诊断库</div><div class="line">   &quot;wdio-spec-reporter&quot;: &quot;^0.1.0&quot;,  // 控制台输出测试报告</div><div class="line">   &quot;allure-commandline&quot;: &quot;^1.5.0&quot;,  // 根据测试结果生成测试报告</div><div class="line">   &quot;wdio-allure-reporter&quot;: &quot;^0.1.2&quot;  // 根据测试报告展现更直观的UI界面</div><div class="line"> &#125;,</div><div class="line">&quot;scripts&quot;: &#123;</div><div class="line">   &quot;selenium&quot;: &quot;selenium-standalone start&quot;, // 启动selenium</div><div class="line">   &quot;test&quot;: &quot;.\\node_modules\\.bin\\wdio&quot;, // 执行test</div><div class="line">   &quot;allure&quot;: &quot;allure generate allure-results &amp;&amp; allure report open&quot; //生成测试报告</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<p>关于wdio-spec-reporter、allure-commandline、wdio-allure-reporter 不一定全需要安装。</p>
+<p>selenium-standalone包安装成功后需要执行以下命令来安装各浏览器driver，详细说明戳这里： <a href="https://github.com/vvo/selenium-standalone" target="_blank" rel="external">selenium-standalone</a>，install的过程中可能会遇到问题，建议翻墙试试<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">selenium-standalone install</div></pre></td></tr></table></figure></p>
+<p>安装成功后，执行以下命令就可以启动selenium-server：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">selenium-standalone start</div></pre></td></tr></table></figure></p>
+<h5 id="wdio配置文件："><a href="#wdio配置文件：" class="headerlink" title="wdio配置文件："></a>wdio配置文件：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">var config = require(&apos;./config&apos;);</div><div class="line">var common = require(&apos;./common&apos;);</div><div class="line"></div><div class="line">exports.config = &#123;</div><div class="line">    // selenium-server 启动的IP和端口，默认是4444</div><div class="line">    host: &apos;127.0.0.1&apos;,</div><div class="line">    port: 4444,</div><div class="line">    // 哪些文件执行测试</div><div class="line">    specs: [</div><div class="line">        &apos;./modules/*.js&apos;</div><div class="line">    ],</div><div class="line">    // 哪些文件不执行测试</div><div class="line">    exclude: [</div><div class="line">        &apos;./modules/function.js&apos;,</div><div class="line">        &apos;./modules/register.js&apos;,</div><div class="line">        &apos;./modules/invite.js&apos;</div><div class="line">    ],</div><div class="line">    // 使用什么浏览器来执行测试</div><div class="line">    capabilities: [&#123;</div><div class="line">        browserName: &apos;chrome&apos;,</div><div class="line">        maxInstances: 1, // 最多启动多少个浏览器窗口并行执行</div><div class="line">        chromeOptions: &#123;</div><div class="line">            args: [&apos;disable-extensions&apos;]</div><div class="line">        &#125;</div><div class="line">    &#125;],</div><div class="line">    logLevel: &apos;silent&apos;,</div><div class="line">    coloredLogs: true,</div><div class="line">    baseUrl: config.webUrl,</div><div class="line">    waitforTimeout: 100000, // 100s</div><div class="line">    framework: &apos;mocha&apos;,</div><div class="line">    reporters: [&apos;spec&apos;, &apos;allure&apos;], // 两种测试报告方式</div><div class="line">    reporterOptions: &#123;</div><div class="line">        allure: &#123;</div><div class="line">            outputDir: &apos;allure-results&apos; // allure测试结果上传目录</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    mochaOpts: &#123;</div><div class="line">        ui: &apos;bdd&apos;,</div><div class="line">        timeout: 99999999  // 整个测试执行的超时时间，长就对了</div><div class="line">    &#125;,</div><div class="line">    // 每次执行测试前把之前allure保留的测试结果清空</div><div class="line">    onPrepare: function (config, capabilities) &#123;</div><div class="line">        common.deleteFile(&apos;./allure-report&apos;);</div><div class="line">        common.deleteFile(&apos;./allure-results&apos;);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h5 id="登录测试用例："><a href="#登录测试用例：" class="headerlink" title="登录测试用例："></a>登录测试用例：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">describe(&apos;login-test&apos;, function () &#123;</div><div class="line">    it(&apos;login&apos;, function () &#123;</div><div class="line">        return browser</div><div class="line">            .deleteCookie() // 删除所有cookie</div><div class="line">            .url(config.webUrl + &apos;/login.htm&apos;) // 打开登录页面</div><div class="line">            .setValue(&apos;#txtMobilePhone&apos;, config.loginInfo.mobilePhone) // 设置手机号</div><div class="line">            .setValue(&apos;#txtPassword&apos;, config.loginInfo.password) // 设置密码</div><div class="line">            .click(&apos;#btnLogin&apos;) // 点击登录按钮</div><div class="line">            .waitForExist(&apos;#topBarContent&apos;, config.waitMS); // 如果这样元素存在代表成功</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h5 id="方法注册与调用说明："><a href="#方法注册与调用说明：" class="headerlink" title="方法注册与调用说明："></a>方法注册与调用说明：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">// 可以通过 browser.checkInviteSuccess()调用</div><div class="line">browser.addCommand(&apos;checkInviteSuccess&apos;, function (inboxType) &#123;</div><div class="line"></div><div class="line">    $(&apos;.sessionList .sessionItem[id=&quot;&apos; + inboxType + &apos;&quot;]&apos;).click();</div><div class="line">    browser.waitForExist(&apos;.messageItem&apos;, config.waitMS);</div><div class="line"></div><div class="line">    var result = browser</div><div class="line">        .execute(function () &#123;</div><div class="line">            var text = null;</div><div class="line">            $(&apos;.inboxBox .messageItem .textMsg&apos;).each(function () &#123;</div><div class="line">                text += $(this).text();</div><div class="line">            &#125;);</div><div class="line">            return text;</div><div class="line">        &#125;);</div><div class="line"></div><div class="line">    // 断言正则表达式方法</div><div class="line">    assert.match(result.value, /已经成为好友|成功加入|已经申请|成功申请/, &apos;判断收到的消息是否包含指定的内容&apos;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h5 id="执行测试："><a href="#执行测试：" class="headerlink" title="执行测试："></a>执行测试：</h5><p>控制台A<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm run selenium  //启动selenium-server</div></pre></td></tr></table></figure></p>
+<p>控制台B<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm run test //执行test</div></pre></td></tr></table></figure></p>
+<h5 id="生成测试报告："><a href="#生成测试报告：" class="headerlink" title="生成测试报告："></a>生成测试报告：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm run allure</div></pre></td></tr></table></figure>
+<p><img src="/img/ui-auto-test/testResult.png" alt="某次测试结果.png"></p>
+<h5 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h5><ol>
+<li><p>WebdriverIO的命令上面提到的只是很小一部分，有兴趣赶快玩起来；</p>
+</li>
+<li><p>describe、it 都是Mocha内提供的方法，单条用例的调试可以使用it.only，单个describe可以describe.only，关于Mocha介绍戳这里  <a href="http://mochajs.org/" target="_blank" rel="external">Mocha</a>；</p>
+</li>
+<li><p>Chai提供BDD(行为驱动开发) 断言风格和TDD(测试驱动开发)断言风格，关于Chai介绍戳这里 <a href="http://chaijs.com/" target="_blank" rel="external">Chai</a>；</p>
+</li>
+<li><p>有时候不用非要断言来验证用例是否正确执行，像上面的登录的用例中，waitForExist的元素是登录成功后才可以看见，所以这样也是可以代表成功的；</p>
+</li>
+</ol>
+<h5 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h5><ul>
+<li><a href="http://www.seleniumhq.org/" target="_blank" rel="external">Selenium</a></li>
+<li><a href="http://webdriver.io/" target="_blank" rel="external">WebdriverIO</a></li>
+<li><a href="https://github.com/vvo/selenium-standalone" target="_blank" rel="external">Selenium-standalone</a></li>
+<li><a href="http://mochajs.org/" target="_blank" rel="external">Mocha</a></li>
+<li><a href="http://chaijs.com/" target="_blank" rel="external">Chai</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/自动化测试/" rel="tag"># 自动化测试</a>
+          
+            <a href="/tags/前端/" rel="tag"># 前端</a>
+          
+            <a href="/tags/Node-js/" rel="tag"># Node.js</a>
+          
+            <a href="/tags/WebdriverIO/" rel="tag"># WebdriverIO</a>
+          
+            <a href="/tags/Mocha/" rel="tag"># Mocha</a>
+          
+            <a href="/tags/Chai/" rel="tag"># Chai</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/16/cross-project-data-share/" rel="prev" title="跨项目数据共享(跨语言)">
+                跨项目数据共享(跨语言) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_mingdao"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+
+    <script type="text/javascript" id="wumiiComments">
+        var wumiiPermaLink = location.href;
+        var wumiiTitle = "分分钟玩转UI自动化测试";
+        var wumiiSitePrefix = "http://beckjin.com/";
+        var wumiiCommentParams = "&pf=JAVASCRIPT";
+    </script>
+    <script type="text/javascript" src="http://widget.wumii.cn/ext/cw/widget"></script>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="Beck Jin" />
+          <p class="site-author-name" itemprop="name">Beck Jin</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#项目搭建条件："><span class="nav-number">1.</span> <span class="nav-text">项目搭建条件：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#目录结构："><span class="nav-number">2.</span> <span class="nav-text">目录结构：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#package-json："><span class="nav-number">3.</span> <span class="nav-text">package.json：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#wdio配置文件："><span class="nav-number">4.</span> <span class="nav-text">wdio配置文件：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#登录测试用例："><span class="nav-number">5.</span> <span class="nav-text">登录测试用例：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#方法注册与调用说明："><span class="nav-number">6.</span> <span class="nav-text">方法注册与调用说明：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#执行测试："><span class="nav-number">7.</span> <span class="nav-text">执行测试：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#生成测试报告："><span class="nav-number">8.</span> <span class="nav-text">生成测试报告：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#总结："><span class="nav-number">9.</span> <span class="nav-text">总结：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#参考链接："><span class="nav-number">10.</span> <span class="nav-text">参考链接：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Beck Jin</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("FCgGthOl6XN7xRjfK31raebD-gzGzoHsz", "20z736XSuGX562R2ky8uu4EU");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

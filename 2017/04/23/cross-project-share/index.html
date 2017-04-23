@@ -1,0 +1,962 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="跨项目,跨语言,gRPC," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="对于这个话题，我相信大家很容易想到，HTTP接口的方式可以解决。 大概的做法类似这样：  根据HTTP接口需要的参数，将参数序列化成json字符串；  根据当前项目开发语言，封装一个处理Post||Get请求的方法，发送请求；  接口返回结果，然后反序列化成实体在逻辑代码中使用；    可能在单个项目内使用这样的方式痛点并不是很明显。但如果是在多个项目内，每个项目都依赖于这个接口，那为了获取到数据">
+<meta name="keywords" content="跨项目,跨语言,gRPC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="跨项目数据共享(跨语言)">
+<meta property="og:url" content="http://www.beckjin.com/2017/04/23/cross-project-share/index.html">
+<meta property="og:site_name" content="Beck's Blog">
+<meta property="og:description" content="对于这个话题，我相信大家很容易想到，HTTP接口的方式可以解决。 大概的做法类似这样：  根据HTTP接口需要的参数，将参数序列化成json字符串；  根据当前项目开发语言，封装一个处理Post||Get请求的方法，发送请求；  接口返回结果，然后反序列化成实体在逻辑代码中使用；    可能在单个项目内使用这样的方式痛点并不是很明显。但如果是在多个项目内，每个项目都依赖于这个接口，那为了获取到数据">
+<meta property="og:image" content="http://www.beckjin.com/img/cross-project-share/rpc.png">
+<meta property="og:image" content="http://www.beckjin.com/img/cross-project-share/buildCode.png">
+<meta property="og:updated_time" content="2017-04-23T12:41:24.310Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="跨项目数据共享(跨语言)">
+<meta name="twitter:description" content="对于这个话题，我相信大家很容易想到，HTTP接口的方式可以解决。 大概的做法类似这样：  根据HTTP接口需要的参数，将参数序列化成json字符串；  根据当前项目开发语言，封装一个处理Post||Get请求的方法，发送请求；  接口返回结果，然后反序列化成实体在逻辑代码中使用；    可能在单个项目内使用这样的方式痛点并不是很明显。但如果是在多个项目内，每个项目都依赖于这个接口，那为了获取到数据">
+<meta name="twitter:image" content="http://www.beckjin.com/img/cross-project-share/rpc.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.beckjin.com/2017/04/23/cross-project-share/"/>
+
+
+
+
+
+  <title>跨项目数据共享(跨语言) | Beck's Blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Beck's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2017/04/23/cross-project-share/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Beck Jin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beck's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                跨项目数据共享(跨语言)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-23T19:13:36+08:00">
+                2017-04-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/后端/" itemprop="url" rel="index">
+                    <span itemprop="name">后端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/04/23/cross-project-share/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/04/23/cross-project-share/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+             <span id="/2017/04/23/cross-project-share/" class="leancloud_visitors" data-flag-title="跨项目数据共享(跨语言)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>对于这个话题，我相信大家很容易想到，HTTP接口的方式可以解决。</p>
+<p>大概的做法类似这样：</p>
+<ol>
+<li><p>根据HTTP接口需要的参数，将参数序列化成json字符串；</p>
+</li>
+<li><p>根据当前项目开发语言，封装一个处理Post||Get请求的方法，发送请求；</p>
+</li>
+<li><p>接口返回结果，然后反序列化成实体在逻辑代码中使用；</p>
+</li>
+</ol>
+<hr>
+<p>可能在单个项目内使用这样的方式痛点并不是很明显。但如果是在多个项目内，每个项目都依赖于这个接口，那为了获取到数据可能会写很多重复代码。而且可能因为没有统一的反序列实体来映射，会出现A项目对这个属性名反序列化后叫西门庆，到了B项目同样的属性名就叫成了武大郎，这样开发的同学也会觉得很不开心。</p>
+<p>我们目前的情况是多个项目，而且项目也不是统一的语言。为了解决上面的问题，我们决定使用gRPC的方式来处理，基本需要满足以下条件：</p>
+<ol>
+<li>微服务化</li>
+<li>跨语言</li>
+<li>性能</li>
+<li>调用者方便</li>
+</ol>
+<p>因为我目前参与的项目基于.Net开发，所以下面的一些例子可能会不自觉偏向C#。</p>
+<hr>
+<h4 id="在使用gRPC之前，需要先了解一下RPC、HTTP接口"><a href="#在使用gRPC之前，需要先了解一下RPC、HTTP接口" class="headerlink" title="在使用gRPC之前，需要先了解一下RPC、HTTP接口"></a>在使用gRPC之前，需要先了解一下RPC、HTTP接口</h4><h5 id="RPC"><a href="#RPC" class="headerlink" title="RPC"></a>RPC</h5><ul>
+<li>RPC（Remote Procedure Call Protocol）就是从一台机器（客户端）上通过参数传递的方式调用另一台机器（服务器）上的一个函数或方法并得到返回的结果，流程如下：</li>
+</ul>
+<p><img src="/img/cross-project-share/rpc.png" alt="RPC流程"></p>
+<h5 id="HTTP接口"><a href="#HTTP接口" class="headerlink" title="HTTP接口"></a>HTTP接口</h5><ul>
+<li><p>论复杂度，RPC框架肯定是高于简单的HTTP接口的；</p>
+</li>
+<li><p>HTTP接口由于受限于HTTP协议，需要带HTTP请求头，导致传输起来效率不如RPC；</p>
+</li>
+<li><p>RPC是长链接，不必每次通信都要像HTTP一样去握手。</p>
+</li>
+</ul>
+<h5 id="gRPC"><a href="#gRPC" class="headerlink" title="gRPC"></a>gRPC</h5><ul>
+<li><p>gRPC 是一个高性能 RPC 框架，和HTTP一样都是一种对RPC的实现，但性能相比之下更好；</p>
+</li>
+<li><p>使用 Protocol Buffers 来作为序列化和反序列化，以及接口定义语言，Protocol Buffers已经被证明是非常高效序列化框架；</p>
+</li>
+<li><p>跨语言，跨平台，gRPC支持多种平台和多种语言；</p>
+</li>
+<li><p>基于 HTTP/2。</p>
+</li>
+</ul>
+<hr>
+<h4 id="gRPC服务创建大概流程如下："><a href="#gRPC服务创建大概流程如下：" class="headerlink" title="gRPC服务创建大概流程如下："></a>gRPC服务创建大概流程如下：</h4><p>1、创建.proto文件，定义通信的数据结构和服务接口。文件内包含方法、请求参数、返回结果等；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">syntax = &quot;proto3&quot;;</div><div class="line"></div><div class="line">package MD.CacheService;</div><div class="line"></div><div class="line">service MDCache &#123;</div><div class="line">    ///获取单账号信息</div><div class="line">    rpc GetAccountInfo (AccountInfoRequest) returns (AccountInfoResponse) &#123;&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">///获取单账号数据请求参数</div><div class="line">message AccountInfoRequest &#123;</div><div class="line">  ///账号id</div><div class="line">  string accountId = 1;</div><div class="line">&#125;</div><div class="line"></div><div class="line">///获取单个账号数据返回值</div><div class="line">message AccountInfoResponse &#123;</div><div class="line">    ///账号实体</div><div class="line">    AccountInfo accountInfo = 1;</div><div class="line">&#125;</div><div class="line"></div><div class="line">///账号实体</div><div class="line">message AccountInfo&#123;</div><div class="line">    ///账号id</div><div class="line">    string accountId = 1;</div><div class="line">    ///姓名</div><div class="line">    string fullname = 2;</div><div class="line">    ///头像</div><div class="line">    string avatar = 3;</div><div class="line">    ///账号创建时间，时间戳</div><div class="line">    int64 createTime = 4;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2、根据.proto文件通过Protocol Buffer 编译器分别生成服务队和客户端的代码（看官方的支持，可以选择一种你最擅长的语言，服务端和客户端完全不需要规定一样的语言）；</p>
+<p><img src="/img/cross-project-share/buildCode.png" alt="生成的代码"></p>
+<p>3、基于生成的代码创建服务端和客户端应用；</p>
+<p>4、在服务端创建一个类对服务接口进行override；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">public class CacheServiceImpl : MDCache.MDCacheBase</div><div class="line">&#123;</div><div class="line">    /// &lt;summary&gt;</div><div class="line">    /// 获取单个账号accountInfo</div><div class="line">    /// &lt;/summary&gt;</div><div class="line">    /// &lt;param name=&quot;request&quot;&gt;&lt;/param&gt;</div><div class="line">    /// &lt;param name=&quot;context&quot;&gt;&lt;/param&gt;</div><div class="line">    /// &lt;returns&gt;&lt;/returns&gt;</div><div class="line">    public override Task&lt;AccountInfoResponse&gt; GetAccountInfo(AccountInfoRequest request, ServerCallContext context)</div><div class="line">    &#123;</div><div class="line">        var response = new AccountInfoResponse();</div><div class="line"></div><div class="line">        if (!string.IsNullOrEmpty(request.AccountId))</div><div class="line">        &#123;</div><div class="line">            response.AccountInfo = GetServiceAccountInfo(request.AccountId);</div><div class="line">        &#125;</div><div class="line">        return Task.FromResult(response);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p> 5、启动服务（服务安装基于Topshelf）；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">class Program</div><div class="line">&#123;</div><div class="line">    static void Main(string[] args)</div><div class="line">    &#123;</div><div class="line">        HostFactory.Run(x =&gt;</div><div class="line">        &#123;</div><div class="line">            x.Service&lt;CacheService&gt;(s =&gt;</div><div class="line">            &#123;</div><div class="line">                s.ConstructUsing(name =&gt; new CacheService());</div><div class="line">                s.WhenStarted(tc =&gt; tc.Start());</div><div class="line">                s.WhenStopped(tc =&gt; tc.Stop());</div><div class="line">            &#125;);</div><div class="line">            x.RunAsLocalSystem();</div><div class="line">            </div><div class="line">            x.SetDisplayName(&quot;MD.CacheService&quot;);</div><div class="line">            x.SetServiceName(&quot;MD.CacheService&quot;);</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public class CacheService</div><div class="line">&#123;</div><div class="line">    private readonly string host = ConfigurationManager.AppSettings[&quot;Host&quot;];//服务IP</div><div class="line">    private readonly string port = ConfigurationManager.AppSettings[&quot;Port&quot;];//服务端口</div><div class="line"></div><div class="line">    readonly Server server;</div><div class="line">    public CacheService()</div><div class="line">    &#123;</div><div class="line">        server = new Server</div><div class="line">        &#123;</div><div class="line">            Services = &#123; MDCache.BindService(new CacheServiceImpl()) &#125;,</div><div class="line">            Ports = &#123; new ServerPort(host, Convert.ToInt32(port), ServerCredentials.Insecure) &#125;</div><div class="line">        &#125;;</div><div class="line">    &#125;</div><div class="line">    public void Start() &#123; server.Start(); &#125;</div><div class="line">    public void Stop() &#123; server.ShutdownAsync(); &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>6、客户端连接测试<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var channel = new Channel(&quot;host:port&quot;, ChannelCredentials.Insecure);</div><div class="line">var client = new MDCacheClient(channel);</div></pre></td></tr></table></figure></p>
+<p><a href="http://www.grpc.io/docs/quickstart/csharp.html" target="_blank" rel="external">C#官方 example</a> ，照着做也可以实现效果</p>
+<h4 id="部署："><a href="#部署：" class="headerlink" title="部署："></a>部署：</h4><ul>
+<li>基于.Net Core的可以将服务部署在Linux上；</li>
+<li>基于.Net Framework的可以部署成Windows服务，关于Windows服务方式，这里推荐使用Topshelf，非常简单。</li>
+</ul>
+<p>服务部署后涉及到如何做到负载，我们必须保证服务的稳定，不希望单点故障。关于这部分的实现方式，后面会介绍使用 Nginx+Consul来解决</p>
+<h4 id="参考文档："><a href="#参考文档：" class="headerlink" title="参考文档："></a>参考文档：</h4><ul>
+<li><a href="https://developers.google.com/protocol-buffers/docs/proto3" target="_blank" rel="external">https://developers.google.com/protocol-buffers/docs/proto3</a></li>
+<li><a href="http://www.grpc.io/docs/" target="_blank" rel="external">http://www.grpc.io/docs/</a></li>
+<li><a href="http://topshelf-project.com/" target="_blank" rel="external">http://topshelf-project.com/</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/跨项目/" rel="tag"># 跨项目</a>
+          
+            <a href="/tags/跨语言/" rel="tag"># 跨语言</a>
+          
+            <a href="/tags/gRPC/" rel="tag"># gRPC</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/23/ui-auto-test/" rel="next" title="分分钟玩转UI自动化测试">
+                <i class="fa fa-chevron-left"></i> 分分钟玩转UI自动化测试
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_mingdao"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="Beck Jin" />
+          <p class="site-author-name" itemprop="name">Beck Jin</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#在使用gRPC之前，需要先了解一下RPC、HTTP接口"><span class="nav-number">1.</span> <span class="nav-text">在使用gRPC之前，需要先了解一下RPC、HTTP接口</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#RPC"><span class="nav-number">1.1.</span> <span class="nav-text">RPC</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HTTP接口"><span class="nav-number">1.2.</span> <span class="nav-text">HTTP接口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#gRPC"><span class="nav-number">1.3.</span> <span class="nav-text">gRPC</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gRPC服务创建大概流程如下："><span class="nav-number">2.</span> <span class="nav-text">gRPC服务创建大概流程如下：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#部署："><span class="nav-number">3.</span> <span class="nav-text">部署：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考文档："><span class="nav-number">4.</span> <span class="nav-text">参考文档：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Beck Jin</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cysXCJVAH';
+      var conf = '86ed5e25ac78f2be2bb22bebd11a8054';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("FCgGthOl6XN7xRjfK31raebD-gzGzoHsz", "20z736XSuGX562R2ky8uu4EU");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
