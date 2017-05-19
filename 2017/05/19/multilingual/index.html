@@ -1,0 +1,979 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="C#,i18N,ASP.NET,多语言," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="实现方式大概两种：1、key使用方式： 在资源文件内定义key，如果原语言是中文，key通常是一个带含义的英文或者拼音；变态一点的就是xxxx1111，xxxx1112（很荣幸，我们的项目很变态 /(ㄒoㄒ)/~~），然后在代码中通过 Resource.lang.xxxx1111 或者 lang.xxxx1111(js文件内) 方式引用；  问题： key名难定义，就算定义得好也不见得大家都看得懂">
+<meta name="keywords" content="C#,i18N,ASP.NET,多语言">
+<meta property="og:type" content="article">
+<meta property="og:title" content="让多语言开发变得简单点">
+<meta property="og:url" content="http://www.beckjin.com/2017/05/19/multilingual/index.html">
+<meta property="og:site_name" content="Beck's Blog">
+<meta property="og:description" content="实现方式大概两种：1、key使用方式： 在资源文件内定义key，如果原语言是中文，key通常是一个带含义的英文或者拼音；变态一点的就是xxxx1111，xxxx1112（很荣幸，我们的项目很变态 /(ㄒoㄒ)/~~），然后在代码中通过 Resource.lang.xxxx1111 或者 lang.xxxx1111(js文件内) 方式引用；  问题： key名难定义，就算定义得好也不见得大家都看得懂">
+<meta property="og:image" content="http://www.beckjin.com/img/multilingual/crowdin.png">
+<meta property="og:image" content="http://www.beckjin.com/img/multilingual/po.png">
+<meta property="og:image" content="http://www.beckjin.com/img/multilingual/local.png">
+<meta property="og:updated_time" content="2017-05-19T15:37:39.393Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="让多语言开发变得简单点">
+<meta name="twitter:description" content="实现方式大概两种：1、key使用方式： 在资源文件内定义key，如果原语言是中文，key通常是一个带含义的英文或者拼音；变态一点的就是xxxx1111，xxxx1112（很荣幸，我们的项目很变态 /(ㄒoㄒ)/~~），然后在代码中通过 Resource.lang.xxxx1111 或者 lang.xxxx1111(js文件内) 方式引用；  问题： key名难定义，就算定义得好也不见得大家都看得懂">
+<meta name="twitter:image" content="http://www.beckjin.com/img/multilingual/crowdin.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.beckjin.com/2017/05/19/multilingual/"/>
+
+
+
+
+
+  <meta name="wumiiVerification" content="9c0f45c7-25e2-468d-9df0-8b3af4c615ac" />
+  <title>让多语言开发变得简单点 | Beck's Blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Beck's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2017/05/19/multilingual/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Beck Jin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beck's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                让多语言开发变得简单点
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-19T15:37:02+08:00">
+                2017-05-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/后端/" itemprop="url" rel="index">
+                    <span itemprop="name">后端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/05/19/multilingual/" class="leancloud_visitors" data-flag-title="让多语言开发变得简单点">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="实现方式大概两种："><a href="#实现方式大概两种：" class="headerlink" title="实现方式大概两种："></a>实现方式大概两种：</h2><h3 id="1、key"><a href="#1、key" class="headerlink" title="1、key"></a>1、key</h3><h4 id="使用方式："><a href="#使用方式：" class="headerlink" title="使用方式："></a>使用方式：</h4><blockquote>
+<p>在资源文件内定义key，如果原语言是中文，key通常是一个带含义的英文或者拼音；变态一点的就是xxxx1111，xxxx1112（很荣幸，我们的项目很变态 /(ㄒoㄒ)/~~），然后在代码中通过 Resource.lang.xxxx1111 或者 lang.xxxx1111(js文件内) 方式引用；</p>
+</blockquote>
+<h4 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h4><ol>
+<li>key名难定义，就算定义得好也不见得大家都看得懂；</li>
+<li>修改不方便（打开代码，看到的都是lang.xxxx，我要修改的内容在哪，马勒戈壁）。如果开发直接修改资源文件，那么每个语言的都要修改，可是日语只会 “亚麻得”；</li>
+<li>如果项目是先按某个语言开发好功能，后期补翻译的，那就更悲催了，研发需要重新回来替换一次；</li>
+</ol>
+<hr>
+<h3 id="2、gettext"><a href="#2、gettext" class="headerlink" title="2、gettext"></a>2、gettext</h3><h4 id="先了解三种文件类型："><a href="#先了解三种文件类型：" class="headerlink" title="先了解三种文件类型："></a>先了解三种文件类型：</h4><ul>
+<li><p>.po文件</p>
+<blockquote>
+<p>PO是Portable Object（可移植对象）的缩写形式，它是面向翻译人员的、提取于源代码的一种资源文件；</p>
+</blockquote>
+</li>
+<li><p>.pot文件</p>
+<blockquote>
+<p>POT是Portable Object Template（可移植对象模板）的缩写形式，是一种模板文件，其实质与.po文件一样，其中包含了从源代码中提取所有的翻译字符串的列表，主要提供给翻译人员使用，可以通过.pot文件生成.po文件；</p>
+</blockquote>
+</li>
+<li><p>.mo文件</p>
+<blockquote>
+<p>MO是Machine Object（机器对象）的缩写形式，它是面向计算机的、由.po文件通过GNU gettext工具包编译而成的二进制文件，应用程序通过读取.mo文件使自身的界面转换成用户使用的语言；</p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<h4 id="使用方式：-1"><a href="#使用方式：-1" class="headerlink" title="使用方式："></a>使用方式：</h4><blockquote>
+<p>在代码文件内写成：_(“明道”)，通过命令提取到pot文件中，通过poedit等工具根据pot文件创建其他语言对于的po文件</p>
+</blockquote>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#: src/test.cs:36</div><div class="line">msgid &quot;明道&quot;</div><div class="line">msgstr &quot;&quot;</div></pre></td></tr></table></figure>
+<h3 id="问题：-1"><a href="#问题：-1" class="headerlink" title="问题："></a>问题：</h3><p> gettext的方式的主要问题是因为key的唯一性会导致多义词、单复数难处理，但对于我们目前来说还是可以接受的，所以最终决定换成gettext方式</p>
+<hr>
+<h3 id="如果是基于-Net-Framework-的项目："><a href="#如果是基于-Net-Framework-的项目：" class="headerlink" title="如果是基于.Net Framework 的项目："></a>如果是基于.Net Framework 的项目：</h3><h5 id="在需要支持翻译的项目nuget安装i18N：i18N详细介绍"><a href="#在需要支持翻译的项目nuget安装i18N：i18N详细介绍" class="headerlink" title="在需要支持翻译的项目nuget安装i18N：i18N详细介绍"></a>在需要支持翻译的项目nuget安装i18N：<a href="https://github.com/turquoiseowl/i18n" target="_blank" rel="external">i18N详细介绍</a></h5><blockquote>
+<p>Install-Package i18N</p>
+</blockquote>
+<h5 id="在使用文案的地方都按照以下方式来写："><a href="#在使用文案的地方都按照以下方式来写：" class="headerlink" title="在使用文案的地方都按照以下方式来写："></a>在使用文案的地方都按照以下方式来写：</h5> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1. [[[明道]]]   // 没有参数</div><div class="line"></div><div class="line">2. [[[我在 %0 上班 ||| 明道 ]]]  // 带参数</div><div class="line"></div><div class="line">3. string.Format(&quot;[[[welcome %1, today is %0|||&#123;0&#125;|||&#123;1&#125;]]]&quot;, day, name) //string.Format 方式</div></pre></td></tr></table></figure>
+<h5 id="web-config-配置："><a href="#web-config-配置：" class="headerlink" title="web.config 配置："></a>web.config 配置：</h5> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;appSettings&gt;</div><div class="line">    &lt;!-- 定义资源文件名称(.po)--&gt;</div><div class="line">    &lt;add key=&quot;i18n.LocaleFilename&quot; value=&quot;mdTranslation&quot; /&gt;</div><div class="line">&lt;/appSettings&gt;</div><div class="line">&lt;system.webServer&gt;</div><div class="line">    &lt;modules&gt;</div><div class="line">        &lt;add name=&quot;i18n.LocalizingModule&quot; type=&quot;i18n.LocalizingModule, i18n&quot; /&gt;</div><div class="line">    &lt;/modules&gt;</div><div class="line">&lt;/system.webServer&gt;</div></pre></td></tr></table></figure>
+<h5 id="Application-Start-配置："><a href="#Application-Start-配置：" class="headerlink" title="Application_Start 配置："></a>Application_Start 配置：</h5> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">void Application_Start(object sender, EventArgs e)</div><div class="line">&#123;</div><div class="line">    // 默认语言（简体中文）</div><div class="line">    i18n.LocalizedApplication.Current.DefaultLanguage = &quot;zh-Hans&quot;; </div><div class="line">    // url里面是否带语言参数 http://www.xxx.com/en, Void 表示不带语言参数（可按项目的实际要求，非Voide方式可能存在文件引用路径问题）</div><div class="line">    i18n.UrlLocalizer.UrlLocalizationScheme = i18n.UrlLocalizationScheme.Void; </div><div class="line">    // 哪些ContentType文件需求支持多语言解析</div><div class="line">    i18n.LocalizedApplication.Current.ContentTypesToLocalize = new Regex(@&quot;^(?:(?:(?:text|application)/(?:plain|html|xml|json|x-json))(?:\s*;.*)?)$&quot;);</div><div class="line">    //如果开发的项目没有考虑时区问题，需要设置成null，不然dateTime类型会按照时区重新计算</div><div class="line">    i18n.LocalizedApplication.Current.SetPrincipalAppLanguageForRequestHandlers = null;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="执行命令生成pot和po文件："><a href="#执行命令生成pot和po文件：" class="headerlink" title="执行命令生成pot和po文件："></a>执行命令生成pot和po文件：</h5> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&quot;$(TargetDir)i18n.PostBuild.exe&quot; &quot;$(ProjectDir)\web.config&quot;</div></pre></td></tr></table></figure>
+<h5 id="得到pot和po文件之后，可以使用以下方式来完成多语言的翻译："><a href="#得到pot和po文件之后，可以使用以下方式来完成多语言的翻译：" class="headerlink" title="得到pot和po文件之后，可以使用以下方式来完成多语言的翻译："></a>得到pot和po文件之后，可以使用以下方式来完成多语言的翻译：</h5><pre><code>1. poedit // 本地翻译软件，可以根据pot模板创建各语言的po文件，也可以直接对现有的po文件进行翻译
+
+2. transifex // 在线翻译平台，可以导入pot模板，自动创建多个语言来在线翻译。也可以将现有的po文件导入
+
+3. crowdin // 在线翻译平台（类似transifex）
+</code></pre><h5 id="我们使用的nuget安装的i18N在多语言实现上并没有用到mo文件，所以可以不生成mo文件"><a href="#我们使用的nuget安装的i18N在多语言实现上并没有用到mo文件，所以可以不生成mo文件" class="headerlink" title="我们使用的nuget安装的i18N在多语言实现上并没有用到mo文件，所以可以不生成mo文件"></a>我们使用的nuget安装的i18N在多语言实现上并没有用到mo文件，所以可以不生成mo文件</h5><p> <br><br> <strong><em>对于所有访问资源都在所部署的IIS服务器的情况，以上配置基本就可以了</em></strong></p>
+<hr>
+<p> 但是对于引用CDN的文件来说，以上的方式就不合适了，所以我们弃用i18N自带的pot模板生成工具i18n.PostBuild，自己实现。</p>
+<p> 大概思路：</p>
+<ol>
+<li><p>如果资源文件在所部署的IIS服务器上，依然使用以上的试试；</p>
+</li>
+<li><p>如果资源文件在CDN上（对于我们来说要翻译部分基本是 js、tpl、css、image），所以只需要处理js、tpl里面的多语言即可；</p>
+</li>
+<li><p>类似[[[xxxx]]]这样的语法，我们定义一个js里面的语法，_l(‘xxxx’)；</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">_l(&quot;明道&quot;)</div><div class="line"></div><div class="line">_l(&quot;我在 %0 上班&quot;,&quot;明道&quot;)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">window._l = function () &#123;</div><div class="line">  var args = arguments;</div><div class="line">  if (args) &#123;</div><div class="line">    var key = args[0];</div><div class="line">    var content = key;</div><div class="line">    if (typeof mdTranslation != &apos;undefined&apos; &amp;&amp; mdTranslation[key])</div><div class="line">      content = mdTranslation[key];</div><div class="line">    // 含0% 1% 的内容替换</div><div class="line">    if (args.length &gt; 1) &#123;</div><div class="line">      for (var i = 1; i &lt; args.length; i++) &#123;</div><div class="line">        content = content.replace(new RegExp(&apos;%&apos; + (i - 1), &apos;g&apos;), args[i]);</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    return content;</div><div class="line">  &#125;</div><div class="line">  return &apos;&apos;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</code></pre><ol>
+<li><p>根据[[[xxxx]]] 和 _l(‘xxxx’) 语法我们通过脚本来提取所有的key，生成pot文件，大家可以注意文件内有一行 <strong>#: Disabled references:1</strong>，这里其实是有讲究的，我的方式是出于自动生成方便，大家有兴趣可以深入了解一下 <a href="http://www.gnu.org/software/gettext/manual/index.html" target="_blank" rel="external">gettext</a>;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">msgid &quot;&quot;</div><div class="line">msgstr &quot;&quot;</div><div class="line">&quot;Project-Id-Version: \n&quot;</div><div class="line">&quot;POT-Creation-Date: 2017-05-17 15:12:04+08:00\n&quot;</div><div class="line">&quot;MIME-Version: 1.0\n&quot;</div><div class="line">&quot;Content-Type: text/plain; charset=utf-8\n&quot;</div><div class="line">&quot;Content-Transfer-Encoding: 8bit\n&quot;</div><div class="line">&quot;X-Generator: i18n.POTGenerator\n&quot;</div><div class="line"> </div><div class="line">#: Disabled references:1</div><div class="line">msgid &quot;明道&quot;</div><div class="line">msgstr &quot;&quot;</div><div class="line"></div><div class="line">#: Disabled references:1</div><div class="line">msgid &quot;我在 %0 上班&quot;</div><div class="line">msgstr &quot;&quot;</div></pre></td></tr></table></figure>
+</li>
+<li><p>将pot模板导入到 transifex/crowdin 中，指定这个模板需要翻译出哪些语言，在线翻译完成后下载po文件；</p>
+<p> <img src="/img/multilingual/crowdin.png" alt="crowdin.png"></p>
+<p> <img src="/img/multilingual/po.png" alt="po.png"></p>
+</li>
+<li><p>根据po文件生成js文件，把js引入到项目下就可以通过 _l(‘xxxx’) 的方式使用了；</p>
+<p> <img src="/img/multilingual/local.png" alt="local.png"></p>
+<p><br><br><strong>注意：</strong>如果使用第三方翻译平台，基本上都是按词数或者条数来收费的。为了减少一些成本，对于已经翻译好的内容，其实可以不用存储在翻译平台，翻译好后下载po文件后就可以把翻译平台上的内容清空。之后再导入新的pot文件，所以对pot的生成就要做一些处理，我们希望是增量式的。</p>
+<ol>
+<li><p>提取站点中所有有效的key</p>
+</li>
+<li><p>清理pot和po文件中无效的key</p>
+</li>
+<li><p>对比提取出来的key与现有翻译文件(已经清理过)中的key</p>
+</li>
+<li><p>生成增量key的pot文件</p>
+</li>
+<li><p>到如只含增量key的pot文件，完成翻译</p>
+</li>
+<li><p>从翻译平台下载po文件，修改本地的pot和po文件（增量部分copy追加到文件中）</p>
+</li>
+<li><p>重新更新po文件生成js文件</p>
+</li>
+</ol>
+<p>以上的实现我们是通过gulp来完成的，具体实现方式可以根据情况而定。</p>
+</li>
+</ol>
+<hr>
+<h3 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h3><ul>
+<li><a href="http://www.gnu.org/software/gettext/manual/index.html" target="_blank" rel="external">gettext</a></li>
+<li><a href="https://github.com/turquoiseowl/i18n" target="_blank" rel="external">i18n for ASP.NET</a></li>
+<li><a href="https://crowdin.com" target="_blank" rel="external">crowdin</a></li>
+<li><a href="https://www.transifex.com" target="_blank" rel="external">transifex</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C#</a>
+          
+            <a href="/tags/i18N/" rel="tag"># i18N</a>
+          
+            <a href="/tags/ASP-NET/" rel="tag"># ASP.NET</a>
+          
+            <a href="/tags/多语言/" rel="tag"># 多语言</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/22/ui-automate-test/" rel="prev" title="分分钟玩转UI自动化测试">
+                分分钟玩转UI自动化测试 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_mingdao"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+
+    <script type="text/javascript" id="wumiiComments">
+        var wumiiPermaLink = location.href;
+        var wumiiTitle = "让多语言开发变得简单点";
+        var wumiiSitePrefix = "http://beckjin.com/";
+        var wumiiCommentParams = "&pf=JAVASCRIPT";
+    </script>
+    <script type="text/javascript" src="http://widget.wumii.cn/ext/cw/widget"></script>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="Beck Jin" />
+          <p class="site-author-name" itemprop="name">Beck Jin</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#实现方式大概两种："><span class="nav-number">1.</span> <span class="nav-text">实现方式大概两种：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、key"><span class="nav-number">1.1.</span> <span class="nav-text">1、key</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用方式："><span class="nav-number">1.1.1.</span> <span class="nav-text">使用方式：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#问题："><span class="nav-number">1.1.2.</span> <span class="nav-text">问题：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、gettext"><span class="nav-number">1.2.</span> <span class="nav-text">2、gettext</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#先了解三种文件类型："><span class="nav-number">1.2.1.</span> <span class="nav-text">先了解三种文件类型：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用方式：-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">使用方式：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题：-1"><span class="nav-number">1.3.</span> <span class="nav-text">问题：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如果是基于-Net-Framework-的项目："><span class="nav-number">1.4.</span> <span class="nav-text">如果是基于.Net Framework 的项目：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#在需要支持翻译的项目nuget安装i18N：i18N详细介绍"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">在需要支持翻译的项目nuget安装i18N：i18N详细介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#在使用文案的地方都按照以下方式来写："><span class="nav-number">1.4.0.2.</span> <span class="nav-text">在使用文案的地方都按照以下方式来写：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#web-config-配置："><span class="nav-number">1.4.0.3.</span> <span class="nav-text">web.config 配置：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Application-Start-配置："><span class="nav-number">1.4.0.4.</span> <span class="nav-text">Application_Start 配置：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#执行命令生成pot和po文件："><span class="nav-number">1.4.0.5.</span> <span class="nav-text">执行命令生成pot和po文件：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#得到pot和po文件之后，可以使用以下方式来完成多语言的翻译："><span class="nav-number">1.4.0.6.</span> <span class="nav-text">得到pot和po文件之后，可以使用以下方式来完成多语言的翻译：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#我们使用的nuget安装的i18N在多语言实现上并没有用到mo文件，所以可以不生成mo文件"><span class="nav-number">1.4.0.7.</span> <span class="nav-text">我们使用的nuget安装的i18N在多语言实现上并没有用到mo文件，所以可以不生成mo文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接："><span class="nav-number">1.5.</span> <span class="nav-text">参考链接：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Beck Jin</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("FCgGthOl6XN7xRjfK31raebD-gzGzoHsz", "20z736XSuGX562R2ky8uu4EU");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
