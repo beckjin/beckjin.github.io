@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="跨项目,代码共享,C#," />
+  <meta name="keywords" content="Actor,Orleans,并发,分布式," />
 
 
 
@@ -90,23 +90,21 @@
 
 
 
-<meta name="description" content="A：你把xx项目的xx代码发我一份吧，我这边也有那个功能B：好的。（ctrl+c、ctrl+v 甩过去）    A：我这边的逻辑怎么和你不一样？你那边是不是偷偷修改了什么B：艹，我怎么知道你那么也有这个逻辑。。。A：怪我咯？？？  类似这些情况目前在开发团队中或多或少总会存在，开发过程中对于copy代码这件事，可能苦于目前工作量大，开发交付时间紧张，选择一个目前认为高效的方式，不copy能怎样呢">
-<meta name="keywords" content="跨项目,代码共享,C#">
+<meta name="description" content="程序在运行过程中有时会莫名其妙出现代码的某些约束或者执行结果和理想状况不一样，正常逻辑怎么会出现这样的情况？到底发生了什么？好像见了鬼！瞬间好无助。  大多数出现正常逻辑很难解释的时候，我们可能会想到并发问题，因为好像只有并发才会能说服自己。为了验证和解决这个问题，我们可能会尝试一些方案，在并发的情况下我相信很多人都使用过锁，锁确实也能帮忙我们解决问题，不然它干嘛存在。 但随着业务逻辑的持续复杂，">
+<meta name="keywords" content="Actor,Orleans,并发,分布式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="跨项目代码共享(C#)">
-<meta property="og:url" content="http://www.beckjin.com/2017/03/25/cross-project-code-share/index.html">
+<meta property="og:title" content="Orleans解决并发之痛（一）">
+<meta property="og:url" content="http://www.beckjin.com/2017/07/22/actor-orleans-one/index.html">
 <meta property="og:site_name" content="Beck's Blog">
-<meta property="og:description" content="A：你把xx项目的xx代码发我一份吧，我这边也有那个功能B：好的。（ctrl+c、ctrl+v 甩过去）    A：我这边的逻辑怎么和你不一样？你那边是不是偷偷修改了什么B：艹，我怎么知道你那么也有这个逻辑。。。A：怪我咯？？？  类似这些情况目前在开发团队中或多或少总会存在，开发过程中对于copy代码这件事，可能苦于目前工作量大，开发交付时间紧张，选择一个目前认为高效的方式，不copy能怎样呢">
-<meta property="og:image" content="http://www.beckjin.com/img/cross-project-code-share/lib.png">
-<meta property="og:image" content="http://www.beckjin.com/img/cross-project-code-share/structure.png">
-<meta property="og:image" content="http://www.beckjin.com/img/cross-project-code-share/release.png">
-<meta property="og:image" content="http://www.beckjin.com/img/cross-project-code-share/package.png">
-<meta property="og:image" content="http://www.beckjin.com/img/cross-project-code-share/publish.png">
-<meta property="og:updated_time" content="2017-04-23T13:28:29.940Z">
+<meta property="og:description" content="程序在运行过程中有时会莫名其妙出现代码的某些约束或者执行结果和理想状况不一样，正常逻辑怎么会出现这样的情况？到底发生了什么？好像见了鬼！瞬间好无助。  大多数出现正常逻辑很难解释的时候，我们可能会想到并发问题，因为好像只有并发才会能说服自己。为了验证和解决这个问题，我们可能会尝试一些方案，在并发的情况下我相信很多人都使用过锁，锁确实也能帮忙我们解决问题，不然它干嘛存在。 但随着业务逻辑的持续复杂，">
+<meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-one/help.jpg">
+<meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-one/actorSystem.png">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5378831-a8efe21e2353e18a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-07-21T18:12:41.655Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="跨项目代码共享(C#)">
-<meta name="twitter:description" content="A：你把xx项目的xx代码发我一份吧，我这边也有那个功能B：好的。（ctrl+c、ctrl+v 甩过去）    A：我这边的逻辑怎么和你不一样？你那边是不是偷偷修改了什么B：艹，我怎么知道你那么也有这个逻辑。。。A：怪我咯？？？  类似这些情况目前在开发团队中或多或少总会存在，开发过程中对于copy代码这件事，可能苦于目前工作量大，开发交付时间紧张，选择一个目前认为高效的方式，不copy能怎样呢">
-<meta name="twitter:image" content="http://www.beckjin.com/img/cross-project-code-share/lib.png">
+<meta name="twitter:title" content="Orleans解决并发之痛（一）">
+<meta name="twitter:description" content="程序在运行过程中有时会莫名其妙出现代码的某些约束或者执行结果和理想状况不一样，正常逻辑怎么会出现这样的情况？到底发生了什么？好像见了鬼！瞬间好无助。  大多数出现正常逻辑很难解释的时候，我们可能会想到并发问题，因为好像只有并发才会能说服自己。为了验证和解决这个问题，我们可能会尝试一些方案，在并发的情况下我相信很多人都使用过锁，锁确实也能帮忙我们解决问题，不然它干嘛存在。 但随着业务逻辑的持续复杂，">
+<meta name="twitter:image" content="http://www.beckjin.com/img/actor-orleans-one/help.jpg">
 
 
 
@@ -134,14 +132,14 @@
 
 
 
-  <link rel="canonical" href="http://www.beckjin.com/2017/03/25/cross-project-code-share/"/>
+  <link rel="canonical" href="http://www.beckjin.com/2017/07/22/actor-orleans-one/"/>
 
 
 
 
 
   <meta name="wumiiVerification" content="9c0f45c7-25e2-468d-9df0-8b3af4c615ac" />
-  <title>跨项目代码共享(C#) | Beck's Blog</title>
+  <title>Orleans解决并发之痛（一） | Beck's Blog</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -270,7 +268,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2017/03/25/cross-project-code-share/">
+    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2017/07/22/actor-orleans-one/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
@@ -291,7 +289,7 @@
             
             
               
-                跨项目代码共享(C#)
+                Orleans解决并发之痛（一）
               
             
           </h1>
@@ -306,8 +304,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-25T23:04:05+08:00">
-                2017-03-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-22T22:14:22+08:00">
+                2017-07-22
               </time>
             
 
@@ -346,7 +344,7 @@
 
           
           
-             <span id="/2017/03/25/cross-project-code-share/" class="leancloud_visitors" data-flag-title="跨项目代码共享(C#)">
+             <span id="/2017/07/22/actor-orleans-one/" class="leancloud_visitors" data-flag-title="Orleans解决并发之痛（一）">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -374,61 +372,58 @@
       
 
       
-        <blockquote>
-<p>A：你把xx项目的xx代码发我一份吧，我这边也有那个功能<br>B：好的。（ctrl+c、ctrl+v 甩过去）</p>
-</blockquote>
-<hr>
-<blockquote>
-<p>A：我这边的逻辑怎么和你不一样？你那边是不是偷偷修改了什么<br>B：艹，我怎么知道你那么也有这个逻辑。。。<br>A：怪我咯？？？</p>
-</blockquote>
-<p>类似这些情况目前在开发团队中或多或少总会存在，开发过程中对于copy代码这件事，可能苦于目前工作量大，开发交付时间紧张，选择一个目前认为高效的方式，不copy能怎样呢？心里当然是知道肯定存在解决方案的。</p>
-<h3 id="我们解决问题的方式是搭建自己的-Nuget-Server"><a href="#我们解决问题的方式是搭建自己的-Nuget-Server" class="headerlink" title="我们解决问题的方式是搭建自己的 Nuget Server"></a>我们解决问题的方式是搭建自己的 Nuget Server</h3><p>通过 Nuget Server的方式可以帮助我们进行代码统一管理，功能变化的代码版本控制，Server端版本升级时对引用方目前使用的版本进行兼容即可。每个项目公共功能的代码使用只需要一键安装就来了。如果Server端版本升了，引用方根据项目本身的需要，看是否需要升级到新版本。</p>
-<ol>
-<li><p>创建一个项目，用来管理通过 Nuget Server 发布的代码，代码本身通过github管理，理论上每次发布新版本Nuget包都有一个分支代码和该版本对应；</p>
+        <p>程序在运行过程中有时会莫名其妙出现代码的某些约束或者执行结果和理想状况不一样，正常逻辑怎么会出现这样的情况？到底发生了什么？好像见了鬼！瞬间好无助。</p>
+<p><img src="/img/actor-orleans-one/help.jpg" alt="谁来救救我"></p>
+<p>大多数出现正常逻辑很难解释的时候，我们可能会想到并发问题，因为好像只有并发才会能说服自己。为了验证和解决这个问题，我们可能会尝试一些方案，在并发的情况下我相信很多人都使用过锁，锁确实也能帮忙我们解决问题，不然它干嘛存在。</p>
+<p>但随着业务逻辑的持续复杂，锁的使用可能无处不在。首先大家都知道锁本身的机制很耗性能；然后锁本身不涉及什么编程模式，所以在业务代码中融入大量锁对代码本身的稳定性也有一定影响。</p>
+<p>经过查找资料，因为本身的项目是基于.NET，所以发现Microsoft Orleans好像可以比较好的满足解决并发的需求。</p>
+<h3 id="Orleans之前，先来扯一扯Actor模型"><a href="#Orleans之前，先来扯一扯Actor模型" class="headerlink" title="Orleans之前，先来扯一扯Actor模型"></a>Orleans之前，先来扯一扯Actor模型</h3><ol>
+<li><p>Actor是以单线程存在的，所有消息都是顺序到达的，每次收到消息后，就放入队列，而它每次也从队列中取出消息体来处理；</p>
 </li>
-<li><p>创建类库，我们使用场景是需要同时支持 .Net Framework和 .Net Core 项目的使用（.Net Framework 4.5.2及以上可以使用，.Net Standard 1.5及以上可以使用），而且希望功能性相关代码只维护一份</p>
-<ul>
-<li>尝试1：使用可移植类库来实现，经过一系列的测试，失败了；</li>
-<li>尝试2：使用standard类库来实现，经过一系列的测试，依然失败；</li>
-<li><p>尝试3：</p>
-<ul>
-<li><p>创建两个类库，一个基于.Net Framework 4.5.2，一个基于.Net Standard 1.5；</p>
-<p><img src="/img/cross-project-code-share/lib.png" alt="lib.png"></p>
+<li><p>每一个Actor有一个Id和它对应，一个Id对应的Actor只会在<strong>集群中</strong>存在一个，使用者只需要通过Id就能随时访问不需要关注该Actor在集群的什么位置；</p>
 </li>
-<li><p>把.Net Standard 1.5的类库中的.csproj 文件复制到.Net Framework 4.5.2的类库中，创建一个与.Net Framework 4.5.2中的.csproj同名的.project.json，彻底删除上一步中创建的Net Standard 1.5类库；</p>
-<p><img src="/img/cross-project-code-share/structure.png" alt="structure.png"></p>
-</li>
-<li><p>project.json 内容如下：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line"> &quot;frameworks&quot;:  &#123;&quot;net452&quot;: &#123; &#125; &#125;,</div><div class="line"> &quot;runtimes&quot;: &#123;&quot;win&quot;: &#123;&#125;&#125;,</div><div class="line"> &quot;dependencies&quot;: &#123;&#125;  //根据这个类库的依赖项决定</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>添加现有项目（位于.Net Framework 4.5.2的类库下的Netstandard1.5.csproj），移除Netstandard1.5类库无效依赖，最终就达到了两个类库服用一份代码；</p>
-</li>
-<li><p>Build的时候还是会失败的，Properties/AssemblyInfo.cs 对于Netstandard1.5类库来说是没用的，所以把这个文件的生成操作设置成 “无”；</p>
-</li>
-<li><p>重新Build，成功了。</p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>编写功能性代码。在任何一个类库中写都可以，因为本质是一份代码，从哪个类库看都是一样的。完成后自己先做好测试；</p>
-</li>
-<li><p>在Release模式下Build（build的时候最好把两个类库的程序集名称和默认命名空间都修改成一致，还需要设置生成xml文件，xml文件内包含所有代码的注释，方便调用者使用）；</p>
-</li>
-<li><p>将类库中Release文件夹中的dll和xml拖拽到 NuGet Package Manager 的内容区域，需按规定的目录格式，如果当前Package有依赖其他Package，则需要Edit dependencies</p>
-<p>   <img src="/img/cross-project-code-share/release.png" alt="release.png"></p>
-<p>   <img src="/img/cross-project-code-share/package.png" alt="package.png"></p>
-</li>
-<li><p>发布到本地 Nuget Server，Publish Url只要内网之间可以访问就行；</p>
-<p>   <img src="/img/cross-project-code-share/publish.png" alt="publish.png"></p>
-</li>
-<li><p>引用方在vs中配置本地的 Nuget 源，然后就可以安装/升级/卸载 Nuget Server上的包了。</p>
+<li><p>每一个Actor看作是一个独立的实体，拥有自己独立的状态。Actor与Actor直接可以进行消息通知；</p>
+<p>注：有状态的 Actor在集群中一个Id只会存在一个实例，无状态的可配置为根据流量存在多个，无状态的情况看具体业务需求。</p>
+<p><img src="/img/actor-orleans-one/actorSystem.png" alt="Actor System"></p>
 </li>
 </ol>
-<h3 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h3><ul>
-<li><a href="https://docs.microsoft.com/zh-cn/nuget/" target="_blank" rel="external">Nuget</a></li>
-<li><a href="https://github.com/NuGetPackageExplorer/NuGetPackageExplorer" target="_blank" rel="external">NuGetPackageExplorer</a></li>
-</ul>
+<h3 id="再来扯一扯Orleans框架"><a href="#再来扯一扯Orleans框架" class="headerlink" title="再来扯一扯Orleans框架"></a>再来扯一扯Orleans框架</h3><blockquote>
+<p>Orleans 提供了一个简单的方法来构建大规模、高并发、分布式应用程序，被认为是Actor模型的分布式版本，是一种改进的Actor模型。在Orleans中，Actors被称作Grains，采用接口来表示，Actors的消息用异步方法来接收，方法返回值必须是Task or Task<t>。</t></p>
+</blockquote>
+<h5 id="Orleans几个核心角色："><a href="#Orleans几个核心角色：" class="headerlink" title="Orleans几个核心角色："></a>Orleans几个核心角色：</h5><h6 id="Grains（Actors）"><a href="#Grains（Actors）" class="headerlink" title="Grains（Actors）"></a>Grains（Actors）</h6><blockquote>
+<p>Grains是Orleans应用程序的业务逻辑实现与抽象，Grains是彼此孤立的原子单位，分布的，持久的。 一个典型的Grain是有状态和行为的一个单实例。</p>
+</blockquote>
+<h6 id="Silo"><a href="#Silo" class="headerlink" title="Silo"></a>Silo</h6><blockquote>
+<p>Silo是一个主机服务，里面主要用于执行Grains，也就是说Grains开发完成后需要注册到Silo中，然后等待调用。它监听一个端口，用来监听从Silo到Silo的消息或者从客户端到Silo的消息的，典型的Silo就是，每台机器运行一个Silo，会对外暴露网关地址供调用。</p>
+</blockquote>
+<h6 id="Cluster（集群搭建的时候会具体介绍）"><a href="#Cluster（集群搭建的时候会具体介绍）" class="headerlink" title="Cluster（集群搭建的时候会具体介绍）"></a>Cluster（集群搭建的时候会具体介绍）</h6><blockquote>
+<p>大量的Silo同时在一起工作就形成了Orleans的集群，Orleans运行完全自动化的集群管理。</p>
+</blockquote>
+<h6 id="Client"><a href="#Client" class="headerlink" title="Client"></a>Client</h6><blockquote>
+<p>具体的应用客户端，可以是控制台、Web应用程序、WPF等一切.NET端技术。</p>
+</blockquote>
+<hr>
+<p>开始接触Orleans Sample的时候，第一感觉项目结构和gRPC还挺像的，如果你之前有接触，一定感觉很亲切：</p>
+<blockquote>
+<ol>
+<li>定义一个接口（Interfaces）</li>
+<li>实现接口（Grains） – 添加引用Interfaces</li>
+<li>启动服务端（Silo）– 添加引用Interfaces，Grains</li>
+<li>启动客户端 （Client）– 添加引用Interfaces</li>
+</ol>
+</blockquote>
+<p>练习过程中对Nuget安装Orleans相关依赖包可能会有一些模糊，这里说明一下我的具体步骤，希望尽快帮忙实现效果，所有程序集使用.Net Framework的版本都是4.6：</p>
+<p>Interfaces类库，添加引用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">PM&gt; Install-Package Microsoft.Orleans.Core</div></pre></td></tr></table></figure></p>
+<p>Grains类库，添加引用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">PM&gt; Install-Package Microsoft.Orleans.Core</div></pre></td></tr></table></figure></p>
+<p>Silos控制台应用程序 添加引用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">PM&gt; Install-Package Microsoft.Orleans.Core</div><div class="line">PM&gt; Install-Package Microsoft.Orleans.OrleansCodeGenerator</div><div class="line">PM&gt; Install-Package Microsoft.Orleans.OrleansProviders</div><div class="line">PM&gt; Install-Package Microsoft.Orleans.OrleansRuntime</div></pre></td></tr></table></figure></p>
+<p>Client控制台应用程序 添加引用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">PM&gt; Install-Package Microsoft.Orleans.Core</div><div class="line">PM&gt; Install-Package Microsoft.Orleans.OrleansCodeGenerator</div></pre></td></tr></table></figure></p>
+<hr>
+<p>关键代码，看看是不是单线程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var friend = GrainClient.GrainFactory.GetGrain&lt;IHello&gt;(0); //0是这个Grain的标识符primaryKey</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public Task&lt;string&gt; SayHello(string greeting)</div><div class="line">&#123;</div><div class="line">     System.Threading.Thread.Sleep(3000); </div><div class="line">     var oldText = text;</div><div class="line">     text = greeting;</div><div class="line">     Console.WriteLine(oldText);</div><div class="line">     return Task.FromResult(oldText);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>启动2个Silo(集群)，同时启动2个Client，Client分别连接Silo1和Silo2网关，确保两个Client不共用一个Silo主进程，但使用的是同一个Grain，因为primaryKey都是0。最终会发现每次输出的结果都会等待3s，这就说明同一个Grain内部是单线程执行。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/5378831-a8efe21e2353e18a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Test Result"></p>
+<p>哪都有你的 <a href="https://github.com/beckjin/OrleansSamples/tree/master/OrleansTest1" target="_blank" rel="external">Hello World Demo</a></p>
 
       
     </div>
@@ -458,11 +453,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/跨项目/" rel="tag"># 跨项目</a>
+            <a href="/tags/Actor/" rel="tag"># Actor</a>
           
-            <a href="/tags/代码共享/" rel="tag"># 代码共享</a>
+            <a href="/tags/Orleans/" rel="tag"># Orleans</a>
           
-            <a href="/tags/C/" rel="tag"># C#</a>
+            <a href="/tags/并发/" rel="tag"># 并发</a>
+          
+            <a href="/tags/分布式/" rel="tag"># 分布式</a>
           
         </div>
       
@@ -475,15 +472,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/16/cross-project-data-share/" rel="next" title="跨项目数据共享(跨语言)">
-                <i class="fa fa-chevron-left"></i> 跨项目数据共享(跨语言)
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/19/multilingual/" rel="prev" title="让多语言开发变得简单点">
+                让多语言开发变得简单点 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -520,7 +517,7 @@
 
     <script type="text/javascript" id="wumiiComments">
         var wumiiPermaLink = location.href;
-        var wumiiTitle = "跨项目代码共享(C#)";
+        var wumiiTitle = "Orleans解决并发之痛（一）";
         var wumiiSitePrefix = "http://beckjin.com/";
         var wumiiCommentParams = "&pf=JAVASCRIPT";
     </script>
@@ -640,7 +637,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#我们解决问题的方式是搭建自己的-Nuget-Server"><span class="nav-number">1.</span> <span class="nav-text">我们解决问题的方式是搭建自己的 Nuget Server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关资料"><span class="nav-number">2.</span> <span class="nav-text">相关资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Orleans之前，先来扯一扯Actor模型"><span class="nav-number">1.</span> <span class="nav-text">Orleans之前，先来扯一扯Actor模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#再来扯一扯Orleans框架"><span class="nav-number">2.</span> <span class="nav-text">再来扯一扯Orleans框架</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Orleans几个核心角色："><span class="nav-number">2.0.1.</span> <span class="nav-text">Orleans几个核心角色：</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Grains（Actors）"><span class="nav-number">2.0.1.1.</span> <span class="nav-text">Grains（Actors）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Silo"><span class="nav-number">2.0.1.2.</span> <span class="nav-text">Silo</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Cluster（集群搭建的时候会具体介绍）"><span class="nav-number">2.0.1.3.</span> <span class="nav-text">Cluster（集群搭建的时候会具体介绍）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Client"><span class="nav-number">2.0.1.4.</span> <span class="nav-text">Client</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
