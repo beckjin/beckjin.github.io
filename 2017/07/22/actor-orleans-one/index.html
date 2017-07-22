@@ -100,7 +100,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-one/help.jpg">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-one/actorSystem.png">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5378831-a8efe21e2353e18a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-07-22T10:40:21.855Z">
+<meta property="og:updated_time" content="2017-07-22T11:14:27.117Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Orleans解决并发之痛（一）：单线程">
 <meta name="twitter:description" content="程序在运行过程中有时会莫名其妙出现代码的某些约束或者执行结果和理想状况不一样，正常逻辑怎么会出现这样的情况？到底发生了什么？好像见了鬼！瞬间好无助。  大多数出现正常逻辑很难解释的时候，我们可能会想到并发问题，因为好像只有并发才会能说服自己。为了验证和解决这个问题，我们可能会尝试一些方案，在并发的情况下我相信很多人都使用过锁，锁确实也能帮忙我们解决问题，不然它干嘛存在。 但随着业务逻辑的持续复杂，">
@@ -413,10 +413,42 @@
 </ol>
 </blockquote>
 <p>练习过程中对Nuget安装Orleans相关依赖包可能会有一些模糊，这里说明一下我的具体步骤，希望尽快帮忙实现效果，所有程序集使用.Net Framework的版本都是4.6：</p>
-<p>Interfaces类库，添加引用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">PM&gt; Install-Package Microsoft.Orleans.Core</div></pre></td></tr></table></figure></p>
-<p>Grains类库，添加引用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">PM&gt; Install-Package Microsoft.Orleans.Core</div></pre></td></tr></table></figure></p>
-<p>Silo控制台应用程序，添加引用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">PM&gt; Install-Package Microsoft.Orleans.Core</div><div class="line">PM&gt; Install-Package Microsoft.Orleans.OrleansCodeGenerator</div><div class="line">PM&gt; Install-Package Microsoft.Orleans.OrleansProviders</div><div class="line">PM&gt; Install-Package Microsoft.Orleans.OrleansRuntime</div></pre></td></tr></table></figure></p>
-<p>Client控制台应用程序，添加引用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">PM&gt; Install-Package Microsoft.Orleans.Core</div><div class="line">PM&gt; Install-Package Microsoft.Orleans.OrleansCodeGenerator</div></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr>
+<th>程序集名称</th>
+<th>类型</th>
+<th>Nuget依赖包<br> Microsoft.Orleans.</th>
+<th>引用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Interfaces</td>
+<td>类库</td>
+<td>Core</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Grains</td>
+<td>类库</td>
+<td>Core</td>
+<td>Interfaces</td>
+</tr>
+<tr>
+<td>Silo</td>
+<td>控制台程序</td>
+<td>Core<br>OrleansCodeGenerator<br>OrleansProviders<br> OrleansRuntime</td>
+<td>Interfaces<br>Grains</td>
+</tr>
+<tr>
+<td>Client</td>
+<td>控制台程序</td>
+<td>Core<br> OrleansCodeGenerator</td>
+<td>Interfaces</td>
+</tr>
+</tbody>
+</table>
 <p>在Silo项目中添加配置文件 OrleansConfiguration.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</div><div class="line">&lt;OrleansConfiguration xmlns=&quot;urn:orleans&quot;&gt;</div><div class="line">    &lt;Globals&gt;</div><div class="line">        &lt;SeedNode Address=&quot;localhost&quot; Port=&quot;11111&quot; /&gt;</div><div class="line">    &lt;/Globals&gt;</div><div class="line">    &lt;Defaults&gt;</div><div class="line">        &lt;Networking Address=&quot;localhost&quot; Port=&quot;11111&quot; /&gt;</div><div class="line">        &lt;ProxyingGateway Address=&quot;localhost&quot; Port=&quot;30000&quot; /&gt;</div><div class="line">    &lt;/Defaults&gt;</div><div class="line">&lt;/OrleansConfiguration&gt;</div></pre></td></tr></table></figure></p>
 <p><strong>SeedNode</strong>：集群中主Silo地址，生产环境并不可以这么使用，已这种方式配置主Silo的情况下，其他Silo加入集群需要等主Silo先启动。之后会介绍SystemStore来维护集群成员关系；<br><strong>Networking </strong>：内部Silo与Silo之间通信地址；<br><strong>ProxyingGateway</strong>：  客户端网关地址；</p>
 <p>在Client项目中添加配置文件 ClientConfiguration.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</div><div class="line">&lt;ClientConfiguration xmlns=&quot;urn:orleans&quot;&gt;</div><div class="line">    &lt;Gateway Address=&quot;localhost&quot; Port=&quot;30000&quot;/&gt;</div><div class="line">&lt;/ClientConfiguration&gt;</div></pre></td></tr></table></figure></p>
