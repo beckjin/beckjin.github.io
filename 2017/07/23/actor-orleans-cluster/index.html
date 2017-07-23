@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="跨项目,代码共享,C#," />
+  <meta name="keywords" content="Actor,Orleans,并发,分布式," />
 
 
 
@@ -90,23 +90,22 @@
 
 
 
-<meta name="description" content="A：你把xx项目的xx代码发我一份吧，我这边也有那个功能B：好的。（ctrl+c、ctrl+v 甩过去）    A：我这边的逻辑怎么和你不一样？你那边是不是偷偷修改了什么B：艹，我怎么知道你那么也有这个逻辑。。。A：怪我咯？？？  类似这些情况目前在开发团队中或多或少总会存在，开发过程中对于copy代码这件事，可能苦于目前工作量大，开发交付时间紧张，选择一个目前认为高效的方式，不copy能怎样呢">
-<meta name="keywords" content="跨项目,代码共享,C#">
+<meta name="description" content="Orleans本身的设计是一个分布式的框架，多个Silo构成集群，Grains分布在多个Silo中。一旦一个Silo挂了，原来归属这个Silo的Grains会自动在其他Silo中激活。生产环境下还是需要以集群方式来部署。  在Orleans解决并发之痛（二）：Grain状态文章中提到内存存储State是不靠谱的，同样，以内存方式存储集群中Silo的成员关系也是不靠谱的，所以本文使用SQL Serv">
+<meta name="keywords" content="Actor,Orleans,并发,分布式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="跨项目代码共享(C#)">
-<meta property="og:url" content="http://www.beckjin.com/2017/03/25/cross-project-code-share/index.html">
+<meta property="og:title" content="Orleans解决并发之痛（三）：集群">
+<meta property="og:url" content="http://www.beckjin.com/2017/07/23/actor-orleans-cluster/index.html">
 <meta property="og:site_name" content="Beck's Blog">
-<meta property="og:description" content="A：你把xx项目的xx代码发我一份吧，我这边也有那个功能B：好的。（ctrl+c、ctrl+v 甩过去）    A：我这边的逻辑怎么和你不一样？你那边是不是偷偷修改了什么B：艹，我怎么知道你那么也有这个逻辑。。。A：怪我咯？？？  类似这些情况目前在开发团队中或多或少总会存在，开发过程中对于copy代码这件事，可能苦于目前工作量大，开发交付时间紧张，选择一个目前认为高效的方式，不copy能怎样呢">
-<meta property="og:image" content="http://www.beckjin.com/img/cross-project-code-share/lib.png">
-<meta property="og:image" content="http://www.beckjin.com/img/cross-project-code-share/structure.png">
-<meta property="og:image" content="http://www.beckjin.com/img/cross-project-code-share/release.png">
-<meta property="og:image" content="http://www.beckjin.com/img/cross-project-code-share/package.png">
-<meta property="og:image" content="http://www.beckjin.com/img/cross-project-code-share/publish.png">
-<meta property="og:updated_time" content="2017-07-22T05:13:10.453Z">
+<meta property="og:description" content="Orleans本身的设计是一个分布式的框架，多个Silo构成集群，Grains分布在多个Silo中。一旦一个Silo挂了，原来归属这个Silo的Grains会自动在其他Silo中激活。生产环境下还是需要以集群方式来部署。  在Orleans解决并发之痛（二）：Grain状态文章中提到内存存储State是不靠谱的，同样，以内存方式存储集群中Silo的成员关系也是不靠谱的，所以本文使用SQL Serv">
+<meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-cluster/cluster.png">
+<meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-cluster/systemStore.png">
+<meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-cluster/testResult.png">
+<meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-cluster/testResult2.png">
+<meta property="og:updated_time" content="2017-07-23T13:09:57.610Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="跨项目代码共享(C#)">
-<meta name="twitter:description" content="A：你把xx项目的xx代码发我一份吧，我这边也有那个功能B：好的。（ctrl+c、ctrl+v 甩过去）    A：我这边的逻辑怎么和你不一样？你那边是不是偷偷修改了什么B：艹，我怎么知道你那么也有这个逻辑。。。A：怪我咯？？？  类似这些情况目前在开发团队中或多或少总会存在，开发过程中对于copy代码这件事，可能苦于目前工作量大，开发交付时间紧张，选择一个目前认为高效的方式，不copy能怎样呢">
-<meta name="twitter:image" content="http://www.beckjin.com/img/cross-project-code-share/lib.png">
+<meta name="twitter:title" content="Orleans解决并发之痛（三）：集群">
+<meta name="twitter:description" content="Orleans本身的设计是一个分布式的框架，多个Silo构成集群，Grains分布在多个Silo中。一旦一个Silo挂了，原来归属这个Silo的Grains会自动在其他Silo中激活。生产环境下还是需要以集群方式来部署。  在Orleans解决并发之痛（二）：Grain状态文章中提到内存存储State是不靠谱的，同样，以内存方式存储集群中Silo的成员关系也是不靠谱的，所以本文使用SQL Serv">
+<meta name="twitter:image" content="http://www.beckjin.com/img/actor-orleans-cluster/cluster.png">
 
 
 
@@ -134,14 +133,14 @@
 
 
 
-  <link rel="canonical" href="http://www.beckjin.com/2017/03/25/cross-project-code-share/"/>
+  <link rel="canonical" href="http://www.beckjin.com/2017/07/23/actor-orleans-cluster/"/>
 
 
 
 
 
   <meta name="wumiiVerification" content="9c0f45c7-25e2-468d-9df0-8b3af4c615ac" />
-  <title>跨项目代码共享(C#) | Beck's Blog</title>
+  <title>Orleans解决并发之痛（三）：集群 | Beck's Blog</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -270,7 +269,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2017/03/25/cross-project-code-share/">
+    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2017/07/23/actor-orleans-cluster/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
@@ -291,7 +290,7 @@
             
             
               
-                跨项目代码共享(C#)
+                Orleans解决并发之痛（三）：集群
               
             
           </h1>
@@ -306,8 +305,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-25T23:04:05+08:00">
-                2017-03-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-23T21:06:51+08:00">
+                2017-07-23
               </time>
             
 
@@ -329,8 +328,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Nuget-Server/" itemprop="url" rel="index">
-                    <span itemprop="name">Nuget Server</span>
+                  <a href="/categories/Orleans/" itemprop="url" rel="index">
+                    <span itemprop="name">Orleans</span>
                   </a>
                 </span>
 
@@ -346,7 +345,7 @@
 
           
           
-             <span id="/2017/03/25/cross-project-code-share/" class="leancloud_visitors" data-flag-title="跨项目代码共享(C#)">
+             <span id="/2017/07/23/actor-orleans-cluster/" class="leancloud_visitors" data-flag-title="Orleans解决并发之痛（三）：集群">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -374,60 +373,28 @@
       
 
       
-        <blockquote>
-<p>A：你把xx项目的xx代码发我一份吧，我这边也有那个功能<br>B：好的。（ctrl+c、ctrl+v 甩过去）</p>
-</blockquote>
-<hr>
-<blockquote>
-<p>A：我这边的逻辑怎么和你不一样？你那边是不是偷偷修改了什么<br>B：艹，我怎么知道你那么也有这个逻辑。。。<br>A：怪我咯？？？</p>
-</blockquote>
-<p>类似这些情况目前在开发团队中或多或少总会存在，开发过程中对于copy代码这件事，可能苦于目前工作量大，开发交付时间紧张，选择一个目前认为高效的方式，不copy能怎样呢？心里当然是知道肯定存在解决方案的。</p>
-<h3 id="我们解决问题的方式是搭建自己的-Nuget-Server"><a href="#我们解决问题的方式是搭建自己的-Nuget-Server" class="headerlink" title="我们解决问题的方式是搭建自己的 Nuget Server"></a>我们解决问题的方式是搭建自己的 Nuget Server</h3><p>通过 Nuget Server的方式可以帮助我们进行代码统一管理，功能变化的代码版本控制，Server端版本升级时对引用方目前使用的版本进行兼容即可。每个项目公共功能的代码使用只需要一键安装就来了。如果Server端版本升了，引用方根据项目本身的需要，看是否需要升级到新版本。</p>
-<ol>
-<li><p>创建一个项目，用来管理通过 Nuget Server 发布的代码，代码本身通过github管理，理论上每次发布新版本Nuget包都有一个分支代码和该版本对应；</p>
-</li>
-<li><p>创建类库，我们使用场景是需要同时支持 .Net Framework和 .Net Core 项目的使用（.Net Framework 4.5.2及以上可以使用，.Net Standard 1.5及以上可以使用），而且希望功能性相关代码只维护一份</p>
-<ul>
-<li>尝试1：使用可移植类库来实现，经过一系列的测试，失败了；</li>
-<li>尝试2：使用standard类库来实现，经过一系列的测试，依然失败；</li>
-<li><p>尝试3：</p>
-<ul>
-<li><p>创建两个类库，一个基于.Net Framework 4.5.2，一个基于.Net Standard 1.5；</p>
-<p><img src="/img/cross-project-code-share/lib.png" alt="lib.png"></p>
-</li>
-<li><p>把.Net Standard 1.5的类库中的.csproj 文件复制到.Net Framework 4.5.2的类库中，创建一个与.Net Framework 4.5.2中的.csproj同名的.project.json，彻底删除上一步中创建的Net Standard 1.5类库；</p>
-<p><img src="/img/cross-project-code-share/structure.png" alt="structure.png"></p>
-</li>
-<li><p>project.json 内容如下：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line"> &quot;frameworks&quot;:  &#123;&quot;net452&quot;: &#123; &#125; &#125;,</div><div class="line"> &quot;runtimes&quot;: &#123;&quot;win&quot;: &#123;&#125;&#125;,</div><div class="line"> &quot;dependencies&quot;: &#123;&#125;  //根据这个类库的依赖项决定</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>添加现有项目（位于.Net Framework 4.5.2的类库下的Netstandard1.5.csproj），移除Netstandard1.5类库无效依赖，最终就达到了两个类库服用一份代码；</p>
-</li>
-<li><p>Build的时候还是会失败的，Properties/AssemblyInfo.cs 对于Netstandard1.5类库来说是没用的，所以把这个文件的生成操作设置成 “无”；</p>
-</li>
-<li><p>重新Build，成功了。</p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>编写功能性代码。在任何一个类库中写都可以，因为本质是一份代码，从哪个类库看都是一样的。完成后自己先做好测试；</p>
-</li>
-<li><p>在Release模式下Build（build的时候最好把两个类库的程序集名称和默认命名空间都修改成一致，还需要设置生成xml文件，xml文件内包含所有代码的注释，方便调用者使用）；</p>
-</li>
-<li><p>将类库中Release文件夹中的dll和xml拖拽到 NuGet Package Manager 的内容区域，需按规定的目录格式，如果当前Package有依赖其他Package，则需要Edit dependencies</p>
-<p>   <img src="/img/cross-project-code-share/release.png" alt="release.png"></p>
-<p>   <img src="/img/cross-project-code-share/package.png" alt="package.png"></p>
-</li>
-<li><p>发布到本地 Nuget Server，Publish Url只要内网之间可以访问就行；</p>
-<p>   <img src="/img/cross-project-code-share/publish.png" alt="publish.png"></p>
-</li>
-<li><p>引用方在vs中配置本地的 Nuget 源，然后就可以安装/升级/卸载 Nuget Server上的包了。</p>
-</li>
-</ol>
-<h3 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h3><ul>
-<li><a href="https://docs.microsoft.com/zh-cn/nuget/" target="_blank" rel="external">Nuget</a></li>
-<li><a href="https://github.com/NuGetPackageExplorer/NuGetPackageExplorer" target="_blank" rel="external">NuGetPackageExplorer</a></li>
+        <p>Orleans本身的设计是一个分布式的框架，多个Silo构成集群，Grains分布在多个Silo中。一旦一个Silo挂了，原来归属这个Silo的Grains会自动在其他Silo中激活。生产环境下还是需要以集群方式来部署。</p>
+<p><img src="/img/actor-orleans-cluster/cluster.png" alt="cluster"></p>
+<p>在<a href="http://www.jianshu.com/p/ccd9cffa77bf" target="_blank" rel="external">Orleans解决并发之痛（二）：Grain状态</a>文章中提到内存存储State是不靠谱的，同样，以内存方式存储集群中Silo的成员关系也是不靠谱的，所以本文使用SQL Server来做Silo的成员关系存储，以内存方式存储成员关系存在主节点之说，其他节点的启动必须依赖主节点的启动状态，但以Azure Table、SQL Server 、ZooKeeper、Consul 等存储成员关系，所有的Silo都是平等的，不需要等待谁。</p>
+<p>之前在<a href="http://www.jianshu.com/p/141ea382d242" target="_blank" rel="external">Orleans解决并发之痛（一）：单线程</a>Demo中是以内存存储集群成员关系的，有兴趣可以返回查看。</p>
+<p>这篇文章的Demo是<a href="http://www.jianshu.com/p/ccd9cffa77bf" target="_blank" rel="external">Orleans解决并发之痛（二）：Grain状态</a>的基础上完成的，所以在原来代码的基础上做一些调整即可。我们会启动3个Silo，构建成一个集群环境。实际上提供3个配置文件即可，配置文件稍做修改就可实现。</p>
+<h4 id="Silo配置文件"><a href="#Silo配置文件" class="headerlink" title="Silo配置文件"></a>Silo配置文件</h4><p>OrleansConfiguration1.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</div><div class="line">&lt;OrleansConfiguration xmlns=&quot;urn:orleans&quot;&gt;</div><div class="line">    &lt;Globals&gt;</div><div class="line">        &lt;SystemStore </div><div class="line">			SystemStoreType=&quot;SqlServer&quot; </div><div class="line">			DeploymentId=&quot;OrleansTest&quot; </div><div class="line">			DataConnectionString=&quot;Server=.;Database=OrleansStorage;User ID=sa;Password=123456;&quot;/&gt;</div><div class="line">      </div><div class="line">        &lt;StorageProviders&gt;</div><div class="line">            &lt;Provider Type=&quot;Orleans.Storage.AdoNetStorageProvider&quot;</div><div class="line">                      Name=&quot;OrleansStorage&quot;</div><div class="line">                      AdoInvariant=&quot;System.Data.SqlClient&quot;</div><div class="line">                      DataConnectionString=&quot;Server=.;Database=OrleansStorage;User ID=sa;Password=123456;&quot;/&gt;</div><div class="line">        &lt;/StorageProviders&gt;</div><div class="line">    &lt;/Globals&gt;</div><div class="line">    &lt;Defaults&gt;</div><div class="line">        &lt;Networking Address=&quot;localhost&quot; Port=&quot;11111&quot; /&gt;</div><div class="line">        &lt;ProxyingGateway Address=&quot;localhost&quot; Port=&quot;30000&quot; /&gt;</div><div class="line">    &lt;/Defaults&gt;</div><div class="line">&lt;/OrleansConfiguration&gt;</div></pre></td></tr></table></figure></p>
+<p>OrleansConfiguration2.xml和OrleansConfiguration3.xml除了Networking 、ProxyingGateway 配置有所区别，其他完全一样。</p>
+<p>OrleansConfiguration2.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;Networking Address=&quot;localhost&quot; Port=&quot;11112&quot; /&gt;</div><div class="line">&lt;ProxyingGateway Address=&quot;localhost&quot; Port=&quot;30001&quot; /&gt;</div></pre></td></tr></table></figure></p>
+<p>OrleansConfiguration3.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;Networking Address=&quot;localhost&quot; Port=&quot;11113&quot; /&gt;</div><div class="line">&lt;ProxyingGateway Address=&quot;localhost&quot; Port=&quot;30002&quot; /&gt;</div></pre></td></tr></table></figure></p>
+<p>这次配置文件中引入了一个SystemStore节点：<br><strong>SystemStoreType：</strong>存储的类型；如：AzureTable、SqlServer、ZooKeeper等；<br><strong>DeploymentId：</strong>部署的唯一Id标识，具有相同的DeploymentId的Silo会加入一个集群中；<br><strong>DataConnectionString：</strong>连接字符串；</p>
+<p>3台Silo启动成功后，在OrleansStorage库的OrleansMembershipTable表中会记录下成员关系：</p>
+<p><img src="/img/actor-orleans-cluster/systemStore.png" alt="systemStore"></p>
+<h4 id="Client配置文件"><a href="#Client配置文件" class="headerlink" title="Client配置文件"></a>Client配置文件</h4><p>ClientConfiguration.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</div><div class="line">&lt;ClientConfiguration xmlns=&quot;urn:orleans&quot;&gt;</div><div class="line">   &lt;SystemStore SystemStoreType =&quot;SqlServer&quot;</div><div class="line">                DeploymentId=&quot;OrleansTest&quot;</div><div class="line">                DataConnectionString=&quot;Data Source=.;Database=OrleansStorage;User ID=sa;Password=123456;&quot; </div><div class="line">				AdoInvariant=&quot;System.Data.SqlClient&quot; /&gt;</div><div class="line">&lt;/ClientConfiguration&gt;</div></pre></td></tr></table></figure></p>
+<p>Client通过DeploymentId标识连接Silo集群。具体最终调用那个Silo完成方法的调用，由其内部调配。当某一台Silo挂了，Grain会重新在另一个Silo上激活，达到高可用状态。</p>
+<h4 id="Client的测试代码："><a href="#Client的测试代码：" class="headerlink" title="Client的测试代码："></a>Client的测试代码：</h4><p>我们用一个死循环，创建很多Grain，来观察Silo控制台的输出效果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var random = new Random();</div><div class="line">while (true)</div><div class="line">&#123;</div><div class="line">	Thread.Sleep(1000);</div><div class="line">	var grainId = random.Next().ToString();</div><div class="line">	var grain = GrainClient.GrainFactory.GetGrain&lt;IPersonGrain&gt;(&quot;Test-&quot; + grainId);</div><div class="line">	grain.SayHelloAsync();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="测试结果："><a href="#测试结果：" class="headerlink" title="测试结果："></a>测试结果：</h4><p>从控制台输出结果来开，每台Silo上Grain的分配还是比较均匀的</p>
+<p><img src="/img/actor-orleans-cluster/testResult.png" alt="Test Result"></p>
+<p>当杀掉一个Silo后，服务依然是正常运行，具体Grain是否重新被分配有兴趣可以测试一下：<br><img src="/img/actor-orleans-cluster/testResult2.png" alt="Test Result2"></p>
+<h3 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h3><ul>
+<li><a href="http://www.infoq.com/cn/news/2014/11/intro-actor-model" target="_blank" rel="external">Actor模型</a></li>
+<li><a href="http://dotnet.github.io/orleans/" target="_blank" rel="external">Orleans</a></li>
+<li><a href="https://github.com/beckjin/OrleansSamples/tree/master/OrleansCluster" target="_blank" rel="external">案例Demo</a></li>
 </ul>
 
       
@@ -458,11 +425,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/跨项目/" rel="tag"># 跨项目</a>
+            <a href="/tags/Actor/" rel="tag"># Actor</a>
           
-            <a href="/tags/代码共享/" rel="tag"># 代码共享</a>
+            <a href="/tags/Orleans/" rel="tag"># Orleans</a>
           
-            <a href="/tags/C/" rel="tag"># C#</a>
+            <a href="/tags/并发/" rel="tag"># 并发</a>
+          
+            <a href="/tags/分布式/" rel="tag"># 分布式</a>
           
         </div>
       
@@ -475,15 +444,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/16/cross-project-data-share/" rel="next" title="跨项目数据共享(跨语言)">
-                <i class="fa fa-chevron-left"></i> 跨项目数据共享(跨语言)
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/23/actor-orleans-grain-state/" rel="prev" title="Orleans解决并发之痛（二）：Grain状态">
+                Orleans解决并发之痛（二）：Grain状态 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -520,7 +489,7 @@
 
     <script type="text/javascript" id="wumiiComments">
         var wumiiPermaLink = location.href;
-        var wumiiTitle = "跨项目代码共享(C#)";
+        var wumiiTitle = "Orleans解决并发之痛（三）：集群";
         var wumiiSitePrefix = "http://beckjin.com/";
         var wumiiCommentParams = "&pf=JAVASCRIPT";
     </script>
@@ -640,7 +609,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#我们解决问题的方式是搭建自己的-Nuget-Server"><span class="nav-number">1.</span> <span class="nav-text">我们解决问题的方式是搭建自己的 Nuget Server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关资料"><span class="nav-number">2.</span> <span class="nav-text">相关资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Silo配置文件"><span class="nav-number">1.</span> <span class="nav-text">Silo配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Client配置文件"><span class="nav-number">2.</span> <span class="nav-text">Client配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Client的测试代码："><span class="nav-number">3.</span> <span class="nav-text">Client的测试代码：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试结果："><span class="nav-number">4.</span> <span class="nav-text">测试结果：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接："><span class="nav-number"></span> <span class="nav-text">参考链接：</span></a></div>
             
 
           </div>
