@@ -99,8 +99,8 @@
 <meta property="og:description" content="程序在运行过程中有时会莫名其妙出现代码的某些约束或者执行结果和理想状况不一样，正常逻辑怎么会出现这样的情况？到底发生了什么？好像见了鬼！瞬间好无助。  大多数出现正常逻辑很难解释的时候，我们可能会想到并发问题，因为好像只有并发才会能说服自己。为了验证和解决这个问题，我们可能会尝试一些方案，在并发的情况下我相信很多人都使用过锁，锁确实也能帮忙我们解决问题，不然它干嘛存在。 但随着业务逻辑的持续复杂，">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-one/help.jpg">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-one/actorSystem.png">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5378831-a8efe21e2353e18a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-07-22T11:14:27.117Z">
+<meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-one/testResult.png">
+<meta property="og:updated_time" content="2017-07-23T07:19:07.665Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Orleans解决并发之痛（一）：单线程">
 <meta name="twitter:description" content="程序在运行过程中有时会莫名其妙出现代码的某些约束或者执行结果和理想状况不一样，正常逻辑怎么会出现这样的情况？到底发生了什么？好像见了鬼！瞬间好无助。  大多数出现正常逻辑很难解释的时候，我们可能会想到并发问题，因为好像只有并发才会能说服自己。为了验证和解决这个问题，我们可能会尝试一些方案，在并发的情况下我相信很多人都使用过锁，锁确实也能帮忙我们解决问题，不然它干嘛存在。 但随着业务逻辑的持续复杂，">
@@ -457,7 +457,7 @@
 <h5 id="Grain说明："><a href="#Grain说明：" class="headerlink" title="Grain说明："></a>Grain说明：</h5><p>每个Grain都是单实例的，具有唯一标识。根据唯一标识获取Grain，这个标识可以是GUID、String、Long、混合类型。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var friend = GrainClient.GrainFactory.GetGrain&lt;IHello&gt;(0); // long类型的primaryKey 0</div></pre></td></tr></table></figure></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public Task&lt;string&gt; SayHello(string greeting)</div><div class="line">&#123;</div><div class="line">     System.Threading.Thread.Sleep(3000); </div><div class="line">     var oldText = text;</div><div class="line">     text = greeting;</div><div class="line">     Console.WriteLine(oldText);</div><div class="line">     return Task.FromResult(oldText);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>启动2个Silo(集群)，同时启动2个Client，Client分别连接Silo1和Silo2网关，但使用的是同一个Grain，primaryKey都是0。最终会发现每次输出的结果都会等待3s，这说明同一个Grain内部是单线程执行。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/5378831-a8efe21e2353e18a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Test Result"></p>
+<p><img src="/img/actor-orleans-one/testResult.png" alt="Test Result"></p>
 <h3 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h3><ul>
 <li><a href="http://www.infoq.com/cn/news/2014/11/intro-actor-model" target="_blank" rel="external">Actor模型</a></li>
 <li><a href="http://dotnet.github.io/orleans/" target="_blank" rel="external">Orleans</a></li>
@@ -510,6 +510,10 @@
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/23/actor-orleans-grain-state/" rel="next" title="Orleans解决并发之痛（二）：Grain状态">
+                <i class="fa fa-chevron-left"></i> Orleans解决并发之痛（二）：Grain状态
+              </a>
             
           </div>
 
@@ -619,7 +623,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

@@ -1,0 +1,899 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Actor,Orleans,并发,分布式," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Grains是Orleans应用程序的构建块，它们是彼此孤立的原子单位，分布的，持久的， 一个典型的Grain是有状态和行为的一个单实例，每个Grain实例的在单线程内执行，Grain之间共享数据通过消息传递，Grains是由Silo自动化管理。 Grain之间传递消息过程中也可能出现死锁的情况，如：Grain A发送消息给Grain B，并等待它的完成，此时Grain B发送一个消息给Grain">
+<meta name="keywords" content="Actor,Orleans,并发,分布式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Orleans解决并发之痛（二）：Grain状态">
+<meta property="og:url" content="http://www.beckjin.com/2017/07/23/actor-orleans-grain-state/index.html">
+<meta property="og:site_name" content="Beck's Blog">
+<meta property="og:description" content="Grains是Orleans应用程序的构建块，它们是彼此孤立的原子单位，分布的，持久的， 一个典型的Grain是有状态和行为的一个单实例，每个Grain实例的在单线程内执行，Grain之间共享数据通过消息传递，Grains是由Silo自动化管理。 Grain之间传递消息过程中也可能出现死锁的情况，如：Grain A发送消息给Grain B，并等待它的完成，此时Grain B发送一个消息给Grain">
+<meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-grain-state/testResult.png">
+<meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-grain-state/storage.png">
+<meta property="og:updated_time" content="2017-07-23T07:22:49.227Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Orleans解决并发之痛（二）：Grain状态">
+<meta name="twitter:description" content="Grains是Orleans应用程序的构建块，它们是彼此孤立的原子单位，分布的，持久的， 一个典型的Grain是有状态和行为的一个单实例，每个Grain实例的在单线程内执行，Grain之间共享数据通过消息传递，Grains是由Silo自动化管理。 Grain之间传递消息过程中也可能出现死锁的情况，如：Grain A发送消息给Grain B，并等待它的完成，此时Grain B发送一个消息给Grain">
+<meta name="twitter:image" content="http://www.beckjin.com/img/actor-orleans-grain-state/testResult.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.beckjin.com/2017/07/23/actor-orleans-grain-state/"/>
+
+
+
+
+
+  <meta name="wumiiVerification" content="9c0f45c7-25e2-468d-9df0-8b3af4c615ac" />
+  <title>Orleans解决并发之痛（二）：Grain状态 | Beck's Blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Beck's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2017/07/23/actor-orleans-grain-state/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Beck Jin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beck's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Orleans解决并发之痛（二）：Grain状态
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-23T15:33:42+08:00">
+                2017-07-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Orleans/" itemprop="url" rel="index">
+                    <span itemprop="name">Orleans</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/07/23/actor-orleans-grain-state/" class="leancloud_visitors" data-flag-title="Orleans解决并发之痛（二）：Grain状态">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Grains是Orleans应用程序的构建块，它们是彼此孤立的原子单位，分布的，持久的， 一个典型的Grain是有状态和行为的一个单实例，每个Grain实例的在单线程内执行，Grain之间共享数据通过消息传递，Grains是由Silo自动化管理。</p>
+<p>Grain之间传递消息过程中也可能出现死锁的情况，如：Grain A发送消息给Grain B，并等待它的完成，此时Grain B发送一个消息给Grain A，也等待其完成，这时候出现相互等待而造成死锁。Orleans对Grain之间产生的死锁问题解决也是非常简单的，只需要在Grain上加[Reentrant]属性，具体可查看官方<a href="https://dotnet.github.io/orleans/Tutorials/Concurrency.html" target="_blank" rel="external">Concurrency</a>。</p>
+<p>Grain状态有好几种存储方式，比如：AzureTableStorage、AzureBlobStorage、SQLStorage、MemoryStorage  等，我们还可以自定义存储。MemoryStorage在测试项目使用没问题，但实际生产环境要使用其他持久存储的方式，因为一旦一个Silo被关闭，内存存储的状态将会消失。</p>
+<p>在分布式下，State的使用可以减少很多对数据库层面的压力。当然也不是所有的Grain都推荐使用State，还是看实际业务需求。我们可以想象一个场景，一个商品的库存如果保存在State中，所有请求都共享这个State，在判断是否有剩余商品的时候是不是就不需要每次都去查询数据库了？</p>
+<h4 id="定义接口"><a href="#定义接口" class="headerlink" title="定义接口"></a>定义接口</h4> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public interface IPersonGrain : IGrainWithStringKey</div><div class="line">&#123;</div><div class="line">	Task SayHelloAsync();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="实现接口"><a href="#实现接口" class="headerlink" title="实现接口"></a>实现接口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class PersonGrain : Grain, IPersonGrain</div><div class="line">&#123;</div><div class="line">    public Task SayHelloAsync()</div><div class="line">    &#123;</div><div class="line">        string primaryKey = this.GetPrimaryKeyString();</div><div class="line"> </div><div class="line">        Console.WriteLine($&quot;&#123;primaryKey&#125; said hello!&quot;);</div><div class="line"> </div><div class="line">        return Task.CompletedTask;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="为了实现状态存储，我们需要创建一个class："><a href="#为了实现状态存储，我们需要创建一个class：" class="headerlink" title="为了实现状态存储，我们需要创建一个class："></a>为了实现状态存储，我们需要创建一个class：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public class PersonGrainState</div><div class="line">&#123;</div><div class="line">	public bool SaidHello &#123; get; set; &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="修改代码，实现的PersonGrain不应该再继承Grain，而是Grain"><a href="#修改代码，实现的PersonGrain不应该再继承Grain，而是Grain" class="headerlink" title="修改代码，实现的PersonGrain不应该再继承Grain，而是Grain"></a>修改代码，实现的PersonGrain不应该再继承Grain，而是Grain<t></t></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">[StorageProvider(ProviderName = &quot;OrleansStorage&quot;)]</div><div class="line">public class PersonGrain : Grain&lt;PersonGrainState&gt;, IPersonGrain</div><div class="line">&#123;</div><div class="line">	public async Task SayHelloAsync()</div><div class="line">	&#123;</div><div class="line">		string primaryKey = this.GetPrimaryKeyString();</div><div class="line"></div><div class="line">		bool saidHelloBefore = this.State.SaidHello;</div><div class="line">		string saidHelloBeforeStr = saidHelloBefore ? &quot; already&quot; : null;</div><div class="line"></div><div class="line">		Console.WriteLine($&quot;&#123;primaryKey&#125;&#123;saidHelloBeforeStr&#125; said hello!&quot;);</div><div class="line"></div><div class="line">		this.State.SaidHello = true;</div><div class="line">		await this.WriteStateAsync();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>第一次调用这个方法的时候this.State.SaidHello为false，输出’xxx said hello!’。然后我们通过WriteStateAsync修改SaidHello为true，当第二次被调用的时候，从State里取出的SaidHello已经变成了true，则输出’xxx already said hello!’</p>
+<p>Orleans 提供了非常简单的API来处理持久化装状态，看方法名就知道什么啥意思了，WriteStateAsync()、ReadStateAsync() 、 ClearStateAsync()。</p>
+<p>同时在PersonGrain加了一个StorageProvider属性，参数ProviderName赋值为OrleansStorage，这里需要对Silo的配置文件（<strong>OrleansConfiguration.xml</strong>）做调整，添加StorageProviders配置，Type表示存储方式，Name表示名称，程序内指定的ProviderName需要和配置中这个名称保持一致。</p>
+<p><strong>注意：</strong><br>当Name为Default时，如果某个Grain使用Default来存储，可以不需要加StorageProvider属性。StorageProviders下可以有多个Provider，每个Provider的Type可以不一样，每个Grain指定的存储方式也可以不一样，ProviderName指定是谁就用谁存储。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</div><div class="line">&lt;OrleansConfiguration xmlns=&quot;urn:orleans&quot;&gt;</div><div class="line">    &lt;Globals&gt;</div><div class="line">        &lt;SeedNode Address=&quot;localhost&quot; Port=&quot;11111&quot; /&gt;</div><div class="line">        &lt;StorageProviders&gt;</div><div class="line">            &lt;Provider Type=&quot;Orleans.Storage.MemoryStorage&quot;</div><div class="line">                      Name=&quot;OrleansStorage&quot; /&gt;</div><div class="line">        &lt;/StorageProviders&gt;</div><div class="line">    &lt;/Globals&gt;</div><div class="line">    &lt;Defaults&gt;</div><div class="line">        &lt;Networking Address=&quot;localhost&quot; Port=&quot;11111&quot; /&gt;</div><div class="line">        &lt;ProxyingGateway Address=&quot;localhost&quot; Port=&quot;30000&quot; /&gt;</div><div class="line">    &lt;/Defaults&gt;</div><div class="line">&lt;/OrleansConfiguration&gt;</div></pre></td></tr></table></figure></p>
+<h4 id="为了验证Grain之间是独立的，在Client加入以下代码："><a href="#为了验证Grain之间是独立的，在Client加入以下代码：" class="headerlink" title="为了验证Grain之间是独立的，在Client加入以下代码："></a>为了验证Grain之间是独立的，在Client加入以下代码：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"> var joe = GrainClient.GrainFactory.GetGrain&lt;IPersonGrain&gt;(&quot;Joe&quot;);</div><div class="line">joe.SayHelloAsync();</div><div class="line">joe.SayHelloAsync();</div><div class="line"></div><div class="line">var sam = GrainClient.GrainFactory.GetGrain&lt;IPersonGrain&gt;(&quot;Sam&quot;);</div><div class="line">sam.SayHelloAsync();</div><div class="line">sam.SayHelloAsync();</div></pre></td></tr></table></figure>
+<h4 id="测试结果："><a href="#测试结果：" class="headerlink" title="测试结果："></a>测试结果：</h4><p><img src="/img/actor-orleans-grain-state/testResult.png" alt="Test Result"></p>
+<h4 id="SQL-Server-持久存储State"><a href="#SQL-Server-持久存储State" class="headerlink" title="SQL Server 持久存储State"></a>SQL Server 持久存储State</h4><p>上面提到State以内存存储的方式并不适合生产环境，那下面我们使用SQL Server来实现。</p>
+<h6 id="在Silo程序集中安装依赖包："><a href="#在Silo程序集中安装依赖包：" class="headerlink" title="在Silo程序集中安装依赖包："></a>在Silo程序集中安装依赖包：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Install-Package Microsoft.Orleans.OrleansSqlUtils</div><div class="line">Install-Package System.Data.SqlClient</div></pre></td></tr></table></figure>
+<h6 id="创建数据库和表："><a href="#创建数据库和表：" class="headerlink" title="创建数据库和表："></a>创建数据库和表：</h6><ol>
+<li>在SQL Server中创建一个数据库，命名如：OrleansStorage（随意）；</li>
+<li>在解决方案下找到目录：packages\Microsoft.Orleans.OrleansSqlUtils.1.5.0\lib\net461\SQLServer，目录下有一个.sql文件，在OrleansStorage数据库下执行这个sql脚本即可；</li>
+</ol>
+<h6 id="修改OrleansConfiguration-xml的StorageProviders节点为："><a href="#修改OrleansConfiguration-xml的StorageProviders节点为：" class="headerlink" title="修改OrleansConfiguration.xml的StorageProviders节点为："></a>修改OrleansConfiguration.xml的StorageProviders节点为：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;StorageProviders&gt;</div><div class="line">	&lt;Provider Type=&quot;Orleans.Storage.AdoNetStorageProvider&quot;</div><div class="line">			  Name=&quot;OrleansStorage&quot;</div><div class="line">			  AdoInvariant=&quot;System.Data.SqlClient&quot;</div><div class="line">			  DataConnectionString=&quot;Server=.;Database=OrleansStorage;User ID=sa;Password=123456;&quot;/&gt;</div><div class="line">&lt;/StorageProviders&gt;</div></pre></td></tr></table></figure>
+<h6 id="重新启动Silo和Client："><a href="#重新启动Silo和Client：" class="headerlink" title="重新启动Silo和Client："></a>重新启动Silo和Client：</h6><p>执行完成后查看数据库中表Storage的内容，数据的值是二进制是方式存储。<br><img src="/img/actor-orleans-grain-state/storage.png" alt="storage"></p>
+<p>之后不管重启多少次，输出的结果都是 “xxx already saild hello!” 。</p>
+<h3 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h3><ul>
+<li><a href="http://www.infoq.com/cn/news/2014/11/intro-actor-model" target="_blank" rel="external">Actor模型</a></li>
+<li><a href="http://dotnet.github.io/orleans/" target="_blank" rel="external">Orleans</a></li>
+<li><a href="https://github.com/beckjin/OrleansSamples/tree/master/OrleansState" target="_blank" rel="external">案例Demo</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Actor/" rel="tag"># Actor</a>
+          
+            <a href="/tags/Orleans/" rel="tag"># Orleans</a>
+          
+            <a href="/tags/并发/" rel="tag"># 并发</a>
+          
+            <a href="/tags/分布式/" rel="tag"># 分布式</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/22/actor-orleans-one/" rel="prev" title="Orleans解决并发之痛（一）：单线程">
+                Orleans解决并发之痛（一）：单线程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_mingdao"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+
+    <script type="text/javascript" id="wumiiComments">
+        var wumiiPermaLink = location.href;
+        var wumiiTitle = "Orleans解决并发之痛（二）：Grain状态";
+        var wumiiSitePrefix = "http://beckjin.com/";
+        var wumiiCommentParams = "&pf=JAVASCRIPT";
+    </script>
+    <script type="text/javascript" src="http://widget.wumii.cn/ext/cw/widget"></script>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="Beck Jin" />
+          <p class="site-author-name" itemprop="name">Beck Jin</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义接口"><span class="nav-number">1.</span> <span class="nav-text">定义接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现接口"><span class="nav-number">2.</span> <span class="nav-text">实现接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为了实现状态存储，我们需要创建一个class："><span class="nav-number">3.</span> <span class="nav-text">为了实现状态存储，我们需要创建一个class：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改代码，实现的PersonGrain不应该再继承Grain，而是Grain"><span class="nav-number">4.</span> <span class="nav-text">修改代码，实现的PersonGrain不应该再继承Grain，而是Grain</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为了验证Grain之间是独立的，在Client加入以下代码："><span class="nav-number">5.</span> <span class="nav-text">为了验证Grain之间是独立的，在Client加入以下代码：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试结果："><span class="nav-number">6.</span> <span class="nav-text">测试结果：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SQL-Server-持久存储State"><span class="nav-number">7.</span> <span class="nav-text">SQL Server 持久存储State</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#在Silo程序集中安装依赖包："><span class="nav-number">7.0.1.</span> <span class="nav-text">在Silo程序集中安装依赖包：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#创建数据库和表："><span class="nav-number">7.0.2.</span> <span class="nav-text">创建数据库和表：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#修改OrleansConfiguration-xml的StorageProviders节点为："><span class="nav-number">7.0.3.</span> <span class="nav-text">修改OrleansConfiguration.xml的StorageProviders节点为：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#重新启动Silo和Client："><span class="nav-number">7.0.4.</span> <span class="nav-text">重新启动Silo和Client：</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接："><span class="nav-number"></span> <span class="nav-text">参考链接：</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Beck Jin</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("FCgGthOl6XN7xRjfK31raebD-gzGzoHsz", "20z736XSuGX562R2ky8uu4EU");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
