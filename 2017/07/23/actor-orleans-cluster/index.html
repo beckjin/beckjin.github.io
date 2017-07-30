@@ -101,7 +101,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-cluster/systemStore.png">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-cluster/testResult.png">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-cluster/testResult2.png">
-<meta property="og:updated_time" content="2017-07-23T13:14:11.378Z">
+<meta property="og:updated_time" content="2017-07-30T15:36:54.324Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Orleans解决并发之痛（三）：集群">
 <meta name="twitter:description" content="Orleans本身的设计是一个分布式的框架，多个Silo构成集群，Grains分布在多个Silo中。一旦一个Silo挂了，原来归属这个Silo的Grains会自动在其他Silo中激活。生产环境下还是需要以集群方式来部署。  在Orleans解决并发之痛（二）：Grain状态文章中提到内存存储State是不靠谱的，同样，以内存方式存储集群中Silo的成员关系也是不靠谱的，所以本文使用SQL Serv">
@@ -394,7 +394,7 @@
 <h3 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h3><ul>
 <li><a href="http://www.infoq.com/cn/news/2014/11/intro-actor-model" target="_blank" rel="external">Actor模型</a></li>
 <li><a href="http://dotnet.github.io/orleans/" target="_blank" rel="external">Orleans</a></li>
-<li><a href="https://github.com/beckjin/OrleansSamples/tree/master/OrleansCluster" target="_blank" rel="external">案例Demo</a></li>
+<li><a href="https://github.com/beckjin/OrleansSamples/tree/master/OrleansCluster" target="_blank" rel="external">案例Demo-OrleansCluster</a></li>
 </ul>
 
       
@@ -443,6 +443,10 @@
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/30/actor-orleans-streams/" rel="next" title="Orleans解决并发之痛（四）：Streams">
+                <i class="fa fa-chevron-left"></i> Orleans解决并发之痛（四）：Streams
+              </a>
             
           </div>
 
@@ -552,7 +556,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
