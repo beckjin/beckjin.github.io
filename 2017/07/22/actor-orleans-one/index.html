@@ -101,7 +101,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-one/actorSystem.png">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-one/configuration.png">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-one/testResult.png">
-<meta property="og:updated_time" content="2017-08-06T06:42:16.387Z">
+<meta property="og:updated_time" content="2017-08-19T16:20:16.185Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Orleans解决并发之痛（一）：单线程">
 <meta name="twitter:description" content="程序在运行过程中有时会莫名其妙出现代码的某些约束或者执行结果和理想状况不一样，正常逻辑怎么会出现这样的情况？到底发生了什么？好像见了鬼！瞬间好无助。  大多数出现正常逻辑很难解释的时候，我们可能会想到并发问题，因为好像只有并发才会能说服自己。为了验证和解决这个问题，我们可能会尝试一些方案，在并发的情况下我相信很多人都使用过锁，锁确实也能帮忙我们解决问题，不然它干嘛存在。 但随着业务逻辑的持续复杂，">
@@ -451,7 +451,7 @@
 </tbody>
 </table>
 <p>在Silo项目中添加配置文件 OrleansConfiguration.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</div><div class="line">&lt;OrleansConfiguration xmlns=&quot;urn:orleans&quot;&gt;</div><div class="line">    &lt;Globals&gt;</div><div class="line">        &lt;SeedNode Address=&quot;localhost&quot; Port=&quot;11111&quot; /&gt;</div><div class="line">    &lt;/Globals&gt;</div><div class="line">    &lt;Defaults&gt;</div><div class="line">        &lt;Networking Address=&quot;localhost&quot; Port=&quot;11111&quot; /&gt;</div><div class="line">        &lt;ProxyingGateway Address=&quot;localhost&quot; Port=&quot;30000&quot; /&gt;</div><div class="line">    &lt;/Defaults&gt;</div><div class="line">&lt;/OrleansConfiguration&gt;</div></pre></td></tr></table></figure></p>
-<p><strong>SeedNode</strong>：集群中主Silo地址，生产环境并不可以这么使用，已这种方式配置主Silo的情况下，其他Silo加入集群需要等主Silo先启动。之后会介绍SystemStore来维护集群成员关系；<br><strong>Networking </strong>：内部Silo与Silo之间通信地址；<br><strong>ProxyingGateway</strong>：  客户端网关地址；</p>
+<p><strong>SeedNode</strong>：集群中主Silo地址，生产环境并不可以这么使用，已这种方式配置主Silo的情况下，其他Silo加入集群需要等主Silo先启动。之后会介绍SystemStore来维护集群成员关系；<br><strong>Networking</strong>：内部Silo与Silo之间通信地址；<br><strong>ProxyingGateway</strong>：客户端调用的网关地址；</p>
 <p>在Client项目中添加配置文件 ClientConfiguration.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</div><div class="line">&lt;ClientConfiguration xmlns=&quot;urn:orleans&quot;&gt;</div><div class="line">    &lt;Gateway Address=&quot;localhost&quot; Port=&quot;30000&quot;/&gt;</div><div class="line">&lt;/ClientConfiguration&gt;</div></pre></td></tr></table></figure></p>
 <p><strong>Gateway</strong>：配置Silo对外的网关地址；</p>
 <p>集群下可以配置多个Gateway节点，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;Gateway Address=&quot;gateway1&quot; Port=&quot;30000&quot;/&gt;</div><div class="line">&lt;Gateway Address=&quot;gateway2&quot; Port=&quot;30000&quot;/&gt;</div></pre></td></tr></table></figure></p>
