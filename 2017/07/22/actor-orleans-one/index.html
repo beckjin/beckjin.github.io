@@ -101,7 +101,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-one/actorSystem.png">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-one/configuration.png">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-one/testResult.png">
-<meta property="og:updated_time" content="2017-08-19T16:20:16.185Z">
+<meta property="og:updated_time" content="2017-08-19T16:31:42.885Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Orleans解决并发之痛（一）：单线程">
 <meta name="twitter:description" content="程序在运行过程中有时会莫名其妙出现代码的某些约束或者执行结果和理想状况不一样，正常逻辑怎么会出现这样的情况？到底发生了什么？好像见了鬼！瞬间好无助。  大多数出现正常逻辑很难解释的时候，我们可能会想到并发问题，因为好像只有并发才会能说服自己。为了验证和解决这个问题，我们可能会尝试一些方案，在并发的情况下我相信很多人都使用过锁，锁确实也能帮忙我们解决问题，不然它干嘛存在。 但随着业务逻辑的持续复杂，">
@@ -458,6 +458,7 @@
 <p><strong>注意：</strong>配置文件需要设置属性 “复制到输出目录”</p>
 <p><img src="/img/actor-orleans-one/configuration.png" alt="configuration"></p>
 <h5 id="Grain说明："><a href="#Grain说明：" class="headerlink" title="Grain说明："></a>Grain说明：</h5><p>每个Grain都是单实例的，具有唯一标识。根据唯一标识获取Grain，这个标识可以是GUID、String、Long、混合类型。</p>
+<p>在Grain内如果发送消息给其他Grain，需要使用 this.GrainFactory.GetGrain，不能通过 GrainClient.GrainFactory.GetGrain。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var test = GrainClient.GrainFactory.GetGrain&lt;ITest&gt;(0); // long类型的primaryKey 0</div></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class TestGrain : Orleans.Grain, ITest</div><div class="line">&#123;</div><div class="line">	private int num = 0;</div><div class="line"></div><div class="line">	public Task AddCount()</div><div class="line">	&#123;</div><div class="line">		num++;</div><div class="line">		Console.WriteLine(num);</div><div class="line">		return Task.CompletedTask;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h5 id="Client说明："><a href="#Client说明：" class="headerlink" title="Client说明："></a>Client说明：</h5><p>同时启动3个Task，每个Task内并行200次调用AddCount方法。如果没有做特殊的处理，num的结果肯定是乱的，并不会出现一直累加的效果。</p>
