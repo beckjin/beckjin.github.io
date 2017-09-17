@@ -99,7 +99,7 @@
 <meta property="og:description" content="Vue.js 是当下很火的一个 JavaScript MVVM 库，它以数据驱动和组件化的思想构建。不管你是 Angular 的忠实粉，还是 React 的迷恋者，有机会多了解一个框架也没什么坏处，更何况 Vue 上手难度还是比较低的 。 本文将介绍 Vue 全家桶（Vue+Vue-router+Vuex）在项目中的使用。经过一个项目的开发，个人感觉相比于 React，Vue 给我最大的感受是简单">
 <meta property="og:image" content="http://www.beckjin.com/img/vue-family/store.png">
 <meta property="og:image" content="http://www.beckjin.com/img/vue-family/ui.png">
-<meta property="og:updated_time" content="2017-09-17T12:19:05.321Z">
+<meta property="og:updated_time" content="2017-09-17T12:48:14.939Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="尝一尝Vue全家桶">
 <meta name="twitter:description" content="Vue.js 是当下很火的一个 JavaScript MVVM 库，它以数据驱动和组件化的思想构建。不管你是 Angular 的忠实粉，还是 React 的迷恋者，有机会多了解一个框架也没什么坏处，更何况 Vue 上手难度还是比较低的 。 本文将介绍 Vue 全家桶（Vue+Vue-router+Vuex）在项目中的使用。经过一个项目的开发，个人感觉相比于 React，Vue 给我最大的感受是简单">
@@ -373,7 +373,7 @@
       
         <p>Vue.js 是当下很火的一个 JavaScript MVVM 库，它以数据驱动和组件化的思想构建。不管你是 Angular 的忠实粉，还是 React 的迷恋者，有机会多了解一个框架也没什么坏处，更何况 Vue 上手难度还是比较低的 。</p>
 <p>本文将介绍 Vue 全家桶（Vue+Vue-router+Vuex）在项目中的使用。经过一个项目的开发，个人感觉相比于 React，Vue 给我最大的感受是简单、易理解，不过这可能和我自身对 React 的掌握程度及本次开发的项目大小有关。</p>
-<h4 id="双向数据绑定"><a href="#双向数据绑定" class="headerlink" title="双向数据绑定"></a>双向数据绑定</h4><p>Vue 内的双向数据绑定使用还是比较简单的 v-bind 就可以解决问题。</p>
+<h4 id="双向数据绑定"><a href="#双向数据绑定" class="headerlink" title="双向数据绑定"></a>双向数据绑定</h4><p>Vue 内的双向数据绑定使用还是比较简单的 v-model 就可以解决问题。</p>
 <p>但有一个问题需要注意，特别在编辑数据项的时候，双向数据绑定可能引起静态数据联动的问题，这时候需要用到对象复制来解决问题。如：在弹层中编辑数据时，导致列表数据同步跟随着变化。</p>
 <h4 id="Vue-router"><a href="#Vue-router" class="headerlink" title="Vue-router"></a>Vue-router</h4><p>这里直接使用懒加载路由，如果要测试非懒加载可以移出来预先 require；</p>
 <h6 id="main-js"><a href="#main-js" class="headerlink" title="main.js"></a>main.js</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">import Vue from &apos;vue&apos;;</div><div class="line">import VueRouter from &apos;vue-router&apos;;</div><div class="line">Vue.use(VueRouter);</div><div class="line">const router = new VueRouter(&#123;</div><div class="line">    mode: &apos;history&apos;,</div><div class="line">    routes: [</div><div class="line">        &#123;path: &apos;/&apos;, component: resolve =&gt; require([&apos;./components&apos;], resolve)&#125;,</div><div class="line">        &#123;path: &apos;/refresh&apos;, component: resolve =&gt; require([&apos;./components&apos;], resolve)&#125;,</div><div class="line">        &#123;path: &apos;/forbid&apos;, component: resolve =&gt; require([&apos;./components/forbid&apos;], resolve)&#125;</div><div class="line">    ]</div><div class="line">&#125;);</div><div class="line"></div><div class="line">//store</div><div class="line">import store from &apos;./store/index&apos;;</div><div class="line">new Vue(&#123;</div><div class="line">    store,</div><div class="line">    router</div><div class="line">&#125;).$mount(&apos;#container&apos;);</div></pre></td></tr></table></figure>
