@@ -1,15 +1,19 @@
-<!doctype html>
+<!DOCTYPE html>
 
 
 
   
 
 
-<html class="theme-next pisces use-motion" lang="zh-Hans">
+<html class="theme-next muse use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
 
 
 
@@ -33,36 +37,11 @@
 
 
 
+
   
   
   <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
 
 
 
@@ -71,7 +50,22 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.3" color="#222">
+
+
+
 
 
   <meta name="keywords" content=".Net" />
@@ -83,19 +77,15 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
-
-
-
-
 
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Beck's Blog">
+<meta property="og:title" content="Beck&#39;s Blog">
 <meta property="og:url" content="http://www.beckjin.com/index.html">
-<meta property="og:site_name" content="Beck's Blog">
+<meta property="og:site_name" content="Beck&#39;s Blog">
+<meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Beck's Blog">
+<meta name="twitter:title" content="Beck&#39;s Blog">
 
 
 
@@ -103,10 +93,12 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Pisces',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
-    motion: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: '0',
       author: '博主'
@@ -129,12 +121,7 @@
 
 
 
-  <meta name="wumiiVerification" content="9c0f45c7-25e2-468d-9df0-8b3af4c615ac" />
   <title>Beck's Blog</title>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
   
 
 
@@ -144,11 +131,9 @@
 
 
 
+</head>
 
-
-
-
-
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -156,8 +141,7 @@
   
 
   <div class="container sidebar-position-left 
-   page-home 
- ">
+  page-home">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -203,8 +187,18 @@
         </li>
       
         
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
+          <a href="/categories/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -214,21 +208,11 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
           </a>
         </li>
       
@@ -260,13 +244,17 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2017/11/03/actor-orleans-dashboard/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -279,16 +267,8 @@
         
         
           <h2 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/11/03/actor-orleans-dashboard/" itemprop="url">
-                  Orleans解决并发之痛（六）：Dashboard
-                </a>
-              
-            
-          </h2>
+                <a class="post-title-link" href="/2017/11/03/actor-orleans-dashboard/" itemprop="url">Orleans解决并发之痛（六）：Dashboard</a></h2>
         
 
         <div class="post-meta">
@@ -340,17 +320,6 @@
 
           
           
-             <span id="/2017/11/03/actor-orleans-dashboard/" class="leancloud_visitors" data-flag-title="Orleans解决并发之痛（六）：Dashboard">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
 
           
 
@@ -362,6 +331,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -370,30 +342,60 @@
       
         
           
-           Orleans Dashboard 是来自 OrleansContrib 提供的一个Orleans 报表工具。通过 Orleans Dashboard 我们能很方便的监控 Silos 状态、Grains 分布情况、异常率、吞吐量、平均响应时间等，这样我们就能了解集群的运行平稳性，也能排除错误和性能
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/03/actor-orleans-dashboard/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+            <p><a href="https://github.com/OrleansContrib/OrleansDashboard" target="_blank" rel="noopener"> Orleans Dashboard</a> 是来自 <a href="https://github.com/OrleansContrib/" target="_blank" rel="noopener">OrleansContrib</a> 提供的一个Orleans 报表工具。通过 Orleans Dashboard 我们能很方便的监控 Silos 状态、Grains 分布情况、异常率、吞吐量、平均响应时间等，这样我们就能了解集群的运行平稳性，也能排除错误和性能瓶颈。</p>
+<p>初始项目的代码根据之前的案例 <a href="https://github.com/beckjin/OrleansSamples/tree/master/OrleansCluster" target="_blank" rel="noopener">Demo-OrleansCluster</a> 稍微做了调整，Orleans Dashboard 的使用方法还是比较简单的。</p>
+<ol>
+<li><p>Nuget安装OrleansDashboard：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Install-Package OrleansDashboard</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改配置文件 OrleansConfiguration.xml，Globals节点下添加BootstrapProviders节点：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;Globals&gt;</span><br><span class="line">     ......</span><br><span class="line">     &lt;BootstrapProviders&gt;</span><br><span class="line">         &lt;Provider Type=&quot;OrleansDashboard.Dashboard&quot; Name=&quot;Dashboard&quot; /&gt;</span><br><span class="line">     &lt;/BootstrapProviders&gt;</span><br><span class="line"> &lt;/Globals&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>完成以上工作就可以启动Silo了。</p>
+<p>Silo启动成功后，Orleans Dashboard 默认访问地址是 localhost:8080。如果你想修改端口或者添加安全验证，可以根据配置参数来调整 <a href="https://github.com/OrleansContrib/OrleansDashboard#configuring-the-dashboard" target="_blank" rel="noopener">Configuring the Dashboard </a> 。</p>
+<p><strong>注意</strong>：启动过程中可能会出现下面这个错误：</p>
+<blockquote>
+<p>System.AggregateException: 发生一个或多个错误。 —&gt; System.DllNotFoundException: 无法加载 DLL“libuv”: 找不到指定的模块。 (异常来自 HRESULT:0x8007007E)。</p>
+</blockquote>
+<p>在 OrleansDashboard 的 issues下已有人提到，可以关注一下 ：<a href="https://github.com/OrleansContrib/OrleansDashboard/issues/62" target="_blank" rel="noopener">https://github.com/OrleansContrib/OrleansDashboard/issues/62</a></p>
+<p>我暂时采用的方案是： 将 \packages\Libuv.1.10.0\runtimes\win-x86\native\libuv.dll) 复制到 bin\Debug\ 下，重新启动就可以跑起来了。</p>
+<h4 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h4><p>在 Orleans Dashboard 概述中可以了解到当前集群激活的Grains数量、Silos数量、错误率、吞吐量、平均响应时间及整体的性能情况。</p>
+<p><img src="/img/actor-orleans-dashboard/overview.png" alt="Overview"></p>
+<h4 id="Grains"><a href="#Grains" class="headerlink" title="Grains"></a>Grains</h4><p>Grains模块统计出当前所有激活的Grains以及Grains的数量变量趋势，我们可以通过点击每个Grain详情查看更详细信息，详情下包括Grain下的所有方法的调用情况及当前Grain归属的Silo：</p>
+<p><img src="/img/actor-orleans-dashboard/grain.png" alt="Grain"></p>
+<h4 id="Silos"><a href="#Silos" class="headerlink" title="Silos"></a>Silos</h4><p>Silos模块概述和Grains类似，报表会呈现当前集群Silo的健康状态，通过Silo的详情我们可以了解到：</p>
+<ol>
+<li>当前服务器的CPU、内存、Grain是使用情况；</li>
+<li>Silo性能分析；</li>
+<li>消息的发送和接收状况和Silo的一些属性；</li>
+<li>分布着哪些Grains；</li>
+</ol>
+<p><img src="/img/actor-orleans-dashboard/silo.png" alt="Silo.png"></p>
+<p>本文是使用一个Silo实例来实现，如果是集群，可以参考 <a href="https://github.com/beckjin/OrleansSamples/tree/master/OrleansCluster" target="_blank" rel="noopener">Demo-OrleansCluster</a> 。Silo的配置文件内加上OrleansDashboard的配置即可。如果是同一台机器，注意端口号分别指定一下。</p>
+<p>在Client端添加测试代码，直接粗暴点来个死循环：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var random = new Random();</span><br><span class="line">while (true)</span><br><span class="line">&#123;</span><br><span class="line">	var grainId = random.Next();</span><br><span class="line">	var grain = GrainClient.GrainFactory.GetGrain&lt;IPersonGrain&gt;(&quot;beck&quot; + grainId);</span><br><span class="line">	grain.SayHelloAsync().Wait();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>测试结果：</p>
+<p><img src="/img/actor-orleans-dashboard/result-grain.png" alt="PersonGrain"><br><img src="/img/actor-orleans-dashboard/result-silo.png" alt="Silo"></p>
+<h3 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h3><ul>
+<li><a href="http://dotnet.github.io/orleans/" target="_blank" rel="noopener">Orleans</a></li>
+<li><a href="https://github.com/OrleansContrib/OrleansDashboard" target="_blank" rel="noopener"> Orleans Dashboard</a></li>
+<li><a href="https://github.com/OrleansContrib/" target="_blank" rel="noopener">OrleansContrib</a> </li>
+<li><a href="https://github.com/beckjin/OrleansSamples/tree/master/OrleansDashboard" target="_blank" rel="noopener">案例Demo-OrleansDashboard</a></li>
+</ul>
+
+          
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -407,6 +409,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -419,13 +425,17 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2017/09/17/vue-family/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -438,16 +448,8 @@
         
         
           <h2 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/09/17/vue-family/" itemprop="url">
-                  尝一尝Vue全家桶
-                </a>
-              
-            
-          </h2>
+                <a class="post-title-link" href="/2017/09/17/vue-family/" itemprop="url">尝一尝Vue全家桶</a></h2>
         
 
         <div class="post-meta">
@@ -499,17 +501,6 @@
 
           
           
-             <span id="/2017/09/17/vue-family/" class="leancloud_visitors" data-flag-title="尝一尝Vue全家桶">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
 
           
 
@@ -521,6 +512,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -529,31 +523,41 @@
       
         
           
-          Vue.js 是当下很火的一个 JavaScript MVVM 库，它以数据驱动和组件化的思想构建。不管你是 Angular 的忠实粉，还是 React 的迷恋者，有机会多了解一个框架也没什么坏处，更何况 Vue 上手难度还是比较低的 。
-本文将介绍 Vue 全家桶（Vue+Vue-router+V
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/09/17/vue-family/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+            <p>Vue.js 是当下很火的一个 JavaScript MVVM 库，它以数据驱动和组件化的思想构建。不管你是 Angular 的忠实粉，还是 React 的迷恋者，有机会多了解一个框架也没什么坏处，更何况 Vue 上手难度还是比较低的 。</p>
+<p>本文将介绍 Vue 全家桶（Vue+Vue-router+Vuex）在项目中的使用。经过一个项目的开发，个人感觉相比于 React，Vue 给我最大的感受是简单、易理解，不过这可能和我自身对 React 的掌握程度及本次开发的项目大小有关。</p>
+<h4 id="双向数据绑定"><a href="#双向数据绑定" class="headerlink" title="双向数据绑定"></a>双向数据绑定</h4><p>Vue 内的双向数据绑定使用还是比较简单的 v-model 就可以解决问题。</p>
+<p>但有一个问题需要注意，特别在编辑数据项的时候，双向数据绑定可能引起静态数据联动的问题，这时候需要用到对象复制来解决问题。如：在弹层中编辑数据时，导致列表数据同步跟随着变化。</p>
+<h4 id="Vue-router"><a href="#Vue-router" class="headerlink" title="Vue-router"></a>Vue-router</h4><p>这里直接使用懒加载路由，如果要测试非懒加载可以移出来预先 require；</p>
+<h6 id="main-js"><a href="#main-js" class="headerlink" title="main.js"></a>main.js</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import Vue from &apos;vue&apos;;</span><br><span class="line">import VueRouter from &apos;vue-router&apos;;</span><br><span class="line">Vue.use(VueRouter);</span><br><span class="line">const router = new VueRouter(&#123;</span><br><span class="line">    mode: &apos;history&apos;,</span><br><span class="line">    routes: [</span><br><span class="line">        &#123;path: &apos;/&apos;, component: resolve =&gt; require([&apos;./components&apos;], resolve)&#125;,</span><br><span class="line">        &#123;path: &apos;/refresh&apos;, component: resolve =&gt; require([&apos;./components&apos;], resolve)&#125;,</span><br><span class="line">        &#123;path: &apos;/forbid&apos;, component: resolve =&gt; require([&apos;./components/forbid&apos;], resolve)&#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">//store</span><br><span class="line">import store from &apos;./store/index&apos;;</span><br><span class="line">new Vue(&#123;</span><br><span class="line">    store,</span><br><span class="line">    router</span><br><span class="line">&#125;).$mount(&apos;#container&apos;);</span><br></pre></td></tr></table></figure>
+<h4 id="Vuex"><a href="#Vuex" class="headerlink" title="Vuex"></a>Vuex</h4><p>Vuex 允许我们将 store 分割到 module 。每个模块拥有自己的 state、getters、actions、mutations。</p>
+<p><img src="/img/vue-family/store.png" alt="store"></p>
+<h6 id="notice-js-部分代码"><a href="#notice-js-部分代码" class="headerlink" title="notice.js 部分代码"></a>notice.js 部分代码</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">const state = &#123;</span><br><span class="line">    currentNoticeType: noticeType.update.val,</span><br><span class="line">    noticeList: []</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const getters = &#123;</span><br><span class="line">    noticeList: state =&gt; &#123;</span><br><span class="line">        return state.noticeList;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const actions = &#123;</span><br><span class="line">    getNoticeList(context, type)&#123;</span><br><span class="line">        ajax.post(&apos;/notice/getList&apos;, &#123;type: type&#125;, (data) =&gt; &#123;</span><br><span class="line">            if (data) &#123;</span><br><span class="line">                setTimeout(function () &#123;</span><br><span class="line">                    context.commit(&apos;getNoticeList&apos;, data);</span><br><span class="line">                &#125;, 100);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">    removeNotice(context, id)&#123;</span><br><span class="line">        return new Promise((resolve) =&gt; &#123;</span><br><span class="line">            ajax.post(&apos;/notice/remove&apos;, &#123;id: id&#125;, (data) =&gt; &#123;</span><br><span class="line">                resolve(data);</span><br><span class="line">                if (data) &#123;</span><br><span class="line">                    context.commit(&apos;removeNotice&apos;, id);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const mutations = &#123;</span><br><span class="line">    getNoticeList(state, data)&#123;</span><br><span class="line">        state.noticeList = data;</span><br><span class="line">    &#125;,</span><br><span class="line">    removeNotice(state, id)&#123;</span><br><span class="line">        var noticeList = state.noticeList.filter(function (noticeItem) &#123;</span><br><span class="line">            return noticeItem.id != id;</span><br><span class="line">        &#125;);</span><br><span class="line">        state.noticeList = noticeList;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">    state,</span><br><span class="line">    getters,</span><br><span class="line">    actions,</span><br><span class="line">    mutations</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="index-js"><a href="#index-js" class="headerlink" title="index.js"></a>index.js</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import Vue from &apos;vue&apos;</span><br><span class="line">import Vuex from &apos;vuex&apos;</span><br><span class="line">import notice from &apos;./modules/notice&apos;</span><br><span class="line">Vue.use(Vuex);</span><br><span class="line">export default new Vuex.Store(&#123;</span><br><span class="line">    modules: &#123;</span><br><span class="line">        notice</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>getters：用来从 store 获取 Vue 组件数据；<br>mutations：更改 store 中的状态的唯一方式；<br>actions：可以包含任意异步操作， 提交 mutation，而不是直接变更状态；</p>
+</blockquote>
+<p>注意：<br>store 的状态修改只能显式地提交 mutation 触发；<br>action 内可以完成服务端接口调用，可以通过 commit 触发 mutation 修改 store 状态，也可以通过 dispatch 触发其它 action，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">context.dispatch(&apos;getNoticeList&apos;, context.state.currentNoticeType);</span><br></pre></td></tr></table></figure>
+<p>Vue 文件内调用方式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">computed: &#123;</span><br><span class="line">	...mapGetters([</span><br><span class="line">		&apos;currentNoticeType&apos;, // 获取 state 中的 currentNoticeType</span><br><span class="line">	])</span><br><span class="line">&#125;,</span><br><span class="line">methods: &#123;</span><br><span class="line">	closePreview: function () &#123;</span><br><span class="line">		this.$store.commit(&apos;closePreviewNotice&apos;); // 如果不需要调用服务端接口，可以直接通过 commit 调用 mutation</span><br><span class="line">	&#125;,</span><br><span class="line">	deleteNotice() &#123;</span><br><span class="line">		this.$store.dispatch(&apos;removeNotice&apos;, this.noticeItem.id).then((success) =&gt; &#123;</span><br><span class="line">			</span><br><span class="line">		&#125;);</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Element-UI"><a href="#Element-UI" class="headerlink" title="Element UI"></a>Element UI</h4><p>在开发项目的时候，难免会用到组件，关于是否自己造轮子的问题大家都有不同的看法，这些都是需求看情况而定，肯定不能因为现有开源组件不支持反而一味阉割需求。Element UI给我们提供了丰富的组件，只有引入一下CDN文件或者npm安装，同时也可以按需引入，避免资源文件过大，官方文档都有说明 <a href="http://element.eleme.io/#/zh-CN/component/quickstart" target="_blank" rel="noopener">快速上手</a> 。我在 <strong>mian.js</strong>  加入以下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import &apos;element-ui/lib/theme-default/icon.css&apos;;</span><br><span class="line">import &apos;element-ui/lib/theme-default/message.css&apos;;</span><br><span class="line">import &apos;element-ui/lib/theme-default/message-box.css&apos;;</span><br><span class="line">import &apos;element-ui/lib/theme-default/date-picker.css&apos;;</span><br><span class="line">import &#123;Message, MessageBox, DatePicker&#125; from &apos;element-ui&apos;;</span><br><span class="line">Vue.use(DatePicker);</span><br><span class="line">Vue.prototype.$message = Message;</span><br><span class="line">Vue.prototype.$messageBox = MessageBox;</span><br></pre></td></tr></table></figure>
+<p>附上出自无敌设计师的效果图一张：</p>
+<p><img src="/img/vue-family/ui.png" alt="出自无敌的UI设计师"></p>
+
+          
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -567,6 +571,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -579,13 +587,17 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2017/08/19/actor-orleans-webapi/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -598,16 +610,8 @@
         
         
           <h2 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/08/19/actor-orleans-webapi/" itemprop="url">
-                  Orleans解决并发之痛（五）：Web API
-                </a>
-              
-            
-          </h2>
+                <a class="post-title-link" href="/2017/08/19/actor-orleans-webapi/" itemprop="url">Orleans解决并发之痛（五）：Web API</a></h2>
         
 
         <div class="post-meta">
@@ -659,17 +663,6 @@
 
           
           
-             <span id="/2017/08/19/actor-orleans-webapi/" class="leancloud_visitors" data-flag-title="Orleans解决并发之痛（五）：Web API">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
 
           
 
@@ -681,6 +674,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -689,31 +685,72 @@
       
         
           
-          通过前面几篇文章的介绍，可能会疑问怎么在实际开发中调用Grain，之前Demo的Client都是基于控制台应用程序，实际开发下可能是基于Web Form、Web API、MVC……，由于一时短路了，没有联想到控制台应用程序的方式怎么切到其他方式调用。
-这篇文章将会介绍基于Web API的方式调用Gr
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/08/19/actor-orleans-webapi/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+            <p>通过前面几篇文章的介绍，可能会疑问怎么在实际开发中调用Grain，之前Demo的Client都是基于控制台应用程序，实际开发下可能是基于Web Form、Web API、MVC……，由于一时短路了，没有联想到控制台应用程序的方式怎么切到其他方式调用。</p>
+<p>这篇文章将会介绍基于Web API的方式调用Grain，但相比Web API，我可能更倾向于gRPC，Web API基于Http，相比RPC性能上会弱一些，RPC方式接口调用上也会更方便，不过这次还是希望装逼的方式可以简单点。有兴趣可以看看这篇文章 <a href="http://beckjin.com/2017/04/16/cross-project-data-share/" target="_blank" rel="noopener">跨项目数据共享(跨语言)</a> 。</p>
+<p><img src="/img/actor-orleans-webapi/simple.png" alt="-"></p>
+<p>我们可以基于 <a href="https://github.com/beckjin/OrleansSamples/tree/master/OrleansState" target="_blank" rel="noopener">Demo-OrleansState</a> 来调整代码：</p>
+<blockquote>
+<ol>
+<li>将Client控制台程序删除；</li>
+<li>新建解决方案文件夹 Orleans，并将Grains、Interfaces、Silo 程序集移到文件夹内，这样看上去清晰一点；</li>
+<li>创建类库 Business，普通的业务逻辑代码；</li>
+<li>创建空的Web API项目；</li>
+</ol>
+</blockquote>
+<p><strong>注意：</strong> Silo目前依然是控制台应用程序。<br>如果项目是基于.Net Framework，之后可以将Silo使用 <a href="http://topshelf-project.com/" target="_blank" rel="noopener">Topshelf</a> 以Windows服务方式部署；如果是基于.Net Core，可以使用Docker来部署；据官方提供的Sample <a href="https://github.com/dotnet/orleans/tree/master/Samples/HelloWorld.NetCore" target="_blank" rel="noopener">HelloWorld.NetCore</a>，Orleans 2.0.0将支持.Net Core，目前是1.5.0。</p>
+<h6 id="项目结构："><a href="#项目结构：" class="headerlink" title="项目结构："></a>项目结构：</h6><p><img src="/img/actor-orleans-webapi/project.png" alt="项目代码结构"></p>
+<h6 id="依赖引用："><a href="#依赖引用：" class="headerlink" title="依赖引用："></a>依赖引用：</h6><table>
+<thead>
+<tr>
+<th>程序集名称</th>
+<th>类型</th>
+<th>Nuget依赖包<br> Microsoft.Orleans.</th>
+<th>引用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Business</td>
+<td>类库</td>
+<td>Core</td>
+<td>Interfaces</td>
+</tr>
+<tr>
+<td>WebAPI</td>
+<td>Web API</td>
+<td>Core<br>OrleansCodeGenerator</td>
+<td>Business</td>
+</tr>
+</tbody>
+</table>
+<p><img src="/img/actor-orleans-webapi/flow.png" alt="依赖引用关系图"></p>
+<h6 id="配置连接Silo："><a href="#配置连接Silo：" class="headerlink" title="配置连接Silo："></a>配置连接Silo：</h6><p>WebAPI项目在启动的时候，需要同时连接上Silo，才能调用Grain里面的方法。ClientConfiguration.xml和之前的控制台程序一样即可，在Global.asax的Application_Start修改代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">protected void Application_Start()</span><br><span class="line">&#123;</span><br><span class="line">	var config = ClientConfiguration.LoadFromFile(Server.MapPath(@&quot;~/ClientConfiguration.xml&quot;));</span><br><span class="line">	GrainClient.Initialize(config);</span><br><span class="line">	System.Web.Http.GlobalConfiguration.Configure(WebApiConfig.Register);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="Business调用Grain："><a href="#Business调用Grain：" class="headerlink" title="Business调用Grain："></a>Business调用Grain：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class Persion</span><br><span class="line">&#123;</span><br><span class="line">	public string SayHello(string name)</span><br><span class="line">	&#123;</span><br><span class="line">		var grain = GrainClient.GrainFactory.GetGrain&lt;IPersonGrain&gt;(name);</span><br><span class="line">		grain.SayHelloAsync();</span><br><span class="line">		return &quot;success&quot;;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="WebAPI调用Business层方法："><a href="#WebAPI调用Business层方法：" class="headerlink" title="WebAPI调用Business层方法："></a>WebAPI调用Business层方法：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class PersonController : ApiController</span><br><span class="line">&#123;</span><br><span class="line">	[HttpGet]</span><br><span class="line">	public string SayHello(string name)</span><br><span class="line">	&#123;</span><br><span class="line">		return new Business.Persion().SayHello(name);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>根据实际接口定义规范，修改WebApiConfig.cs，假设routeTemplate配置如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">routeTemplate: &quot;api/&#123;controller&#125;/&#123;action&#125;&quot;</span><br></pre></td></tr></table></figure></p>
+<h6 id="测试："><a href="#测试：" class="headerlink" title="测试："></a>测试：</h6><p>启动 Silo和WebAPI后，在浏览器内数据地址：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:&#123;WebAPI启动的端口号&#125;/api/person/sayHello?name=beck</span><br></pre></td></tr></table></figure>
+<p><img src="/img/actor-orleans-webapi/testResult.png" alt="服务端显示结果"></p>
+<h3 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h3><ul>
+<li><a href="http://www.infoq.com/cn/news/2014/11/intro-actor-model" target="_blank" rel="noopener">Actor模型</a></li>
+<li><a href="http://dotnet.github.io/orleans/" target="_blank" rel="noopener">Orleans</a></li>
+<li><a href="https://github.com/beckjin/OrleansSamples/tree/master/OrleansWebAPI" target="_blank" rel="noopener">案例Demo-OrleansWebAPI</a></li>
+</ul>
+
+          
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -727,6 +764,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -739,13 +780,17 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2017/07/30/actor-orleans-streams/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -758,16 +803,8 @@
         
         
           <h2 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/07/30/actor-orleans-streams/" itemprop="url">
-                  Orleans解决并发之痛（四）：Streams
-                </a>
-              
-            
-          </h2>
+                <a class="post-title-link" href="/2017/07/30/actor-orleans-streams/" itemprop="url">Orleans解决并发之痛（四）：Streams</a></h2>
         
 
         <div class="post-meta">
@@ -819,17 +856,6 @@
 
           
           
-             <span id="/2017/07/30/actor-orleans-streams/" class="leancloud_visitors" data-flag-title="Orleans解决并发之痛（四）：Streams">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
 
           
 
@@ -841,6 +867,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -849,30 +878,73 @@
       
         
           
-          Orleans 提供了 Stream扩展编程模型。此模型提供了一套API，使处理流更简单和更健壮。Stream默认提供了两种Provider，不同的流类型可能使用不同的Provider来处理，Simple Message Stream Provider 和 Azure Queue Stream Pr
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/30/actor-orleans-streams/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+            <p>Orleans 提供了 Stream扩展编程模型。此模型提供了一套API，使处理流更简单和更健壮。Stream默认提供了两种Provider，不同的流类型可能使用不同的Provider来处理，<a href="https://github.com/dotnet/orleans/blob/master/src/Orleans/Streams/SimpleMessageStream/SimpleMessageStreamProvider.cs" target="_blank" rel="noopener">Simple Message Stream Provider</a> 和 <a href="https://github.com/dotnet/orleans/blob/master/src/OrleansAzureUtils/Providers/Streams/AzureQueue/AzureQueueStreamProvider.cs" target="_blank" rel="noopener">Azure Queue Stream Provider</a>。Stream Providers兼容现有的队列技术，比如： <a href="http://azure.microsoft.com/en-us/services/event-hubs/" target="_blank" rel="noopener">Event Hubs</a>、<a href="http://azure.microsoft.com/en-us/services/service-bus/" target="_blank" rel="noopener">ServiceBus</a>、<a href="http://azure.microsoft.com/en-us/documentation/articles/storage-dotnet-how-to-use-queues/" target="_blank" rel="noopener">Azure Queues</a>、<a href="http://kafka.apache.org/" target="_blank" rel="noopener">Apache Kafka</a>，不再需要编写额外的代码来配合这些队列技术的使用。</p>
+<h3 id="关于为什么Orleans会提供Stream扩展编程模型？"><a href="#关于为什么Orleans会提供Stream扩展编程模型？" class="headerlink" title="关于为什么Orleans会提供Stream扩展编程模型？"></a>关于为什么Orleans会提供Stream扩展编程模型？</h3><p>当今已经有一系列技术可以来构建一个流处理系统。包括持久存储流数据方面，如：<a href="http://azure.microsoft.com/en-us/services/event-hubs/" target="_blank" rel="noopener">Event Hubs</a>、<a href="http://kafka.apache.org/" target="_blank" rel="noopener">Kafka</a>；数据流计算操作方面，如： <a href="http://azure.microsoft.com/en-us/services/stream-analytics/" target="_blank" rel="noopener">Azure Stream Analytics</a>、<a href="https://storm.apache.org/" target="_blank" rel="noopener">Apache Storm</a>、<a href="https://spark.apache.org/streaming/" target="_blank" rel="noopener">Apache Spark Streaming</a>， 而这些技术并不适合细粒度的自由格式的流数据计算， 或者支持的并不好，因为实际情况下可能需要对不同的数据流执行不同的操作，Orleans Streams目的就是解决这类问题，Stream编程模型和发布订阅模式挺相似。</p>
+<p>上述提到的一些技术我并没有详细学习，后面会了解并对比，如果已熟悉的可以先思考并给我普及普及。</p>
+<p>Orleans Stream大概实现的步骤如下：</p>
+<blockquote>
+<ol>
+<li>获取 StreamProvider</li>
+<li>获取 IAsyncStream<t></t></li>
+<li>订阅者订阅一个Stream</li>
+<li>发布者向某个Stream发布消息</li>
+</ol>
+</blockquote>
+<h3 id="Silo配置文件OrleansConfiguration-xml修改"><a href="#Silo配置文件OrleansConfiguration-xml修改" class="headerlink" title="Silo配置文件OrleansConfiguration.xml修改"></a>Silo配置文件OrleansConfiguration.xml修改</h3><p>在Globals节点中添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;StorageProviders&gt;</span><br><span class="line">	&lt;Provider Type=&quot;Orleans.Storage.MemoryStorage&quot; Name=&quot;PubSubStore&quot; /&gt;</span><br><span class="line">&lt;/StorageProviders&gt;</span><br><span class="line">&lt;StreamProviders&gt;</span><br><span class="line">	&lt;Provider Type=&quot;Orleans.Providers.Streams.SimpleMessageStream.SimpleMessageStreamProvider&quot; Name=&quot;SMSProvider&quot;/&gt;</span><br><span class="line">&lt;/StreamProviders&gt;</span><br></pre></td></tr></table></figure></p>
+<p>Name为PubSubStore的StorageProvider是必须的，Stream内部需要它来跟踪所有流订阅，记录各个流的发布者和订阅者的关系，本例中使用MemoryStorage，实际生产环境这是不对的。</p>
+<p>Name为SMSProvider的StreamProvider指定了消息的发布形式，Orleans当前提供的两种StreamProvider：<strong>Simple Message Stream Provider</strong> 和 <strong>Azure Queue Stream Provider</strong> 都是可靠的。</p>
+<p><strong>Simple Message Stream Provider</strong>：不保证可靠的交付，失败的消息不会自动重新发送，但可以根据返回的Task状态来判断是否重新发送，事件执行顺序遵循FIFO原则。</p>
+<p><strong>Azure Queue Stream Provider</strong>：事件被加入Azure Queue， 如果传送或处理失败，事件不会从队列中删除，并且稍后会自动重新被发送，因此事件执行顺序不遵循FIFO原则。</p>
+<h3 id="获取-StreamProvider"><a href="#获取-StreamProvider" class="headerlink" title="获取 StreamProvider"></a>获取 StreamProvider</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var streamProvider = this.GetStreamProvider(&quot;SMSProvider&quot;);</span><br></pre></td></tr></table></figure>
+<p><strong>SMSProvider</strong> 对应配置文件中Name为SMSProvider的StreamProvider</p>
+<h3 id="获取-IAsyncStream"><a href="#获取-IAsyncStream" class="headerlink" title="获取 IAsyncStream"></a>获取 IAsyncStream<t></t></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var streamId = this.GetPrimaryKey();</span><br><span class="line">var stream = streamProvider.GetStream&lt;string&gt;(streamId, &quot;GrainStream&quot;);</span><br></pre></td></tr></table></figure>
+<p>GetStream 需要两个参数，通过两个值定位唯一的Stream：<br><strong>streamId</strong>：Guid类型，stream标识<br><strong>streamNamespace</strong>：字符串，stream的命名空间</p>
+<h3 id="订阅一个Stream"><a href="#订阅一个Stream" class="headerlink" title="订阅一个Stream"></a>订阅一个Stream</h3><p>订阅Stream分为隐式和显式订阅。</p>
+<h4 id="隐式订阅"><a href="#隐式订阅" class="headerlink" title="隐式订阅"></a>隐式订阅</h4><p>隐式订阅的订阅者是唯一的，不存在对一个Stream的多次订阅，也不能取消订阅。</p>
+<p>Interface：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface IImplicitSubscriberGrain : IGrainWithGuidKey</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Grain：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">[ImplicitStreamSubscription(&quot;GrainImplicitStream&quot;)]</span><br><span class="line">public class ImplicitSubscriberGrain : Grain, IImplicitSubscriberGrain, IAsyncObserver&lt;string&gt;</span><br><span class="line">&#123;</span><br><span class="line">	protected StreamSubscriptionHandle&lt;string&gt; streamHandle;</span><br><span class="line"></span><br><span class="line">	public override async Task OnActivateAsync()</span><br><span class="line">	&#123;</span><br><span class="line">		var streamId = this.GetPrimaryKey();</span><br><span class="line">		var streamProvider = this.GetStreamProvider(&quot;SMSProvider&quot;);</span><br><span class="line">		var stream = streamProvider.GetStream&lt;string&gt;(streamId, &quot;GrainImplicitStream&quot;);</span><br><span class="line">		streamHandle = await stream.SubscribeAsync(OnNextAsync);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public override async Task OnDeactivateAsync()</span><br><span class="line">	&#123;</span><br><span class="line">		if (streamHandle != null)</span><br><span class="line">			await streamHandle.UnsubscribeAsync();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public Task OnCompletedAsync()</span><br><span class="line">	&#123;</span><br><span class="line">		return Task.CompletedTask;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public Task OnErrorAsync(Exception ex)</span><br><span class="line">	&#123;</span><br><span class="line">		return Task.CompletedTask;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public Task OnNextAsync(string item, StreamSequenceToken token = null)</span><br><span class="line">	&#123;</span><br><span class="line">		Console.WriteLine($&quot;Received message:&#123;item&#125;&quot;);</span><br><span class="line">		return Task.CompletedTask;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>在Grain上标记 ImplicitStreamSubscription 属性，变量值为命名空间；</li>
+<li>在Grain的OnActivateAsync方法体中调用SubscribeAsync；</li>
+<li>实现IAsyncObserver接口，当发布者向Stream发送消息，订阅者接到消息后将执行OnNextAsync；</li>
+<li>隐式订阅模式订阅者自动由发布者创建；</li>
+</ol>
+<h4 id="显式订阅"><a href="#显式订阅" class="headerlink" title="显式订阅"></a>显式订阅</h4><p>Interface：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public interface IExplicitSubscriberGrain : IGrainWithGuidKey</span><br><span class="line">&#123;</span><br><span class="line">	Task&lt;StreamSubscriptionHandle&lt;string&gt;&gt; SubscribeAsync();</span><br><span class="line"></span><br><span class="line">	Task ReceivedMessageAsync(string data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Grain：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">public class ExplicitSubscriberGrain : Grain, IExplicitSubscriberGrain</span><br><span class="line">&#123;</span><br><span class="line">	private IAsyncStream&lt;string&gt; stream;</span><br><span class="line"></span><br><span class="line">	public async override Task OnActivateAsync()</span><br><span class="line">	&#123;</span><br><span class="line">		var streamProvider = this.GetStreamProvider(&quot;SMSProvider&quot;);</span><br><span class="line">		stream = streamProvider.GetStream&lt;string&gt;(this.GetPrimaryKey(), &quot;GrainExplicitStream&quot;);</span><br><span class="line">		var subscriptionHandles = await stream.GetAllSubscriptionHandles();</span><br><span class="line">		if (subscriptionHandles.Count &gt; 0)</span><br><span class="line">		&#123;</span><br><span class="line">			subscriptionHandles.ToList().ForEach(async x =&gt;</span><br><span class="line">			&#123;</span><br><span class="line">				await x.ResumeAsync((payload, token) =&gt; this.ReceivedMessageAsync(payload));</span><br><span class="line">			&#125;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public async Task&lt;StreamSubscriptionHandle&lt;string&gt;&gt; SubscribeAsync()</span><br><span class="line">	&#123;</span><br><span class="line">		return await stream.SubscribeAsync((payload, token) =&gt; this.ReceivedMessageAsync(payload));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public Task ReceivedMessageAsync(string data)</span><br><span class="line">	&#123;</span><br><span class="line">		Console.WriteLine($&quot;Received message:&#123;data&#125;&quot;);</span><br><span class="line">		return Task.CompletedTask;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li><p>订阅者通过调用SubscribeAsync方法完成订阅，并返回StreamSubscriptionHandle，这个对象提供了UnsubscribeAsync方法，方便取消订阅；</p>
+</li>
+<li><p>本例子中支持对同一个Stream被订阅多次，被订阅多次的结果是当向这个Stream发送消息的时候，ReceivedMessageAsync会执行多次。如果不希望对同一个Stream定义多次，在SubscribeAsync方法中可以通过GetAllSubscriptionHandles获取当前订阅者的个数，只有为0才执行订阅；</p>
+</li>
+<li><p>订阅者是一直存在的，除了被显示调用了UnsubscribeAsync方法。在OnActivateAsync中我们加入了ResumeAsync操作， 当Grain由未激活状态变为激活状态的时候，通过GetAllSubscriptionHandles获取这个Stream中存在的订阅者，通过ResumeAsync可以把它们重新唤醒。（<strong>模拟方式</strong>：杀掉Silo，重新启动即可，不过前提条件是PubSubStore不能使用MemoryStorage，因为使用MemoryStorage存储一旦重启后订阅者和发布者的关系都会丢失）</p>
+</li>
+</ol>
+<h3 id="发布消息"><a href="#发布消息" class="headerlink" title="发布消息"></a>发布消息</h3><p>Interface：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public interface IPublisherGrain: IGrainWithGuidKey</span><br><span class="line">&#123;</span><br><span class="line">	Task PublishMessageAsync(string data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Grain：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class PublisherGrain : Grain, IPublisherGrain</span><br><span class="line">&#123;</span><br><span class="line">	private IAsyncStream&lt;string&gt; stream;</span><br><span class="line"></span><br><span class="line">	public override Task OnActivateAsync()</span><br><span class="line">	&#123;</span><br><span class="line">		var streamId = this.GetPrimaryKey();</span><br><span class="line">		var streamProvider = this.GetStreamProvider(&quot;SMSProvider&quot;);</span><br><span class="line">		this.stream = streamProvider.GetStream&lt;string&gt;(streamId, &quot;GrainExplicitStream&quot;); //隐式：GrainImplicitStream</span><br><span class="line">		return base.OnActivateAsync();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public async Task PublishMessageAsync(string data)</span><br><span class="line">	&#123;</span><br><span class="line">		Console.WriteLine($&quot;Sending data: &#123;data&#125;&quot;);</span><br><span class="line">		await this.stream.OnNextAsync(data);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>通过调用IAsyncStream的OnNextAsync发布消息即可。这里可以针对返回的Task状态再作一些操作，如果不成功，重新发送或记录日志等。</p>
+<h3 id="Client发布消息："><a href="#Client发布消息：" class="headerlink" title="Client发布消息："></a>Client发布消息：</h3><h6 id="客户端发布消息："><a href="#客户端发布消息：" class="headerlink" title="客户端发布消息："></a>客户端发布消息：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">while (true)</span><br><span class="line">&#123;</span><br><span class="line">	Console.WriteLine(&quot;Press &apos;exit&apos; to exit...&quot;);</span><br><span class="line">	var input = Console.ReadLine();</span><br><span class="line">	if (input == &quot;exit&quot;) break;</span><br><span class="line">	var publisherGrain = GrainClient.GrainFactory.GetGrain&lt;IPublisherGrain&gt;(Guid.Empty);</span><br><span class="line">	publisherGrain.PublishMessageAsync(input);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/img/actor-orleans-streams/implicit.png" alt="发布消息"></p>
+<h6 id="显示订阅下，需要增加另一个客户端先完成订阅："><a href="#显示订阅下，需要增加另一个客户端先完成订阅：" class="headerlink" title="显示订阅下，需要增加另一个客户端先完成订阅："></a>显示订阅下，需要增加另一个客户端先完成订阅：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var subscriberGrain = GrainClient.GrainFactory.GetGrain&lt;IExplicitSubscriberGrain&gt;(Guid.Empty);</span><br><span class="line">var streamHandle = subscriberGrain.SubscribeAsync().Result;</span><br><span class="line">Console.WriteLine(&quot;Press enter to exit...&quot;);</span><br><span class="line">Console.ReadLine();</span><br><span class="line">streamHandle.UnsubscribeAsync();</span><br></pre></td></tr></table></figure>
+<p><img src="/img/actor-orleans-streams/explicit.png" alt="显示订阅下发布消息"></p>
+<h3 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h3><ul>
+<li><a href="http://www.infoq.com/cn/news/2014/11/intro-actor-model" target="_blank" rel="noopener">Actor模型</a></li>
+<li><a href="http://dotnet.github.io/orleans/" target="_blank" rel="noopener">Orleans</a></li>
+<li><a href="https://github.com/beckjin/OrleansSamples/tree/master/OrleansStreams" target="_blank" rel="noopener">案例Demo-OrleansStreams</a></li>
+</ul>
+
+          
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -886,6 +958,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -898,13 +974,17 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2017/07/23/actor-orleans-cluster/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -917,16 +997,8 @@
         
         
           <h2 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/07/23/actor-orleans-cluster/" itemprop="url">
-                  Orleans解决并发之痛（三）：集群
-                </a>
-              
-            
-          </h2>
+                <a class="post-title-link" href="/2017/07/23/actor-orleans-cluster/" itemprop="url">Orleans解决并发之痛（三）：集群</a></h2>
         
 
         <div class="post-meta">
@@ -978,17 +1050,6 @@
 
           
           
-             <span id="/2017/07/23/actor-orleans-cluster/" class="leancloud_visitors" data-flag-title="Orleans解决并发之痛（三）：集群">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
 
           
 
@@ -1000,6 +1061,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -1008,32 +1072,43 @@
       
         
           
-          Orleans本身的设计是一个分布式的框架，多个Silo构成集群，Grains分布在多个Silo中。一旦一个Silo挂了，原来归属这个Silo的Grains会自动在其他Silo中激活。生产环境下还是需要以集群方式来部署。
+            <p>Orleans本身的设计是一个分布式的框架，多个Silo构成集群，Grains分布在多个Silo中。一旦一个Silo挂了，原来归属这个Silo的Grains会自动在其他Silo中激活。生产环境下还是需要以集群方式来部署。</p>
+<p><img src="/img/actor-orleans-cluster/cluster.png" alt="cluster"></p>
+<p>在<a href="/2017/07/23/actor-orleans-grain-state/">Orleans解决并发之痛（二）：Grain状态</a>文章中提到内存存储State是不靠谱的，同样，以内存方式存储集群中Silo的成员关系也是不靠谱的，所以本文使用SQL Server来做Silo的成员关系存储，以内存方式存储成员关系存在主节点之说，其他节点的启动必须依赖主节点的启动状态，但以Azure Table、SQL Server 、ZooKeeper、Consul 等存储成员关系，所有的Silo都是平等的，不需要等待谁。</p>
+<p>之前在<a href="/2017/07/22/actor-orleans-one/">Orleans解决并发之痛（一）：单线程</a>Demo中是以内存存储集群成员关系的，有兴趣可以返回查看。</p>
+<p>这篇文章的Demo是<a href="/2017/07/23/actor-orleans-grain-state/">Orleans解决并发之痛（二）：Grain状态</a>的基础上完成的，所以在原来代码的基础上做一些调整即可。我们会启动3个Silo，构建成一个集群环境。实际上提供3个配置文件即可，配置文件稍做修改就可实现。</p>
+<h4 id="Silo配置文件"><a href="#Silo配置文件" class="headerlink" title="Silo配置文件"></a>Silo配置文件</h4><p>OrleansConfiguration1.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</span><br><span class="line">&lt;OrleansConfiguration xmlns=&quot;urn:orleans&quot;&gt;</span><br><span class="line">    &lt;Globals&gt;</span><br><span class="line">        &lt;SystemStore </span><br><span class="line">			SystemStoreType=&quot;SqlServer&quot; </span><br><span class="line">			DeploymentId=&quot;OrleansTest&quot; </span><br><span class="line">			DataConnectionString=&quot;Server=.;Database=OrleansStorage;User ID=sa;Password=123456;&quot;/&gt;</span><br><span class="line">      </span><br><span class="line">        &lt;StorageProviders&gt;</span><br><span class="line">            &lt;Provider Type=&quot;Orleans.Storage.AdoNetStorageProvider&quot;</span><br><span class="line">                      Name=&quot;OrleansStorage&quot;</span><br><span class="line">                      AdoInvariant=&quot;System.Data.SqlClient&quot;</span><br><span class="line">                      DataConnectionString=&quot;Server=.;Database=OrleansStorage;User ID=sa;Password=123456;&quot;/&gt;</span><br><span class="line">        &lt;/StorageProviders&gt;</span><br><span class="line">    &lt;/Globals&gt;</span><br><span class="line">    &lt;Defaults&gt;</span><br><span class="line">        &lt;Networking Address=&quot;localhost&quot; Port=&quot;11111&quot; /&gt;</span><br><span class="line">        &lt;ProxyingGateway Address=&quot;localhost&quot; Port=&quot;30000&quot; /&gt;</span><br><span class="line">    &lt;/Defaults&gt;</span><br><span class="line">&lt;/OrleansConfiguration&gt;</span><br></pre></td></tr></table></figure></p>
+<p>OrleansConfiguration2.xml和OrleansConfiguration3.xml除了Networking 、ProxyingGateway 配置有所区别，其他完全一样。</p>
+<p>OrleansConfiguration2.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;Networking Address=&quot;localhost&quot; Port=&quot;11112&quot; /&gt;</span><br><span class="line">&lt;ProxyingGateway Address=&quot;localhost&quot; Port=&quot;30001&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>OrleansConfiguration3.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;Networking Address=&quot;localhost&quot; Port=&quot;11113&quot; /&gt;</span><br><span class="line">&lt;ProxyingGateway Address=&quot;localhost&quot; Port=&quot;30002&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>这次配置文件中引入了一个SystemStore节点：<br><strong>SystemStoreType：</strong>存储的类型；如：AzureTable、SqlServer、ZooKeeper等；<br><strong>DeploymentId：</strong>部署的唯一Id标识，具有相同的DeploymentId的Silo会加入一个集群中；<br><strong>DataConnectionString：</strong>连接字符串；</p>
+<p>3台Silo启动成功后，在OrleansStorage库的OrleansMembershipTable表中会记录下成员关系：</p>
+<p><img src="/img/actor-orleans-cluster/systemStore.png" alt="systemStore"></p>
+<h4 id="Client配置文件"><a href="#Client配置文件" class="headerlink" title="Client配置文件"></a>Client配置文件</h4><p>ClientConfiguration.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</span><br><span class="line">&lt;ClientConfiguration xmlns=&quot;urn:orleans&quot;&gt;</span><br><span class="line">   &lt;SystemStore SystemStoreType =&quot;SqlServer&quot;</span><br><span class="line">                DeploymentId=&quot;OrleansTest&quot;</span><br><span class="line">                DataConnectionString=&quot;Data Source=.;Database=OrleansStorage;User ID=sa;Password=123456;&quot; </span><br><span class="line">				AdoInvariant=&quot;System.Data.SqlClient&quot; /&gt;</span><br><span class="line">&lt;/ClientConfiguration&gt;</span><br></pre></td></tr></table></figure></p>
+<p>Client通过DeploymentId标识连接Silo集群。具体最终调用那个Silo完成方法的调用，由其内部调配。当某一台Silo挂了，Grain会重新在另一个Silo上激活，达到高可用状态。</p>
+<h4 id="Client的测试代码："><a href="#Client的测试代码：" class="headerlink" title="Client的测试代码："></a>Client的测试代码：</h4><p>我们用一个死循环，创建很多Grain，来观察Silo控制台的输出效果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var random = new Random();</span><br><span class="line">while (true)</span><br><span class="line">&#123;</span><br><span class="line">	Thread.Sleep(1000);</span><br><span class="line">	var grainId = random.Next().ToString();</span><br><span class="line">	var grain = GrainClient.GrainFactory.GetGrain&lt;IPersonGrain&gt;(&quot;Test-&quot; + grainId);</span><br><span class="line">	grain.SayHelloAsync();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="测试结果："><a href="#测试结果：" class="headerlink" title="测试结果："></a>测试结果：</h4><p>从控制台输出结果来开，每台Silo上Grain的分配还是比较均匀的</p>
+<p><img src="/img/actor-orleans-cluster/testResult.png" alt="Test Result"></p>
+<p>当杀掉一个Silo后，服务依然是正常运行，具体Grain是否重新被分配有兴趣可以测试一下：<br><img src="/img/actor-orleans-cluster/testResult2.png" alt="Test Result2"></p>
+<h3 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h3><ul>
+<li><a href="http://www.infoq.com/cn/news/2014/11/intro-actor-model" target="_blank" rel="noopener">Actor模型</a></li>
+<li><a href="http://dotnet.github.io/orleans/" target="_blank" rel="noopener">Orleans</a></li>
+<li><a href="https://github.com/beckjin/OrleansSamples/tree/master/OrleansCluster" target="_blank" rel="noopener">案例Demo-OrleansCluster</a></li>
+</ul>
 
-在Orleans解决并发之痛（二）：Grain状态文章中提到内存存储Stat
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/23/actor-orleans-cluster/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+          
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -1047,6 +1122,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -1059,13 +1138,17 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2017/07/23/actor-orleans-grain-state/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1078,16 +1161,8 @@
         
         
           <h2 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/07/23/actor-orleans-grain-state/" itemprop="url">
-                  Orleans解决并发之痛（二）：Grain状态
-                </a>
-              
-            
-          </h2>
+                <a class="post-title-link" href="/2017/07/23/actor-orleans-grain-state/" itemprop="url">Orleans解决并发之痛（二）：Grain状态</a></h2>
         
 
         <div class="post-meta">
@@ -1139,17 +1214,6 @@
 
           
           
-             <span id="/2017/07/23/actor-orleans-grain-state/" class="leancloud_visitors" data-flag-title="Orleans解决并发之痛（二）：Grain状态">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
 
           
 
@@ -1161,6 +1225,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -1169,31 +1236,48 @@
       
         
           
-          Grains是Orleans应用程序的构建块，它们是彼此孤立的原子单位，分布的，持久的， 一个典型的Grain是有状态和行为的一个单实例，每个Grain实例的在单线程内执行，Grain之间共享数据通过消息传递，Grains是由Silo自动化管理。
-Grain之间传递消息过程中也可能出现死锁的情况，如
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/23/actor-orleans-grain-state/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+            <p>Grains是Orleans应用程序的构建块，它们是彼此孤立的原子单位，分布的，持久的， 一个典型的Grain是有状态和行为的一个单实例，每个Grain实例的在单线程内执行，Grain之间共享数据通过消息传递，Grains是由Silo自动化管理。</p>
+<p>Grain之间传递消息过程中也可能出现死锁的情况，如：Grain A发送消息给Grain B，并等待它的完成，此时Grain B发送一个消息给Grain A，也等待其完成，这时候出现相互等待而造成死锁。Orleans对Grain之间产生的死锁问题解决也是非常简单的，只需要在Grain上加[Reentrant]属性，具体可查看官方<a href="https://dotnet.github.io/orleans/Tutorials/Concurrency.html" target="_blank" rel="noopener">Concurrency</a>。</p>
+<p>Grain状态有好几种存储方式，比如：AzureTableStorage、AzureBlobStorage、SQLStorage、MemoryStorage  等，我们还可以自定义存储。MemoryStorage在测试项目使用没问题，但实际生产环境要使用其他持久存储的方式，因为一旦一个Silo被关闭，内存存储的状态将会消失。</p>
+<p>在分布式下，State的使用可以减少很多对数据库层面的压力。当然也不是所有的Grain都推荐使用State，还是看实际业务需求。我们可以想象一个场景，一个商品的库存如果保存在State中，所有请求都共享这个State，在判断是否有剩余商品的时候是不是就不需要每次都去查询数据库了？</p>
+<h4 id="定义接口"><a href="#定义接口" class="headerlink" title="定义接口"></a>定义接口</h4> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public interface IPersonGrain : IGrainWithStringKey</span><br><span class="line">&#123;</span><br><span class="line">	Task SayHelloAsync();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="实现接口"><a href="#实现接口" class="headerlink" title="实现接口"></a>实现接口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class PersonGrain : Grain, IPersonGrain</span><br><span class="line">&#123;</span><br><span class="line">    public Task SayHelloAsync()</span><br><span class="line">    &#123;</span><br><span class="line">        string primaryKey = this.GetPrimaryKeyString();</span><br><span class="line"> </span><br><span class="line">        Console.WriteLine($&quot;&#123;primaryKey&#125; said hello!&quot;);</span><br><span class="line"> </span><br><span class="line">        return Task.CompletedTask;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="为了实现状态存储，我们需要创建一个class："><a href="#为了实现状态存储，我们需要创建一个class：" class="headerlink" title="为了实现状态存储，我们需要创建一个class："></a>为了实现状态存储，我们需要创建一个class：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public class PersonGrainState</span><br><span class="line">&#123;</span><br><span class="line">	public bool SaidHello &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="修改代码，实现的PersonGrain不应该再继承Grain，而是Grain"><a href="#修改代码，实现的PersonGrain不应该再继承Grain，而是Grain" class="headerlink" title="修改代码，实现的PersonGrain不应该再继承Grain，而是Grain"></a>修改代码，实现的PersonGrain不应该再继承Grain，而是Grain<t></t></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[StorageProvider(ProviderName = &quot;OrleansStorage&quot;)]</span><br><span class="line">public class PersonGrain : Grain&lt;PersonGrainState&gt;, IPersonGrain</span><br><span class="line">&#123;</span><br><span class="line">	public async Task SayHelloAsync()</span><br><span class="line">	&#123;</span><br><span class="line">		string primaryKey = this.GetPrimaryKeyString();</span><br><span class="line"></span><br><span class="line">		bool saidHelloBefore = this.State.SaidHello;</span><br><span class="line">		string saidHelloBeforeStr = saidHelloBefore ? &quot; already&quot; : null;</span><br><span class="line"></span><br><span class="line">		Console.WriteLine($&quot;&#123;primaryKey&#125;&#123;saidHelloBeforeStr&#125; said hello!&quot;);</span><br><span class="line"></span><br><span class="line">		this.State.SaidHello = true;</span><br><span class="line">		await this.WriteStateAsync();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第一次调用这个方法的时候this.State.SaidHello为false，输出’xxx said hello!’。然后我们通过WriteStateAsync修改SaidHello为true，当第二次被调用的时候，从State里取出的SaidHello已经变成了true，则输出’xxx already said hello!’</p>
+<p>Orleans 提供了非常简单的API来处理持久化装状态，看方法名就知道什么啥意思了，WriteStateAsync()、ReadStateAsync() 、 ClearStateAsync()。</p>
+<p>同时在PersonGrain加了一个StorageProvider属性，参数ProviderName赋值为OrleansStorage，这里需要对Silo的配置文件（<strong>OrleansConfiguration.xml</strong>）做调整，添加StorageProviders配置，Type表示存储方式，Name表示名称，程序内指定的ProviderName需要和配置中这个名称保持一致。</p>
+<p><strong>注意：</strong><br>当Name为Default时，如果某个Grain使用Default来存储，可以不需要加StorageProvider属性。StorageProviders下可以有多个Provider，每个Provider的Type可以不一样，每个Grain指定的存储方式也可以不一样，ProviderName指定是谁就用谁存储。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</span><br><span class="line">&lt;OrleansConfiguration xmlns=&quot;urn:orleans&quot;&gt;</span><br><span class="line">    &lt;Globals&gt;</span><br><span class="line">        &lt;SeedNode Address=&quot;localhost&quot; Port=&quot;11111&quot; /&gt;</span><br><span class="line">        &lt;StorageProviders&gt;</span><br><span class="line">            &lt;Provider Type=&quot;Orleans.Storage.MemoryStorage&quot;</span><br><span class="line">                      Name=&quot;OrleansStorage&quot; /&gt;</span><br><span class="line">        &lt;/StorageProviders&gt;</span><br><span class="line">    &lt;/Globals&gt;</span><br><span class="line">    &lt;Defaults&gt;</span><br><span class="line">        &lt;Networking Address=&quot;localhost&quot; Port=&quot;11111&quot; /&gt;</span><br><span class="line">        &lt;ProxyingGateway Address=&quot;localhost&quot; Port=&quot;30000&quot; /&gt;</span><br><span class="line">    &lt;/Defaults&gt;</span><br><span class="line">&lt;/OrleansConfiguration&gt;</span><br></pre></td></tr></table></figure></p>
+<h4 id="为了验证Grain之间是独立的，在Client加入以下代码："><a href="#为了验证Grain之间是独立的，在Client加入以下代码：" class="headerlink" title="为了验证Grain之间是独立的，在Client加入以下代码："></a>为了验证Grain之间是独立的，在Client加入以下代码：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> var joe = GrainClient.GrainFactory.GetGrain&lt;IPersonGrain&gt;(&quot;Joe&quot;);</span><br><span class="line">joe.SayHelloAsync();</span><br><span class="line">joe.SayHelloAsync();</span><br><span class="line"></span><br><span class="line">var sam = GrainClient.GrainFactory.GetGrain&lt;IPersonGrain&gt;(&quot;Sam&quot;);</span><br><span class="line">sam.SayHelloAsync();</span><br><span class="line">sam.SayHelloAsync();</span><br></pre></td></tr></table></figure>
+<h4 id="测试结果："><a href="#测试结果：" class="headerlink" title="测试结果："></a>测试结果：</h4><p><img src="/img/actor-orleans-grain-state/testResult.png" alt="Test Result"></p>
+<h4 id="SQL-Server-持久存储State"><a href="#SQL-Server-持久存储State" class="headerlink" title="SQL Server 持久存储State"></a>SQL Server 持久存储State</h4><p>上面提到State以内存存储的方式并不适合生产环境，那下面我们使用SQL Server来实现。</p>
+<h6 id="在Silo程序集中安装依赖包："><a href="#在Silo程序集中安装依赖包：" class="headerlink" title="在Silo程序集中安装依赖包："></a>在Silo程序集中安装依赖包：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Install-Package Microsoft.Orleans.OrleansSqlUtils</span><br><span class="line">Install-Package System.Data.SqlClient</span><br></pre></td></tr></table></figure>
+<h6 id="创建数据库和表："><a href="#创建数据库和表：" class="headerlink" title="创建数据库和表："></a>创建数据库和表：</h6><ol>
+<li>在SQL Server中创建一个数据库，命名如：OrleansStorage（随意）；</li>
+<li>在解决方案下找到目录：packages\Microsoft.Orleans.OrleansSqlUtils.1.5.0\lib\net461\SQLServer，目录下有一个.sql文件，在OrleansStorage数据库下执行这个sql脚本即可；</li>
+</ol>
+<h6 id="修改OrleansConfiguration-xml的StorageProviders节点为："><a href="#修改OrleansConfiguration-xml的StorageProviders节点为：" class="headerlink" title="修改OrleansConfiguration.xml的StorageProviders节点为："></a>修改OrleansConfiguration.xml的StorageProviders节点为：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;StorageProviders&gt;</span><br><span class="line">	&lt;Provider Type=&quot;Orleans.Storage.AdoNetStorageProvider&quot;</span><br><span class="line">			  Name=&quot;OrleansStorage&quot;</span><br><span class="line">			  AdoInvariant=&quot;System.Data.SqlClient&quot;</span><br><span class="line">			  DataConnectionString=&quot;Server=.;Database=OrleansStorage;User ID=sa;Password=123456;&quot;/&gt;</span><br><span class="line">&lt;/StorageProviders&gt;</span><br></pre></td></tr></table></figure>
+<h6 id="重新启动Silo和Client："><a href="#重新启动Silo和Client：" class="headerlink" title="重新启动Silo和Client："></a>重新启动Silo和Client：</h6><p>执行完成后查看数据库中表Storage的内容，数据的值是二进制是方式存储。<br><img src="/img/actor-orleans-grain-state/storage.png" alt="storage"></p>
+<p>之后不管重启多少次，输出的结果都是 “xxx already saild hello!” 。</p>
+<h3 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h3><ul>
+<li><a href="http://www.infoq.com/cn/news/2014/11/intro-actor-model" target="_blank" rel="noopener">Actor模型</a></li>
+<li><a href="http://dotnet.github.io/orleans/" target="_blank" rel="noopener">Orleans</a></li>
+<li><a href="https://github.com/beckjin/OrleansSamples/tree/master/OrleansState" target="_blank" rel="noopener">案例Demo-OrleansState</a></li>
+</ul>
+
+          
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -1207,6 +1291,10 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -1219,13 +1307,17 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2017/07/22/actor-orleans-one/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1238,16 +1330,8 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
         
         
           <h2 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/07/22/actor-orleans-one/" itemprop="url">
-                  Orleans解决并发之痛（一）：单线程
-                </a>
-              
-            
-          </h2>
+                <a class="post-title-link" href="/2017/07/22/actor-orleans-one/" itemprop="url">Orleans解决并发之痛（一）：单线程</a></h2>
         
 
         <div class="post-meta">
@@ -1299,17 +1383,6 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
 
           
           
-             <span id="/2017/07/22/actor-orleans-one/" class="leancloud_visitors" data-flag-title="Orleans解决并发之痛（一）：单线程">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
 
           
 
@@ -1321,6 +1394,9 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -1329,32 +1405,117 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
       
         
           
-          程序在运行过程中有时会莫名其妙出现代码的某些约束或者执行结果和理想状况不一样，正常逻辑怎么会出现这样的情况？到底发生了什么？好像见了鬼！瞬间好无助。
+            <p>程序在运行过程中有时会莫名其妙出现代码的某些约束或者执行结果和理想状况不一样，正常逻辑怎么会出现这样的情况？到底发生了什么？好像见了鬼！瞬间好无助。</p>
+<p><img src="/img/actor-orleans-one/help.jpg" alt="谁来救救我"></p>
+<p>大多数出现正常逻辑很难解释的时候，我们可能会想到并发问题，因为好像只有并发才会能说服自己。为了验证和解决这个问题，我们可能会尝试一些方案，在并发的情况下我相信很多人都使用过锁，锁确实也能帮忙我们解决问题，不然它干嘛存在。</p>
+<p>但随着业务逻辑的持续复杂，锁的使用可能无处不在。首先大家都知道锁本身的机制很耗性能；然后锁本身不涉及什么编程模式，所以在业务代码中融入大量锁对代码本身的稳定性也有一定影响。</p>
+<p>经过查找资料，因为本身的项目是基于.NET，所以发现Microsoft Orleans好像可以比较好的满足解决并发的需求。</p>
+<h3 id="Orleans之前，先来扯一扯Actor模型"><a href="#Orleans之前，先来扯一扯Actor模型" class="headerlink" title="Orleans之前，先来扯一扯Actor模型"></a>Orleans之前，先来扯一扯Actor模型</h3><ol>
+<li><p>Actor是以单线程存在的，所有消息都是顺序到达的，每次收到消息后，就放入队列，而它每次也从队列中取出消息体来处理；</p>
+</li>
+<li><p>每一个Actor有一个Id和它对应，一个Id对应的Actor只会在<strong>集群中</strong>存在一个，使用者只需要通过Id就能随时访问不需要关注该Actor在集群的什么位置；</p>
+</li>
+<li><p>每一个Actor看作是一个独立的实体，拥有自己独立的状态。Actor与Actor直接可以进行消息通知；</p>
+<p>注：有状态的 Actor在集群中一个Id只会存在一个实例，无状态的可配置为根据流量存在多个，无状态的情况看具体业务需求。</p>
+<p><img src="/img/actor-orleans-one/actorSystem.png" alt="Actor System"></p>
+</li>
+</ol>
+<h3 id="再来扯一扯Orleans框架"><a href="#再来扯一扯Orleans框架" class="headerlink" title="再来扯一扯Orleans框架"></a>再来扯一扯Orleans框架</h3><blockquote>
+<p>Orleans 提供了一个简单的方法来构建大规模、高并发、分布式应用程序，被认为是Actor模型的分布式版本，是一种改进的Actor模型。在Orleans中，Actors被称作Grains，采用接口来表示，Actors的消息用异步方法来接收，方法返回值必须是Task or Task<t>。</t></p>
+</blockquote>
+<h5 id="Orleans几个核心角色："><a href="#Orleans几个核心角色：" class="headerlink" title="Orleans几个核心角色："></a>Orleans几个核心角色：</h5><h6 id="Grains（Actors）"><a href="#Grains（Actors）" class="headerlink" title="Grains（Actors）"></a>Grains（Actors）</h6><blockquote>
+<p>Grains是Orleans应用程序的业务逻辑实现与抽象，Grains是彼此孤立的原子单位，分布的，持久的。 一个典型的Grain是有状态和行为的一个单实例。</p>
+</blockquote>
+<h6 id="Silo"><a href="#Silo" class="headerlink" title="Silo"></a>Silo</h6><blockquote>
+<p>Silo是一个主机服务，里面主要用于执行Grains，也就是说Grains开发完成后需要注册到Silo中，然后等待调用。它监听一个端口，用来监听从Silo到Silo的消息或者从客户端到Silo的消息的，典型的Silo就是，每台机器运行一个Silo，会对外暴露网关地址供调用。</p>
+</blockquote>
+<h6 id="Cluster（集群搭建的时候会具体介绍）"><a href="#Cluster（集群搭建的时候会具体介绍）" class="headerlink" title="Cluster（集群搭建的时候会具体介绍）"></a>Cluster（集群搭建的时候会具体介绍）</h6><blockquote>
+<p>大量的Silo同时在一起工作就形成了Orleans的集群，Orleans运行完全自动化的集群管理。</p>
+</blockquote>
+<h6 id="Client"><a href="#Client" class="headerlink" title="Client"></a>Client</h6><blockquote>
+<p>具体的应用客户端，可以是控制台、Web应用程序、WPF等一切.NET端技术。</p>
+</blockquote>
+<hr>
+<p>开始接触Orleans Sample的时候，第一感觉项目结构和gRPC还挺像的，如果你之前有接触，一定感觉很亲切：</p>
+<blockquote>
+<ol>
+<li>定义一个接口（Interfaces）</li>
+<li>实现接口（Grains） – 添加引用Interfaces</li>
+<li>启动服务端（Silo）– 添加引用Interfaces，Grains</li>
+<li>启动客户端 （Client）– 添加引用Interfaces</li>
+</ol>
+</blockquote>
+<p>练习过程中对Nuget安装Orleans相关依赖包可能会有一些模糊，这里说明一下我的具体步骤，希望尽快帮忙实现效果，所有程序集使用.Net Framework的版本都是4.6：</p>
+<table>
+<thead>
+<tr>
+<th>程序集名称</th>
+<th>类型</th>
+<th>Nuget依赖包<br> Microsoft.Orleans.</th>
+<th>引用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Interfaces</td>
+<td>类库</td>
+<td>Core</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Grains</td>
+<td>类库</td>
+<td>Core</td>
+<td>Interfaces</td>
+</tr>
+<tr>
+<td>Silo</td>
+<td>控制台程序</td>
+<td>Core<br>OrleansCodeGenerator<br>OrleansProviders<br> OrleansRuntime</td>
+<td>Interfaces<br>Grains</td>
+</tr>
+<tr>
+<td>Client</td>
+<td>控制台程序</td>
+<td>Core<br> OrleansCodeGenerator</td>
+<td>Interfaces</td>
+</tr>
+</tbody>
+</table>
+<p>在Silo项目中添加配置文件 OrleansConfiguration.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</span><br><span class="line">&lt;OrleansConfiguration xmlns=&quot;urn:orleans&quot;&gt;</span><br><span class="line">    &lt;Globals&gt;</span><br><span class="line">        &lt;SeedNode Address=&quot;localhost&quot; Port=&quot;11111&quot; /&gt;</span><br><span class="line">    &lt;/Globals&gt;</span><br><span class="line">    &lt;Defaults&gt;</span><br><span class="line">        &lt;Networking Address=&quot;localhost&quot; Port=&quot;11111&quot; /&gt;</span><br><span class="line">        &lt;ProxyingGateway Address=&quot;localhost&quot; Port=&quot;30000&quot; /&gt;</span><br><span class="line">    &lt;/Defaults&gt;</span><br><span class="line">&lt;/OrleansConfiguration&gt;</span><br></pre></td></tr></table></figure></p>
+<p><strong>SeedNode</strong>：集群中主Silo地址，生产环境并不可以这么使用，已这种方式配置主Silo的情况下，其他Silo加入集群需要等主Silo先启动。之后会介绍SystemStore来维护集群成员关系；<br><strong>Networking</strong>：内部Silo与Silo之间通信地址；<br><strong>ProxyingGateway</strong>：客户端调用的网关地址；</p>
+<p>在Client项目中添加配置文件 ClientConfiguration.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</span><br><span class="line">&lt;ClientConfiguration xmlns=&quot;urn:orleans&quot;&gt;</span><br><span class="line">    &lt;Gateway Address=&quot;localhost&quot; Port=&quot;30000&quot;/&gt;</span><br><span class="line">&lt;/ClientConfiguration&gt;</span><br></pre></td></tr></table></figure></p>
+<p><strong>Gateway</strong>：配置Silo对外的网关地址；</p>
+<p>集群下可以配置多个Gateway节点，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;Gateway Address=&quot;gateway1&quot; Port=&quot;30000&quot;/&gt;</span><br><span class="line">&lt;Gateway Address=&quot;gateway2&quot; Port=&quot;30000&quot;/&gt;</span><br></pre></td></tr></table></figure></p>
+<p><strong>注意：</strong>配置文件需要设置属性 “复制到输出目录”</p>
+<p><img src="/img/actor-orleans-one/configuration.png" alt="configuration"></p>
+<h5 id="Grain说明："><a href="#Grain说明：" class="headerlink" title="Grain说明："></a>Grain说明：</h5><p>每个Grain都是单实例的，具有唯一标识。根据唯一标识获取Grain，这个标识可以是GUID、String、Long、混合类型。</p>
+<p>在Grain内如果发送消息给其他Grain，需要使用 this.GrainFactory.GetGrain，不能通过 GrainClient.GrainFactory.GetGrain。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var test = GrainClient.GrainFactory.GetGrain&lt;ITest&gt;(0); // long类型的primaryKey 0</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class TestGrain : Orleans.Grain, ITest</span><br><span class="line">&#123;</span><br><span class="line">	private int num = 0;</span><br><span class="line"></span><br><span class="line">	public Task AddCount()</span><br><span class="line">	&#123;</span><br><span class="line">		num++;</span><br><span class="line">		Console.WriteLine(num);</span><br><span class="line">		return Task.CompletedTask;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="Client说明："><a href="#Client说明：" class="headerlink" title="Client说明："></a>Client说明：</h5><p>同时启动3个Task，每个Task内并行200次调用AddCount方法。如果没有做特殊的处理，num的结果肯定是乱的，并不会出现一直累加的效果。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">private static void DoClientWork()</span><br><span class="line">&#123;</span><br><span class="line">	var t1 = Task.Factory.StartNew(() =&gt;</span><br><span class="line">	&#123;</span><br><span class="line">		AddCount();</span><br><span class="line">	&#125;);</span><br><span class="line">	var t2 = Task.Factory.StartNew(() =&gt;</span><br><span class="line">	&#123;</span><br><span class="line">		AddCount();</span><br><span class="line">	&#125;);</span><br><span class="line">	var t3 = Task.Factory.StartNew(() =&gt;</span><br><span class="line">	&#123;</span><br><span class="line">		AddCount();</span><br><span class="line">	&#125;);</span><br><span class="line">	Task.WaitAll(t1, t2, t3);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static void AddCount()</span><br><span class="line">&#123;</span><br><span class="line">	var test = GrainClient.GrainFactory.GetGrain&lt;ITest&gt;(0);</span><br><span class="line"></span><br><span class="line">	Parallel.For(0, 200, (i) =&gt;</span><br><span class="line">	&#123;</span><br><span class="line">		test.AddCount();</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实际上执行最终的结果是600，并不会出现不一致的变化效果，这足以说明同一个Grain内部是单线程执行。</p>
+<p><img src="/img/actor-orleans-one/testResult.png" alt="Test Result"></p>
+<h3 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h3><ul>
+<li><a href="http://www.infoq.com/cn/news/2014/11/intro-actor-model" target="_blank" rel="noopener">Actor模型</a></li>
+<li><a href="http://dotnet.github.io/orleans/" target="_blank" rel="noopener">Orleans</a></li>
+<li><a href="https://github.com/beckjin/OrleansSamples/tree/master/OrleansTest1" target="_blank" rel="noopener">案例Demo-OrleansTest</a></li>
+</ul>
 
-大多数出现正常逻辑很难解释的时候，我们可能会想到并发问题，因为好像只有并发才会能说服自己。为了验证和解决这个问题，我们可能会尝试一些方案，在并发的情
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/22/actor-orleans-one/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+          
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -1368,6 +1529,10 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -1380,13 +1545,17 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2017/05/19/multilingual/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1399,16 +1568,8 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
         
         
           <h2 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/05/19/multilingual/" itemprop="url">
-                  让多语言开发变得简单点
-                </a>
-              
-            
-          </h2>
+                <a class="post-title-link" href="/2017/05/19/multilingual/" itemprop="url">让多语言开发变得简单点</a></h2>
         
 
         <div class="post-meta">
@@ -1460,17 +1621,6 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
 
           
           
-             <span id="/2017/05/19/multilingual/" class="leancloud_visitors" data-flag-title="让多语言开发变得简单点">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
 
           
 
@@ -1482,6 +1632,9 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -1490,31 +1643,116 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
       
         
           
-          实现方式大概两种：1、key使用方式：
-在资源文件内定义key，如果原语言是中文，key通常是一个带含义的英文或者拼音；变态一点的就是xxxx1111，xxxx1112（很荣幸，我们的项目很变态 /(ㄒoㄒ)/~~），然后在代码中通过 Resource.lang.xxxx1111 或者 lang.x
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/05/19/multilingual/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+            <h2 id="实现方式大概两种："><a href="#实现方式大概两种：" class="headerlink" title="实现方式大概两种："></a>实现方式大概两种：</h2><h3 id="1、key"><a href="#1、key" class="headerlink" title="1、key"></a>1、key</h3><h4 id="使用方式："><a href="#使用方式：" class="headerlink" title="使用方式："></a>使用方式：</h4><blockquote>
+<p>在资源文件内定义key，如果原语言是中文，key通常是一个带含义的英文或者拼音；变态一点的就是xxxx1111，xxxx1112（很荣幸，我们的项目很变态 /(ㄒoㄒ)/~~），然后在代码中通过 Resource.lang.xxxx1111 或者 lang.xxxx1111(js文件内) 方式引用；</p>
+</blockquote>
+<h4 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h4><ol>
+<li>key名难定义，就算定义得好也不见得大家都看得懂；</li>
+<li>修改不方便（打开代码，看到的都是lang.xxxx，我要修改的内容在哪，马勒戈壁）。如果开发直接修改资源文件，那么每个语言的都要修改，可是日语只会 “亚麻得”；</li>
+<li>如果项目是先按某个语言开发好功能，后期补翻译的，那就更悲催了，研发需要重新回来替换一次；</li>
+</ol>
+<hr>
+<h3 id="2、gettext"><a href="#2、gettext" class="headerlink" title="2、gettext"></a>2、gettext</h3><h4 id="先了解三种文件类型："><a href="#先了解三种文件类型：" class="headerlink" title="先了解三种文件类型："></a>先了解三种文件类型：</h4><ul>
+<li><p>.po文件</p>
+<blockquote>
+<p>PO是Portable Object（可移植对象）的缩写形式，它是面向翻译人员的、提取于源代码的一种资源文件；</p>
+</blockquote>
+</li>
+<li><p>.pot文件</p>
+<blockquote>
+<p>POT是Portable Object Template（可移植对象模板）的缩写形式，是一种模板文件，其实质与.po文件一样，其中包含了从源代码中提取所有的翻译字符串的列表，主要提供给翻译人员使用，可以通过.pot文件生成.po文件；</p>
+</blockquote>
+</li>
+<li><p>.mo文件</p>
+<blockquote>
+<p>MO是Machine Object（机器对象）的缩写形式，它是面向计算机的、由.po文件通过GNU gettext工具包编译而成的二进制文件，应用程序通过读取.mo文件使自身的界面转换成用户使用的语言；</p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<h4 id="使用方式：-1"><a href="#使用方式：-1" class="headerlink" title="使用方式："></a>使用方式：</h4><blockquote>
+<p>在代码文件内写成：_(“明道”)，通过命令提取到pot文件中，通过poedit等工具根据pot文件创建其他语言对于的po文件</p>
+</blockquote>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#: src/test.cs:36</span><br><span class="line">msgid &quot;明道&quot;</span><br><span class="line">msgstr &quot;&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="问题：-1"><a href="#问题：-1" class="headerlink" title="问题："></a>问题：</h3><p> gettext的方式的主要问题是因为key的唯一性会导致多义词、单复数难处理，但对于我们目前来说还是可以接受的，所以最终决定换成gettext方式</p>
+<hr>
+<h3 id="如果是基于-Net-Framework-的项目："><a href="#如果是基于-Net-Framework-的项目：" class="headerlink" title="如果是基于.Net Framework 的项目："></a>如果是基于.Net Framework 的项目：</h3><h5 id="在需要支持翻译的项目nuget安装i18N：i18N详细介绍"><a href="#在需要支持翻译的项目nuget安装i18N：i18N详细介绍" class="headerlink" title="在需要支持翻译的项目nuget安装i18N：i18N详细介绍"></a>在需要支持翻译的项目nuget安装i18N：<a href="https://github.com/turquoiseowl/i18n" target="_blank" rel="noopener">i18N详细介绍</a></h5><blockquote>
+<p>Install-Package i18N</p>
+</blockquote>
+<h5 id="在使用文案的地方都按照以下方式来写："><a href="#在使用文案的地方都按照以下方式来写：" class="headerlink" title="在使用文案的地方都按照以下方式来写："></a>在使用文案的地方都按照以下方式来写：</h5> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. [[[明道]]]   // 没有参数</span><br><span class="line"></span><br><span class="line">2. [[[我在 %0 上班 ||| 明道 ]]]  // 带参数</span><br><span class="line"></span><br><span class="line">3. string.Format(&quot;[[[welcome %1, today is %0|||&#123;0&#125;|||&#123;1&#125;]]]&quot;, day, name) //string.Format 方式</span><br></pre></td></tr></table></figure>
+<h5 id="web-config-配置："><a href="#web-config-配置：" class="headerlink" title="web.config 配置："></a>web.config 配置：</h5> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;appSettings&gt;</span><br><span class="line">    &lt;!-- 定义资源文件名称(.po)--&gt;</span><br><span class="line">    &lt;add key=&quot;i18n.LocaleFilename&quot; value=&quot;mdTranslation&quot; /&gt;</span><br><span class="line">&lt;/appSettings&gt;</span><br><span class="line">&lt;system.webServer&gt;</span><br><span class="line">    &lt;modules&gt;</span><br><span class="line">        &lt;add name=&quot;i18n.LocalizingModule&quot; type=&quot;i18n.LocalizingModule, i18n&quot; /&gt;</span><br><span class="line">    &lt;/modules&gt;</span><br><span class="line">&lt;/system.webServer&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="Application-Start-配置："><a href="#Application-Start-配置：" class="headerlink" title="Application_Start 配置："></a>Application_Start 配置：</h5> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">void Application_Start(object sender, EventArgs e)</span><br><span class="line">&#123;</span><br><span class="line">    // 默认语言（简体中文）</span><br><span class="line">    i18n.LocalizedApplication.Current.DefaultLanguage = &quot;zh-Hans&quot;; </span><br><span class="line">    // url里面是否带语言参数 http://www.xxx.com/en, Void 表示不带语言参数（可按项目的实际要求，非Voide方式可能存在文件引用路径问题）</span><br><span class="line">    i18n.UrlLocalizer.UrlLocalizationScheme = i18n.UrlLocalizationScheme.Void; </span><br><span class="line">    // 哪些ContentType文件需求支持多语言解析</span><br><span class="line">    i18n.LocalizedApplication.Current.ContentTypesToLocalize = new Regex(@&quot;^(?:(?:(?:text|application)/(?:plain|html|xml|json|x-json))(?:\s*;.*)?)$&quot;);</span><br><span class="line">    //如果开发的项目没有考虑时区问题，需要设置成null，不然dateTime类型会按照时区重新计算</span><br><span class="line">    i18n.LocalizedApplication.Current.SetPrincipalAppLanguageForRequestHandlers = null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="执行命令生成pot和po文件："><a href="#执行命令生成pot和po文件：" class="headerlink" title="执行命令生成pot和po文件："></a>执行命令生成pot和po文件：</h5> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;$(TargetDir)i18n.PostBuild.exe&quot; &quot;$(ProjectDir)\web.config&quot;</span><br></pre></td></tr></table></figure>
+<h5 id="得到pot和po文件之后，可以使用以下方式来完成多语言的翻译："><a href="#得到pot和po文件之后，可以使用以下方式来完成多语言的翻译：" class="headerlink" title="得到pot和po文件之后，可以使用以下方式来完成多语言的翻译："></a>得到pot和po文件之后，可以使用以下方式来完成多语言的翻译：</h5><pre><code>1. poedit // 本地翻译软件，可以根据pot模板创建各语言的po文件，也可以直接对现有的po文件进行翻译
+
+2. transifex // 在线翻译平台，可以导入pot模板，自动创建多个语言来在线翻译。也可以将现有的po文件导入
+
+3. crowdin // 在线翻译平台（类似transifex）
+</code></pre><h5 id="我们使用的nuget安装的i18N在多语言实现上并没有用到mo文件，所以可以不生成mo文件"><a href="#我们使用的nuget安装的i18N在多语言实现上并没有用到mo文件，所以可以不生成mo文件" class="headerlink" title="我们使用的nuget安装的i18N在多语言实现上并没有用到mo文件，所以可以不生成mo文件"></a>我们使用的nuget安装的i18N在多语言实现上并没有用到mo文件，所以可以不生成mo文件</h5><p> <br><br> <strong><em>对于所有访问资源都在所部署的IIS服务器的情况，以上配置基本就可以了</em></strong></p>
+<hr>
+<p> 但是对于引用CDN的文件来说，以上的方式就不合适了，所以我们弃用i18N自带的pot模板生成工具i18n.PostBuild，自己实现。</p>
+<p> 大概思路：</p>
+<ol>
+<li><p>如果资源文件在所部署的IIS服务器上，依然使用以上的试试；</p>
+</li>
+<li><p>如果资源文件在CDN上（对于我们来说要翻译部分基本是 js、tpl、css、image），所以只需要处理js、tpl里面的多语言即可；</p>
+</li>
+<li><p>类似[[[xxxx]]]这样的语法，我们定义一个js里面的语法，_l(‘xxxx’)；</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">_l(&quot;明道&quot;)</span><br><span class="line"></span><br><span class="line">_l(&quot;我在 %0 上班&quot;,&quot;明道&quot;)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">window._l = function () &#123;</span><br><span class="line">  var args = arguments;</span><br><span class="line">  if (args) &#123;</span><br><span class="line">    var key = args[0];</span><br><span class="line">    var content = key;</span><br><span class="line">    if (typeof mdTranslation != &apos;undefined&apos; &amp;&amp; mdTranslation[key])</span><br><span class="line">      content = mdTranslation[key];</span><br><span class="line">    // 含0% 1% 的内容替换</span><br><span class="line">    if (args.length &gt; 1) &#123;</span><br><span class="line">      for (var i = 1; i &lt; args.length; i++) &#123;</span><br><span class="line">        content = content.replace(new RegExp(&apos;%&apos; + (i - 1), &apos;g&apos;), args[i]);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return content;</span><br><span class="line">  &#125;</span><br><span class="line">  return &apos;&apos;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</code></pre><ol>
+<li><p>根据[[[xxxx]]] 和 _l(‘xxxx’) 语法我们通过脚本来提取所有的key，生成pot文件，大家可以注意文件内有一行 <strong>#: Disabled references:1</strong>，这里其实是有讲究的，我的方式是出于自动生成方便，大家有兴趣可以深入了解一下 <a href="http://www.gnu.org/software/gettext/manual/index.html" target="_blank" rel="noopener">gettext</a>;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">msgid &quot;&quot;</span><br><span class="line">msgstr &quot;&quot;</span><br><span class="line">&quot;Project-Id-Version: \n&quot;</span><br><span class="line">&quot;POT-Creation-Date: 2017-05-17 15:12:04+08:00\n&quot;</span><br><span class="line">&quot;MIME-Version: 1.0\n&quot;</span><br><span class="line">&quot;Content-Type: text/plain; charset=utf-8\n&quot;</span><br><span class="line">&quot;Content-Transfer-Encoding: 8bit\n&quot;</span><br><span class="line">&quot;X-Generator: i18n.POTGenerator\n&quot;</span><br><span class="line"> </span><br><span class="line">#: Disabled references:1</span><br><span class="line">msgid &quot;明道&quot;</span><br><span class="line">msgstr &quot;&quot;</span><br><span class="line"></span><br><span class="line">#: Disabled references:1</span><br><span class="line">msgid &quot;我在 %0 上班&quot;</span><br><span class="line">msgstr &quot;&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将pot模板导入到 transifex/crowdin 中，指定这个模板需要翻译出哪些语言，在线翻译完成后下载po文件；</p>
+<p> <img src="/img/multilingual/crowdin.png" alt="crowdin.png"></p>
+<p> <img src="/img/multilingual/po.png" alt="po.png"></p>
+</li>
+<li><p>根据po文件生成js文件，把js引入到项目下就可以通过 _l(‘xxxx’) 的方式使用了；</p>
+<p> <img src="/img/multilingual/local.png" alt="local.png"></p>
+<p><br><br><strong>注意：</strong>如果使用第三方翻译平台，基本上都是按词数或者条数来收费的。为了减少一些成本，对于已经翻译好的内容，其实可以不用存储在翻译平台，翻译好后下载po文件后就可以把翻译平台上的内容清空。之后再导入新的pot文件，所以对pot的生成就要做一些处理，我们希望是增量式的。</p>
+<ol>
+<li><p>提取站点中所有有效的key</p>
+</li>
+<li><p>清理pot和po文件中无效的key</p>
+</li>
+<li><p>对比提取出来的key与现有翻译文件(已经清理过)中的key</p>
+</li>
+<li><p>生成增量key的pot文件</p>
+</li>
+<li><p>导入只含增量key的pot文件，完成翻译</p>
+</li>
+<li><p>从翻译平台下载po文件，修改本地的pot和po文件（增量部分copy追加到文件中）</p>
+</li>
+<li><p>重新更新po文件生成js文件</p>
+</li>
+</ol>
+<p>以上的实现我们是通过gulp来完成的，具体实现方式可以根据情况而定。</p>
+</li>
+</ol>
+<hr>
+<h3 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h3><ul>
+<li><a href="http://www.gnu.org/software/gettext/manual/index.html" target="_blank" rel="noopener">gettext</a></li>
+<li><a href="https://github.com/turquoiseowl/i18n" target="_blank" rel="noopener">i18n for ASP.NET</a></li>
+<li><a href="https://crowdin.com" target="_blank" rel="noopener">crowdin</a></li>
+<li><a href="https://www.transifex.com" target="_blank" rel="noopener">transifex</a></li>
+</ul>
+
+          
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -1528,6 +1766,10 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -1540,13 +1782,17 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2017/04/22/ui-automate-test/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1559,16 +1805,8 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
         
         
           <h2 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/04/22/ui-automate-test/" itemprop="url">
-                  分分钟玩转UI自动化测试
-                </a>
-              
-            
-          </h2>
+                <a class="post-title-link" href="/2017/04/22/ui-automate-test/" itemprop="url">分分钟玩转UI自动化测试</a></h2>
         
 
         <div class="post-meta">
@@ -1620,17 +1858,6 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
 
           
           
-             <span id="/2017/04/22/ui-automate-test/" class="leancloud_visitors" data-flag-title="分分钟玩转UI自动化测试">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
 
           
 
@@ -1642,6 +1869,9 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -1650,33 +1880,75 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
       
         
           
-          有没有那么一刻，看到自动模拟用户操作界面感觉好神奇。
+            <p>有没有那么一刻，看到自动模拟用户操作界面感觉好神奇。</p>
+<p><img src="/img/ui-auto-test/timg.jpg" alt="timg.jpg"></p>
+<p>关于什么叫UI自动化测试就不解释了，基本上是你刚才脑海里想到什么就是什么。</p>
+<p>在分层自动化测试中包括：UI测试、集成/接口测试、单元测试。大神告诉我：UI自动化测试在自动化测试中占比只有10%。先不用在乎具体这个比例是什么，我们关注的是实际价值，这个需要根据实际项目来判断。不过对于UI自动化，基本上做冒烟测试用例的自动化就差不多了，从UI上来验证主业务流程的稳定性，同时降低一些维护成本。</p>
+<p>今天我们来聊聊WebdriverIO，WebdriverIO是Webdriver Node.js模块，API非常丰富，同时支持Mobile，不过说到Webdriver那就需要先了解一下Selenuim的发展过程，这里就不装逼了，有兴趣的可以到官方网站瞅瞅。</p>
+<p>WebdriverIO有两种使用模式，一种是Standalone Mode，一种是WDIO。官方其实是推荐使用WDIO，大概几个原因：</p>
+<ol>
+<li><p>调试方便</p>
+</li>
+<li><p>多模块并行测试</p>
+</li>
+<li><p>命令的执行都是同步的，直接通过变量接收结果，不用像Standalone Mode执行一个异步操作然后then…then…</p>
+</li>
+<li><p>提供配置文件，使测试参数的配置更简单</p>
+</li>
+</ol>
+<p>##下面开始我们的项目：</p>
+<h5 id="项目搭建条件："><a href="#项目搭建条件：" class="headerlink" title="项目搭建条件："></a>项目搭建条件：</h5><ol>
+<li>安装JDK</li>
+<li>安装Node.js</li>
+<li>安装webdriverio</li>
+<li>安装selenium-standalone</li>
+<li>安装wdio</li>
+<li>安装mocha，测试框架</li>
+<li>安装chai，诊断库</li>
+</ol>
+<h5 id="目录结构："><a href="#目录结构：" class="headerlink" title="目录结构："></a>目录结构：</h5><p><img src="/img/ui-auto-test/structure.png" alt="测试项目目录结构.png"></p>
+<h5 id="package-json："><a href="#package-json：" class="headerlink" title="package.json："></a>package.json：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&quot;devDependencies&quot;: &#123;</span><br><span class="line">   &quot;webdriverio&quot;: &quot;^4.6.2&quot;,  // webdriverio 库</span><br><span class="line">   &quot;selenium-standalone&quot;: &quot;^6.2.0&quot;,  // selenium standalone server、浏览器driver安装</span><br><span class="line">   &quot;wdio&quot;: &quot;^0.3.3&quot;,  // wdio测试运行器</span><br><span class="line">   &quot;wdio-mocha-framework&quot;: &quot;^0.5.9&quot;,  // 摩卡测试框架</span><br><span class="line">   &quot;chai&quot;: &quot;^3.5.0&quot;,  // 诊断库</span><br><span class="line">   &quot;wdio-spec-reporter&quot;: &quot;^0.1.0&quot;,  // 控制台输出测试报告</span><br><span class="line">   &quot;allure-commandline&quot;: &quot;^1.5.0&quot;,  // 根据测试结果生成测试报告</span><br><span class="line">   &quot;wdio-allure-reporter&quot;: &quot;^0.1.2&quot;  // 根据测试报告展现更直观的UI界面</span><br><span class="line"> &#125;,</span><br><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">   &quot;selenium&quot;: &quot;selenium-standalone start&quot;, // 启动selenium</span><br><span class="line">   &quot;test&quot;: &quot;.\\node_modules\\.bin\\wdio&quot;, // 执行test</span><br><span class="line">   &quot;allure&quot;: &quot;allure generate allure-results &amp;&amp; allure report open&quot; //生成测试报告</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>关于wdio-spec-reporter、allure-commandline、wdio-allure-reporter 不一定全需要安装。</p>
+<p>selenium-standalone包安装成功后需要执行以下命令来安装各浏览器driver，详细说明戳这里： <a href="https://github.com/vvo/selenium-standalone" target="_blank" rel="noopener">selenium-standalone</a>，install的过程中可能会遇到问题，建议翻墙试试<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">selenium-standalone install</span><br></pre></td></tr></table></figure></p>
+<p>安装成功后，执行以下命令就可以启动selenium-server：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">selenium-standalone start</span><br></pre></td></tr></table></figure></p>
+<h5 id="wdio配置文件："><a href="#wdio配置文件：" class="headerlink" title="wdio配置文件："></a>wdio配置文件：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">var config = require(&apos;./config&apos;);</span><br><span class="line">var common = require(&apos;./common&apos;);</span><br><span class="line"></span><br><span class="line">exports.config = &#123;</span><br><span class="line">    // selenium-server 启动的IP和端口，默认是4444</span><br><span class="line">    host: &apos;127.0.0.1&apos;,</span><br><span class="line">    port: 4444,</span><br><span class="line">    // 哪些文件执行测试</span><br><span class="line">    specs: [</span><br><span class="line">        &apos;./modules/*.js&apos;</span><br><span class="line">    ],</span><br><span class="line">    // 哪些文件不执行测试</span><br><span class="line">    exclude: [</span><br><span class="line">        &apos;./modules/function.js&apos;,</span><br><span class="line">        &apos;./modules/register.js&apos;,</span><br><span class="line">        &apos;./modules/invite.js&apos;</span><br><span class="line">    ],</span><br><span class="line">    // 使用什么浏览器来执行测试</span><br><span class="line">    capabilities: [&#123;</span><br><span class="line">        browserName: &apos;chrome&apos;,</span><br><span class="line">        maxInstances: 1, // 最多启动多少个浏览器窗口并行执行</span><br><span class="line">        chromeOptions: &#123;</span><br><span class="line">            args: [&apos;disable-extensions&apos;]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;],</span><br><span class="line">    logLevel: &apos;silent&apos;,</span><br><span class="line">    coloredLogs: true,</span><br><span class="line">    baseUrl: config.webUrl,</span><br><span class="line">    waitforTimeout: 100000, // 100s</span><br><span class="line">    framework: &apos;mocha&apos;,</span><br><span class="line">    reporters: [&apos;spec&apos;, &apos;allure&apos;], // 两种测试报告方式</span><br><span class="line">    reporterOptions: &#123;</span><br><span class="line">        allure: &#123;</span><br><span class="line">            outputDir: &apos;allure-results&apos; // allure测试结果上传目录</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    mochaOpts: &#123;</span><br><span class="line">        ui: &apos;bdd&apos;,</span><br><span class="line">        timeout: 99999999  // 整个测试执行的超时时间，长就对了</span><br><span class="line">    &#125;,</span><br><span class="line">    // 每次执行测试前把之前allure保留的测试结果清空</span><br><span class="line">    onPrepare: function (config, capabilities) &#123;</span><br><span class="line">        common.deleteFile(&apos;./allure-report&apos;);</span><br><span class="line">        common.deleteFile(&apos;./allure-results&apos;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h5 id="登录测试用例："><a href="#登录测试用例：" class="headerlink" title="登录测试用例："></a>登录测试用例：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">describe(&apos;login-test&apos;, function () &#123;</span><br><span class="line">    it(&apos;login&apos;, function () &#123;</span><br><span class="line">        return browser</span><br><span class="line">            .deleteCookie() // 删除所有cookie</span><br><span class="line">            .url(config.webUrl + &apos;/login.htm&apos;) // 打开登录页面</span><br><span class="line">            .setValue(&apos;#txtMobilePhone&apos;, config.loginInfo.mobilePhone) // 设置手机号</span><br><span class="line">            .setValue(&apos;#txtPassword&apos;, config.loginInfo.password) // 设置密码</span><br><span class="line">            .click(&apos;#btnLogin&apos;) // 点击登录按钮</span><br><span class="line">            .waitForExist(&apos;#topBarContent&apos;, config.waitMS); // 如果这样元素存在代表成功</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h5 id="方法注册与调用说明："><a href="#方法注册与调用说明：" class="headerlink" title="方法注册与调用说明："></a>方法注册与调用说明：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// 可以通过 browser.checkInviteSuccess()调用</span><br><span class="line">browser.addCommand(&apos;checkInviteSuccess&apos;, function (inboxType) &#123;</span><br><span class="line"></span><br><span class="line">    $(&apos;.sessionList .sessionItem[id=&quot;&apos; + inboxType + &apos;&quot;]&apos;).click();</span><br><span class="line">    browser.waitForExist(&apos;.messageItem&apos;, config.waitMS);</span><br><span class="line"></span><br><span class="line">    var result = browser</span><br><span class="line">        .execute(function () &#123;</span><br><span class="line">            var text = null;</span><br><span class="line">            $(&apos;.inboxBox .messageItem .textMsg&apos;).each(function () &#123;</span><br><span class="line">                text += $(this).text();</span><br><span class="line">            &#125;);</span><br><span class="line">            return text;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    // 断言正则表达式方法</span><br><span class="line">    assert.match(result.value, /已经成为好友|成功加入|已经申请|成功申请/, &apos;判断收到的消息是否包含指定的内容&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h5 id="执行测试："><a href="#执行测试：" class="headerlink" title="执行测试："></a>执行测试：</h5><p>控制台A<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run selenium  //启动selenium-server</span><br></pre></td></tr></table></figure></p>
+<p>控制台B<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run test //执行test</span><br></pre></td></tr></table></figure></p>
+<h5 id="生成测试报告："><a href="#生成测试报告：" class="headerlink" title="生成测试报告："></a>生成测试报告：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run allure</span><br></pre></td></tr></table></figure>
+<p><img src="/img/ui-auto-test/testResult.png" alt="某次测试结果.png"></p>
+<h5 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h5><ol>
+<li><p>WebdriverIO的命令上面提到的只是很小一部分，有兴趣赶快玩起来；</p>
+</li>
+<li><p>describe、it 都是Mocha内提供的方法，单条用例的调试可以使用it.only，单个describe可以describe.only，关于Mocha介绍戳这里  <a href="http://mochajs.org/" target="_blank" rel="noopener">Mocha</a>；</p>
+</li>
+<li><p>Chai提供BDD(行为驱动开发) 断言风格和TDD(测试驱动开发)断言风格，关于Chai介绍戳这里 <a href="http://chaijs.com/" target="_blank" rel="noopener">Chai</a>；</p>
+</li>
+<li><p>有时候不用非要断言来验证用例是否正确执行，像上面的登录的用例中，waitForExist的元素是登录成功后才可以看见，所以这样也是可以代表成功的；</p>
+</li>
+</ol>
+<h5 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h5><ul>
+<li><a href="http://www.seleniumhq.org/" target="_blank" rel="noopener">Selenium</a></li>
+<li><a href="http://webdriver.io/" target="_blank" rel="noopener">WebdriverIO</a></li>
+<li><a href="https://github.com/vvo/selenium-standalone" target="_blank" rel="noopener">Selenium-standalone</a></li>
+<li><a href="http://mochajs.org/" target="_blank" rel="noopener">Mocha</a></li>
+<li><a href="http://chaijs.com/" target="_blank" rel="noopener">Chai</a></li>
+</ul>
 
-关于什么叫UI自动化测试就不解释了，基本上是你刚才脑海里想到什么就是什么。
-在分层自动化测试中包括：UI测试、集成/接口测试、单元测试。大神告诉我：UI自动化测试在自动化测试中占比只有10%。先不用在乎具体这个比例是什么，我们关注的是实际价值，
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/04/22/ui-automate-test/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+          
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -1690,6 +1962,10 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -1702,13 +1978,17 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2017/04/16/cross-project-data-share/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1721,16 +2001,8 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
         
         
           <h2 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/04/16/cross-project-data-share/" itemprop="url">
-                  跨项目数据共享(跨语言)
-                </a>
-              
-            
-          </h2>
+                <a class="post-title-link" href="/2017/04/16/cross-project-data-share/" itemprop="url">跨项目数据共享(跨语言)</a></h2>
         
 
         <div class="post-meta">
@@ -1782,17 +2054,6 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
 
           
           
-             <span id="/2017/04/16/cross-project-data-share/" class="leancloud_visitors" data-flag-title="跨项目数据共享(跨语言)">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
 
           
 
@@ -1804,6 +2065,9 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -1812,41 +2076,85 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
       
         
           
-          对于这个话题，我相信大家很容易想到，HTTP接口的方式可以解决。
-大概的做法类似这样：
+            <p>对于这个话题，我相信大家很容易想到，HTTP接口的方式可以解决。</p>
+<p>大概的做法类似这样：</p>
+<ol>
+<li><p>根据HTTP接口需要的参数，将参数序列化成json字符串；</p>
+</li>
+<li><p>根据当前项目开发语言，封装一个处理Post||Get请求的方法，发送请求；</p>
+</li>
+<li><p>接口返回结果，然后反序列化成实体在逻辑代码中使用；</p>
+</li>
+</ol>
+<hr>
+<p>可能在单个项目内使用这样的方式痛点并不是很明显。但如果是在多个项目内，每个项目都依赖于这个接口，那为了获取到数据可能会写很多重复代码。而且可能因为没有统一的反序列实体来映射，会出现A项目对这个属性名反序列化后叫西门庆，到了B项目同样的属性名就叫成了武大郎，这样开发的同学也会觉得很不开心。</p>
+<p>我们目前的情况是多个项目，而且项目也不是统一的语言。为了解决上面的问题，我们决定使用gRPC的方式来处理，基本需要满足以下条件：</p>
+<ol>
+<li>微服务化</li>
+<li>跨语言</li>
+<li>性能</li>
+<li>调用者方便</li>
+</ol>
+<p>因为我目前参与的项目基于.Net开发，所以下面的一些例子可能会不自觉偏向C#。</p>
+<hr>
+<h4 id="在使用gRPC之前，需要先了解一下RPC、HTTP接口"><a href="#在使用gRPC之前，需要先了解一下RPC、HTTP接口" class="headerlink" title="在使用gRPC之前，需要先了解一下RPC、HTTP接口"></a>在使用gRPC之前，需要先了解一下RPC、HTTP接口</h4><h5 id="RPC"><a href="#RPC" class="headerlink" title="RPC"></a>RPC</h5><ul>
+<li>RPC（Remote Procedure Call Protocol）就是从一台机器（客户端）上通过参数传递的方式调用另一台机器（服务器）上的一个函数或方法并得到返回的结果，流程如下：</li>
+</ul>
+<p><img src="/img/cross-project-data-share/rpc.png" alt="RPC流程"></p>
+<h5 id="HTTP接口"><a href="#HTTP接口" class="headerlink" title="HTTP接口"></a>HTTP接口</h5><ul>
+<li><p>论复杂度，RPC框架肯定是高于简单的HTTP接口的；</p>
+</li>
+<li><p>HTTP接口由于受限于HTTP协议，需要带HTTP请求头，导致传输起来效率不如RPC；</p>
+</li>
+<li><p>RPC是长链接，不必每次通信都要像HTTP一样去握手。</p>
+</li>
+</ul>
+<h5 id="gRPC"><a href="#gRPC" class="headerlink" title="gRPC"></a>gRPC</h5><ul>
+<li><p>gRPC 是一个高性能 RPC 框架，和HTTP一样都是一种对RPC的实现，但性能相比之下更好；</p>
+</li>
+<li><p>使用 Protocol Buffers 来作为序列化和反序列化，以及接口定义语言，Protocol Buffers已经被证明是非常高效序列化框架；</p>
+</li>
+<li><p>跨语言，跨平台，gRPC支持多种平台和多种语言；</p>
+</li>
+<li><p>基于 HTTP/2。</p>
+</li>
+</ul>
+<hr>
+<h4 id="gRPC服务创建大概流程如下："><a href="#gRPC服务创建大概流程如下：" class="headerlink" title="gRPC服务创建大概流程如下："></a>gRPC服务创建大概流程如下：</h4><p>1、创建.proto文件，定义通信的数据结构和服务接口。文件内包含方法、请求参数、返回结果等；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">syntax = &quot;proto3&quot;;</span><br><span class="line"></span><br><span class="line">package MD.CacheService;</span><br><span class="line"></span><br><span class="line">service MDCache &#123;</span><br><span class="line">    ///获取单账号信息</span><br><span class="line">    rpc GetAccountInfo (AccountInfoRequest) returns (AccountInfoResponse) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">///获取单账号数据请求参数</span><br><span class="line">message AccountInfoRequest &#123;</span><br><span class="line">  ///账号id</span><br><span class="line">  string accountId = 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">///获取单个账号数据返回值</span><br><span class="line">message AccountInfoResponse &#123;</span><br><span class="line">    ///账号实体</span><br><span class="line">    AccountInfo accountInfo = 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">///账号实体</span><br><span class="line">message AccountInfo&#123;</span><br><span class="line">    ///账号id</span><br><span class="line">    string accountId = 1;</span><br><span class="line">    ///姓名</span><br><span class="line">    string fullname = 2;</span><br><span class="line">    ///头像</span><br><span class="line">    string avatar = 3;</span><br><span class="line">    ///账号创建时间，时间戳</span><br><span class="line">    int64 createTime = 4;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2、根据.proto文件通过Protocol Buffer 编译器分别生成服务队和客户端的代码（看官方的支持，可以选择一种你最擅长的语言，服务端和客户端完全不需要规定一样的语言）；</p>
+<p><img src="/img/cross-project-data-share/buildCode.png" alt="生成的代码"></p>
+<p>3、基于生成的代码创建服务端和客户端应用；</p>
+<p>4、在服务端创建一个类对服务接口进行override；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class CacheServiceImpl : MDCache.MDCacheBase</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 获取单个账号accountInfo</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    /// &lt;param name=&quot;request&quot;&gt;&lt;/param&gt;</span><br><span class="line">    /// &lt;param name=&quot;context&quot;&gt;&lt;/param&gt;</span><br><span class="line">    /// &lt;returns&gt;&lt;/returns&gt;</span><br><span class="line">    public override Task&lt;AccountInfoResponse&gt; GetAccountInfo(AccountInfoRequest request, ServerCallContext context)</span><br><span class="line">    &#123;</span><br><span class="line">        var response = new AccountInfoResponse();</span><br><span class="line"></span><br><span class="line">        if (!string.IsNullOrEmpty(request.AccountId))</span><br><span class="line">        &#123;</span><br><span class="line">            response.AccountInfo = GetServiceAccountInfo(request.AccountId);</span><br><span class="line">        &#125;</span><br><span class="line">        return Task.FromResult(response);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 5、启动服务（服务安装基于Topshelf）；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">class Program</span><br><span class="line">&#123;</span><br><span class="line">    static void Main(string[] args)</span><br><span class="line">    &#123;</span><br><span class="line">        HostFactory.Run(x =&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            x.Service&lt;CacheService&gt;(s =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                s.ConstructUsing(name =&gt; new CacheService());</span><br><span class="line">                s.WhenStarted(tc =&gt; tc.Start());</span><br><span class="line">                s.WhenStopped(tc =&gt; tc.Stop());</span><br><span class="line">            &#125;);</span><br><span class="line">            x.RunAsLocalSystem();</span><br><span class="line">            </span><br><span class="line">            x.SetDisplayName(&quot;MD.CacheService&quot;);</span><br><span class="line">            x.SetServiceName(&quot;MD.CacheService&quot;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class CacheService</span><br><span class="line">&#123;</span><br><span class="line">    private readonly string host = ConfigurationManager.AppSettings[&quot;Host&quot;];//服务IP</span><br><span class="line">    private readonly string port = ConfigurationManager.AppSettings[&quot;Port&quot;];//服务端口</span><br><span class="line"></span><br><span class="line">    readonly Server server;</span><br><span class="line">    public CacheService()</span><br><span class="line">    &#123;</span><br><span class="line">        server = new Server</span><br><span class="line">        &#123;</span><br><span class="line">            Services = &#123; MDCache.BindService(new CacheServiceImpl()) &#125;,</span><br><span class="line">            Ports = &#123; new ServerPort(host, Convert.ToInt32(port), ServerCredentials.Insecure) &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    public void Start() &#123; server.Start(); &#125;</span><br><span class="line">    public void Stop() &#123; server.ShutdownAsync(); &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>6、客户端连接测试<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var channel = new Channel(&quot;host:port&quot;, ChannelCredentials.Insecure);</span><br><span class="line">var client = new MDCacheClient(channel);</span><br></pre></td></tr></table></figure></p>
+<p><a href="http://www.grpc.io/docs/quickstart/csharp.html" target="_blank" rel="noopener">C#官方 example</a> ，照着做也可以实现效果</p>
+<h4 id="部署："><a href="#部署：" class="headerlink" title="部署："></a>部署：</h4><ul>
+<li>基于.Net Core的可以将服务部署在Linux上；</li>
+<li>基于.Net Framework的可以部署成Windows服务，关于Windows服务方式，这里推荐使用Topshelf，非常简单。</li>
+</ul>
+<p>服务部署后涉及到如何做到负载，我们必须保证服务的稳定，不希望单点故障。关于这部分的实现方式，后面会介绍使用 Nginx+Consul来解决</p>
+<h4 id="参考文档："><a href="#参考文档：" class="headerlink" title="参考文档："></a>参考文档：</h4><ul>
+<li><a href="https://developers.google.com/protocol-buffers/docs/proto3" target="_blank" rel="noopener">https://developers.google.com/protocol-buffers/docs/proto3</a></li>
+<li><a href="http://www.grpc.io/docs/" target="_blank" rel="noopener">http://www.grpc.io/docs/</a></li>
+<li><a href="http://topshelf-project.com/" target="_blank" rel="noopener">http://topshelf-project.com/</a></li>
+</ul>
 
-根据HTTP接口需要的参数，将参数序列化成json字符串；
-
-根据当前项目开发语言，封装一个处理Post||Get请求的方法，发送请求；
-
-接口返回结果，然后反序列化成实体在逻辑代码中使用；
-
-
-
-可能在单个项
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/04/16/cross-project-data-share/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+          
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -1860,6 +2168,10 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -1892,72 +2204,73 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
 
       
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/uploads/avatar.png"
-               alt="Beck Jin" />
-          <p class="site-author-name" itemprop="name">Beck Jin</p>
-           
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Beck Jin</p>
               <p class="site-description motion-element" itemprop="description"></p>
-           
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
         </div>
-        <nav class="site-state motion-element">
-
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-categories">
-              <a href="/categories/index.html">
-                <span class="site-state-item-count">6</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
-                <span class="site-state-item-count">19</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
-
-
       </section>
 
       
@@ -1974,19 +2287,36 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2017</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Beck Jin</span>
+
+  
 </div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
 
 
 
         
+
+
+
+
+
+
 
         
       </div>
@@ -1997,6 +2327,8 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
         <i class="fa fa-arrow-up"></i>
         
       </div>
+    
+
     
 
   </div>
@@ -2031,49 +2363,54 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
 
 
   
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
   
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
   
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
-
-
 
   
   
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
 
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
 
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
 
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
 
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
 
 
   
 
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
 
 
 
@@ -2103,14 +2440,8 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
 
 
 
-  
 
 
-
-
-
-
-  
 
 
 
@@ -2118,113 +2449,17 @@ Grain之间传递消息过程中也可能出现死锁的情况，如
 
   
 
+
+
+
+
   
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-  <script>AV.initialize("FCgGthOl6XN7xRjfK31raebD-gzGzoHsz", "20z736XSuGX562R2ky8uu4EU");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
 
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
+  
 
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+  
 
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
-        });
-    }
-
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
-
+  
   
 
   

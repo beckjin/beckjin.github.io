@@ -1,15 +1,19 @@
-<!doctype html>
+<!DOCTYPE html>
 
 
 
   
 
 
-<html class="theme-next pisces use-motion" lang="zh-Hans">
+<html class="theme-next muse use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
 
 
 
@@ -33,36 +37,11 @@
 
 
 
+
   
   
   <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
 
 
 
@@ -71,7 +50,22 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.3" color="#222">
+
+
+
 
 
   <meta name="keywords" content="跨项目,跨语言,gRPC," />
@@ -83,11 +77,6 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
-
-
-
-
 
 
 <meta name="description" content="对于这个话题，我相信大家很容易想到，HTTP接口的方式可以解决。 大概的做法类似这样：  根据HTTP接口需要的参数，将参数序列化成json字符串；  根据当前项目开发语言，封装一个处理Post||Get请求的方法，发送请求；  接口返回结果，然后反序列化成实体在逻辑代码中使用；    可能在单个项目内使用这样的方式痛点并不是很明显。但如果是在多个项目内，每个项目都依赖于这个接口，那为了获取到数据">
@@ -95,8 +84,9 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="跨项目数据共享(跨语言)">
 <meta property="og:url" content="http://www.beckjin.com/2017/04/16/cross-project-data-share/index.html">
-<meta property="og:site_name" content="Beck's Blog">
+<meta property="og:site_name" content="Beck&#39;s Blog">
 <meta property="og:description" content="对于这个话题，我相信大家很容易想到，HTTP接口的方式可以解决。 大概的做法类似这样：  根据HTTP接口需要的参数，将参数序列化成json字符串；  根据当前项目开发语言，封装一个处理Post||Get请求的方法，发送请求；  接口返回结果，然后反序列化成实体在逻辑代码中使用；    可能在单个项目内使用这样的方式痛点并不是很明显。但如果是在多个项目内，每个项目都依赖于这个接口，那为了获取到数据">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.beckjin.com/img/cross-project-data-share/rpc.png">
 <meta property="og:image" content="http://www.beckjin.com/img/cross-project-data-share/buildCode.png">
 <meta property="og:updated_time" content="2017-07-22T05:12:22.185Z">
@@ -111,10 +101,12 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Pisces',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
-    motion: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: '0',
       author: '博主'
@@ -137,12 +129,7 @@
 
 
 
-  <meta name="wumiiVerification" content="9c0f45c7-25e2-468d-9df0-8b3af4c615ac" />
   <title>跨项目数据共享(跨语言) | Beck's Blog</title>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
   
 
 
@@ -152,18 +139,16 @@
 
 
 
+</head>
 
-
-
-
-
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
     
   
 
-  <div class="container sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -209,8 +194,18 @@
         </li>
       
         
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
+          <a href="/categories/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -220,21 +215,11 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
           </a>
         </li>
       
@@ -266,13 +251,17 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2017/04/16/cross-project-data-share/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -284,14 +273,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                跨项目数据共享(跨语言)
-              
-            
-          </h2>
+          <h2 class="post-title" itemprop="name headline">跨项目数据共享(跨语言)</h2>
         
 
         <div class="post-meta">
@@ -343,17 +325,6 @@
 
           
           
-             <span id="/2017/04/16/cross-project-data-share/" class="leancloud_visitors" data-flag-title="跨项目数据共享(跨语言)">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
 
           
 
@@ -365,6 +336,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -416,50 +390,38 @@
 </ul>
 <hr>
 <h4 id="gRPC服务创建大概流程如下："><a href="#gRPC服务创建大概流程如下：" class="headerlink" title="gRPC服务创建大概流程如下："></a>gRPC服务创建大概流程如下：</h4><p>1、创建.proto文件，定义通信的数据结构和服务接口。文件内包含方法、请求参数、返回结果等；</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">syntax = &quot;proto3&quot;;</div><div class="line"></div><div class="line">package MD.CacheService;</div><div class="line"></div><div class="line">service MDCache &#123;</div><div class="line">    ///获取单账号信息</div><div class="line">    rpc GetAccountInfo (AccountInfoRequest) returns (AccountInfoResponse) &#123;&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">///获取单账号数据请求参数</div><div class="line">message AccountInfoRequest &#123;</div><div class="line">  ///账号id</div><div class="line">  string accountId = 1;</div><div class="line">&#125;</div><div class="line"></div><div class="line">///获取单个账号数据返回值</div><div class="line">message AccountInfoResponse &#123;</div><div class="line">    ///账号实体</div><div class="line">    AccountInfo accountInfo = 1;</div><div class="line">&#125;</div><div class="line"></div><div class="line">///账号实体</div><div class="line">message AccountInfo&#123;</div><div class="line">    ///账号id</div><div class="line">    string accountId = 1;</div><div class="line">    ///姓名</div><div class="line">    string fullname = 2;</div><div class="line">    ///头像</div><div class="line">    string avatar = 3;</div><div class="line">    ///账号创建时间，时间戳</div><div class="line">    int64 createTime = 4;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">syntax = &quot;proto3&quot;;</span><br><span class="line"></span><br><span class="line">package MD.CacheService;</span><br><span class="line"></span><br><span class="line">service MDCache &#123;</span><br><span class="line">    ///获取单账号信息</span><br><span class="line">    rpc GetAccountInfo (AccountInfoRequest) returns (AccountInfoResponse) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">///获取单账号数据请求参数</span><br><span class="line">message AccountInfoRequest &#123;</span><br><span class="line">  ///账号id</span><br><span class="line">  string accountId = 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">///获取单个账号数据返回值</span><br><span class="line">message AccountInfoResponse &#123;</span><br><span class="line">    ///账号实体</span><br><span class="line">    AccountInfo accountInfo = 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">///账号实体</span><br><span class="line">message AccountInfo&#123;</span><br><span class="line">    ///账号id</span><br><span class="line">    string accountId = 1;</span><br><span class="line">    ///姓名</span><br><span class="line">    string fullname = 2;</span><br><span class="line">    ///头像</span><br><span class="line">    string avatar = 3;</span><br><span class="line">    ///账号创建时间，时间戳</span><br><span class="line">    int64 createTime = 4;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>2、根据.proto文件通过Protocol Buffer 编译器分别生成服务队和客户端的代码（看官方的支持，可以选择一种你最擅长的语言，服务端和客户端完全不需要规定一样的语言）；</p>
 <p><img src="/img/cross-project-data-share/buildCode.png" alt="生成的代码"></p>
 <p>3、基于生成的代码创建服务端和客户端应用；</p>
 <p>4、在服务端创建一个类对服务接口进行override；</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">public class CacheServiceImpl : MDCache.MDCacheBase</div><div class="line">&#123;</div><div class="line">    /// &lt;summary&gt;</div><div class="line">    /// 获取单个账号accountInfo</div><div class="line">    /// &lt;/summary&gt;</div><div class="line">    /// &lt;param name=&quot;request&quot;&gt;&lt;/param&gt;</div><div class="line">    /// &lt;param name=&quot;context&quot;&gt;&lt;/param&gt;</div><div class="line">    /// &lt;returns&gt;&lt;/returns&gt;</div><div class="line">    public override Task&lt;AccountInfoResponse&gt; GetAccountInfo(AccountInfoRequest request, ServerCallContext context)</div><div class="line">    &#123;</div><div class="line">        var response = new AccountInfoResponse();</div><div class="line"></div><div class="line">        if (!string.IsNullOrEmpty(request.AccountId))</div><div class="line">        &#123;</div><div class="line">            response.AccountInfo = GetServiceAccountInfo(request.AccountId);</div><div class="line">        &#125;</div><div class="line">        return Task.FromResult(response);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class CacheServiceImpl : MDCache.MDCacheBase</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// 获取单个账号accountInfo</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    /// &lt;param name=&quot;request&quot;&gt;&lt;/param&gt;</span><br><span class="line">    /// &lt;param name=&quot;context&quot;&gt;&lt;/param&gt;</span><br><span class="line">    /// &lt;returns&gt;&lt;/returns&gt;</span><br><span class="line">    public override Task&lt;AccountInfoResponse&gt; GetAccountInfo(AccountInfoRequest request, ServerCallContext context)</span><br><span class="line">    &#123;</span><br><span class="line">        var response = new AccountInfoResponse();</span><br><span class="line"></span><br><span class="line">        if (!string.IsNullOrEmpty(request.AccountId))</span><br><span class="line">        &#123;</span><br><span class="line">            response.AccountInfo = GetServiceAccountInfo(request.AccountId);</span><br><span class="line">        &#125;</span><br><span class="line">        return Task.FromResult(response);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p> 5、启动服务（服务安装基于Topshelf）；</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">class Program</div><div class="line">&#123;</div><div class="line">    static void Main(string[] args)</div><div class="line">    &#123;</div><div class="line">        HostFactory.Run(x =&gt;</div><div class="line">        &#123;</div><div class="line">            x.Service&lt;CacheService&gt;(s =&gt;</div><div class="line">            &#123;</div><div class="line">                s.ConstructUsing(name =&gt; new CacheService());</div><div class="line">                s.WhenStarted(tc =&gt; tc.Start());</div><div class="line">                s.WhenStopped(tc =&gt; tc.Stop());</div><div class="line">            &#125;);</div><div class="line">            x.RunAsLocalSystem();</div><div class="line">            </div><div class="line">            x.SetDisplayName(&quot;MD.CacheService&quot;);</div><div class="line">            x.SetServiceName(&quot;MD.CacheService&quot;);</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public class CacheService</div><div class="line">&#123;</div><div class="line">    private readonly string host = ConfigurationManager.AppSettings[&quot;Host&quot;];//服务IP</div><div class="line">    private readonly string port = ConfigurationManager.AppSettings[&quot;Port&quot;];//服务端口</div><div class="line"></div><div class="line">    readonly Server server;</div><div class="line">    public CacheService()</div><div class="line">    &#123;</div><div class="line">        server = new Server</div><div class="line">        &#123;</div><div class="line">            Services = &#123; MDCache.BindService(new CacheServiceImpl()) &#125;,</div><div class="line">            Ports = &#123; new ServerPort(host, Convert.ToInt32(port), ServerCredentials.Insecure) &#125;</div><div class="line">        &#125;;</div><div class="line">    &#125;</div><div class="line">    public void Start() &#123; server.Start(); &#125;</div><div class="line">    public void Stop() &#123; server.ShutdownAsync(); &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>6、客户端连接测试<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var channel = new Channel(&quot;host:port&quot;, ChannelCredentials.Insecure);</div><div class="line">var client = new MDCacheClient(channel);</div></pre></td></tr></table></figure></p>
-<p><a href="http://www.grpc.io/docs/quickstart/csharp.html" target="_blank" rel="external">C#官方 example</a> ，照着做也可以实现效果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">class Program</span><br><span class="line">&#123;</span><br><span class="line">    static void Main(string[] args)</span><br><span class="line">    &#123;</span><br><span class="line">        HostFactory.Run(x =&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            x.Service&lt;CacheService&gt;(s =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                s.ConstructUsing(name =&gt; new CacheService());</span><br><span class="line">                s.WhenStarted(tc =&gt; tc.Start());</span><br><span class="line">                s.WhenStopped(tc =&gt; tc.Stop());</span><br><span class="line">            &#125;);</span><br><span class="line">            x.RunAsLocalSystem();</span><br><span class="line">            </span><br><span class="line">            x.SetDisplayName(&quot;MD.CacheService&quot;);</span><br><span class="line">            x.SetServiceName(&quot;MD.CacheService&quot;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class CacheService</span><br><span class="line">&#123;</span><br><span class="line">    private readonly string host = ConfigurationManager.AppSettings[&quot;Host&quot;];//服务IP</span><br><span class="line">    private readonly string port = ConfigurationManager.AppSettings[&quot;Port&quot;];//服务端口</span><br><span class="line"></span><br><span class="line">    readonly Server server;</span><br><span class="line">    public CacheService()</span><br><span class="line">    &#123;</span><br><span class="line">        server = new Server</span><br><span class="line">        &#123;</span><br><span class="line">            Services = &#123; MDCache.BindService(new CacheServiceImpl()) &#125;,</span><br><span class="line">            Ports = &#123; new ServerPort(host, Convert.ToInt32(port), ServerCredentials.Insecure) &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    public void Start() &#123; server.Start(); &#125;</span><br><span class="line">    public void Stop() &#123; server.ShutdownAsync(); &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>6、客户端连接测试<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var channel = new Channel(&quot;host:port&quot;, ChannelCredentials.Insecure);</span><br><span class="line">var client = new MDCacheClient(channel);</span><br></pre></td></tr></table></figure></p>
+<p><a href="http://www.grpc.io/docs/quickstart/csharp.html" target="_blank" rel="noopener">C#官方 example</a> ，照着做也可以实现效果</p>
 <h4 id="部署："><a href="#部署：" class="headerlink" title="部署："></a>部署：</h4><ul>
 <li>基于.Net Core的可以将服务部署在Linux上；</li>
 <li>基于.Net Framework的可以部署成Windows服务，关于Windows服务方式，这里推荐使用Topshelf，非常简单。</li>
 </ul>
 <p>服务部署后涉及到如何做到负载，我们必须保证服务的稳定，不希望单点故障。关于这部分的实现方式，后面会介绍使用 Nginx+Consul来解决</p>
 <h4 id="参考文档："><a href="#参考文档：" class="headerlink" title="参考文档："></a>参考文档：</h4><ul>
-<li><a href="https://developers.google.com/protocol-buffers/docs/proto3" target="_blank" rel="external">https://developers.google.com/protocol-buffers/docs/proto3</a></li>
-<li><a href="http://www.grpc.io/docs/" target="_blank" rel="external">http://www.grpc.io/docs/</a></li>
-<li><a href="http://topshelf-project.com/" target="_blank" rel="external">http://topshelf-project.com/</a></li>
+<li><a href="https://developers.google.com/protocol-buffers/docs/proto3" target="_blank" rel="noopener">https://developers.google.com/protocol-buffers/docs/proto3</a></li>
+<li><a href="http://www.grpc.io/docs/" target="_blank" rel="noopener">http://www.grpc.io/docs/</a></li>
+<li><a href="http://topshelf-project.com/" target="_blank" rel="noopener">http://topshelf-project.com/</a></li>
 </ul>
 
       
     </div>
+    
+    
+    
 
-    <div>
-      
-        
+    
 
-      
-    </div>
+    
 
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -475,15 +437,15 @@
       
 
       
-        
+      
       
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/22/ui-automate-test/" rel="next" title="分分钟玩转UI自动化测试">
-                <i class="fa fa-chevron-left"></i> 分分钟玩转UI自动化测试
+              <a href="/2017/03/25/cross-project-code-share/" rel="next" title="跨项目代码共享(C#)">
+                <i class="fa fa-chevron-left"></i> 跨项目代码共享(C#)
               </a>
             
           </div>
@@ -492,8 +454,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/03/25/cross-project-code-share/" rel="prev" title="跨项目代码共享(C#)">
-                跨项目代码共享(C#) <i class="fa fa-chevron-right"></i>
+              <a href="/2017/04/22/ui-automate-test/" rel="prev" title="分分钟玩转UI自动化测试">
+                分分钟玩转UI自动化测试 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -503,32 +465,17 @@
       
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
 
     <div class="post-spread">
       
-        <!-- JiaThis Button BEGIN -->
-<div class="jiathis_style_24x24">
-  <a class="jiathis_button_weixin"></a>
-  <a class="jiathis_button_qzone"></a>
-  <a class="jiathis_button_cqq"></a>
-  <a class="jiathis_button_tsina"></a>
-  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
-  <a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript" >
-  var jiathis_config={
-    hideMore:false
-  }
-</script>
-<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
-<!-- JiaThis Button END -->
-      
     </div>
-	
-	
   </div>
 
 
@@ -537,11 +484,9 @@
 
 
           
-  <div class="comments" id="comments">
-    
-      <div id="SOHUCS"></div>
-    
-  </div>
+
+  
+
 
 
         </div>
@@ -557,81 +502,82 @@
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
             站点概览
           </li>
         </ul>
       
 
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/uploads/avatar.png"
-               alt="Beck Jin" />
-          <p class="site-author-name" itemprop="name">Beck Jin</p>
-           
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Beck Jin</p>
               <p class="site-description motion-element" itemprop="description"></p>
-           
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
         </div>
-        <nav class="site-state motion-element">
-
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-categories">
-              <a href="/categories/index.html">
-                <span class="site-state-item-count">6</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
-                <span class="site-state-item-count">19</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
-
-
       </section>
 
       
@@ -644,7 +590,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#在使用gRPC之前，需要先了解一下RPC、HTTP接口"><span class="nav-number">1.</span> <span class="nav-text">在使用gRPC之前，需要先了解一下RPC、HTTP接口</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#RPC"><span class="nav-number">1.1.</span> <span class="nav-text">RPC</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HTTP接口"><span class="nav-number">1.2.</span> <span class="nav-text">HTTP接口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#gRPC"><span class="nav-number">1.3.</span> <span class="nav-text">gRPC</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gRPC服务创建大概流程如下："><span class="nav-number">2.</span> <span class="nav-text">gRPC服务创建大概流程如下：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#部署："><span class="nav-number">3.</span> <span class="nav-text">部署：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考文档："><span class="nav-number">4.</span> <span class="nav-text">参考文档：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#在使用gRPC之前，需要先了解一下RPC、HTTP接口"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x5728;&#x4F7F;&#x7528;gRPC&#x4E4B;&#x524D;&#xFF0C;&#x9700;&#x8981;&#x5148;&#x4E86;&#x89E3;&#x4E00;&#x4E0B;RPC&#x3001;HTTP&#x63A5;&#x53E3;" class="headerlink" title="&#x5728;&#x4F7F;&#x7528;gRPC&#x4E4B;&#x524D;&#xFF0C;&#x9700;&#x8981;&#x5148;&#x4E86;&#x89E3;&#x4E00;&#x4E0B;RPC&#x3001;HTTP&#x63A5;&#x53E3;"></a>&#x5728;&#x4F7F;&#x7528;gRPC&#x4E4B;&#x524D;&#xFF0C;&#x9700;&#x8981;&#x5148;&#x4E86;&#x89E3;&#x4E00;&#x4E0B;RPC&#x3001;HTTP&#x63A5;&#x53E3;</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#RPC"><span class="nav-number">1.1.</span> <span class="nav-text"><a href="#RPC" class="headerlink" title="RPC"></a>RPC</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HTTP接口"><span class="nav-number">1.2.</span> <span class="nav-text"><a href="#HTTP&#x63A5;&#x53E3;" class="headerlink" title="HTTP&#x63A5;&#x53E3;"></a>HTTP&#x63A5;&#x53E3;</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#gRPC"><span class="nav-number">1.3.</span> <span class="nav-text"><a href="#gRPC" class="headerlink" title="gRPC"></a>gRPC</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gRPC服务创建大概流程如下："><span class="nav-number">2.</span> <span class="nav-text"><a href="#gRPC&#x670D;&#x52A1;&#x521B;&#x5EFA;&#x5927;&#x6982;&#x6D41;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A;" class="headerlink" title="gRPC&#x670D;&#x52A1;&#x521B;&#x5EFA;&#x5927;&#x6982;&#x6D41;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A;"></a>gRPC&#x670D;&#x52A1;&#x521B;&#x5EFA;&#x5927;&#x6982;&#x6D41;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#部署："><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x90E8;&#x7F72;&#xFF1A;" class="headerlink" title="&#x90E8;&#x7F72;&#xFF1A;"></a>&#x90E8;&#x7F72;&#xFF1A;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考文档："><span class="nav-number">4.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x6587;&#x6863;&#xFF1A;" class="headerlink" title="&#x53C2;&#x8003;&#x6587;&#x6863;&#xFF1A;"></a>&#x53C2;&#x8003;&#x6587;&#x6863;&#xFF1A;</span></a></li></ol></div>
             
 
           </div>
@@ -664,19 +610,36 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2017</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Beck Jin</span>
+
+  
 </div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
 
 
 
         
+
+
+
+
+
+
 
         
       </div>
@@ -687,6 +650,8 @@
         <i class="fa fa-arrow-up"></i>
         
       </div>
+    
+
     
 
   </div>
@@ -721,53 +686,58 @@
 
 
   
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
   
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
   
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
-
-
 
   
   
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
-
-
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
 
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
 
 
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
 
 
 
@@ -797,14 +767,8 @@
 
 
 
-  
 
 
-
-
-
-
-  
 
 
 
@@ -812,113 +776,17 @@
 
   
 
+
+
+
+
   
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-  <script>AV.initialize("FCgGthOl6XN7xRjfK31raebD-gzGzoHsz", "20z736XSuGX562R2ky8uu4EU");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
 
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
+  
 
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+  
 
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
-        });
-    }
-
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
-
+  
   
 
   

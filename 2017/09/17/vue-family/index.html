@@ -1,15 +1,19 @@
-<!doctype html>
+<!DOCTYPE html>
 
 
 
   
 
 
-<html class="theme-next pisces use-motion" lang="zh-Hans">
+<html class="theme-next muse use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
 
 
 
@@ -33,36 +37,11 @@
 
 
 
+
   
   
   <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
 
 
 
@@ -71,7 +50,22 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.3" color="#222">
+
+
+
 
 
   <meta name="keywords" content="前端,Vue.js," />
@@ -83,11 +77,6 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
-
-
-
-
 
 
 <meta name="description" content="Vue.js 是当下很火的一个 JavaScript MVVM 库，它以数据驱动和组件化的思想构建。不管你是 Angular 的忠实粉，还是 React 的迷恋者，有机会多了解一个框架也没什么坏处，更何况 Vue 上手难度还是比较低的 。 本文将介绍 Vue 全家桶（Vue+Vue-router+Vuex）在项目中的使用。经过一个项目的开发，个人感觉相比于 React，Vue 给我最大的感受是简单">
@@ -95,8 +84,9 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="尝一尝Vue全家桶">
 <meta property="og:url" content="http://www.beckjin.com/2017/09/17/vue-family/index.html">
-<meta property="og:site_name" content="Beck's Blog">
+<meta property="og:site_name" content="Beck&#39;s Blog">
 <meta property="og:description" content="Vue.js 是当下很火的一个 JavaScript MVVM 库，它以数据驱动和组件化的思想构建。不管你是 Angular 的忠实粉，还是 React 的迷恋者，有机会多了解一个框架也没什么坏处，更何况 Vue 上手难度还是比较低的 。 本文将介绍 Vue 全家桶（Vue+Vue-router+Vuex）在项目中的使用。经过一个项目的开发，个人感觉相比于 React，Vue 给我最大的感受是简单">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.beckjin.com/img/vue-family/store.png">
 <meta property="og:image" content="http://www.beckjin.com/img/vue-family/ui.png">
 <meta property="og:updated_time" content="2017-09-17T12:48:14.939Z">
@@ -111,10 +101,12 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Pisces',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
-    motion: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: '0',
       author: '博主'
@@ -137,12 +129,7 @@
 
 
 
-  <meta name="wumiiVerification" content="9c0f45c7-25e2-468d-9df0-8b3af4c615ac" />
   <title>尝一尝Vue全家桶 | Beck's Blog</title>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
   
 
 
@@ -152,18 +139,16 @@
 
 
 
+</head>
 
-
-
-
-
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
     
   
 
-  <div class="container sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -209,8 +194,18 @@
         </li>
       
         
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
+          <a href="/categories/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -220,21 +215,11 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
           </a>
         </li>
       
@@ -266,13 +251,17 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2017/09/17/vue-family/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -284,14 +273,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                尝一尝Vue全家桶
-              
-            
-          </h2>
+          <h2 class="post-title" itemprop="name headline">尝一尝Vue全家桶</h2>
         
 
         <div class="post-meta">
@@ -343,17 +325,6 @@
 
           
           
-             <span id="/2017/09/17/vue-family/" class="leancloud_visitors" data-flag-title="尝一尝Vue全家桶">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
 
           
 
@@ -365,6 +336,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -376,46 +350,34 @@
 <h4 id="双向数据绑定"><a href="#双向数据绑定" class="headerlink" title="双向数据绑定"></a>双向数据绑定</h4><p>Vue 内的双向数据绑定使用还是比较简单的 v-model 就可以解决问题。</p>
 <p>但有一个问题需要注意，特别在编辑数据项的时候，双向数据绑定可能引起静态数据联动的问题，这时候需要用到对象复制来解决问题。如：在弹层中编辑数据时，导致列表数据同步跟随着变化。</p>
 <h4 id="Vue-router"><a href="#Vue-router" class="headerlink" title="Vue-router"></a>Vue-router</h4><p>这里直接使用懒加载路由，如果要测试非懒加载可以移出来预先 require；</p>
-<h6 id="main-js"><a href="#main-js" class="headerlink" title="main.js"></a>main.js</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">import Vue from &apos;vue&apos;;</div><div class="line">import VueRouter from &apos;vue-router&apos;;</div><div class="line">Vue.use(VueRouter);</div><div class="line">const router = new VueRouter(&#123;</div><div class="line">    mode: &apos;history&apos;,</div><div class="line">    routes: [</div><div class="line">        &#123;path: &apos;/&apos;, component: resolve =&gt; require([&apos;./components&apos;], resolve)&#125;,</div><div class="line">        &#123;path: &apos;/refresh&apos;, component: resolve =&gt; require([&apos;./components&apos;], resolve)&#125;,</div><div class="line">        &#123;path: &apos;/forbid&apos;, component: resolve =&gt; require([&apos;./components/forbid&apos;], resolve)&#125;</div><div class="line">    ]</div><div class="line">&#125;);</div><div class="line"></div><div class="line">//store</div><div class="line">import store from &apos;./store/index&apos;;</div><div class="line">new Vue(&#123;</div><div class="line">    store,</div><div class="line">    router</div><div class="line">&#125;).$mount(&apos;#container&apos;);</div></pre></td></tr></table></figure>
+<h6 id="main-js"><a href="#main-js" class="headerlink" title="main.js"></a>main.js</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import Vue from &apos;vue&apos;;</span><br><span class="line">import VueRouter from &apos;vue-router&apos;;</span><br><span class="line">Vue.use(VueRouter);</span><br><span class="line">const router = new VueRouter(&#123;</span><br><span class="line">    mode: &apos;history&apos;,</span><br><span class="line">    routes: [</span><br><span class="line">        &#123;path: &apos;/&apos;, component: resolve =&gt; require([&apos;./components&apos;], resolve)&#125;,</span><br><span class="line">        &#123;path: &apos;/refresh&apos;, component: resolve =&gt; require([&apos;./components&apos;], resolve)&#125;,</span><br><span class="line">        &#123;path: &apos;/forbid&apos;, component: resolve =&gt; require([&apos;./components/forbid&apos;], resolve)&#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">//store</span><br><span class="line">import store from &apos;./store/index&apos;;</span><br><span class="line">new Vue(&#123;</span><br><span class="line">    store,</span><br><span class="line">    router</span><br><span class="line">&#125;).$mount(&apos;#container&apos;);</span><br></pre></td></tr></table></figure>
 <h4 id="Vuex"><a href="#Vuex" class="headerlink" title="Vuex"></a>Vuex</h4><p>Vuex 允许我们将 store 分割到 module 。每个模块拥有自己的 state、getters、actions、mutations。</p>
 <p><img src="/img/vue-family/store.png" alt="store"></p>
-<h6 id="notice-js-部分代码"><a href="#notice-js-部分代码" class="headerlink" title="notice.js 部分代码"></a>notice.js 部分代码</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">const state = &#123;</div><div class="line">    currentNoticeType: noticeType.update.val,</div><div class="line">    noticeList: []</div><div class="line">&#125;;</div><div class="line"></div><div class="line">const getters = &#123;</div><div class="line">    noticeList: state =&gt; &#123;</div><div class="line">        return state.noticeList;</div><div class="line">    &#125;,</div><div class="line">&#125;;</div><div class="line"></div><div class="line">const actions = &#123;</div><div class="line">    getNoticeList(context, type)&#123;</div><div class="line">        ajax.post(&apos;/notice/getList&apos;, &#123;type: type&#125;, (data) =&gt; &#123;</div><div class="line">            if (data) &#123;</div><div class="line">                setTimeout(function () &#123;</div><div class="line">                    context.commit(&apos;getNoticeList&apos;, data);</div><div class="line">                &#125;, 100);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;,</div><div class="line">    removeNotice(context, id)&#123;</div><div class="line">        return new Promise((resolve) =&gt; &#123;</div><div class="line">            ajax.post(&apos;/notice/remove&apos;, &#123;id: id&#125;, (data) =&gt; &#123;</div><div class="line">                resolve(data);</div><div class="line">                if (data) &#123;</div><div class="line">                    context.commit(&apos;removeNotice&apos;, id);</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125;);</div><div class="line">    &#125;,</div><div class="line">&#125;;</div><div class="line"></div><div class="line">const mutations = &#123;</div><div class="line">    getNoticeList(state, data)&#123;</div><div class="line">        state.noticeList = data;</div><div class="line">    &#125;,</div><div class="line">    removeNotice(state, id)&#123;</div><div class="line">        var noticeList = state.noticeList.filter(function (noticeItem) &#123;</div><div class="line">            return noticeItem.id != id;</div><div class="line">        &#125;);</div><div class="line">        state.noticeList = noticeList;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">export default &#123;</div><div class="line">    state,</div><div class="line">    getters,</div><div class="line">    actions,</div><div class="line">    mutations</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h6 id="index-js"><a href="#index-js" class="headerlink" title="index.js"></a>index.js</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">import Vue from &apos;vue&apos;</div><div class="line">import Vuex from &apos;vuex&apos;</div><div class="line">import notice from &apos;./modules/notice&apos;</div><div class="line">Vue.use(Vuex);</div><div class="line">export default new Vuex.Store(&#123;</div><div class="line">    modules: &#123;</div><div class="line">        notice</div><div class="line">    &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h6 id="notice-js-部分代码"><a href="#notice-js-部分代码" class="headerlink" title="notice.js 部分代码"></a>notice.js 部分代码</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">const state = &#123;</span><br><span class="line">    currentNoticeType: noticeType.update.val,</span><br><span class="line">    noticeList: []</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const getters = &#123;</span><br><span class="line">    noticeList: state =&gt; &#123;</span><br><span class="line">        return state.noticeList;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const actions = &#123;</span><br><span class="line">    getNoticeList(context, type)&#123;</span><br><span class="line">        ajax.post(&apos;/notice/getList&apos;, &#123;type: type&#125;, (data) =&gt; &#123;</span><br><span class="line">            if (data) &#123;</span><br><span class="line">                setTimeout(function () &#123;</span><br><span class="line">                    context.commit(&apos;getNoticeList&apos;, data);</span><br><span class="line">                &#125;, 100);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">    removeNotice(context, id)&#123;</span><br><span class="line">        return new Promise((resolve) =&gt; &#123;</span><br><span class="line">            ajax.post(&apos;/notice/remove&apos;, &#123;id: id&#125;, (data) =&gt; &#123;</span><br><span class="line">                resolve(data);</span><br><span class="line">                if (data) &#123;</span><br><span class="line">                    context.commit(&apos;removeNotice&apos;, id);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const mutations = &#123;</span><br><span class="line">    getNoticeList(state, data)&#123;</span><br><span class="line">        state.noticeList = data;</span><br><span class="line">    &#125;,</span><br><span class="line">    removeNotice(state, id)&#123;</span><br><span class="line">        var noticeList = state.noticeList.filter(function (noticeItem) &#123;</span><br><span class="line">            return noticeItem.id != id;</span><br><span class="line">        &#125;);</span><br><span class="line">        state.noticeList = noticeList;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">    state,</span><br><span class="line">    getters,</span><br><span class="line">    actions,</span><br><span class="line">    mutations</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="index-js"><a href="#index-js" class="headerlink" title="index.js"></a>index.js</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import Vue from &apos;vue&apos;</span><br><span class="line">import Vuex from &apos;vuex&apos;</span><br><span class="line">import notice from &apos;./modules/notice&apos;</span><br><span class="line">Vue.use(Vuex);</span><br><span class="line">export default new Vuex.Store(&#123;</span><br><span class="line">    modules: &#123;</span><br><span class="line">        notice</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>getters：用来从 store 获取 Vue 组件数据；<br>mutations：更改 store 中的状态的唯一方式；<br>actions：可以包含任意异步操作， 提交 mutation，而不是直接变更状态；</p>
 </blockquote>
 <p>注意：<br>store 的状态修改只能显式地提交 mutation 触发；<br>action 内可以完成服务端接口调用，可以通过 commit 触发 mutation 修改 store 状态，也可以通过 dispatch 触发其它 action，如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">context.dispatch(&apos;getNoticeList&apos;, context.state.currentNoticeType);</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">context.dispatch(&apos;getNoticeList&apos;, context.state.currentNoticeType);</span><br></pre></td></tr></table></figure>
 <p>Vue 文件内调用方式如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">computed: &#123;</div><div class="line">	...mapGetters([</div><div class="line">		&apos;currentNoticeType&apos;, // 获取 state 中的 currentNoticeType</div><div class="line">	])</div><div class="line">&#125;,</div><div class="line">methods: &#123;</div><div class="line">	closePreview: function () &#123;</div><div class="line">		this.$store.commit(&apos;closePreviewNotice&apos;); // 如果不需要调用服务端接口，可以直接通过 commit 调用 mutation</div><div class="line">	&#125;,</div><div class="line">	deleteNotice() &#123;</div><div class="line">		this.$store.dispatch(&apos;removeNotice&apos;, this.noticeItem.id).then((success) =&gt; &#123;</div><div class="line">			</div><div class="line">		&#125;);</div><div class="line">	&#125;,</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="Element-UI"><a href="#Element-UI" class="headerlink" title="Element UI"></a>Element UI</h4><p>在开发项目的时候，难免会用到组件，关于是否自己造轮子的问题大家都有不同的看法，这些都是需求看情况而定，肯定不能因为现有开源组件不支持反而一味阉割需求。Element UI给我们提供了丰富的组件，只有引入一下CDN文件或者npm安装，同时也可以按需引入，避免资源文件过大，官方文档都有说明 <a href="http://element.eleme.io/#/zh-CN/component/quickstart" target="_blank" rel="external">快速上手</a> 。我在 <strong>mian.js</strong>  加入以下代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">import &apos;element-ui/lib/theme-default/icon.css&apos;;</div><div class="line">import &apos;element-ui/lib/theme-default/message.css&apos;;</div><div class="line">import &apos;element-ui/lib/theme-default/message-box.css&apos;;</div><div class="line">import &apos;element-ui/lib/theme-default/date-picker.css&apos;;</div><div class="line">import &#123;Message, MessageBox, DatePicker&#125; from &apos;element-ui&apos;;</div><div class="line">Vue.use(DatePicker);</div><div class="line">Vue.prototype.$message = Message;</div><div class="line">Vue.prototype.$messageBox = MessageBox;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">computed: &#123;</span><br><span class="line">	...mapGetters([</span><br><span class="line">		&apos;currentNoticeType&apos;, // 获取 state 中的 currentNoticeType</span><br><span class="line">	])</span><br><span class="line">&#125;,</span><br><span class="line">methods: &#123;</span><br><span class="line">	closePreview: function () &#123;</span><br><span class="line">		this.$store.commit(&apos;closePreviewNotice&apos;); // 如果不需要调用服务端接口，可以直接通过 commit 调用 mutation</span><br><span class="line">	&#125;,</span><br><span class="line">	deleteNotice() &#123;</span><br><span class="line">		this.$store.dispatch(&apos;removeNotice&apos;, this.noticeItem.id).then((success) =&gt; &#123;</span><br><span class="line">			</span><br><span class="line">		&#125;);</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Element-UI"><a href="#Element-UI" class="headerlink" title="Element UI"></a>Element UI</h4><p>在开发项目的时候，难免会用到组件，关于是否自己造轮子的问题大家都有不同的看法，这些都是需求看情况而定，肯定不能因为现有开源组件不支持反而一味阉割需求。Element UI给我们提供了丰富的组件，只有引入一下CDN文件或者npm安装，同时也可以按需引入，避免资源文件过大，官方文档都有说明 <a href="http://element.eleme.io/#/zh-CN/component/quickstart" target="_blank" rel="noopener">快速上手</a> 。我在 <strong>mian.js</strong>  加入以下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import &apos;element-ui/lib/theme-default/icon.css&apos;;</span><br><span class="line">import &apos;element-ui/lib/theme-default/message.css&apos;;</span><br><span class="line">import &apos;element-ui/lib/theme-default/message-box.css&apos;;</span><br><span class="line">import &apos;element-ui/lib/theme-default/date-picker.css&apos;;</span><br><span class="line">import &#123;Message, MessageBox, DatePicker&#125; from &apos;element-ui&apos;;</span><br><span class="line">Vue.use(DatePicker);</span><br><span class="line">Vue.prototype.$message = Message;</span><br><span class="line">Vue.prototype.$messageBox = MessageBox;</span><br></pre></td></tr></table></figure>
 <p>附上出自无敌设计师的效果图一张：</p>
 <p><img src="/img/vue-family/ui.png" alt="出自无敌的UI设计师"></p>
 
       
     </div>
+    
+    
+    
 
-    <div>
-      
-        
+    
 
-      
-    </div>
+    
 
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -429,15 +391,15 @@
       
 
       
-        
+      
       
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/03/actor-orleans-dashboard/" rel="next" title="Orleans解决并发之痛（六）：Dashboard">
-                <i class="fa fa-chevron-left"></i> Orleans解决并发之痛（六）：Dashboard
+              <a href="/2017/08/19/actor-orleans-webapi/" rel="next" title="Orleans解决并发之痛（五）：Web API">
+                <i class="fa fa-chevron-left"></i> Orleans解决并发之痛（五）：Web API
               </a>
             
           </div>
@@ -446,8 +408,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/08/19/actor-orleans-webapi/" rel="prev" title="Orleans解决并发之痛（五）：Web API">
-                Orleans解决并发之痛（五）：Web API <i class="fa fa-chevron-right"></i>
+              <a href="/2017/11/03/actor-orleans-dashboard/" rel="prev" title="Orleans解决并发之痛（六）：Dashboard">
+                Orleans解决并发之痛（六）：Dashboard <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -457,32 +419,17 @@
       
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
 
     <div class="post-spread">
       
-        <!-- JiaThis Button BEGIN -->
-<div class="jiathis_style_24x24">
-  <a class="jiathis_button_weixin"></a>
-  <a class="jiathis_button_qzone"></a>
-  <a class="jiathis_button_cqq"></a>
-  <a class="jiathis_button_tsina"></a>
-  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
-  <a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript" >
-  var jiathis_config={
-    hideMore:false
-  }
-</script>
-<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
-<!-- JiaThis Button END -->
-      
     </div>
-	
-	
   </div>
 
 
@@ -491,11 +438,9 @@
 
 
           
-  <div class="comments" id="comments">
-    
-      <div id="SOHUCS"></div>
-    
-  </div>
+
+  
+
 
 
         </div>
@@ -511,81 +456,82 @@
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
             站点概览
           </li>
         </ul>
       
 
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/uploads/avatar.png"
-               alt="Beck Jin" />
-          <p class="site-author-name" itemprop="name">Beck Jin</p>
-           
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Beck Jin</p>
               <p class="site-description motion-element" itemprop="description"></p>
-           
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
         </div>
-        <nav class="site-state motion-element">
-
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-categories">
-              <a href="/categories/index.html">
-                <span class="site-state-item-count">6</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
-                <span class="site-state-item-count">19</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
-
-
       </section>
 
       
@@ -598,7 +544,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#双向数据绑定"><span class="nav-number">1.</span> <span class="nav-text">双向数据绑定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Vue-router"><span class="nav-number">2.</span> <span class="nav-text">Vue-router</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#main-js"><span class="nav-number">2.0.1.</span> <span class="nav-text">main.js</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Vuex"><span class="nav-number">3.</span> <span class="nav-text">Vuex</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#notice-js-部分代码"><span class="nav-number">3.0.1.</span> <span class="nav-text">notice.js 部分代码</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#index-js"><span class="nav-number">3.0.2.</span> <span class="nav-text">index.js</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Element-UI"><span class="nav-number">4.</span> <span class="nav-text">Element UI</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#双向数据绑定"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x53CC;&#x5411;&#x6570;&#x636E;&#x7ED1;&#x5B9A;" class="headerlink" title="&#x53CC;&#x5411;&#x6570;&#x636E;&#x7ED1;&#x5B9A;"></a>&#x53CC;&#x5411;&#x6570;&#x636E;&#x7ED1;&#x5B9A;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Vue-router"><span class="nav-number">2.</span> <span class="nav-text"><a href="#Vue-router" class="headerlink" title="Vue-router"></a>Vue-router</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#main-js"><span class="nav-number">2.0.1.</span> <span class="nav-text"><a href="#main-js" class="headerlink" title="main.js"></a>main.js</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Vuex"><span class="nav-number">3.</span> <span class="nav-text"><a href="#Vuex" class="headerlink" title="Vuex"></a>Vuex</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#notice-js-部分代码"><span class="nav-number">3.0.1.</span> <span class="nav-text"><a href="#notice-js-&#x90E8;&#x5206;&#x4EE3;&#x7801;" class="headerlink" title="notice.js &#x90E8;&#x5206;&#x4EE3;&#x7801;"></a>notice.js &#x90E8;&#x5206;&#x4EE3;&#x7801;</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#index-js"><span class="nav-number">3.0.2.</span> <span class="nav-text"><a href="#index-js" class="headerlink" title="index.js"></a>index.js</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Element-UI"><span class="nav-number">4.</span> <span class="nav-text"><a href="#Element-UI" class="headerlink" title="Element UI"></a>Element UI</span></a></li></ol></div>
             
 
           </div>
@@ -618,19 +564,36 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2017</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Beck Jin</span>
+
+  
 </div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
 
 
 
         
+
+
+
+
+
+
 
         
       </div>
@@ -641,6 +604,8 @@
         <i class="fa fa-arrow-up"></i>
         
       </div>
+    
+
     
 
   </div>
@@ -675,53 +640,58 @@
 
 
   
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
   
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
   
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
-
-
 
   
   
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
-
-
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
 
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
 
 
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
 
 
 
@@ -751,14 +721,8 @@
 
 
 
-  
 
 
-
-
-
-
-  
 
 
 
@@ -766,113 +730,17 @@
 
   
 
+
+
+
+
   
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-  <script>AV.initialize("FCgGthOl6XN7xRjfK31raebD-gzGzoHsz", "20z736XSuGX562R2ky8uu4EU");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
 
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
+  
 
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+  
 
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
-        });
-    }
-
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
-
+  
   
 
   

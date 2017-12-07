@@ -1,15 +1,19 @@
-<!doctype html>
+<!DOCTYPE html>
 
 
 
   
 
 
-<html class="theme-next pisces use-motion" lang="zh-Hans">
+<html class="theme-next muse use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
 
 
 
@@ -33,36 +37,11 @@
 
 
 
+
   
   
   <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
 
 
 
@@ -71,7 +50,22 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.3" color="#222">
+
+
+
 
 
   <meta name="keywords" content="Actor,Orleans,并发,分布式," />
@@ -83,11 +77,6 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
-
-
-
-
 
 
 <meta name="description" content="Orleans 提供了 Stream扩展编程模型。此模型提供了一套API，使处理流更简单和更健壮。Stream默认提供了两种Provider，不同的流类型可能使用不同的Provider来处理，Simple Message Stream Provider 和 Azure Queue Stream Provider。Stream Providers兼容现有的队列技术，比如： Event Hubs、Se">
@@ -95,8 +84,9 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Orleans解决并发之痛（四）：Streams">
 <meta property="og:url" content="http://www.beckjin.com/2017/07/30/actor-orleans-streams/index.html">
-<meta property="og:site_name" content="Beck's Blog">
+<meta property="og:site_name" content="Beck&#39;s Blog">
 <meta property="og:description" content="Orleans 提供了 Stream扩展编程模型。此模型提供了一套API，使处理流更简单和更健壮。Stream默认提供了两种Provider，不同的流类型可能使用不同的Provider来处理，Simple Message Stream Provider 和 Azure Queue Stream Provider。Stream Providers兼容现有的队列技术，比如： Event Hubs、Se">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-streams/implicit.png">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-streams/explicit.png">
 <meta property="og:updated_time" content="2017-07-31T13:38:42.599Z">
@@ -111,10 +101,12 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Pisces',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
-    motion: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: '0',
       author: '博主'
@@ -137,12 +129,7 @@
 
 
 
-  <meta name="wumiiVerification" content="9c0f45c7-25e2-468d-9df0-8b3af4c615ac" />
   <title>Orleans解决并发之痛（四）：Streams | Beck's Blog</title>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
   
 
 
@@ -152,18 +139,16 @@
 
 
 
+</head>
 
-
-
-
-
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
     
   
 
-  <div class="container sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -209,8 +194,18 @@
         </li>
       
         
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
+          <a href="/categories/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -220,21 +215,11 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
           </a>
         </li>
       
@@ -266,13 +251,17 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2017/07/30/actor-orleans-streams/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -284,14 +273,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                Orleans解决并发之痛（四）：Streams
-              
-            
-          </h2>
+          <h2 class="post-title" itemprop="name headline">Orleans解决并发之痛（四）：Streams</h2>
         
 
         <div class="post-meta">
@@ -343,17 +325,6 @@
 
           
           
-             <span id="/2017/07/30/actor-orleans-streams/" class="leancloud_visitors" data-flag-title="Orleans解决并发之痛（四）：Streams">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
 
           
 
@@ -365,14 +336,17 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
       
 
       
-        <p>Orleans 提供了 Stream扩展编程模型。此模型提供了一套API，使处理流更简单和更健壮。Stream默认提供了两种Provider，不同的流类型可能使用不同的Provider来处理，<a href="https://github.com/dotnet/orleans/blob/master/src/Orleans/Streams/SimpleMessageStream/SimpleMessageStreamProvider.cs" target="_blank" rel="external">Simple Message Stream Provider</a> 和 <a href="https://github.com/dotnet/orleans/blob/master/src/OrleansAzureUtils/Providers/Streams/AzureQueue/AzureQueueStreamProvider.cs" target="_blank" rel="external">Azure Queue Stream Provider</a>。Stream Providers兼容现有的队列技术，比如： <a href="http://azure.microsoft.com/en-us/services/event-hubs/" target="_blank" rel="external">Event Hubs</a>、<a href="http://azure.microsoft.com/en-us/services/service-bus/" target="_blank" rel="external">ServiceBus</a>、<a href="http://azure.microsoft.com/en-us/documentation/articles/storage-dotnet-how-to-use-queues/" target="_blank" rel="external">Azure Queues</a>、<a href="http://kafka.apache.org/" target="_blank" rel="external">Apache Kafka</a>，不再需要编写额外的代码来配合这些队列技术的使用。</p>
-<h3 id="关于为什么Orleans会提供Stream扩展编程模型？"><a href="#关于为什么Orleans会提供Stream扩展编程模型？" class="headerlink" title="关于为什么Orleans会提供Stream扩展编程模型？"></a>关于为什么Orleans会提供Stream扩展编程模型？</h3><p>当今已经有一系列技术可以来构建一个流处理系统。包括持久存储流数据方面，如：<a href="http://azure.microsoft.com/en-us/services/event-hubs/" target="_blank" rel="external">Event Hubs</a>、<a href="http://kafka.apache.org/" target="_blank" rel="external">Kafka</a>；数据流计算操作方面，如： <a href="http://azure.microsoft.com/en-us/services/stream-analytics/" target="_blank" rel="external">Azure Stream Analytics</a>、<a href="https://storm.apache.org/" target="_blank" rel="external">Apache Storm</a>、<a href="https://spark.apache.org/streaming/" target="_blank" rel="external">Apache Spark Streaming</a>， 而这些技术并不适合细粒度的自由格式的流数据计算， 或者支持的并不好，因为实际情况下可能需要对不同的数据流执行不同的操作，Orleans Streams目的就是解决这类问题，Stream编程模型和发布订阅模式挺相似。</p>
+        <p>Orleans 提供了 Stream扩展编程模型。此模型提供了一套API，使处理流更简单和更健壮。Stream默认提供了两种Provider，不同的流类型可能使用不同的Provider来处理，<a href="https://github.com/dotnet/orleans/blob/master/src/Orleans/Streams/SimpleMessageStream/SimpleMessageStreamProvider.cs" target="_blank" rel="noopener">Simple Message Stream Provider</a> 和 <a href="https://github.com/dotnet/orleans/blob/master/src/OrleansAzureUtils/Providers/Streams/AzureQueue/AzureQueueStreamProvider.cs" target="_blank" rel="noopener">Azure Queue Stream Provider</a>。Stream Providers兼容现有的队列技术，比如： <a href="http://azure.microsoft.com/en-us/services/event-hubs/" target="_blank" rel="noopener">Event Hubs</a>、<a href="http://azure.microsoft.com/en-us/services/service-bus/" target="_blank" rel="noopener">ServiceBus</a>、<a href="http://azure.microsoft.com/en-us/documentation/articles/storage-dotnet-how-to-use-queues/" target="_blank" rel="noopener">Azure Queues</a>、<a href="http://kafka.apache.org/" target="_blank" rel="noopener">Apache Kafka</a>，不再需要编写额外的代码来配合这些队列技术的使用。</p>
+<h3 id="关于为什么Orleans会提供Stream扩展编程模型？"><a href="#关于为什么Orleans会提供Stream扩展编程模型？" class="headerlink" title="关于为什么Orleans会提供Stream扩展编程模型？"></a>关于为什么Orleans会提供Stream扩展编程模型？</h3><p>当今已经有一系列技术可以来构建一个流处理系统。包括持久存储流数据方面，如：<a href="http://azure.microsoft.com/en-us/services/event-hubs/" target="_blank" rel="noopener">Event Hubs</a>、<a href="http://kafka.apache.org/" target="_blank" rel="noopener">Kafka</a>；数据流计算操作方面，如： <a href="http://azure.microsoft.com/en-us/services/stream-analytics/" target="_blank" rel="noopener">Azure Stream Analytics</a>、<a href="https://storm.apache.org/" target="_blank" rel="noopener">Apache Storm</a>、<a href="https://spark.apache.org/streaming/" target="_blank" rel="noopener">Apache Spark Streaming</a>， 而这些技术并不适合细粒度的自由格式的流数据计算， 或者支持的并不好，因为实际情况下可能需要对不同的数据流执行不同的操作，Orleans Streams目的就是解决这类问题，Stream编程模型和发布订阅模式挺相似。</p>
 <p>上述提到的一些技术我并没有详细学习，后面会了解并对比，如果已熟悉的可以先思考并给我普及普及。</p>
 <p>Orleans Stream大概实现的步骤如下：</p>
 <blockquote>
@@ -383,27 +357,27 @@
 <li>发布者向某个Stream发布消息</li>
 </ol>
 </blockquote>
-<h3 id="Silo配置文件OrleansConfiguration-xml修改"><a href="#Silo配置文件OrleansConfiguration-xml修改" class="headerlink" title="Silo配置文件OrleansConfiguration.xml修改"></a>Silo配置文件OrleansConfiguration.xml修改</h3><p>在Globals节点中添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;StorageProviders&gt;</div><div class="line">	&lt;Provider Type=&quot;Orleans.Storage.MemoryStorage&quot; Name=&quot;PubSubStore&quot; /&gt;</div><div class="line">&lt;/StorageProviders&gt;</div><div class="line">&lt;StreamProviders&gt;</div><div class="line">	&lt;Provider Type=&quot;Orleans.Providers.Streams.SimpleMessageStream.SimpleMessageStreamProvider&quot; Name=&quot;SMSProvider&quot;/&gt;</div><div class="line">&lt;/StreamProviders&gt;</div></pre></td></tr></table></figure></p>
+<h3 id="Silo配置文件OrleansConfiguration-xml修改"><a href="#Silo配置文件OrleansConfiguration-xml修改" class="headerlink" title="Silo配置文件OrleansConfiguration.xml修改"></a>Silo配置文件OrleansConfiguration.xml修改</h3><p>在Globals节点中添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;StorageProviders&gt;</span><br><span class="line">	&lt;Provider Type=&quot;Orleans.Storage.MemoryStorage&quot; Name=&quot;PubSubStore&quot; /&gt;</span><br><span class="line">&lt;/StorageProviders&gt;</span><br><span class="line">&lt;StreamProviders&gt;</span><br><span class="line">	&lt;Provider Type=&quot;Orleans.Providers.Streams.SimpleMessageStream.SimpleMessageStreamProvider&quot; Name=&quot;SMSProvider&quot;/&gt;</span><br><span class="line">&lt;/StreamProviders&gt;</span><br></pre></td></tr></table></figure></p>
 <p>Name为PubSubStore的StorageProvider是必须的，Stream内部需要它来跟踪所有流订阅，记录各个流的发布者和订阅者的关系，本例中使用MemoryStorage，实际生产环境这是不对的。</p>
 <p>Name为SMSProvider的StreamProvider指定了消息的发布形式，Orleans当前提供的两种StreamProvider：<strong>Simple Message Stream Provider</strong> 和 <strong>Azure Queue Stream Provider</strong> 都是可靠的。</p>
 <p><strong>Simple Message Stream Provider</strong>：不保证可靠的交付，失败的消息不会自动重新发送，但可以根据返回的Task状态来判断是否重新发送，事件执行顺序遵循FIFO原则。</p>
 <p><strong>Azure Queue Stream Provider</strong>：事件被加入Azure Queue， 如果传送或处理失败，事件不会从队列中删除，并且稍后会自动重新被发送，因此事件执行顺序不遵循FIFO原则。</p>
-<h3 id="获取-StreamProvider"><a href="#获取-StreamProvider" class="headerlink" title="获取 StreamProvider"></a>获取 StreamProvider</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var streamProvider = this.GetStreamProvider(&quot;SMSProvider&quot;);</div></pre></td></tr></table></figure>
+<h3 id="获取-StreamProvider"><a href="#获取-StreamProvider" class="headerlink" title="获取 StreamProvider"></a>获取 StreamProvider</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var streamProvider = this.GetStreamProvider(&quot;SMSProvider&quot;);</span><br></pre></td></tr></table></figure>
 <p><strong>SMSProvider</strong> 对应配置文件中Name为SMSProvider的StreamProvider</p>
-<h3 id="获取-IAsyncStream"><a href="#获取-IAsyncStream" class="headerlink" title="获取 IAsyncStream"></a>获取 IAsyncStream<t></t></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var streamId = this.GetPrimaryKey();</div><div class="line">var stream = streamProvider.GetStream&lt;string&gt;(streamId, &quot;GrainStream&quot;);</div></pre></td></tr></table></figure>
+<h3 id="获取-IAsyncStream"><a href="#获取-IAsyncStream" class="headerlink" title="获取 IAsyncStream"></a>获取 IAsyncStream<t></t></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var streamId = this.GetPrimaryKey();</span><br><span class="line">var stream = streamProvider.GetStream&lt;string&gt;(streamId, &quot;GrainStream&quot;);</span><br></pre></td></tr></table></figure>
 <p>GetStream 需要两个参数，通过两个值定位唯一的Stream：<br><strong>streamId</strong>：Guid类型，stream标识<br><strong>streamNamespace</strong>：字符串，stream的命名空间</p>
 <h3 id="订阅一个Stream"><a href="#订阅一个Stream" class="headerlink" title="订阅一个Stream"></a>订阅一个Stream</h3><p>订阅Stream分为隐式和显式订阅。</p>
 <h4 id="隐式订阅"><a href="#隐式订阅" class="headerlink" title="隐式订阅"></a>隐式订阅</h4><p>隐式订阅的订阅者是唯一的，不存在对一个Stream的多次订阅，也不能取消订阅。</p>
-<p>Interface：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public interface IImplicitSubscriberGrain : IGrainWithGuidKey</div><div class="line">&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>Grain：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">[ImplicitStreamSubscription(&quot;GrainImplicitStream&quot;)]</div><div class="line">public class ImplicitSubscriberGrain : Grain, IImplicitSubscriberGrain, IAsyncObserver&lt;string&gt;</div><div class="line">&#123;</div><div class="line">	protected StreamSubscriptionHandle&lt;string&gt; streamHandle;</div><div class="line"></div><div class="line">	public override async Task OnActivateAsync()</div><div class="line">	&#123;</div><div class="line">		var streamId = this.GetPrimaryKey();</div><div class="line">		var streamProvider = this.GetStreamProvider(&quot;SMSProvider&quot;);</div><div class="line">		var stream = streamProvider.GetStream&lt;string&gt;(streamId, &quot;GrainImplicitStream&quot;);</div><div class="line">		streamHandle = await stream.SubscribeAsync(OnNextAsync);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public override async Task OnDeactivateAsync()</div><div class="line">	&#123;</div><div class="line">		if (streamHandle != null)</div><div class="line">			await streamHandle.UnsubscribeAsync();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public Task OnCompletedAsync()</div><div class="line">	&#123;</div><div class="line">		return Task.CompletedTask;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public Task OnErrorAsync(Exception ex)</div><div class="line">	&#123;</div><div class="line">		return Task.CompletedTask;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public Task OnNextAsync(string item, StreamSequenceToken token = null)</div><div class="line">	&#123;</div><div class="line">		Console.WriteLine($&quot;Received message:&#123;item&#125;&quot;);</div><div class="line">		return Task.CompletedTask;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Interface：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface IImplicitSubscriberGrain : IGrainWithGuidKey</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Grain：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">[ImplicitStreamSubscription(&quot;GrainImplicitStream&quot;)]</span><br><span class="line">public class ImplicitSubscriberGrain : Grain, IImplicitSubscriberGrain, IAsyncObserver&lt;string&gt;</span><br><span class="line">&#123;</span><br><span class="line">	protected StreamSubscriptionHandle&lt;string&gt; streamHandle;</span><br><span class="line"></span><br><span class="line">	public override async Task OnActivateAsync()</span><br><span class="line">	&#123;</span><br><span class="line">		var streamId = this.GetPrimaryKey();</span><br><span class="line">		var streamProvider = this.GetStreamProvider(&quot;SMSProvider&quot;);</span><br><span class="line">		var stream = streamProvider.GetStream&lt;string&gt;(streamId, &quot;GrainImplicitStream&quot;);</span><br><span class="line">		streamHandle = await stream.SubscribeAsync(OnNextAsync);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public override async Task OnDeactivateAsync()</span><br><span class="line">	&#123;</span><br><span class="line">		if (streamHandle != null)</span><br><span class="line">			await streamHandle.UnsubscribeAsync();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public Task OnCompletedAsync()</span><br><span class="line">	&#123;</span><br><span class="line">		return Task.CompletedTask;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public Task OnErrorAsync(Exception ex)</span><br><span class="line">	&#123;</span><br><span class="line">		return Task.CompletedTask;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public Task OnNextAsync(string item, StreamSequenceToken token = null)</span><br><span class="line">	&#123;</span><br><span class="line">		Console.WriteLine($&quot;Received message:&#123;item&#125;&quot;);</span><br><span class="line">		return Task.CompletedTask;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <ol>
 <li>在Grain上标记 ImplicitStreamSubscription 属性，变量值为命名空间；</li>
 <li>在Grain的OnActivateAsync方法体中调用SubscribeAsync；</li>
 <li>实现IAsyncObserver接口，当发布者向Stream发送消息，订阅者接到消息后将执行OnNextAsync；</li>
 <li>隐式订阅模式订阅者自动由发布者创建；</li>
 </ol>
-<h4 id="显式订阅"><a href="#显式订阅" class="headerlink" title="显式订阅"></a>显式订阅</h4><p>Interface：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public interface IExplicitSubscriberGrain : IGrainWithGuidKey</div><div class="line">&#123;</div><div class="line">	Task&lt;StreamSubscriptionHandle&lt;string&gt;&gt; SubscribeAsync();</div><div class="line"></div><div class="line">	Task ReceivedMessageAsync(string data);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>Grain：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">public class ExplicitSubscriberGrain : Grain, IExplicitSubscriberGrain</div><div class="line">&#123;</div><div class="line">	private IAsyncStream&lt;string&gt; stream;</div><div class="line"></div><div class="line">	public async override Task OnActivateAsync()</div><div class="line">	&#123;</div><div class="line">		var streamProvider = this.GetStreamProvider(&quot;SMSProvider&quot;);</div><div class="line">		stream = streamProvider.GetStream&lt;string&gt;(this.GetPrimaryKey(), &quot;GrainExplicitStream&quot;);</div><div class="line">		var subscriptionHandles = await stream.GetAllSubscriptionHandles();</div><div class="line">		if (subscriptionHandles.Count &gt; 0)</div><div class="line">		&#123;</div><div class="line">			subscriptionHandles.ToList().ForEach(async x =&gt;</div><div class="line">			&#123;</div><div class="line">				await x.ResumeAsync((payload, token) =&gt; this.ReceivedMessageAsync(payload));</div><div class="line">			&#125;);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public async Task&lt;StreamSubscriptionHandle&lt;string&gt;&gt; SubscribeAsync()</div><div class="line">	&#123;</div><div class="line">		return await stream.SubscribeAsync((payload, token) =&gt; this.ReceivedMessageAsync(payload));</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public Task ReceivedMessageAsync(string data)</div><div class="line">	&#123;</div><div class="line">		Console.WriteLine($&quot;Received message:&#123;data&#125;&quot;);</div><div class="line">		return Task.CompletedTask;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="显式订阅"><a href="#显式订阅" class="headerlink" title="显式订阅"></a>显式订阅</h4><p>Interface：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public interface IExplicitSubscriberGrain : IGrainWithGuidKey</span><br><span class="line">&#123;</span><br><span class="line">	Task&lt;StreamSubscriptionHandle&lt;string&gt;&gt; SubscribeAsync();</span><br><span class="line"></span><br><span class="line">	Task ReceivedMessageAsync(string data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Grain：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">public class ExplicitSubscriberGrain : Grain, IExplicitSubscriberGrain</span><br><span class="line">&#123;</span><br><span class="line">	private IAsyncStream&lt;string&gt; stream;</span><br><span class="line"></span><br><span class="line">	public async override Task OnActivateAsync()</span><br><span class="line">	&#123;</span><br><span class="line">		var streamProvider = this.GetStreamProvider(&quot;SMSProvider&quot;);</span><br><span class="line">		stream = streamProvider.GetStream&lt;string&gt;(this.GetPrimaryKey(), &quot;GrainExplicitStream&quot;);</span><br><span class="line">		var subscriptionHandles = await stream.GetAllSubscriptionHandles();</span><br><span class="line">		if (subscriptionHandles.Count &gt; 0)</span><br><span class="line">		&#123;</span><br><span class="line">			subscriptionHandles.ToList().ForEach(async x =&gt;</span><br><span class="line">			&#123;</span><br><span class="line">				await x.ResumeAsync((payload, token) =&gt; this.ReceivedMessageAsync(payload));</span><br><span class="line">			&#125;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public async Task&lt;StreamSubscriptionHandle&lt;string&gt;&gt; SubscribeAsync()</span><br><span class="line">	&#123;</span><br><span class="line">		return await stream.SubscribeAsync((payload, token) =&gt; this.ReceivedMessageAsync(payload));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public Task ReceivedMessageAsync(string data)</span><br><span class="line">	&#123;</span><br><span class="line">		Console.WriteLine($&quot;Received message:&#123;data&#125;&quot;);</span><br><span class="line">		return Task.CompletedTask;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <ol>
 <li><p>订阅者通过调用SubscribeAsync方法完成订阅，并返回StreamSubscriptionHandle，这个对象提供了UnsubscribeAsync方法，方便取消订阅；</p>
 </li>
@@ -412,42 +386,30 @@
 <li><p>订阅者是一直存在的，除了被显示调用了UnsubscribeAsync方法。在OnActivateAsync中我们加入了ResumeAsync操作， 当Grain由未激活状态变为激活状态的时候，通过GetAllSubscriptionHandles获取这个Stream中存在的订阅者，通过ResumeAsync可以把它们重新唤醒。（<strong>模拟方式</strong>：杀掉Silo，重新启动即可，不过前提条件是PubSubStore不能使用MemoryStorage，因为使用MemoryStorage存储一旦重启后订阅者和发布者的关系都会丢失）</p>
 </li>
 </ol>
-<h3 id="发布消息"><a href="#发布消息" class="headerlink" title="发布消息"></a>发布消息</h3><p>Interface：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public interface IPublisherGrain: IGrainWithGuidKey</div><div class="line">&#123;</div><div class="line">	Task PublishMessageAsync(string data);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>Grain：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public class PublisherGrain : Grain, IPublisherGrain</div><div class="line">&#123;</div><div class="line">	private IAsyncStream&lt;string&gt; stream;</div><div class="line"></div><div class="line">	public override Task OnActivateAsync()</div><div class="line">	&#123;</div><div class="line">		var streamId = this.GetPrimaryKey();</div><div class="line">		var streamProvider = this.GetStreamProvider(&quot;SMSProvider&quot;);</div><div class="line">		this.stream = streamProvider.GetStream&lt;string&gt;(streamId, &quot;GrainExplicitStream&quot;); //隐式：GrainImplicitStream</div><div class="line">		return base.OnActivateAsync();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public async Task PublishMessageAsync(string data)</div><div class="line">	&#123;</div><div class="line">		Console.WriteLine($&quot;Sending data: &#123;data&#125;&quot;);</div><div class="line">		await this.stream.OnNextAsync(data);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="发布消息"><a href="#发布消息" class="headerlink" title="发布消息"></a>发布消息</h3><p>Interface：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public interface IPublisherGrain: IGrainWithGuidKey</span><br><span class="line">&#123;</span><br><span class="line">	Task PublishMessageAsync(string data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Grain：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class PublisherGrain : Grain, IPublisherGrain</span><br><span class="line">&#123;</span><br><span class="line">	private IAsyncStream&lt;string&gt; stream;</span><br><span class="line"></span><br><span class="line">	public override Task OnActivateAsync()</span><br><span class="line">	&#123;</span><br><span class="line">		var streamId = this.GetPrimaryKey();</span><br><span class="line">		var streamProvider = this.GetStreamProvider(&quot;SMSProvider&quot;);</span><br><span class="line">		this.stream = streamProvider.GetStream&lt;string&gt;(streamId, &quot;GrainExplicitStream&quot;); //隐式：GrainImplicitStream</span><br><span class="line">		return base.OnActivateAsync();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public async Task PublishMessageAsync(string data)</span><br><span class="line">	&#123;</span><br><span class="line">		Console.WriteLine($&quot;Sending data: &#123;data&#125;&quot;);</span><br><span class="line">		await this.stream.OnNextAsync(data);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>通过调用IAsyncStream的OnNextAsync发布消息即可。这里可以针对返回的Task状态再作一些操作，如果不成功，重新发送或记录日志等。</p>
-<h3 id="Client发布消息："><a href="#Client发布消息：" class="headerlink" title="Client发布消息："></a>Client发布消息：</h3><h6 id="客户端发布消息："><a href="#客户端发布消息：" class="headerlink" title="客户端发布消息："></a>客户端发布消息：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">while (true)</div><div class="line">&#123;</div><div class="line">	Console.WriteLine(&quot;Press &apos;exit&apos; to exit...&quot;);</div><div class="line">	var input = Console.ReadLine();</div><div class="line">	if (input == &quot;exit&quot;) break;</div><div class="line">	var publisherGrain = GrainClient.GrainFactory.GetGrain&lt;IPublisherGrain&gt;(Guid.Empty);</div><div class="line">	publisherGrain.PublishMessageAsync(input);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Client发布消息："><a href="#Client发布消息：" class="headerlink" title="Client发布消息："></a>Client发布消息：</h3><h6 id="客户端发布消息："><a href="#客户端发布消息：" class="headerlink" title="客户端发布消息："></a>客户端发布消息：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">while (true)</span><br><span class="line">&#123;</span><br><span class="line">	Console.WriteLine(&quot;Press &apos;exit&apos; to exit...&quot;);</span><br><span class="line">	var input = Console.ReadLine();</span><br><span class="line">	if (input == &quot;exit&quot;) break;</span><br><span class="line">	var publisherGrain = GrainClient.GrainFactory.GetGrain&lt;IPublisherGrain&gt;(Guid.Empty);</span><br><span class="line">	publisherGrain.PublishMessageAsync(input);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="/img/actor-orleans-streams/implicit.png" alt="发布消息"></p>
-<h6 id="显示订阅下，需要增加另一个客户端先完成订阅："><a href="#显示订阅下，需要增加另一个客户端先完成订阅：" class="headerlink" title="显示订阅下，需要增加另一个客户端先完成订阅："></a>显示订阅下，需要增加另一个客户端先完成订阅：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var subscriberGrain = GrainClient.GrainFactory.GetGrain&lt;IExplicitSubscriberGrain&gt;(Guid.Empty);</div><div class="line">var streamHandle = subscriberGrain.SubscribeAsync().Result;</div><div class="line">Console.WriteLine(&quot;Press enter to exit...&quot;);</div><div class="line">Console.ReadLine();</div><div class="line">streamHandle.UnsubscribeAsync();</div></pre></td></tr></table></figure>
+<h6 id="显示订阅下，需要增加另一个客户端先完成订阅："><a href="#显示订阅下，需要增加另一个客户端先完成订阅：" class="headerlink" title="显示订阅下，需要增加另一个客户端先完成订阅："></a>显示订阅下，需要增加另一个客户端先完成订阅：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var subscriberGrain = GrainClient.GrainFactory.GetGrain&lt;IExplicitSubscriberGrain&gt;(Guid.Empty);</span><br><span class="line">var streamHandle = subscriberGrain.SubscribeAsync().Result;</span><br><span class="line">Console.WriteLine(&quot;Press enter to exit...&quot;);</span><br><span class="line">Console.ReadLine();</span><br><span class="line">streamHandle.UnsubscribeAsync();</span><br></pre></td></tr></table></figure>
 <p><img src="/img/actor-orleans-streams/explicit.png" alt="显示订阅下发布消息"></p>
 <h3 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h3><ul>
-<li><a href="http://www.infoq.com/cn/news/2014/11/intro-actor-model" target="_blank" rel="external">Actor模型</a></li>
-<li><a href="http://dotnet.github.io/orleans/" target="_blank" rel="external">Orleans</a></li>
-<li><a href="https://github.com/beckjin/OrleansSamples/tree/master/OrleansStreams" target="_blank" rel="external">案例Demo-OrleansStreams</a></li>
+<li><a href="http://www.infoq.com/cn/news/2014/11/intro-actor-model" target="_blank" rel="noopener">Actor模型</a></li>
+<li><a href="http://dotnet.github.io/orleans/" target="_blank" rel="noopener">Orleans</a></li>
+<li><a href="https://github.com/beckjin/OrleansSamples/tree/master/OrleansStreams" target="_blank" rel="noopener">案例Demo-OrleansStreams</a></li>
 </ul>
 
       
     </div>
+    
+    
+    
 
-    <div>
-      
-        
+    
 
-      
-    </div>
+    
 
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -465,15 +427,15 @@
       
 
       
-        
+      
       
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/19/actor-orleans-webapi/" rel="next" title="Orleans解决并发之痛（五）：Web API">
-                <i class="fa fa-chevron-left"></i> Orleans解决并发之痛（五）：Web API
+              <a href="/2017/07/23/actor-orleans-cluster/" rel="next" title="Orleans解决并发之痛（三）：集群">
+                <i class="fa fa-chevron-left"></i> Orleans解决并发之痛（三）：集群
               </a>
             
           </div>
@@ -482,8 +444,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/07/23/actor-orleans-cluster/" rel="prev" title="Orleans解决并发之痛（三）：集群">
-                Orleans解决并发之痛（三）：集群 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/08/19/actor-orleans-webapi/" rel="prev" title="Orleans解决并发之痛（五）：Web API">
+                Orleans解决并发之痛（五）：Web API <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -493,32 +455,17 @@
       
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
 
     <div class="post-spread">
       
-        <!-- JiaThis Button BEGIN -->
-<div class="jiathis_style_24x24">
-  <a class="jiathis_button_weixin"></a>
-  <a class="jiathis_button_qzone"></a>
-  <a class="jiathis_button_cqq"></a>
-  <a class="jiathis_button_tsina"></a>
-  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
-  <a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript" >
-  var jiathis_config={
-    hideMore:false
-  }
-</script>
-<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
-<!-- JiaThis Button END -->
-      
     </div>
-	
-	
   </div>
 
 
@@ -527,11 +474,9 @@
 
 
           
-  <div class="comments" id="comments">
-    
-      <div id="SOHUCS"></div>
-    
-  </div>
+
+  
+
 
 
         </div>
@@ -547,81 +492,82 @@
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
             站点概览
           </li>
         </ul>
       
 
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/uploads/avatar.png"
-               alt="Beck Jin" />
-          <p class="site-author-name" itemprop="name">Beck Jin</p>
-           
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Beck Jin</p>
               <p class="site-description motion-element" itemprop="description"></p>
-           
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
         </div>
-        <nav class="site-state motion-element">
-
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-categories">
-              <a href="/categories/index.html">
-                <span class="site-state-item-count">6</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
-                <span class="site-state-item-count">19</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
-
-
       </section>
 
       
@@ -634,7 +580,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#关于为什么Orleans会提供Stream扩展编程模型？"><span class="nav-number">1.</span> <span class="nav-text">关于为什么Orleans会提供Stream扩展编程模型？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Silo配置文件OrleansConfiguration-xml修改"><span class="nav-number">2.</span> <span class="nav-text">Silo配置文件OrleansConfiguration.xml修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取-StreamProvider"><span class="nav-number">3.</span> <span class="nav-text">获取 StreamProvider</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取-IAsyncStream"><span class="nav-number">4.</span> <span class="nav-text">获取 IAsyncStream</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#订阅一个Stream"><span class="nav-number">5.</span> <span class="nav-text">订阅一个Stream</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#隐式订阅"><span class="nav-number">5.1.</span> <span class="nav-text">隐式订阅</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#显式订阅"><span class="nav-number">5.2.</span> <span class="nav-text">显式订阅</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发布消息"><span class="nav-number">6.</span> <span class="nav-text">发布消息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Client发布消息："><span class="nav-number">7.</span> <span class="nav-text">Client发布消息：</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#客户端发布消息："><span class="nav-number">7.0.0.1.</span> <span class="nav-text">客户端发布消息：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#显示订阅下，需要增加另一个客户端先完成订阅："><span class="nav-number">7.0.0.2.</span> <span class="nav-text">显示订阅下，需要增加另一个客户端先完成订阅：</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接："><span class="nav-number">8.</span> <span class="nav-text">参考链接：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#关于为什么Orleans会提供Stream扩展编程模型？"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x5173;&#x4E8E;&#x4E3A;&#x4EC0;&#x4E48;Orleans&#x4F1A;&#x63D0;&#x4F9B;Stream&#x6269;&#x5C55;&#x7F16;&#x7A0B;&#x6A21;&#x578B;&#xFF1F;" class="headerlink" title="&#x5173;&#x4E8E;&#x4E3A;&#x4EC0;&#x4E48;Orleans&#x4F1A;&#x63D0;&#x4F9B;Stream&#x6269;&#x5C55;&#x7F16;&#x7A0B;&#x6A21;&#x578B;&#xFF1F;"></a>&#x5173;&#x4E8E;&#x4E3A;&#x4EC0;&#x4E48;Orleans&#x4F1A;&#x63D0;&#x4F9B;Stream&#x6269;&#x5C55;&#x7F16;&#x7A0B;&#x6A21;&#x578B;&#xFF1F;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Silo配置文件OrleansConfiguration-xml修改"><span class="nav-number">2.</span> <span class="nav-text"><a href="#Silo&#x914D;&#x7F6E;&#x6587;&#x4EF6;OrleansConfiguration-xml&#x4FEE;&#x6539;" class="headerlink" title="Silo&#x914D;&#x7F6E;&#x6587;&#x4EF6;OrleansConfiguration.xml&#x4FEE;&#x6539;"></a>Silo&#x914D;&#x7F6E;&#x6587;&#x4EF6;OrleansConfiguration.xml&#x4FEE;&#x6539;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取-StreamProvider"><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x83B7;&#x53D6;-StreamProvider" class="headerlink" title="&#x83B7;&#x53D6; StreamProvider"></a>&#x83B7;&#x53D6; StreamProvider</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取-IAsyncStream"><span class="nav-number">4.</span> <span class="nav-text"><a href="#&#x83B7;&#x53D6;-IAsyncStream" class="headerlink" title="&#x83B7;&#x53D6; IAsyncStream"></a>&#x83B7;&#x53D6; IAsyncStream<t></t></span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#订阅一个Stream"><span class="nav-number">5.</span> <span class="nav-text"><a href="#&#x8BA2;&#x9605;&#x4E00;&#x4E2A;Stream" class="headerlink" title="&#x8BA2;&#x9605;&#x4E00;&#x4E2A;Stream"></a>&#x8BA2;&#x9605;&#x4E00;&#x4E2A;Stream</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#隐式订阅"><span class="nav-number">5.1.</span> <span class="nav-text"><a href="#&#x9690;&#x5F0F;&#x8BA2;&#x9605;" class="headerlink" title="&#x9690;&#x5F0F;&#x8BA2;&#x9605;"></a>&#x9690;&#x5F0F;&#x8BA2;&#x9605;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#显式订阅"><span class="nav-number">5.2.</span> <span class="nav-text"><a href="#&#x663E;&#x5F0F;&#x8BA2;&#x9605;" class="headerlink" title="&#x663E;&#x5F0F;&#x8BA2;&#x9605;"></a>&#x663E;&#x5F0F;&#x8BA2;&#x9605;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发布消息"><span class="nav-number">6.</span> <span class="nav-text"><a href="#&#x53D1;&#x5E03;&#x6D88;&#x606F;" class="headerlink" title="&#x53D1;&#x5E03;&#x6D88;&#x606F;"></a>&#x53D1;&#x5E03;&#x6D88;&#x606F;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Client发布消息："><span class="nav-number">7.</span> <span class="nav-text"><a href="#Client&#x53D1;&#x5E03;&#x6D88;&#x606F;&#xFF1A;" class="headerlink" title="Client&#x53D1;&#x5E03;&#x6D88;&#x606F;&#xFF1A;"></a>Client&#x53D1;&#x5E03;&#x6D88;&#x606F;&#xFF1A;</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#客户端发布消息："><span class="nav-number">7.0.0.1.</span> <span class="nav-text"><a href="#&#x5BA2;&#x6237;&#x7AEF;&#x53D1;&#x5E03;&#x6D88;&#x606F;&#xFF1A;" class="headerlink" title="&#x5BA2;&#x6237;&#x7AEF;&#x53D1;&#x5E03;&#x6D88;&#x606F;&#xFF1A;"></a>&#x5BA2;&#x6237;&#x7AEF;&#x53D1;&#x5E03;&#x6D88;&#x606F;&#xFF1A;</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#显示订阅下，需要增加另一个客户端先完成订阅："><span class="nav-number">7.0.0.2.</span> <span class="nav-text"><a href="#&#x663E;&#x793A;&#x8BA2;&#x9605;&#x4E0B;&#xFF0C;&#x9700;&#x8981;&#x589E;&#x52A0;&#x53E6;&#x4E00;&#x4E2A;&#x5BA2;&#x6237;&#x7AEF;&#x5148;&#x5B8C;&#x6210;&#x8BA2;&#x9605;&#xFF1A;" class="headerlink" title="&#x663E;&#x793A;&#x8BA2;&#x9605;&#x4E0B;&#xFF0C;&#x9700;&#x8981;&#x589E;&#x52A0;&#x53E6;&#x4E00;&#x4E2A;&#x5BA2;&#x6237;&#x7AEF;&#x5148;&#x5B8C;&#x6210;&#x8BA2;&#x9605;&#xFF1A;"></a>&#x663E;&#x793A;&#x8BA2;&#x9605;&#x4E0B;&#xFF0C;&#x9700;&#x8981;&#x589E;&#x52A0;&#x53E6;&#x4E00;&#x4E2A;&#x5BA2;&#x6237;&#x7AEF;&#x5148;&#x5B8C;&#x6210;&#x8BA2;&#x9605;&#xFF1A;</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接："><span class="nav-number">8.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;</span></a></li></ol></div>
             
 
           </div>
@@ -654,19 +600,36 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2017</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Beck Jin</span>
+
+  
 </div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
 
 
 
         
+
+
+
+
+
+
 
         
       </div>
@@ -677,6 +640,8 @@
         <i class="fa fa-arrow-up"></i>
         
       </div>
+    
+
     
 
   </div>
@@ -711,53 +676,58 @@
 
 
   
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
   
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
   
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
-
-
 
   
   
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
-
-
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
 
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
 
 
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
 
 
 
@@ -787,14 +757,8 @@
 
 
 
-  
 
 
-
-
-
-
-  
 
 
 
@@ -802,113 +766,17 @@
 
   
 
+
+
+
+
   
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-  <script>AV.initialize("FCgGthOl6XN7xRjfK31raebD-gzGzoHsz", "20z736XSuGX562R2ky8uu4EU");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
 
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
+  
 
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+  
 
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
-        });
-    }
-
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
-
+  
   
 
   

@@ -1,15 +1,19 @@
-<!doctype html>
+<!DOCTYPE html>
 
 
 
   
 
 
-<html class="theme-next pisces use-motion" lang="zh-Hans">
+<html class="theme-next muse use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
 
 
 
@@ -33,36 +37,11 @@
 
 
 
+
   
   
   <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
 
 
 
@@ -71,7 +50,22 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.3" color="#222">
+
+
+
 
 
   <meta name="keywords" content="Actor,Orleans,并发,分布式," />
@@ -83,11 +77,6 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
-
-
-
-
 
 
 <meta name="description" content="Orleans本身的设计是一个分布式的框架，多个Silo构成集群，Grains分布在多个Silo中。一旦一个Silo挂了，原来归属这个Silo的Grains会自动在其他Silo中激活。生产环境下还是需要以集群方式来部署。  在Orleans解决并发之痛（二）：Grain状态文章中提到内存存储State是不靠谱的，同样，以内存方式存储集群中Silo的成员关系也是不靠谱的，所以本文使用SQL Serv">
@@ -95,8 +84,9 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Orleans解决并发之痛（三）：集群">
 <meta property="og:url" content="http://www.beckjin.com/2017/07/23/actor-orleans-cluster/index.html">
-<meta property="og:site_name" content="Beck's Blog">
+<meta property="og:site_name" content="Beck&#39;s Blog">
 <meta property="og:description" content="Orleans本身的设计是一个分布式的框架，多个Silo构成集群，Grains分布在多个Silo中。一旦一个Silo挂了，原来归属这个Silo的Grains会自动在其他Silo中激活。生产环境下还是需要以集群方式来部署。  在Orleans解决并发之痛（二）：Grain状态文章中提到内存存储State是不靠谱的，同样，以内存方式存储集群中Silo的成员关系也是不靠谱的，所以本文使用SQL Serv">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-cluster/cluster.png">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-cluster/systemStore.png">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-cluster/testResult.png">
@@ -113,10 +103,12 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Pisces',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
-    motion: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: '0',
       author: '博主'
@@ -139,12 +131,7 @@
 
 
 
-  <meta name="wumiiVerification" content="9c0f45c7-25e2-468d-9df0-8b3af4c615ac" />
   <title>Orleans解决并发之痛（三）：集群 | Beck's Blog</title>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
   
 
 
@@ -154,18 +141,16 @@
 
 
 
+</head>
 
-
-
-
-
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
     
   
 
-  <div class="container sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -211,8 +196,18 @@
         </li>
       
         
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
+          <a href="/categories/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -222,21 +217,11 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
           </a>
         </li>
       
@@ -268,13 +253,17 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2017/07/23/actor-orleans-cluster/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -286,14 +275,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                Orleans解决并发之痛（三）：集群
-              
-            
-          </h2>
+          <h2 class="post-title" itemprop="name headline">Orleans解决并发之痛（三）：集群</h2>
         
 
         <div class="post-meta">
@@ -345,17 +327,6 @@
 
           
           
-             <span id="/2017/07/23/actor-orleans-cluster/" class="leancloud_visitors" data-flag-title="Orleans解决并发之痛（三）：集群">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
 
           
 
@@ -367,6 +338,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -378,48 +352,36 @@
 <p>在<a href="/2017/07/23/actor-orleans-grain-state/">Orleans解决并发之痛（二）：Grain状态</a>文章中提到内存存储State是不靠谱的，同样，以内存方式存储集群中Silo的成员关系也是不靠谱的，所以本文使用SQL Server来做Silo的成员关系存储，以内存方式存储成员关系存在主节点之说，其他节点的启动必须依赖主节点的启动状态，但以Azure Table、SQL Server 、ZooKeeper、Consul 等存储成员关系，所有的Silo都是平等的，不需要等待谁。</p>
 <p>之前在<a href="/2017/07/22/actor-orleans-one/">Orleans解决并发之痛（一）：单线程</a>Demo中是以内存存储集群成员关系的，有兴趣可以返回查看。</p>
 <p>这篇文章的Demo是<a href="/2017/07/23/actor-orleans-grain-state/">Orleans解决并发之痛（二）：Grain状态</a>的基础上完成的，所以在原来代码的基础上做一些调整即可。我们会启动3个Silo，构建成一个集群环境。实际上提供3个配置文件即可，配置文件稍做修改就可实现。</p>
-<h4 id="Silo配置文件"><a href="#Silo配置文件" class="headerlink" title="Silo配置文件"></a>Silo配置文件</h4><p>OrleansConfiguration1.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</div><div class="line">&lt;OrleansConfiguration xmlns=&quot;urn:orleans&quot;&gt;</div><div class="line">    &lt;Globals&gt;</div><div class="line">        &lt;SystemStore </div><div class="line">			SystemStoreType=&quot;SqlServer&quot; </div><div class="line">			DeploymentId=&quot;OrleansTest&quot; </div><div class="line">			DataConnectionString=&quot;Server=.;Database=OrleansStorage;User ID=sa;Password=123456;&quot;/&gt;</div><div class="line">      </div><div class="line">        &lt;StorageProviders&gt;</div><div class="line">            &lt;Provider Type=&quot;Orleans.Storage.AdoNetStorageProvider&quot;</div><div class="line">                      Name=&quot;OrleansStorage&quot;</div><div class="line">                      AdoInvariant=&quot;System.Data.SqlClient&quot;</div><div class="line">                      DataConnectionString=&quot;Server=.;Database=OrleansStorage;User ID=sa;Password=123456;&quot;/&gt;</div><div class="line">        &lt;/StorageProviders&gt;</div><div class="line">    &lt;/Globals&gt;</div><div class="line">    &lt;Defaults&gt;</div><div class="line">        &lt;Networking Address=&quot;localhost&quot; Port=&quot;11111&quot; /&gt;</div><div class="line">        &lt;ProxyingGateway Address=&quot;localhost&quot; Port=&quot;30000&quot; /&gt;</div><div class="line">    &lt;/Defaults&gt;</div><div class="line">&lt;/OrleansConfiguration&gt;</div></pre></td></tr></table></figure></p>
+<h4 id="Silo配置文件"><a href="#Silo配置文件" class="headerlink" title="Silo配置文件"></a>Silo配置文件</h4><p>OrleansConfiguration1.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</span><br><span class="line">&lt;OrleansConfiguration xmlns=&quot;urn:orleans&quot;&gt;</span><br><span class="line">    &lt;Globals&gt;</span><br><span class="line">        &lt;SystemStore </span><br><span class="line">			SystemStoreType=&quot;SqlServer&quot; </span><br><span class="line">			DeploymentId=&quot;OrleansTest&quot; </span><br><span class="line">			DataConnectionString=&quot;Server=.;Database=OrleansStorage;User ID=sa;Password=123456;&quot;/&gt;</span><br><span class="line">      </span><br><span class="line">        &lt;StorageProviders&gt;</span><br><span class="line">            &lt;Provider Type=&quot;Orleans.Storage.AdoNetStorageProvider&quot;</span><br><span class="line">                      Name=&quot;OrleansStorage&quot;</span><br><span class="line">                      AdoInvariant=&quot;System.Data.SqlClient&quot;</span><br><span class="line">                      DataConnectionString=&quot;Server=.;Database=OrleansStorage;User ID=sa;Password=123456;&quot;/&gt;</span><br><span class="line">        &lt;/StorageProviders&gt;</span><br><span class="line">    &lt;/Globals&gt;</span><br><span class="line">    &lt;Defaults&gt;</span><br><span class="line">        &lt;Networking Address=&quot;localhost&quot; Port=&quot;11111&quot; /&gt;</span><br><span class="line">        &lt;ProxyingGateway Address=&quot;localhost&quot; Port=&quot;30000&quot; /&gt;</span><br><span class="line">    &lt;/Defaults&gt;</span><br><span class="line">&lt;/OrleansConfiguration&gt;</span><br></pre></td></tr></table></figure></p>
 <p>OrleansConfiguration2.xml和OrleansConfiguration3.xml除了Networking 、ProxyingGateway 配置有所区别，其他完全一样。</p>
-<p>OrleansConfiguration2.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;Networking Address=&quot;localhost&quot; Port=&quot;11112&quot; /&gt;</div><div class="line">&lt;ProxyingGateway Address=&quot;localhost&quot; Port=&quot;30001&quot; /&gt;</div></pre></td></tr></table></figure></p>
-<p>OrleansConfiguration3.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;Networking Address=&quot;localhost&quot; Port=&quot;11113&quot; /&gt;</div><div class="line">&lt;ProxyingGateway Address=&quot;localhost&quot; Port=&quot;30002&quot; /&gt;</div></pre></td></tr></table></figure></p>
+<p>OrleansConfiguration2.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;Networking Address=&quot;localhost&quot; Port=&quot;11112&quot; /&gt;</span><br><span class="line">&lt;ProxyingGateway Address=&quot;localhost&quot; Port=&quot;30001&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>OrleansConfiguration3.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;Networking Address=&quot;localhost&quot; Port=&quot;11113&quot; /&gt;</span><br><span class="line">&lt;ProxyingGateway Address=&quot;localhost&quot; Port=&quot;30002&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
 <p>这次配置文件中引入了一个SystemStore节点：<br><strong>SystemStoreType：</strong>存储的类型；如：AzureTable、SqlServer、ZooKeeper等；<br><strong>DeploymentId：</strong>部署的唯一Id标识，具有相同的DeploymentId的Silo会加入一个集群中；<br><strong>DataConnectionString：</strong>连接字符串；</p>
 <p>3台Silo启动成功后，在OrleansStorage库的OrleansMembershipTable表中会记录下成员关系：</p>
 <p><img src="/img/actor-orleans-cluster/systemStore.png" alt="systemStore"></p>
-<h4 id="Client配置文件"><a href="#Client配置文件" class="headerlink" title="Client配置文件"></a>Client配置文件</h4><p>ClientConfiguration.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</div><div class="line">&lt;ClientConfiguration xmlns=&quot;urn:orleans&quot;&gt;</div><div class="line">   &lt;SystemStore SystemStoreType =&quot;SqlServer&quot;</div><div class="line">                DeploymentId=&quot;OrleansTest&quot;</div><div class="line">                DataConnectionString=&quot;Data Source=.;Database=OrleansStorage;User ID=sa;Password=123456;&quot; </div><div class="line">				AdoInvariant=&quot;System.Data.SqlClient&quot; /&gt;</div><div class="line">&lt;/ClientConfiguration&gt;</div></pre></td></tr></table></figure></p>
+<h4 id="Client配置文件"><a href="#Client配置文件" class="headerlink" title="Client配置文件"></a>Client配置文件</h4><p>ClientConfiguration.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</span><br><span class="line">&lt;ClientConfiguration xmlns=&quot;urn:orleans&quot;&gt;</span><br><span class="line">   &lt;SystemStore SystemStoreType =&quot;SqlServer&quot;</span><br><span class="line">                DeploymentId=&quot;OrleansTest&quot;</span><br><span class="line">                DataConnectionString=&quot;Data Source=.;Database=OrleansStorage;User ID=sa;Password=123456;&quot; </span><br><span class="line">				AdoInvariant=&quot;System.Data.SqlClient&quot; /&gt;</span><br><span class="line">&lt;/ClientConfiguration&gt;</span><br></pre></td></tr></table></figure></p>
 <p>Client通过DeploymentId标识连接Silo集群。具体最终调用那个Silo完成方法的调用，由其内部调配。当某一台Silo挂了，Grain会重新在另一个Silo上激活，达到高可用状态。</p>
-<h4 id="Client的测试代码："><a href="#Client的测试代码：" class="headerlink" title="Client的测试代码："></a>Client的测试代码：</h4><p>我们用一个死循环，创建很多Grain，来观察Silo控制台的输出效果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var random = new Random();</div><div class="line">while (true)</div><div class="line">&#123;</div><div class="line">	Thread.Sleep(1000);</div><div class="line">	var grainId = random.Next().ToString();</div><div class="line">	var grain = GrainClient.GrainFactory.GetGrain&lt;IPersonGrain&gt;(&quot;Test-&quot; + grainId);</div><div class="line">	grain.SayHelloAsync();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="Client的测试代码："><a href="#Client的测试代码：" class="headerlink" title="Client的测试代码："></a>Client的测试代码：</h4><p>我们用一个死循环，创建很多Grain，来观察Silo控制台的输出效果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var random = new Random();</span><br><span class="line">while (true)</span><br><span class="line">&#123;</span><br><span class="line">	Thread.Sleep(1000);</span><br><span class="line">	var grainId = random.Next().ToString();</span><br><span class="line">	var grain = GrainClient.GrainFactory.GetGrain&lt;IPersonGrain&gt;(&quot;Test-&quot; + grainId);</span><br><span class="line">	grain.SayHelloAsync();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h4 id="测试结果："><a href="#测试结果：" class="headerlink" title="测试结果："></a>测试结果：</h4><p>从控制台输出结果来开，每台Silo上Grain的分配还是比较均匀的</p>
 <p><img src="/img/actor-orleans-cluster/testResult.png" alt="Test Result"></p>
 <p>当杀掉一个Silo后，服务依然是正常运行，具体Grain是否重新被分配有兴趣可以测试一下：<br><img src="/img/actor-orleans-cluster/testResult2.png" alt="Test Result2"></p>
 <h3 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h3><ul>
-<li><a href="http://www.infoq.com/cn/news/2014/11/intro-actor-model" target="_blank" rel="external">Actor模型</a></li>
-<li><a href="http://dotnet.github.io/orleans/" target="_blank" rel="external">Orleans</a></li>
-<li><a href="https://github.com/beckjin/OrleansSamples/tree/master/OrleansCluster" target="_blank" rel="external">案例Demo-OrleansCluster</a></li>
+<li><a href="http://www.infoq.com/cn/news/2014/11/intro-actor-model" target="_blank" rel="noopener">Actor模型</a></li>
+<li><a href="http://dotnet.github.io/orleans/" target="_blank" rel="noopener">Orleans</a></li>
+<li><a href="https://github.com/beckjin/OrleansSamples/tree/master/OrleansCluster" target="_blank" rel="noopener">案例Demo-OrleansCluster</a></li>
 </ul>
 
       
     </div>
+    
+    
+    
 
-    <div>
-      
-        
+    
 
-      
-    </div>
+    
 
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -437,15 +399,15 @@
       
 
       
-        
+      
       
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/30/actor-orleans-streams/" rel="next" title="Orleans解决并发之痛（四）：Streams">
-                <i class="fa fa-chevron-left"></i> Orleans解决并发之痛（四）：Streams
+              <a href="/2017/07/23/actor-orleans-grain-state/" rel="next" title="Orleans解决并发之痛（二）：Grain状态">
+                <i class="fa fa-chevron-left"></i> Orleans解决并发之痛（二）：Grain状态
               </a>
             
           </div>
@@ -454,8 +416,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/07/23/actor-orleans-grain-state/" rel="prev" title="Orleans解决并发之痛（二）：Grain状态">
-                Orleans解决并发之痛（二）：Grain状态 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/07/30/actor-orleans-streams/" rel="prev" title="Orleans解决并发之痛（四）：Streams">
+                Orleans解决并发之痛（四）：Streams <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -465,32 +427,17 @@
       
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
 
     <div class="post-spread">
       
-        <!-- JiaThis Button BEGIN -->
-<div class="jiathis_style_24x24">
-  <a class="jiathis_button_weixin"></a>
-  <a class="jiathis_button_qzone"></a>
-  <a class="jiathis_button_cqq"></a>
-  <a class="jiathis_button_tsina"></a>
-  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
-  <a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript" >
-  var jiathis_config={
-    hideMore:false
-  }
-</script>
-<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
-<!-- JiaThis Button END -->
-      
     </div>
-	
-	
   </div>
 
 
@@ -499,11 +446,9 @@
 
 
           
-  <div class="comments" id="comments">
-    
-      <div id="SOHUCS"></div>
-    
-  </div>
+
+  
+
 
 
         </div>
@@ -519,81 +464,82 @@
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
             站点概览
           </li>
         </ul>
       
 
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/uploads/avatar.png"
-               alt="Beck Jin" />
-          <p class="site-author-name" itemprop="name">Beck Jin</p>
-           
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Beck Jin</p>
               <p class="site-description motion-element" itemprop="description"></p>
-           
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
         </div>
-        <nav class="site-state motion-element">
-
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-categories">
-              <a href="/categories/index.html">
-                <span class="site-state-item-count">6</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
-                <span class="site-state-item-count">19</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
-
-
       </section>
 
       
@@ -606,7 +552,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Silo配置文件"><span class="nav-number">1.</span> <span class="nav-text">Silo配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Client配置文件"><span class="nav-number">2.</span> <span class="nav-text">Client配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Client的测试代码："><span class="nav-number">3.</span> <span class="nav-text">Client的测试代码：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试结果："><span class="nav-number">4.</span> <span class="nav-text">测试结果：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接："><span class="nav-number"></span> <span class="nav-text">参考链接：</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Silo配置文件"><span class="nav-number">1.</span> <span class="nav-text"><a href="#Silo&#x914D;&#x7F6E;&#x6587;&#x4EF6;" class="headerlink" title="Silo&#x914D;&#x7F6E;&#x6587;&#x4EF6;"></a>Silo&#x914D;&#x7F6E;&#x6587;&#x4EF6;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Client配置文件"><span class="nav-number">2.</span> <span class="nav-text"><a href="#Client&#x914D;&#x7F6E;&#x6587;&#x4EF6;" class="headerlink" title="Client&#x914D;&#x7F6E;&#x6587;&#x4EF6;"></a>Client&#x914D;&#x7F6E;&#x6587;&#x4EF6;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Client的测试代码："><span class="nav-number">3.</span> <span class="nav-text"><a href="#Client&#x7684;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#xFF1A;" class="headerlink" title="Client&#x7684;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#xFF1A;"></a>Client&#x7684;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#xFF1A;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试结果："><span class="nav-number">4.</span> <span class="nav-text"><a href="#&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#xFF1A;" class="headerlink" title="&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#xFF1A;"></a>&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#xFF1A;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接："><span class="nav-number"></span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;</span></a></div>
             
 
           </div>
@@ -626,19 +572,36 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2017</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Beck Jin</span>
+
+  
 </div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
 
 
 
         
+
+
+
+
+
+
 
         
       </div>
@@ -649,6 +612,8 @@
         <i class="fa fa-arrow-up"></i>
         
       </div>
+    
+
     
 
   </div>
@@ -683,53 +648,58 @@
 
 
   
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
   
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
   
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
-
-
 
   
   
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
-
-
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
 
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
 
 
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
 
 
 
@@ -759,14 +729,8 @@
 
 
 
-  
 
 
-
-
-
-
-  
 
 
 
@@ -774,113 +738,17 @@
 
   
 
+
+
+
+
   
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-  <script>AV.initialize("FCgGthOl6XN7xRjfK31raebD-gzGzoHsz", "20z736XSuGX562R2ky8uu4EU");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
 
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
+  
 
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+  
 
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
-        });
-    }
-
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
-
+  
   
 
   
