@@ -90,7 +90,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/multilingual/crowdin.png">
 <meta property="og:image" content="http://www.beckjin.com/img/multilingual/po.png">
 <meta property="og:image" content="http://www.beckjin.com/img/multilingual/local.png">
-<meta property="og:updated_time" content="2018-01-07T13:18:45.841Z">
+<meta property="og:updated_time" content="2018-01-07T13:25:16.631Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="让多语言开发变得简单点">
 <meta name="twitter:description" content="实现方式大概两种：1、key使用方式： 在资源文件内定义key，如果原语言是中文，key通常是一个带含义的英文或者拼音；变态一点的就是xxxx1111，xxxx1112（很荣幸，我们的项目很变态 /(ㄒoㄒ)/~~），然后在代码中通过 Resource.lang.xxxx1111 或者 lang.xxxx1111(js文件内) 方式引用；  问题： key名难定义，就算定义得好也不见得大家都看得懂">
@@ -425,9 +425,7 @@
 </li>
 <li><p>根据po文件生成js文件，把js引入到项目下就可以通过 _l(‘xxxx’) 的方式使用了；</p>
 <p> <img src="/img/multilingual/local.png" alt="local.png"></p>
-</li>
-</ol>
-<p><strong>注意：</strong>如果使用第三方翻译平台，基本上都是按词数或者条数来收费的。为了减少一些成本，对于已经翻译好的内容，其实可以不用存储在翻译平台，翻译好后下载po文件后就可以把翻译平台上的内容清空。之后再导入新的pot文件，所以对pot的生成就要做一些处理，我们希望是增量式的。</p>
+<p> <strong>注意：</strong>如果使用第三方翻译平台，基本上都是按词数或者条数来收费的。为了减少一些成本，对于已经翻译好的内容，其实可以不用存储在翻译平台，翻译好后下载po文件后就可以把翻译平台上的内容清空。之后再导入新的pot文件，所以对pot的生成就要做一些处理，我们希望是增量式的。</p>
 <ol>
 <li><p>提取站点中所有有效的key</p>
 </li>
@@ -442,10 +440,11 @@
 <li><p>从翻译平台下载po文件，修改本地的pot和po文件（增量部分copy追加到文件中）</p>
 </li>
 <li><p>重新更新po文件生成js文件</p>
+<p>以上的实现我们是通过gulp来完成的，具体实现方式可以根据情况而定。</p>
 </li>
 </ol>
-<p>以上的实现我们是通过gulp来完成的，具体实现方式可以根据情况而定。</p>
-<hr>
+</li>
+</ol>
 <h4 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h4><ul>
 <li><a href="http://www.gnu.org/software/gettext/manual/index.html" target="_blank" rel="noopener">gettext</a></li>
 <li><a href="https://github.com/turquoiseowl/i18n" target="_blank" rel="noopener">i18n for ASP.NET</a></li>
