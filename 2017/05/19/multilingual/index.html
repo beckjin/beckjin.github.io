@@ -90,7 +90,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/multilingual/crowdin.png">
 <meta property="og:image" content="http://www.beckjin.com/img/multilingual/po.png">
 <meta property="og:image" content="http://www.beckjin.com/img/multilingual/local.png">
-<meta property="og:updated_time" content="2018-01-07T13:01:58.085Z">
+<meta property="og:updated_time" content="2018-01-07T13:08:08.620Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="让多语言开发变得简单点">
 <meta name="twitter:description" content="实现方式大概两种：1、key使用方式： 在资源文件内定义key，如果原语言是中文，key通常是一个带含义的英文或者拼音；变态一点的就是xxxx1111，xxxx1112（很荣幸，我们的项目很变态 /(ㄒoㄒ)/~~），然后在代码中通过 Resource.lang.xxxx1111 或者 lang.xxxx1111(js文件内) 方式引用；  问题： key名难定义，就算定义得好也不见得大家都看得懂">
@@ -417,7 +417,7 @@
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">window._l = function () &#123;</span><br><span class="line">  var args = arguments;</span><br><span class="line">  if (args) &#123;</span><br><span class="line">    var key = args[0];</span><br><span class="line">    var content = key;</span><br><span class="line">    if (typeof mdTranslation != &apos;undefined&apos; &amp;&amp; mdTranslation[key])</span><br><span class="line">      content = mdTranslation[key];</span><br><span class="line">    // 含0% 1% 的内容替换</span><br><span class="line">    if (args.length &gt; 1) &#123;</span><br><span class="line">      for (var i = 1; i &lt; args.length; i++) &#123;</span><br><span class="line">        content = content.replace(new RegExp(&apos;%&apos; + (i - 1), &apos;g&apos;), args[i]);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return content;</span><br><span class="line">  &#125;</span><br><span class="line">  return &apos;&apos;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>根据[[[xxxx]]] 和 _l(‘xxxx’) 语法我们通过脚本来提取所有的key，生成pot文件，大家可以注意文件内有一行 <strong>#: Disabled references:1</strong>，这里其实是有讲究的，我的方式是出于自动生成方便，大家有兴趣可以深入了解一下 <a href="http://www.gnu.org/software/gettext/manual/index.html" target="_blank" rel="noopener">gettext</a>;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">msgid &quot;&quot;</span><br><span class="line">msgstr &quot;&quot;</span><br><span class="line">&quot;Project-Id-Version: \n&quot;</span><br><span class="line">&quot;POT-Creation-Date: 2017-05-17 15:12:04+08:00\n&quot;</span><br><span class="line">&quot;MIME-Version: 1.0\n&quot;</span><br><span class="line">&quot;Content-Type: text/plain; charset=utf-8\n&quot;</span><br><span class="line">&quot;Content-Transfer-Encoding: 8bit\n&quot;</span><br><span class="line">&quot;X-Generator: i18n.POTGenerator\n&quot;</span><br><span class="line"> </span><br><span class="line">#: Disabled references:1</span><br><span class="line">msgid &quot;明道&quot;</span><br><span class="line">msgstr &quot;&quot;</span><br><span class="line"></span><br><span class="line">#: Disabled references:1</span><br><span class="line">msgid &quot;我在 %0 上班&quot;</span><br><span class="line">msgstr &quot;&quot;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">msgid &quot;&quot;</span><br><span class="line">msgstr &quot;&quot;</span><br><span class="line">&quot;Project-Id-Version: \n&quot;</span><br><span class="line">&quot;POT-Creation-Date: 2017-05-17 15:12:04+08:00\n&quot;</span><br><span class="line">&quot;MIME-Version: 1.0\n&quot;</span><br><span class="line">&quot;Content-Type: text/plain; charset=utf-8\n&quot;</span><br><span class="line">&quot;Content-Transfer-Encoding: 8bit\n&quot;</span><br><span class="line">&quot;X-Generator: i18n.POTGenerator\n&quot;</span><br><span class="line"></span><br><span class="line">#: Disabled references:1</span><br><span class="line">msgid &quot;明道&quot;</span><br><span class="line">msgstr &quot;&quot;</span><br><span class="line"></span><br><span class="line">#: Disabled references:1</span><br><span class="line">msgid &quot;我在 %0 上班&quot;</span><br><span class="line">msgstr &quot;&quot;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>将pot模板导入到 transifex/crowdin 中，指定这个模板需要翻译出哪些语言，在线翻译完成后下载po文件；</p>
 <p> <img src="/img/multilingual/crowdin.png" alt="crowdin.png"></p>
@@ -425,23 +425,27 @@
 </li>
 <li><p>根据po文件生成js文件，把js引入到项目下就可以通过 _l(‘xxxx’) 的方式使用了；</p>
 <p> <img src="/img/multilingual/local.png" alt="local.png"></p>
+<p> <br></p>
+<p> <strong>注意：</strong>如果使用第三方翻译平台，基本上都是按词数或者条数来收费的。为了减少一些成本，对于已经翻译好的内容，其实可以不用存储在翻译平台，翻译好后下载po文件后就可以把翻译平台上的内容清空。之后再导入新的pot文件，所以对pot的生成就要做一些处理，我们希望是增量式的。</p>
+<ol>
+<li><p>提取站点中所有有效的key</p>
+</li>
+<li><p>清理pot和po文件中无效的key</p>
+</li>
+<li><p>对比提取出来的key与现有翻译文件(已经清理过)中的key</p>
+</li>
+<li><p>生成增量key的pot文件</p>
+</li>
+<li><p>导入只含增量key的pot文件，完成翻译</p>
+</li>
+<li><p>从翻译平台下载po文件，修改本地的pot和po文件（增量部分copy追加到文件中）</p>
+</li>
+<li><p>重新更新po文件生成js文件</p>
+<p>以上的实现我们是通过gulp来完成的，具体实现方式可以根据情况而定。</p>
 </li>
 </ol>
-<p><br><br><strong>注意：</strong>如果使用第三方翻译平台，基本上都是按词数或者条数来收费的。为了减少一些成本，对于已经翻译好的内容，其实可以不用存储在翻译平台，翻译好后下载po文件后就可以把翻译平台上的内容清空。之后再导入新的pot文件，所以对pot的生成就要做一些处理，我们希望是增量式的。</p>
-<pre><code>1. 提取站点中所有有效的key
-
-2. 清理pot和po文件中无效的key
-
-3. 对比提取出来的key与现有翻译文件(已经清理过)中的key
-
-4. 生成增量key的pot文件
-
-5. 导入只含增量key的pot文件，完成翻译
-
-6. 从翻译平台下载po文件，修改本地的pot和po文件（增量部分copy追加到文件中）
-
-7. 重新更新po文件生成js文件
-</code></pre><p>以上的实现我们是通过gulp来完成的，具体实现方式可以根据情况而定。</p>
+</li>
+</ol>
 <hr>
 <h4 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h4><ul>
 <li><a href="http://www.gnu.org/software/gettext/manual/index.html" target="_blank" rel="noopener">gettext</a></li>
