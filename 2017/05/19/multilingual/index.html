@@ -90,7 +90,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/multilingual/crowdin.png">
 <meta property="og:image" content="http://www.beckjin.com/img/multilingual/po.png">
 <meta property="og:image" content="http://www.beckjin.com/img/multilingual/local.png">
-<meta property="og:updated_time" content="2018-01-07T12:36:21.306Z">
+<meta property="og:updated_time" content="2018-01-07T12:47:51.881Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="让多语言开发变得简单点">
 <meta name="twitter:description" content="实现方式大概两种：1、key使用方式： 在资源文件内定义key，如果原语言是中文，key通常是一个带含义的英文或者拼音；变态一点的就是xxxx1111，xxxx1112（很荣幸，我们的项目很变态 /(ㄒoㄒ)/~~），然后在代码中通过 Resource.lang.xxxx1111 或者 lang.xxxx1111(js文件内) 方式引用；  问题： key名难定义，就算定义得好也不见得大家都看得懂">
@@ -367,45 +367,46 @@
 </ol>
 <hr>
 <h5 id="2、gettext"><a href="#2、gettext" class="headerlink" title="2、gettext"></a>2、gettext</h5><h6 id="先了解三种文件类型："><a href="#先了解三种文件类型：" class="headerlink" title="先了解三种文件类型："></a>先了解三种文件类型：</h6><ul>
-<li><p>.po文件</p>
+<li>.po文件</li>
+</ul>
 <blockquote>
 <p>PO是Portable Object（可移植对象）的缩写形式，它是面向翻译人员的、提取于源代码的一种资源文件；</p>
 </blockquote>
-</li>
-<li><p>.pot文件</p>
+<ul>
+<li>.pot文件</li>
+</ul>
 <blockquote>
 <p>POT是Portable Object Template（可移植对象模板）的缩写形式，是一种模板文件，其实质与.po文件一样，其中包含了从源代码中提取所有的翻译字符串的列表，主要提供给翻译人员使用，可以通过.pot文件生成.po文件；</p>
 </blockquote>
-</li>
-<li><p>.mo文件</p>
+<ul>
+<li>.mo文件</li>
+</ul>
 <blockquote>
 <p>MO是Machine Object（机器对象）的缩写形式，它是面向计算机的、由.po文件通过GNU gettext工具包编译而成的二进制文件，应用程序通过读取.mo文件使自身的界面转换成用户使用的语言；</p>
 </blockquote>
-</li>
-</ul>
 <hr>
 <h6 id="使用方式：-1"><a href="#使用方式：-1" class="headerlink" title="使用方式："></a>使用方式：</h6><blockquote>
 <p>在代码文件内写成：_(“明道”)，通过命令提取到pot文件中，通过poedit等工具根据pot文件创建其他语言对于的po文件</p>
 </blockquote>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#: src/test.cs:36</span><br><span class="line">msgid &quot;明道&quot;</span><br><span class="line">msgstr &quot;&quot;</span><br></pre></td></tr></table></figure>
-<h6 id="问题：-1"><a href="#问题：-1" class="headerlink" title="问题："></a>问题：</h6><p> gettext的方式的主要问题是因为key的唯一性会导致多义词、单复数难处理，但对于我们目前来说还是可以接受的，所以最终决定换成gettext方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#: src/test.cs:36</span><br><span class="line">msgid &quot;明道&quot;</span><br><span class="line">msgstr &quot;&quot;</span><br></pre></td></tr></table></figure>
+<h6 id="问题：-1"><a href="#问题：-1" class="headerlink" title="问题："></a>问题：</h6><p>gettext的方式的主要问题是因为key的唯一性会导致多义词、单复数难处理，但对于我们目前来说还是可以接受的，所以最终决定换成gettext方式</p>
 <hr>
 <h4 id="如果是基于-Net-Framework-的项目："><a href="#如果是基于-Net-Framework-的项目：" class="headerlink" title="如果是基于.Net Framework 的项目："></a>如果是基于.Net Framework 的项目：</h4><h6 id="在需要支持翻译的项目nuget安装i18N：i18N详细介绍"><a href="#在需要支持翻译的项目nuget安装i18N：i18N详细介绍" class="headerlink" title="在需要支持翻译的项目nuget安装i18N：i18N详细介绍"></a>在需要支持翻译的项目nuget安装i18N：<a href="https://github.com/turquoiseowl/i18n" target="_blank" rel="noopener">i18N详细介绍</a></h6><blockquote>
 <p>Install-Package i18N</p>
 </blockquote>
-<h6 id="在使用文案的地方都按照以下方式来写："><a href="#在使用文案的地方都按照以下方式来写：" class="headerlink" title="在使用文案的地方都按照以下方式来写："></a>在使用文案的地方都按照以下方式来写：</h6> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. [[[明道]]]   // 没有参数</span><br><span class="line"></span><br><span class="line">2. [[[我在 %0 上班 ||| 明道 ]]]  // 带参数</span><br><span class="line"></span><br><span class="line">3. string.Format(&quot;[[[welcome %1, today is %0|||&#123;0&#125;|||&#123;1&#125;]]]&quot;, day, name) //string.Format 方式</span><br></pre></td></tr></table></figure>
-<h6 id="web-config-配置："><a href="#web-config-配置：" class="headerlink" title="web.config 配置："></a>web.config 配置：</h6> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;appSettings&gt;</span><br><span class="line">    &lt;!-- 定义资源文件名称(.po)--&gt;</span><br><span class="line">    &lt;add key=&quot;i18n.LocaleFilename&quot; value=&quot;mdTranslation&quot; /&gt;</span><br><span class="line">&lt;/appSettings&gt;</span><br><span class="line">&lt;system.webServer&gt;</span><br><span class="line">    &lt;modules&gt;</span><br><span class="line">        &lt;add name=&quot;i18n.LocalizingModule&quot; type=&quot;i18n.LocalizingModule, i18n&quot; /&gt;</span><br><span class="line">    &lt;/modules&gt;</span><br><span class="line">&lt;/system.webServer&gt;</span><br></pre></td></tr></table></figure>
-<h6 id="Application-Start-配置："><a href="#Application-Start-配置：" class="headerlink" title="Application_Start 配置："></a>Application_Start 配置：</h6> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">void Application_Start(object sender, EventArgs e)</span><br><span class="line">&#123;</span><br><span class="line">    // 默认语言（简体中文）</span><br><span class="line">    i18n.LocalizedApplication.Current.DefaultLanguage = &quot;zh-Hans&quot;; </span><br><span class="line">    // url里面是否带语言参数 http://www.xxx.com/en, Void 表示不带语言参数（可按项目的实际要求，非Voide方式可能存在文件引用路径问题）</span><br><span class="line">    i18n.UrlLocalizer.UrlLocalizationScheme = i18n.UrlLocalizationScheme.Void; </span><br><span class="line">    // 哪些ContentType文件需求支持多语言解析</span><br><span class="line">    i18n.LocalizedApplication.Current.ContentTypesToLocalize = new Regex(@&quot;^(?:(?:(?:text|application)/(?:plain|html|xml|json|x-json))(?:\s*;.*)?)$&quot;);</span><br><span class="line">    //如果开发的项目没有考虑时区问题，需要设置成null，不然dateTime类型会按照时区重新计算</span><br><span class="line">    i18n.LocalizedApplication.Current.SetPrincipalAppLanguageForRequestHandlers = null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="执行命令生成pot和po文件："><a href="#执行命令生成pot和po文件：" class="headerlink" title="执行命令生成pot和po文件："></a>执行命令生成pot和po文件：</h6> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;$(TargetDir)i18n.PostBuild.exe&quot; &quot;$(ProjectDir)\web.config&quot;</span><br></pre></td></tr></table></figure>
+<h6 id="在使用文案的地方都按照以下方式来写："><a href="#在使用文案的地方都按照以下方式来写：" class="headerlink" title="在使用文案的地方都按照以下方式来写："></a>在使用文案的地方都按照以下方式来写：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. [[[明道]]]   // 没有参数</span><br><span class="line"></span><br><span class="line">2. [[[我在 %0 上班 ||| 明道 ]]]  // 带参数</span><br><span class="line"></span><br><span class="line">3. string.Format(&quot;[[[welcome %1, today is %0|||&#123;0&#125;|||&#123;1&#125;]]]&quot;, day, name) //string.Format 方式</span><br></pre></td></tr></table></figure>
+<h6 id="web-config-配置："><a href="#web-config-配置：" class="headerlink" title="web.config 配置："></a>web.config 配置：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;appSettings&gt;</span><br><span class="line">    &lt;!-- 定义资源文件名称(.po)--&gt;</span><br><span class="line">    &lt;add key=&quot;i18n.LocaleFilename&quot; value=&quot;mdTranslation&quot; /&gt;</span><br><span class="line">&lt;/appSettings&gt;</span><br><span class="line">&lt;system.webServer&gt;</span><br><span class="line">    &lt;modules&gt;</span><br><span class="line">        &lt;add name=&quot;i18n.LocalizingModule&quot; type=&quot;i18n.LocalizingModule, i18n&quot; /&gt;</span><br><span class="line">    &lt;/modules&gt;</span><br><span class="line">&lt;/system.webServer&gt;</span><br></pre></td></tr></table></figure>
+<h6 id="Application-Start-配置："><a href="#Application-Start-配置：" class="headerlink" title="Application_Start 配置："></a>Application_Start 配置：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">void Application_Start(object sender, EventArgs e)</span><br><span class="line">&#123;</span><br><span class="line">    // 默认语言（简体中文）</span><br><span class="line">    i18n.LocalizedApplication.Current.DefaultLanguage = &quot;zh-Hans&quot;; </span><br><span class="line">    // url里面是否带语言参数 http://www.xxx.com/en, Void 表示不带语言参数（可按项目的实际要求，非Voide方式可能存在文件引用路径问题）</span><br><span class="line">    i18n.UrlLocalizer.UrlLocalizationScheme = i18n.UrlLocalizationScheme.Void; </span><br><span class="line">    // 哪些ContentType文件需求支持多语言解析</span><br><span class="line">    i18n.LocalizedApplication.Current.ContentTypesToLocalize = new Regex(@&quot;^(?:(?:(?:text|application)/(?:plain|html|xml|json|x-json))(?:\s*;.*)?)$&quot;);</span><br><span class="line">    //如果开发的项目没有考虑时区问题，需要设置成null，不然dateTime类型会按照时区重新计算</span><br><span class="line">    i18n.LocalizedApplication.Current.SetPrincipalAppLanguageForRequestHandlers = null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="执行命令生成pot和po文件："><a href="#执行命令生成pot和po文件：" class="headerlink" title="执行命令生成pot和po文件："></a>执行命令生成pot和po文件：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;$(TargetDir)i18n.PostBuild.exe&quot; &quot;$(ProjectDir)\web.config&quot;</span><br></pre></td></tr></table></figure>
 <h6 id="得到pot和po文件之后，可以使用以下方式来完成多语言的翻译："><a href="#得到pot和po文件之后，可以使用以下方式来完成多语言的翻译：" class="headerlink" title="得到pot和po文件之后，可以使用以下方式来完成多语言的翻译："></a>得到pot和po文件之后，可以使用以下方式来完成多语言的翻译：</h6><pre><code>1. poedit // 本地翻译软件，可以根据pot模板创建各语言的po文件，也可以直接对现有的po文件进行翻译
 
 2. transifex // 在线翻译平台，可以导入pot模板，自动创建多个语言来在线翻译。也可以将现有的po文件导入
 
 3. crowdin // 在线翻译平台（类似transifex）
-</code></pre><h6 id="我们使用的nuget安装的i18N在多语言实现上并没有用到mo文件，所以可以不生成mo文件"><a href="#我们使用的nuget安装的i18N在多语言实现上并没有用到mo文件，所以可以不生成mo文件" class="headerlink" title="我们使用的nuget安装的i18N在多语言实现上并没有用到mo文件，所以可以不生成mo文件"></a>我们使用的nuget安装的i18N在多语言实现上并没有用到mo文件，所以可以不生成mo文件</h6><p> <br><br> <strong><em>对于所有访问资源都在所部署的IIS服务器的情况，以上配置基本就可以了</em></strong></p>
+</code></pre><h6 id="我们使用的nuget安装的i18N在多语言实现上并没有用到mo文件，所以可以不生成mo文件"><a href="#我们使用的nuget安装的i18N在多语言实现上并没有用到mo文件，所以可以不生成mo文件" class="headerlink" title="我们使用的nuget安装的i18N在多语言实现上并没有用到mo文件，所以可以不生成mo文件"></a>我们使用的nuget安装的i18N在多语言实现上并没有用到mo文件，所以可以不生成mo文件</h6><p><br><br><strong><em>对于所有访问资源都在所部署的IIS服务器的情况，以上配置基本就可以了</em></strong></p>
 <hr>
-<p> 但是对于引用CDN的文件来说，以上的方式就不合适了，所以我们弃用i18N自带的pot模板生成工具i18n.PostBuild，自己实现。</p>
-<p> 大概思路：</p>
+<p>但是对于引用CDN的文件来说，以上的方式就不合适了，所以我们弃用i18N自带的pot模板生成工具i18n.PostBuild，自己实现。</p>
+<p>大概思路：</p>
 <ol>
 <li><p>如果资源文件在所部署的IIS服务器上，依然使用以上的试试；</p>
 </li>
@@ -413,10 +414,8 @@
 </li>
 <li><p>类似[[[xxxx]]]这样的语法，我们定义一个js里面的语法，_l(‘xxxx’)；</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">_l(&quot;明道&quot;)</span><br><span class="line"></span><br><span class="line">_l(&quot;我在 %0 上班&quot;,&quot;明道&quot;)</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">window._l = function () &#123;</span><br><span class="line">  var args = arguments;</span><br><span class="line">  if (args) &#123;</span><br><span class="line">    var key = args[0];</span><br><span class="line">    var content = key;</span><br><span class="line">    if (typeof mdTranslation != &apos;undefined&apos; &amp;&amp; mdTranslation[key])</span><br><span class="line">      content = mdTranslation[key];</span><br><span class="line">    // 含0% 1% 的内容替换</span><br><span class="line">    if (args.length &gt; 1) &#123;</span><br><span class="line">      for (var i = 1; i &lt; args.length; i++) &#123;</span><br><span class="line">        content = content.replace(new RegExp(&apos;%&apos; + (i - 1), &apos;g&apos;), args[i]);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return content;</span><br><span class="line">  &#125;</span><br><span class="line">  return &apos;&apos;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 </li>
-</ol>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">window._l = function () &#123;</span><br><span class="line">  var args = arguments;</span><br><span class="line">  if (args) &#123;</span><br><span class="line">    var key = args[0];</span><br><span class="line">    var content = key;</span><br><span class="line">    if (typeof mdTranslation != &apos;undefined&apos; &amp;&amp; mdTranslation[key])</span><br><span class="line">      content = mdTranslation[key];</span><br><span class="line">    // 含0% 1% 的内容替换</span><br><span class="line">    if (args.length &gt; 1) &#123;</span><br><span class="line">      for (var i = 1; i &lt; args.length; i++) &#123;</span><br><span class="line">        content = content.replace(new RegExp(&apos;%&apos; + (i - 1), &apos;g&apos;), args[i]);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return content;</span><br><span class="line">  &#125;</span><br><span class="line">  return &apos;&apos;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</code></pre><ol>
 <li><p>根据[[[xxxx]]] 和 _l(‘xxxx’) 语法我们通过脚本来提取所有的key，生成pot文件，大家可以注意文件内有一行 <strong>#: Disabled references:1</strong>，这里其实是有讲究的，我的方式是出于自动生成方便，大家有兴趣可以深入了解一下 <a href="http://www.gnu.org/software/gettext/manual/index.html" target="_blank" rel="noopener">gettext</a>;</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">msgid &quot;&quot;</span><br><span class="line">msgstr &quot;&quot;</span><br><span class="line">&quot;Project-Id-Version: \n&quot;</span><br><span class="line">&quot;POT-Creation-Date: 2017-05-17 15:12:04+08:00\n&quot;</span><br><span class="line">&quot;MIME-Version: 1.0\n&quot;</span><br><span class="line">&quot;Content-Type: text/plain; charset=utf-8\n&quot;</span><br><span class="line">&quot;Content-Transfer-Encoding: 8bit\n&quot;</span><br><span class="line">&quot;X-Generator: i18n.POTGenerator\n&quot;</span><br><span class="line"> </span><br><span class="line">#: Disabled references:1</span><br><span class="line">msgid &quot;明道&quot;</span><br><span class="line">msgstr &quot;&quot;</span><br><span class="line"></span><br><span class="line">#: Disabled references:1</span><br><span class="line">msgid &quot;我在 %0 上班&quot;</span><br><span class="line">msgstr &quot;&quot;</span><br></pre></td></tr></table></figure>
 </li>
@@ -426,27 +425,25 @@
 </li>
 <li><p>根据po文件生成js文件，把js引入到项目下就可以通过 _l(‘xxxx’) 的方式使用了；</p>
 <p> <img src="/img/multilingual/local.png" alt="local.png"></p>
+</li>
+</ol>
 <p><br><br><strong>注意：</strong>如果使用第三方翻译平台，基本上都是按词数或者条数来收费的。为了减少一些成本，对于已经翻译好的内容，其实可以不用存储在翻译平台，翻译好后下载po文件后就可以把翻译平台上的内容清空。之后再导入新的pot文件，所以对pot的生成就要做一些处理，我们希望是增量式的。</p>
-<ol>
-<li><p>提取站点中所有有效的key</p>
-</li>
-<li><p>清理pot和po文件中无效的key</p>
-</li>
-<li><p>对比提取出来的key与现有翻译文件(已经清理过)中的key</p>
-</li>
-<li><p>生成增量key的pot文件</p>
-</li>
-<li><p>导入只含增量key的pot文件，完成翻译</p>
-</li>
-<li><p>从翻译平台下载po文件，修改本地的pot和po文件（增量部分copy追加到文件中）</p>
-</li>
-<li><p>重新更新po文件生成js文件</p>
-</li>
-</ol>
-<p>以上的实现我们是通过gulp来完成的，具体实现方式可以根据情况而定。</p>
-<h4 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h4></li>
-</ol>
-<ul>
+<pre><code>1. 提取站点中所有有效的key
+
+2. 清理pot和po文件中无效的key
+
+3. 对比提取出来的key与现有翻译文件(已经清理过)中的key
+
+4. 生成增量key的pot文件
+
+5. 导入只含增量key的pot文件，完成翻译
+
+6. 从翻译平台下载po文件，修改本地的pot和po文件（增量部分copy追加到文件中）
+
+7. 重新更新po文件生成js文件
+</code></pre><p>以上的实现我们是通过gulp来完成的，具体实现方式可以根据情况而定。</p>
+<hr>
+<h4 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h4><ul>
 <li><a href="http://www.gnu.org/software/gettext/manual/index.html" target="_blank" rel="noopener">gettext</a></li>
 <li><a href="https://github.com/turquoiseowl/i18n" target="_blank" rel="noopener">i18n for ASP.NET</a></li>
 <li><a href="https://crowdin.com" target="_blank" rel="noopener">crowdin</a></li>
