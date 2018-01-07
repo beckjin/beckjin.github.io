@@ -91,7 +91,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-cluster/systemStore.png">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-cluster/testResult.png">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-cluster/testResult2.png">
-<meta property="og:updated_time" content="2017-07-30T15:36:54.325Z">
+<meta property="og:updated_time" content="2018-01-07T11:56:15.827Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Orleans解决并发之痛（三）：集群">
 <meta name="twitter:description" content="Orleans本身的设计是一个分布式的框架，多个Silo构成集群，Grains分布在多个Silo中。一旦一个Silo挂了，原来归属这个Silo的Grains会自动在其他Silo中激活。生产环境下还是需要以集群方式来部署。  在Orleans解决并发之痛（二）：Grain状态文章中提到内存存储State是不靠谱的，同样，以内存方式存储集群中Silo的成员关系也是不靠谱的，所以本文使用SQL Serv">
@@ -376,7 +376,7 @@
 <h4 id="测试结果："><a href="#测试结果：" class="headerlink" title="测试结果："></a>测试结果：</h4><p>从控制台输出结果来开，每台Silo上Grain的分配还是比较均匀的</p>
 <p><img src="/img/actor-orleans-cluster/testResult.png" alt="Test Result"></p>
 <p>当杀掉一个Silo后，服务依然是正常运行，具体Grain是否重新被分配有兴趣可以测试一下：<br><img src="/img/actor-orleans-cluster/testResult2.png" alt="Test Result2"></p>
-<h3 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h3><ul>
+<h4 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h4><ul>
 <li><a href="http://www.infoq.com/cn/news/2014/11/intro-actor-model" target="_blank" rel="noopener">Actor模型</a></li>
 <li><a href="http://dotnet.github.io/orleans/" target="_blank" rel="noopener">Orleans</a></li>
 <li><a href="https://github.com/beckjin/OrleansSamples/tree/master/OrleansCluster" target="_blank" rel="noopener">案例Demo-OrleansCluster</a></li>
@@ -593,7 +593,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Silo配置文件"><span class="nav-number">1.</span> <span class="nav-text"><a href="#Silo&#x914D;&#x7F6E;&#x6587;&#x4EF6;" class="headerlink" title="Silo&#x914D;&#x7F6E;&#x6587;&#x4EF6;"></a>Silo&#x914D;&#x7F6E;&#x6587;&#x4EF6;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Client配置文件"><span class="nav-number">2.</span> <span class="nav-text"><a href="#Client&#x914D;&#x7F6E;&#x6587;&#x4EF6;" class="headerlink" title="Client&#x914D;&#x7F6E;&#x6587;&#x4EF6;"></a>Client&#x914D;&#x7F6E;&#x6587;&#x4EF6;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Client的测试代码："><span class="nav-number">3.</span> <span class="nav-text"><a href="#Client&#x7684;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#xFF1A;" class="headerlink" title="Client&#x7684;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#xFF1A;"></a>Client&#x7684;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#xFF1A;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试结果："><span class="nav-number">4.</span> <span class="nav-text"><a href="#&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#xFF1A;" class="headerlink" title="&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#xFF1A;"></a>&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#xFF1A;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接："><span class="nav-number"></span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Silo配置文件"><span class="nav-number">1.</span> <span class="nav-text"><a href="#Silo&#x914D;&#x7F6E;&#x6587;&#x4EF6;" class="headerlink" title="Silo&#x914D;&#x7F6E;&#x6587;&#x4EF6;"></a>Silo&#x914D;&#x7F6E;&#x6587;&#x4EF6;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Client配置文件"><span class="nav-number">2.</span> <span class="nav-text"><a href="#Client&#x914D;&#x7F6E;&#x6587;&#x4EF6;" class="headerlink" title="Client&#x914D;&#x7F6E;&#x6587;&#x4EF6;"></a>Client&#x914D;&#x7F6E;&#x6587;&#x4EF6;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Client的测试代码："><span class="nav-number">3.</span> <span class="nav-text"><a href="#Client&#x7684;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#xFF1A;" class="headerlink" title="Client&#x7684;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#xFF1A;"></a>Client&#x7684;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#xFF1A;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试结果："><span class="nav-number">4.</span> <span class="nav-text"><a href="#&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#xFF1A;" class="headerlink" title="&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#xFF1A;"></a>&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#xFF1A;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考链接："><span class="nav-number">5.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;</span></a></li></ol></div>
             
 
           </div>
