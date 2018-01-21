@@ -89,7 +89,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.beckjin.com/img/cross-project-data-share/rpc.png">
 <meta property="og:image" content="http://www.beckjin.com/img/cross-project-data-share/buildCode.png">
-<meta property="og:updated_time" content="2018-01-07T13:05:56.687Z">
+<meta property="og:updated_time" content="2018-01-21T12:24:32.519Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="跨项目数据共享(跨语言)">
 <meta name="twitter:description" content="对于这个话题，我相信大家很容易想到，HTTP接口的方式可以解决。 大概的做法类似这样：  根据HTTP接口需要的参数，将参数序列化成json字符串；  根据当前项目开发语言，封装一个处理Post||Get请求的方法，发送请求；  接口返回结果，然后反序列化成实体在逻辑代码中使用；    可能在单个项目内使用这样的方式痛点并不是很明显。但如果是在多个项目内，每个项目都依赖于这个接口，那为了获取到数据">
@@ -415,7 +415,7 @@
 <li>基于.Net Core的可以将服务部署在Linux上；</li>
 <li>基于.Net Framework的可以部署成Windows服务，关于Windows服务方式，这里推荐使用Topshelf，非常简单。</li>
 </ul>
-<p>服务部署后涉及到如何做到负载，我们必须保证服务的稳定，不希望单点故障。关于这部分的实现方式，后面会介绍使用 Nginx+Consul来解决</p>
+<p>服务部署后涉及到负载和高可用的问题，单点故障是不能接收的。关于这部分的实现方式，相信熟悉 Nginx 的同学可以很快解决，当然也可以使用其他方案。</p>
 <h4 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h4><ul>
 <li><a href="https://developers.google.com/protocol-buffers/docs/proto3" target="_blank" rel="noopener">https://developers.google.com/protocol-buffers/docs/proto3</a></li>
 <li><a href="http://www.grpc.io/docs/" target="_blank" rel="noopener">http://www.grpc.io/docs/</a></li>
@@ -614,7 +614,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -625,7 +625,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
