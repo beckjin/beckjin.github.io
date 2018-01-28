@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="代码共享,C#,Nuget Server," />
+  <meta name="keywords" content="Quartz,作业调度," />
 
 
 
@@ -79,24 +79,21 @@
 
 
 
-<meta name="description" content="A：你把xx项目的xx代码发我一份吧，我这边也有那个功能B：好的。（ctrl+c、ctrl+v 甩过去）    A：我这边的逻辑怎么和你不一样？你那边是不是偷偷修改了什么B：艹，我怎么知道你那么也有这个逻辑。。。A：怪我咯？？？  类似这些情况目前在开发团队中或多或少总会存在，开发过程中对于copy代码这件事，可能苦于目前工作量大，开发交付时间紧张，选择一个目前认为高效的方式，不copy能怎样呢">
-<meta name="keywords" content="代码共享,C#,Nuget Server">
+<meta name="description" content="Quartz.NET 是一个开源的作业调度框架，是 Java 作业调度框架  Quartz 的.NET 版本，对于周期性的任务，其作业和触发器的结合，极大的简化了代码的编写，大多时候我们只需要关注作业本身的逻辑。Quartz.NET  支持持久化、集群。Quartz.NET 3.0 已经开始支持 .NET Core/.NET Standard 2.0。 体系结构 Job 为作业的接口，JobDet">
+<meta name="keywords" content="Quartz,作业调度">
 <meta property="og:type" content="article">
-<meta property="og:title" content="跨项目代码共享(C#)">
-<meta property="og:url" content="http://www.beckjin.com/2017/03/25/cross-project-code-share/index.html">
+<meta property="og:title" content="Quartz.NET 作业调度（一）：Test">
+<meta property="og:url" content="http://www.beckjin.com/2018/01/28/quartz-net-test/index.html">
 <meta property="og:site_name" content="Beck&#39;s Blog">
-<meta property="og:description" content="A：你把xx项目的xx代码发我一份吧，我这边也有那个功能B：好的。（ctrl+c、ctrl+v 甩过去）    A：我这边的逻辑怎么和你不一样？你那边是不是偷偷修改了什么B：艹，我怎么知道你那么也有这个逻辑。。。A：怪我咯？？？  类似这些情况目前在开发团队中或多或少总会存在，开发过程中对于copy代码这件事，可能苦于目前工作量大，开发交付时间紧张，选择一个目前认为高效的方式，不copy能怎样呢">
+<meta property="og:description" content="Quartz.NET 是一个开源的作业调度框架，是 Java 作业调度框架  Quartz 的.NET 版本，对于周期性的任务，其作业和触发器的结合，极大的简化了代码的编写，大多时候我们只需要关注作业本身的逻辑。Quartz.NET  支持持久化、集群。Quartz.NET 3.0 已经开始支持 .NET Core/.NET Standard 2.0。 体系结构 Job 为作业的接口，JobDet">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.beckjin.com/img/cross-project-code-share/lib.png">
-<meta property="og:image" content="http://www.beckjin.com/img/cross-project-code-share/structure.png">
-<meta property="og:image" content="http://www.beckjin.com/img/cross-project-code-share/release.png">
-<meta property="og:image" content="http://www.beckjin.com/img/cross-project-code-share/package.png">
-<meta property="og:image" content="http://www.beckjin.com/img/cross-project-code-share/publish.png">
-<meta property="og:updated_time" content="2018-01-21T12:25:49.598Z">
+<meta property="og:image" content="http://www.beckjin.com/img/quartz-net-test/structure.png">
+<meta property="og:image" content="http://www.beckjin.com/img/quartz-net-test/result.png">
+<meta property="og:updated_time" content="2018-01-28T05:37:02.053Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="跨项目代码共享(C#)">
-<meta name="twitter:description" content="A：你把xx项目的xx代码发我一份吧，我这边也有那个功能B：好的。（ctrl+c、ctrl+v 甩过去）    A：我这边的逻辑怎么和你不一样？你那边是不是偷偷修改了什么B：艹，我怎么知道你那么也有这个逻辑。。。A：怪我咯？？？  类似这些情况目前在开发团队中或多或少总会存在，开发过程中对于copy代码这件事，可能苦于目前工作量大，开发交付时间紧张，选择一个目前认为高效的方式，不copy能怎样呢">
-<meta name="twitter:image" content="http://www.beckjin.com/img/cross-project-code-share/lib.png">
+<meta name="twitter:title" content="Quartz.NET 作业调度（一）：Test">
+<meta name="twitter:description" content="Quartz.NET 是一个开源的作业调度框架，是 Java 作业调度框架  Quartz 的.NET 版本，对于周期性的任务，其作业和触发器的结合，极大的简化了代码的编写，大多时候我们只需要关注作业本身的逻辑。Quartz.NET  支持持久化、集群。Quartz.NET 3.0 已经开始支持 .NET Core/.NET Standard 2.0。 体系结构 Job 为作业的接口，JobDet">
+<meta name="twitter:image" content="http://www.beckjin.com/img/quartz-net-test/structure.png">
 
 
 
@@ -126,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://www.beckjin.com/2017/03/25/cross-project-code-share/"/>
+  <link rel="canonical" href="http://www.beckjin.com/2018/01/28/quartz-net-test/"/>
 
 
 
 
 
-  <title>跨项目代码共享(C#) | Beck's Blog</title>
+  <title>Quartz.NET 作业调度（一）：Test | Beck's Blog</title>
   
 
 
@@ -259,7 +256,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2017/03/25/cross-project-code-share/">
+    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2018/01/28/quartz-net-test/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
@@ -276,7 +273,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">跨项目代码共享(C#)</h2>
+          <h2 class="post-title" itemprop="name headline">Quartz.NET 作业调度（一）：Test</h2>
         
 
         <div class="post-meta">
@@ -288,8 +285,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-25T23:04:05+08:00">
-                2017-03-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-28T13:33:39+08:00">
+                2018-01-28
               </time>
             
 
@@ -311,8 +308,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ASP-NET/" itemprop="url" rel="index">
-                    <span itemprop="name">ASP.NET</span>
+                  <a href="/categories/Quartz-NET/" itemprop="url" rel="index">
+                    <span itemprop="name">Quartz.NET</span>
                   </a>
                 </span>
 
@@ -328,7 +325,7 @@
 
           
           
-             <span id="/2017/03/25/cross-project-code-share/" class="leancloud_visitors" data-flag-title="跨项目代码共享(C#)">
+             <span id="/2018/01/28/quartz-net-test/" class="leancloud_visitors" data-flag-title="Quartz.NET 作业调度（一）：Test">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -359,60 +356,31 @@
       
 
       
-        <blockquote>
-<p>A：你把xx项目的xx代码发我一份吧，我这边也有那个功能<br>B：好的。（ctrl+c、ctrl+v 甩过去）</p>
+        <p><a href="https://www.quartz-scheduler.net/" target="_blank" rel="noopener">Quartz.NET</a> 是一个开源的作业调度框架，是 Java 作业调度框架  <a href="http://www.quartz-scheduler.org/" target="_blank" rel="noopener">Quartz</a> 的.NET 版本，对于周期性的任务，其作业和触发器的结合，极大的简化了代码的编写，大多时候我们只需要关注作业本身的逻辑。<a href="https://www.quartz-scheduler.net/" target="_blank" rel="noopener">Quartz.NET</a>  支持持久化、集群。<a href="https://www.quartz-scheduler.net/2017/12/30/quartznet-3.0-released.html" target="_blank" rel="noopener">Quartz.NET 3.0</a> 已经开始支持 .NET Core/.NET Standard 2.0。</p>
+<h4 id="体系结构"><a href="#体系结构" class="headerlink" title="体系结构"></a>体系结构</h4><p><img src="/img/quartz-net-test/structure.png" alt="体系结构"></p>
+<p>Job 为作业的接口，JobDetail 用来描述 Job 的实现类及其它相关的静态信息；Trigger 作为作业的定时管理工具，一个 Trigger 只能对应一个作业实例，而一个作业实例可对应多个 Trigger ；Scheduler 做为定时任务容器，它包含了所有触发器和作业，每个 Scheduler 都存有 JobDetail 和 Trigger<br> 的注册，一个 Scheduler 中可以注册多个 JobDetail 和多个 Trigger 。</p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>创建一个基于 .NET Core 2.0 控制台程序，Nuget 安装 Quartz 即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Install-Package Quartz</span><br></pre></td></tr></table></figure></p>
+<h4 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h4><h6 id="主要接口和类说明："><a href="#主要接口和类说明：" class="headerlink" title="主要接口和类说明："></a>主要接口和类说明：</h6><blockquote>
+<p>IScheduler ：和调度器交互的主要接口<br>JobBuilder：定义 JobDetail 实例<br>IJobDetail：定义 Job 实例及其它相关的静态信息<br>IJob：自定义的作业模块所要继承的接口，调度器会调用这个实现<br>TriggerBuilder：定义 Trigger 实例<br>ITrigger：定义 Job 被触发的时间</p>
 </blockquote>
-<hr>
-<blockquote>
-<p>A：我这边的逻辑怎么和你不一样？你那边是不是偷偷修改了什么<br>B：艹，我怎么知道你那么也有这个逻辑。。。<br>A：怪我咯？？？</p>
-</blockquote>
-<p>类似这些情况目前在开发团队中或多或少总会存在，开发过程中对于copy代码这件事，可能苦于目前工作量大，开发交付时间紧张，选择一个目前认为高效的方式，不copy能怎样呢？心里当然是知道肯定存在解决方案的。</p>
-<h3 id="我们解决问题的方式是搭建自己的-Nuget-Server"><a href="#我们解决问题的方式是搭建自己的-Nuget-Server" class="headerlink" title="我们解决问题的方式是搭建自己的 Nuget Server"></a>我们解决问题的方式是搭建自己的 Nuget Server</h3><p>通过 Nuget Server的方式可以帮助我们进行代码统一管理，功能变化的代码版本控制，Server端版本升级时对引用方目前使用的版本进行兼容即可。每个项目公共功能的代码使用只需要一键安装就来了。如果Server端版本升了，引用方根据项目本身的需要，看是否需要升级到新版本。</p>
+<h6 id="创建流程："><a href="#创建流程：" class="headerlink" title="创建流程："></a>创建流程：</h6><blockquote>
 <ol>
-<li><p>创建一个项目，用来管理通过 Nuget Server 发布的代码，代码本身通过github管理，理论上每次发布新版本Nuget包都有一个分支代码和该版本对应；</p>
-</li>
-<li><p>创建类库，我们使用场景是需要同时支持 .Net Framework和 .Net Core 项目的使用（.Net Framework 4.5.2及以上可以使用，.Net Standard 1.5及以上可以使用），而且希望功能性相关代码只维护一份</p>
-<ul>
-<li>尝试1：使用可移植类库来实现，经过一系列的测试，失败了；</li>
-<li>尝试2：使用standard类库来实现，经过一系列的测试，依然失败；</li>
-<li><p>尝试3：</p>
-<ul>
-<li><p>创建两个类库，一个基于.Net Framework 4.5.2，一个基于.Net Standard 1.5；</p>
-<p><img src="/img/cross-project-code-share/lib.png" alt="lib.png"></p>
-</li>
-<li><p>把.Net Standard 1.5的类库中的.csproj 文件复制到.Net Framework 4.5.2的类库中，创建一个与.Net Framework 4.5.2中的.csproj同名的.project.json，彻底删除上一步中创建的Net Standard 1.5类库；</p>
-<p><img src="/img/cross-project-code-share/structure.png" alt="structure.png"></p>
-</li>
-<li><p>project.json 内容如下：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> &quot;frameworks&quot;:  &#123;&quot;net452&quot;: &#123; &#125; &#125;,</span><br><span class="line"> &quot;runtimes&quot;: &#123;&quot;win&quot;: &#123;&#125;&#125;,</span><br><span class="line"> &quot;dependencies&quot;: &#123;&#125;  //根据这个类库的依赖项决定</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>添加现有项目（位于.Net Framework 4.5.2的类库下的Netstandard1.5.csproj），移除Netstandard1.5类库无效依赖，最终就达到了两个类库服用一份代码；</p>
-</li>
-<li><p>Build的时候还是会失败的，Properties/AssemblyInfo.cs 对于Netstandard1.5类库来说是没用的，所以把这个文件的生成操作设置成 “无”；</p>
-</li>
-<li><p>重新Build，成功了。</p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>编写功能性代码。在任何一个类库中写都可以，因为本质是一份代码，从哪个类库看都是一样的。完成后自己先做好测试；</p>
-</li>
-<li><p>在Release模式下Build（build的时候最好把两个类库的程序集名称和默认命名空间都修改成一致，还需要设置生成xml文件，xml文件内包含所有代码的注释，方便调用者使用）；</p>
-</li>
-<li><p>将类库中Release文件夹中的dll和xml拖拽到 NuGet Package Manager 的内容区域，需按规定的目录格式，如果当前Package有依赖其他Package，则需要Edit dependencies</p>
-<p>   <img src="/img/cross-project-code-share/release.png" alt="release.png"></p>
-<p>   <img src="/img/cross-project-code-share/package.png" alt="package.png"></p>
-</li>
-<li><p>发布到本地 Nuget Server，Publish Url只要内网之间可以访问就行；</p>
-<p>   <img src="/img/cross-project-code-share/publish.png" alt="publish.png"></p>
-</li>
-<li><p>引用方在vs中配置本地的 Nuget 源，然后就可以安装/升级/卸载 Nuget Server上的包了。</p>
-</li>
+<li>创建作业调度池 IScheduler </li>
+<li>创建作业 IJobDetail</li>
+<li>创建触发器 ITrigger</li>
+<li>将作业和触发器加入到作业调度池中</li>
+<li>开始运行</li>
 </ol>
-<h3 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h3><ul>
-<li><a href="https://docs.microsoft.com/zh-cn/nuget/" target="_blank" rel="noopener">Nuget介绍</a></li>
-<li><a href="https://github.com/NuGetPackageExplorer/NuGetPackageExplorer" target="_blank" rel="noopener">NuGetPackageExplorer下载安装</a></li>
+</blockquote>
+<h6 id="代码实现："><a href="#代码实现：" class="headerlink" title="代码实现："></a>代码实现：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">private static async Task RunScheduler()</span><br><span class="line">&#123;</span><br><span class="line">	// 创建作业调度池</span><br><span class="line">	ISchedulerFactory factory = new StdSchedulerFactory();</span><br><span class="line">	IScheduler scheduler = await factory.GetScheduler();</span><br><span class="line"></span><br><span class="line">	// 创建作业</span><br><span class="line">	IJobDetail job = JobBuilder.Create&lt;HelloJob&gt;()</span><br><span class="line">		.WithIdentity(&quot;job1&quot;, &quot;group1&quot;)</span><br><span class="line">		.Build();</span><br><span class="line"></span><br><span class="line">	// 创建触发器，每10s执行一次</span><br><span class="line">	ITrigger trigger = TriggerBuilder.Create()</span><br><span class="line">		.WithIdentity(&quot;trigger1&quot;, &quot;group1&quot;)</span><br><span class="line">		.StartNow()</span><br><span class="line">		.WithSimpleSchedule(x =&gt; x</span><br><span class="line">			.WithIntervalInSeconds(10)</span><br><span class="line">			.RepeatForever())</span><br><span class="line">		.Build();</span><br><span class="line"></span><br><span class="line">	// 加入到作业调度池中</span><br><span class="line">	await scheduler.ScheduleJob(job, trigger);</span><br><span class="line"></span><br><span class="line">	// 开始运行</span><br><span class="line">	await scheduler.Start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>作业实现类 HelloJob<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class HelloJob : IJob</span><br><span class="line">&#123;</span><br><span class="line">	/// &lt;summary&gt;</span><br><span class="line">	/// 作业调度定时执行的方法</span><br><span class="line">	/// &lt;/summary&gt;</span><br><span class="line">	/// &lt;param name=&quot;context&quot;&gt;&lt;/param&gt;</span><br><span class="line">	/// &lt;returns&gt;&lt;/returns&gt;</span><br><span class="line">	public async Task Execute(IJobExecutionContext context)</span><br><span class="line">	&#123;</span><br><span class="line">		await Console.Out.WriteLineAsync(&quot;Hello QuartzNet...&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h6 id="代码说明："><a href="#代码说明：" class="headerlink" title="代码说明："></a>代码说明：</h6><p>通过 StdSchedulerFactory 获取到调度工厂 ISchedulerFactory，通过调度工厂的 GetScheduler 方法获取到一个调度器 scheduler 。初始化调度器 scheduler 之后， 就可以启动、 备用、 关闭。</p>
+<p>通过 JobBuilder 创建一个 IJobDetail 作业详情 ，指定一个 IJob 的实现类 HelloJob ，同时指定了作业详情标识的键名和组名。</p>
+<p>通过 TriggerBuilder 创建一个 ITrigger 触发器，指定了这个触发器标识的键名和组名，触发器只有在启动状态才能工作，这里设置了 StartNow，同时设置了触发器的执行时间，每隔10s执行一次。当 Trigger 触发的时候, HelloJob 的Execute(..) 方法就会在调度器 scheduler 的工作线程中执行，<br>这里设置的 RepeatForever 是指在当前守护进程内重复执行，如果程序被关闭了，那必然不会继续执行。</p>
+<h6 id="执行结果："><a href="#执行结果：" class="headerlink" title="执行结果："></a>执行结果：</h6><p><img src="/img/quartz-net-test/result.png" alt="执行结果"></p>
+<h4 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h4><ul>
+<li><a href="https://www.quartz-scheduler.net/documentation/index.html" target="_blank" rel="noopener">Quartz.NET Documentation</a> </li>
+<li><a href="https://github.com/beckjin/QuartzNetSamples/tree/master/QuartzNetTest" target="_blank" rel="noopener">案例Demo-QuartzNetTest</a></li>
 </ul>
 
       
@@ -460,11 +428,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/代码共享/" rel="tag"># 代码共享</a>
+            <a href="/tags/Quartz/" rel="tag"># Quartz</a>
           
-            <a href="/tags/C/" rel="tag"># C#</a>
-          
-            <a href="/tags/Nuget-Server/" rel="tag"># Nuget Server</a>
+            <a href="/tags/作业调度/" rel="tag"># 作业调度</a>
           
         </div>
       
@@ -477,15 +443,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/01/07/aspnet-async-await/" rel="next" title="ASP.NET 谨用 async/await">
+                <i class="fa fa-chevron-left"></i> ASP.NET 谨用 async/await
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/04/16/cross-project-data-share/" rel="prev" title="跨项目数据共享(跨语言)">
-                跨项目数据共享(跨语言) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -649,7 +615,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#我们解决问题的方式是搭建自己的-Nuget-Server"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x6211;&#x4EEC;&#x89E3;&#x51B3;&#x95EE;&#x9898;&#x7684;&#x65B9;&#x5F0F;&#x662F;&#x642D;&#x5EFA;&#x81EA;&#x5DF1;&#x7684;-Nuget-Server" class="headerlink" title="&#x6211;&#x4EEC;&#x89E3;&#x51B3;&#x95EE;&#x9898;&#x7684;&#x65B9;&#x5F0F;&#x662F;&#x642D;&#x5EFA;&#x81EA;&#x5DF1;&#x7684; Nuget Server"></a>&#x6211;&#x4EEC;&#x89E3;&#x51B3;&#x95EE;&#x9898;&#x7684;&#x65B9;&#x5F0F;&#x662F;&#x642D;&#x5EFA;&#x81EA;&#x5DF1;&#x7684; Nuget Server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接："><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#体系结构"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x4F53;&#x7CFB;&#x7ED3;&#x6784;" class="headerlink" title="&#x4F53;&#x7CFB;&#x7ED3;&#x6784;"></a>&#x4F53;&#x7CFB;&#x7ED3;&#x6784;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x5B89;&#x88C5;" class="headerlink" title="&#x5B89;&#x88C5;"></a>&#x5B89;&#x88C5;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用说明"><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x4F7F;&#x7528;&#x8BF4;&#x660E;" class="headerlink" title="&#x4F7F;&#x7528;&#x8BF4;&#x660E;"></a>&#x4F7F;&#x7528;&#x8BF4;&#x660E;</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#主要接口和类说明："><span class="nav-number">3.0.1.</span> <span class="nav-text"><a href="#&#x4E3B;&#x8981;&#x63A5;&#x53E3;&#x548C;&#x7C7B;&#x8BF4;&#x660E;&#xFF1A;" class="headerlink" title="&#x4E3B;&#x8981;&#x63A5;&#x53E3;&#x548C;&#x7C7B;&#x8BF4;&#x660E;&#xFF1A;"></a>&#x4E3B;&#x8981;&#x63A5;&#x53E3;&#x548C;&#x7C7B;&#x8BF4;&#x660E;&#xFF1A;</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#创建流程："><span class="nav-number">3.0.2.</span> <span class="nav-text"><a href="#&#x521B;&#x5EFA;&#x6D41;&#x7A0B;&#xFF1A;" class="headerlink" title="&#x521B;&#x5EFA;&#x6D41;&#x7A0B;&#xFF1A;"></a>&#x521B;&#x5EFA;&#x6D41;&#x7A0B;&#xFF1A;</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#代码实现："><span class="nav-number">3.0.3.</span> <span class="nav-text"><a href="#&#x4EE3;&#x7801;&#x5B9E;&#x73B0;&#xFF1A;" class="headerlink" title="&#x4EE3;&#x7801;&#x5B9E;&#x73B0;&#xFF1A;"></a>&#x4EE3;&#x7801;&#x5B9E;&#x73B0;&#xFF1A;</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#代码说明："><span class="nav-number">3.0.4.</span> <span class="nav-text"><a href="#&#x4EE3;&#x7801;&#x8BF4;&#x660E;&#xFF1A;" class="headerlink" title="&#x4EE3;&#x7801;&#x8BF4;&#x660E;&#xFF1A;"></a>&#x4EE3;&#x7801;&#x8BF4;&#x660E;&#xFF1A;</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#执行结果："><span class="nav-number">3.0.5.</span> <span class="nav-text"><a href="#&#x6267;&#x884C;&#x7ED3;&#x679C;&#xFF1A;" class="headerlink" title="&#x6267;&#x884C;&#x7ED3;&#x679C;&#xFF1A;"></a>&#x6267;&#x884C;&#x7ED3;&#x679C;&#xFF1A;</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考链接："><span class="nav-number">4.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;</span></a></li></ol></div>
             
 
           </div>
