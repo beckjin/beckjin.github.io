@@ -89,7 +89,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.beckjin.com/img/quartz-net-test/structure.png">
 <meta property="og:image" content="http://www.beckjin.com/img/quartz-net-test/result.png">
-<meta property="og:updated_time" content="2018-01-28T05:37:02.053Z">
+<meta property="og:updated_time" content="2018-03-18T16:42:32.842Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Quartz.NET 作业调度（一）：Test">
 <meta name="twitter:description" content="Quartz.NET 是一个开源的作业调度框架，是 Java 作业调度框架  Quartz 的.NET 版本，对于周期性的任务，其作业和触发器的结合，极大的简化了代码的编写，大多时候我们只需要关注作业本身的逻辑。Quartz.NET  支持持久化、集群。Quartz.NET 3.0 已经开始支持 .NET Core/.NET Standard 2.0。 体系结构 Job 为作业的接口，JobDet">
@@ -379,8 +379,8 @@
 <p>通过 TriggerBuilder 创建一个 ITrigger 触发器，指定了这个触发器标识的键名和组名，触发器只有在启动状态才能工作，这里设置了 StartNow，同时设置了触发器的执行时间，每隔10s执行一次。当 Trigger 触发的时候, HelloJob 的Execute(..) 方法就会在调度器 scheduler 的工作线程中执行，<br>这里设置的 RepeatForever 是指在当前守护进程内重复执行，如果程序被关闭了，那必然不会继续执行。</p>
 <h6 id="执行结果："><a href="#执行结果：" class="headerlink" title="执行结果："></a>执行结果：</h6><p><img src="/img/quartz-net-test/result.png" alt="执行结果"></p>
 <h4 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h4><ul>
-<li><a href="https://www.quartz-scheduler.net/documentation/index.html" target="_blank" rel="noopener">Quartz.NET Documentation</a> </li>
-<li><a href="https://github.com/beckjin/QuartzNetSamples/tree/master/QuartzNetTest" target="_blank" rel="noopener">案例Demo-QuartzNetTest</a></li>
+<li><a href="https://www.quartz-scheduler.net/documentation/quartz-3.x/tutorial/index.html" target="_blank" rel="noopener">Quartz.NET Documentation</a> </li>
+<li><a href="https://github.com/beckjin/QuartzNetSamples/tree/master/QuartzNetTest" target="_blank" rel="noopener">案例 Demo-QuartzNetTest</a></li>
 </ul>
 
       
@@ -567,7 +567,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
