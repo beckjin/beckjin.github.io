@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Quartz,作业调度," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在  Quartz 中，Trigger 即 Job 执行的触发器。和 JobBuilder 类似，我们可以通过 TriggerBuilder 来创建各种情况需要的触发器。Trigger 结合 Job，才能实现完美的作业调度。1await scheduler.ScheduleJob(job, trigger); TriggerBuilderIdentityTrigger 和 Job 类似，都需要设置">
+<meta name="keywords" content="Quartz,作业调度">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Quartz.NET 作业调度（三）：Trigger">
+<meta property="og:url" content="http://www.beckjin.com/2018/03/24/quartz-net-trigger/index.html">
+<meta property="og:site_name" content="Beck&#39;s Blog">
+<meta property="og:description" content="在  Quartz 中，Trigger 即 Job 执行的触发器。和 JobBuilder 类似，我们可以通过 TriggerBuilder 来创建各种情况需要的触发器。Trigger 结合 Job，才能实现完美的作业调度。1await scheduler.ScheduleJob(job, trigger); TriggerBuilderIdentityTrigger 和 Job 类似，都需要设置">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.beckjin.com/img/quartz-net-trigger/corn.png">
+<meta property="og:image" content="http://www.beckjin.com/img/quartz-net-trigger/priority.png">
+<meta property="og:updated_time" content="2018-03-24T09:39:09.741Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Quartz.NET 作业调度（三）：Trigger">
+<meta name="twitter:description" content="在  Quartz 中，Trigger 即 Job 执行的触发器。和 JobBuilder 类似，我们可以通过 TriggerBuilder 来创建各种情况需要的触发器。Trigger 结合 Job，才能实现完美的作业调度。1await scheduler.ScheduleJob(job, trigger); TriggerBuilderIdentityTrigger 和 Job 类似，都需要设置">
+<meta name="twitter:image" content="http://www.beckjin.com/img/quartz-net-trigger/corn.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.beckjin.com/2018/03/24/quartz-net-trigger/"/>
+
+
+
+
+
+  <title>Quartz.NET 作业调度（三）：Trigger | Beck's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Beck's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2018/03/24/quartz-net-trigger/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Beck Jin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beck's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Quartz.NET 作业调度（三）：Trigger</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-24T17:28:45+08:00">
+                2018-03-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Quartz-NET/" itemprop="url" rel="index">
+                    <span itemprop="name">Quartz.NET</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/24/quartz-net-trigger/" class="leancloud_visitors" data-flag-title="Quartz.NET 作业调度（三）：Trigger">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在  Quartz 中，Trigger 即 Job 执行的触发器。和 JobBuilder 类似，我们可以通过 TriggerBuilder 来创建各种情况需要的触发器。Trigger 结合 Job，才能实现完美的作业调度。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">await scheduler.ScheduleJob(job, trigger);</span><br></pre></td></tr></table></figure></p>
+<h3 id="TriggerBuilder"><a href="#TriggerBuilder" class="headerlink" title="TriggerBuilder"></a>TriggerBuilder</h3><h4 id="Identity"><a href="#Identity" class="headerlink" title="Identity"></a>Identity</h4><p>Trigger 和 Job 类似，都需要设置 name 和 group 来标识。如果不设置依然由其自动生成 name。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ITrigger trigger = TriggerBuilder.Create()</span><br><span class="line">		.WithIdentity(&quot;trigger1&quot;, &quot;triggerGroup1&quot;)</span><br><span class="line">		.Build();</span><br></pre></td></tr></table></figure></p>
+<p>简单粗暴点，这样的 Trigger 其实就可以配合 Job 工作了，运行测试会发现 Job 会被马上执行一次，通过源码可以发现，默认开始时间是当前时间，循环一次，但这样的 Trigger 基本什么卵用。如：开始时间、结束时间、执行频率等都没有体现，基本是属于失控的触发器，所以接下来我们需要继续完善它。 </p>
+<h4 id="StartAt-amp-EndAt"><a href="#StartAt-amp-EndAt" class="headerlink" title="StartAt &amp; EndAt"></a>StartAt &amp; EndAt</h4><p>通过 StartAt 和 EndAt 我们可以设置一个 Trigger 开始执行和结束时间，TriggerBuilder 同时预置了一个 StartNow() 方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ITrigger trigger = TriggerBuilder.Create()</span><br><span class="line">		.WithIdentity(&quot;trigger1&quot;, &quot;triggerGroup1&quot;)</span><br><span class="line">		//.StartNow()</span><br><span class="line">		.StartAt(DateTimeOffset.Now)</span><br><span class="line">		.EndAt(DateTimeOffset.Now.AddHours(1))</span><br><span class="line">		.Build();</span><br></pre></td></tr></table></figure></p>
+<h4 id="UsingJobData"><a href="#UsingJobData" class="headerlink" title="UsingJobData"></a>UsingJobData</h4><p>通过 TriggerBuilder 的 UsingJobData 可以为 Trigger 设置一些附属信息，在 Job 的 Execute 方法中，通过 context.Trigger.JobDataMap[“xxx”] 获取属性值，和 context.JobDetail.JobDataMap 使用方式一致。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var triggerDataMap = new JobDataMap();</span><br><span class="line">triggerDataMap.Add(&quot;name&quot;, &quot;beck&quot;);</span><br><span class="line"></span><br><span class="line">ITrigger trigger = TriggerBuilder.Create()</span><br><span class="line">		.WithIdentity(&quot;trigger1&quot;, &quot;triggerGroup1&quot;)</span><br><span class="line">		.StartNow()</span><br><span class="line">		.EndAt(DateTimeOffset.Now.AddHours(1))</span><br><span class="line">		.UsingJobData(triggerDataMap)</span><br><span class="line">		.Build();</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public async Task Execute(IJobExecutionContext context)</span><br><span class="line">&#123;</span><br><span class="line">	var name = context.Trigger.JobDataMap[&quot;name&quot;].ToString();</span><br><span class="line">	await Console.Out.WriteLineAsync($&quot;Execute me, &#123;name&#125;&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="WithSchedule"><a href="#WithSchedule" class="headerlink" title="WithSchedule"></a>WithSchedule</h4><h5 id="WithSimpleSchedule"><a href="#WithSimpleSchedule" class="headerlink" title="WithSimpleSchedule"></a>WithSimpleSchedule</h5><p>通过 WithSimpleSchedule 可以设置 Job 执行的周期及执行的次数，不过循环周期基本是局限于 时、分、秒。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ITrigger trigger = TriggerBuilder.Create()</span><br><span class="line">		.WithIdentity(&quot;trigger1&quot;, &quot;triggerGroup1&quot;)</span><br><span class="line">		.StartNow()</span><br><span class="line">		.EndAt(DateTimeOffset.Now.AddHours(1))</span><br><span class="line">		.UsingJobData(triggerDataMap)</span><br><span class="line">		.WithSimpleSchedule(w =&gt; w</span><br><span class="line">			.WithIntervalInSeconds(1) 	// 每秒执行一次</span><br><span class="line">			.WithRepeatCount(10) 		// 循环10次</span><br><span class="line">			//.RepeatForever() 			// 一直循环下去</span><br><span class="line">		)</span><br><span class="line">		.Build();</span><br></pre></td></tr></table></figure></p>
+<h5 id="WithCalendarIntervalSchedule"><a href="#WithCalendarIntervalSchedule" class="headerlink" title="WithCalendarIntervalSchedule"></a>WithCalendarIntervalSchedule</h5><p>针对 WithSimpleSchedule 做了一定的扩展，可以支持 年、月、周、日、时、分、秒及夏令时是设置。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ITrigger trigger = TriggerBuilder.Create()</span><br><span class="line">		.WithIdentity(&quot;trigger1&quot;, &quot;triggerGroup1&quot;)</span><br><span class="line">		.StartNow()</span><br><span class="line">		.UsingJobData(triggerDataMap)</span><br><span class="line">		.WithCalendarIntervalSchedule(w =&gt; w</span><br><span class="line">			.WithIntervalInWeeks(1)       // 一周执行一次</span><br><span class="line">			//.WithIntervalInDays(1)      // 一天执行一次</span><br><span class="line">			//.WithIntervalInMonths(1)    // 一个月执行一次</span><br><span class="line">			//.WithIntervalInYears(1)     // 一年执行一次</span><br><span class="line">		)</span><br><span class="line">		.Build();</span><br></pre></td></tr></table></figure></p>
+<h5 id="WithDailyTimeIntervalSchedule"><a href="#WithDailyTimeIntervalSchedule" class="headerlink" title="WithDailyTimeIntervalSchedule"></a>WithDailyTimeIntervalSchedule</h5><p>支持更精确的时间配置，可选每天、周末、工作日、周几，并指定的时间范围及执行时间周期，相比前面两种方式更加灵活。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">ITrigger trigger = TriggerBuilder.Create()</span><br><span class="line">		.WithIdentity(&quot;trigger1&quot;, &quot;triggerGroup1&quot;)</span><br><span class="line">		.StartNow()</span><br><span class="line">		.UsingJobData(triggerDataMap)</span><br><span class="line">		.WithDailyTimeIntervalSchedule(w =&gt; w</span><br><span class="line">			.WithIntervalInSeconds(1)</span><br><span class="line">			.WithRepeatCount(20)</span><br><span class="line">			.StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(0, 1))			// 每天 00:01:00 开始</span><br><span class="line">			.EndingDailyAt(TimeOfDay.HourMinuteAndSecondOfDay(22, 10, 12))	// 每天 22:10:12 结束</span><br><span class="line">			.EndingDailyAfterCount(10)									    // 每天最多10次</span><br><span class="line">			//.OnMondayThroughFriday()										// 每周一到周五</span><br><span class="line">			//.OnSaturdayAndSunday()										// 每周六到周日</span><br><span class="line">			//.OnEveryDay()													// 每天</span><br><span class="line">			//.OnDaysOfTheWeek(DayOfWeek.Friday, DayOfWeek.Monday)			// 每周特定某些天</span><br><span class="line">		)</span><br><span class="line">		.Build();</span><br></pre></td></tr></table></figure></p>
+<h5 id="WithCronSchedule"><a href="#WithCronSchedule" class="headerlink" title="WithCronSchedule"></a>WithCronSchedule</h5><p>通过 Cron 表达式来设置执行时间与周期，语法简单，但却能实现非常丰富和灵活的时间配置。Cron 表达式一共7位，最后一位代表年，通常可以直接使用6位。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">  *      *      *      *      *      *</span><br><span class="line">代表秒  代表分  表小时  代表天  代表月  代表星期</span><br></pre></td></tr></table></figure></p>
+<p>先瞄一眼下面表达式及含义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">* * * * * ?  		// 每秒</span><br><span class="line">0/5 * * * * ?  		// 每5秒</span><br><span class="line">0 * * * * ?  		// 每分钟</span><br><span class="line">0 0/30 8-22 * * ?  	// 每天8~22点每30分钟</span><br></pre></td></tr></table></figure>
+<p>下面对部分符号进行说明：</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ?</td>
+<td>只在日期和星期字段中使用，天和星期必须有一个是?</td>
+</tr>
+<tr>
+<td>*</td>
+<td>每（秒、分、小时、天、月)</td>
+</tr>
+<tr>
+<td>/</td>
+<td>递增：0/5。如果在分位，则代表在 0分，5分，10分，15分 的时候执行</td>
+</tr>
+<tr>
+<td>-</td>
+<td>范围  8-22  。如果在小时位，则代表在8点到22点之间执行</td>
+</tr>
+<tr>
+<td>,</td>
+<td>或  1,3,5,6。如果在天位，则代表每月1号，3号，5号，6号执行</td>
+</tr>
+<tr>
+<td>L</td>
+<td>只在日期和星期字段中使用，代表 “Last” 的意思。<br> “0 0 0 L <em> ?” 表示每月最后一天；<br>  “0 0 0 ? </em> L” 表示每月最一个星期六（相当于7L）；</td>
+</tr>
+<tr>
+<td>#</td>
+<td>只能在星期字段中。使用  “0 0 0 ? * 6#3” 表示每月的第三个星期五<br>（6表示星期五，#3表示当前的第三个）</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ITrigger trigger = TriggerBuilder.Create()</span><br><span class="line">		.WithIdentity(&quot;trigger1&quot;, &quot;triggerGroup1&quot;)</span><br><span class="line">		.StartNow()</span><br><span class="line">		.UsingJobData(triggerDataMap)</span><br><span class="line">		.WithCronSchedule(&quot;0/20 0/30 2,4 2-5 8 ?&quot;) // 每年的8月2-5号2点和4点的0分、30分的时候每20秒执行一次</span><br><span class="line">		.Build();</span><br></pre></td></tr></table></figure>
+<p><img src="/img/quartz-net-trigger/corn.png" alt="前5次"></p>
+<h5 id="Misfire-机制"><a href="#Misfire-机制" class="headerlink" title="Misfire 机制"></a>Misfire 机制</h5><p>系统可能由于出现某些异常导致在预定时刻并没有触发 Job 执行，当系统恢复正常时，Quartz 会先检查当前时刻与预定时刻的差值，<strong>如果小于等于 misfireThreshold 值（默认60秒，可以自定义），则不认为发生 Misfire</strong>，并立刻启动该任务，而且之前错过的 Job 执行会全部补上。</p>
+<h6 id="WithSimpleSchedule-有-6-种-Misfire-机制："><a href="#WithSimpleSchedule-有-6-种-Misfire-机制：" class="headerlink" title="WithSimpleSchedule 有 6 种 Misfire 机制："></a>WithSimpleSchedule 有 6 种 Misfire 机制：</h6><ol>
+<li><p>WithMisfireHandlingInstructionFireNow<br>之前丢失的立即补执行一次，时间会从当前执行开始计算，时间周期不变<br>剩余次数=预定的总次数-(丢失次数-1）<br>(如：原设置是15时开始，循环周期是1h，循环10次。系统在14点挂了，当 16:30 恢复时，首先马上会执行一次，下一次执行时间变成 17:30，剩余10-(2【丢失2次】-1【补1次】)=9 )</p>
+</li>
+<li><p>WithMisfireHandlingInstructionIgnoreMisfires<br>之前丢失的次数会马上全部补上，之后执行时间点和周期不会发生变化<br>剩余次数=预定的总次数-丢失次数<br>(如：原来设置16时开始，循环周期是1h。当恢复时间是 16:30，首先马上会执行丢失的所有次数，下一次执行时间依然是 17:00)</p>
+</li>
+<li><p>WithMisfireHandlingInstructionNextWithRemainingCount<br>之前丢失的不管了，之后执行时间点和周期不会发生变化<br>剩余次数=预定的总次数-丢失的次数</p>
+</li>
+<li><p>WithMisfireHandlingInstructionNextWithExistingCount<br>之前丢失的不管了，之后执行时间点和周期不会发生变化<br>剩余次数=预定的总次数</p>
+</li>
+<li><p>WithMisfireHandlingInstructionNowWithRemainingCount<br>之前丢失的立即补执行一次，时间会从当前执行开始计算，时间周期不变<br>剩余次数=预定的总次数-(丢失次数-1）</p>
+</li>
+<li><p>WithMisfireHandlingInstructionNowWithExistingCount<br>之前丢失的立即补执行一次，时间会从当前执行开始计算，时间周期不变<br>剩余次数=预定的总次数-1</p>
+</li>
+</ol>
+<h6 id="WithCalendarIntervalSchedule、WithDailyTimeIntervalSchedule、WithCronSchedule-有-3-种-Misfire-机制："><a href="#WithCalendarIntervalSchedule、WithDailyTimeIntervalSchedule、WithCronSchedule-有-3-种-Misfire-机制：" class="headerlink" title="WithCalendarIntervalSchedule、WithDailyTimeIntervalSchedule、WithCronSchedule 有 3 种 Misfire 机制："></a>WithCalendarIntervalSchedule、WithDailyTimeIntervalSchedule、WithCronSchedule 有 3 种 Misfire 机制：</h6><ol>
+<li><p>WithMisfireHandlingInstructionDoNothing<br>之前丢失的不管了，之后执行时间点和周期不会发生变化<br>剩余次数=预定的总次数</p>
+</li>
+<li><p>WithMisfireHandlingInstructionFireAndProceed<br>之前丢失的立即补执行一次，之后执行时间点和周期不会发生变化<br>剩余次数=预定的总次数-1</p>
+</li>
+<li><p>WithMisfireHandlingInstructionIgnoreMisfires<br>之前丢失的次数会马上全部补上，之后执行时间点和周期不会发生变化<br>剩余次数=预定的总次数-丢失次数</p>
+</li>
+</ol>
+<p><strong>注意</strong>：在测试过程中，一定要关注到默认超出60秒才会触发 Misfire，否则设置任何机制都无效。</p>
+<h4 id="ForJob"><a href="#ForJob" class="headerlink" title="ForJob"></a>ForJob</h4><p>指定 Trigger 对应的 Job，对应的参数值可以是 jobName、 jobKey、jobDetail。但要注意，通过 ForJob 的方式设置的 Trigger ，当 Trigger 被加入调度器时，要确保对应的 Job 已经存在于调度器内。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ITrigger trigger = TriggerBuilder.Create()</span><br><span class="line">		.WithIdentity(&quot;trigger2&quot;, &quot;triggerGroup1&quot;)</span><br><span class="line">		.StartNow()</span><br><span class="line">		.UsingJobData(triggerDataMap)</span><br><span class="line">		.WithCronSchedule(&quot;0/2 * * * * ?&quot;)</span><br><span class="line">		.ForJob(job)</span><br><span class="line">		.Build();</span><br><span class="line"></span><br><span class="line"> await scheduler.AddJob(job, true);</span><br><span class="line"> await scheduler.ScheduleJob(trigger);</span><br></pre></td></tr></table></figure></p>
+<h4 id="Priority"><a href="#Priority" class="headerlink" title="Priority"></a>Priority</h4><p>当多个 Trigger 在同一个时间点触发一个 Job 的时候，可以通过设置 Trigger 优先级来控制执行顺序，Trigger 默认的优先级是 5，值越大优先级越高，最高10。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">// 设置trigger开始时间</span><br><span class="line">var startAt = DateTimeOffset.Now;</span><br><span class="line"></span><br><span class="line">// trigger的附属信息</span><br><span class="line">var triggerDataMap = new JobDataMap();</span><br><span class="line">triggerDataMap.Add(&quot;name&quot;, &quot;beck&quot;);</span><br><span class="line"></span><br><span class="line">// 创建触发器</span><br><span class="line">ITrigger trigger1 = TriggerBuilder.Create()</span><br><span class="line">	.WithIdentity(&quot;trigger1&quot;, &quot;triggerGroup1&quot;)</span><br><span class="line">	.StartAt(startAt)</span><br><span class="line">	.WithCronSchedule(&quot;0/2 * * * * ?&quot;)</span><br><span class="line">	.UsingJobData(triggerDataMap)</span><br><span class="line">	.WithPriority(3)</span><br><span class="line">	.Build();</span><br><span class="line"></span><br><span class="line">// 创建触发器</span><br><span class="line">ITrigger trigger2 = TriggerBuilder.Create()</span><br><span class="line">	.WithIdentity(&quot;trigger2&quot;, &quot;triggerGroup1&quot;)</span><br><span class="line">	.StartAt(startAt)</span><br><span class="line">	.EndAt(DateTimeOffset.Now.AddHours(1))</span><br><span class="line">	.WithCronSchedule(&quot;0/2 * * * * ?&quot;)</span><br><span class="line">	.ForJob(job)</span><br><span class="line">	.UsingJobData(triggerDataMap)</span><br><span class="line">	.WithPriority(7)</span><br><span class="line">	.Build();</span><br><span class="line"></span><br><span class="line">// 加入作业调度器中</span><br><span class="line">await scheduler.ScheduleJob(job, trigger1);</span><br><span class="line">await scheduler.ScheduleJob(trigger2);</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/quartz-net-trigger/priority.png" alt="WithPriority"></p>
+<h4 id="ModifiedByCalendar"><a href="#ModifiedByCalendar" class="headerlink" title="ModifiedByCalendar"></a>ModifiedByCalendar</h4><p>如果希望在指定的周期内排除某些时间段不要执行 Job，我们需要在 Trigger 内增加 ModifiedByCalendar 配置，所有的 Calendar 既设置是排除，也可以是包含。Quartz 提供了以下几种 Calendar：</p>
+<ol>
+<li><p>DailyCalendar   排除一天中的某些时间段不执行</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 排除每天的21~22点</span><br><span class="line">DailyCalendar dailyCalendar = new DailyCalendar(</span><br><span class="line">          DateBuilder.DateOf(21, 0, 0).DateTime, </span><br><span class="line">          DateBuilder.DateOf(22, 0, 0).DateTime</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>WeeklyCalendar 排除星期中的一天或多天</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 排除每周五</span><br><span class="line">WeeklyCalendar weeklyCalendar = new WeeklyCalendar();</span><br><span class="line">weeklyCalendar.SetDayExcluded(DayOfWeek.Friday, true);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>HolidayCalendar  排除特定的日期，精确到天</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 排除2018年11月11日</span><br><span class="line">HolidayCalendar holidayCalendar = new HolidayCalendar();</span><br><span class="line">var holidayDateTime = new DateTime(2018, 3, 24);</span><br><span class="line"> holidayCalendar.AddExcludedDate(holidayDateTime);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>MonthlyCalendar 排除月份中的某天，可选值为1-31，精确到天</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 排除每月1号</span><br><span class="line">MonthlyCalendar monthlyCalendar = new MonthlyCalendar();</span><br><span class="line">monthlyCalendar.SetDayExcluded(1, true);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>AnnualCalendar 排除每年中的某天，精确到天</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 排除每年的11月11日</span><br><span class="line">AnnualCalendar annualCalendar = new AnnualCalendar();</span><br><span class="line">var annualDateTime = new DateTime(2018, 11, 11);</span><br><span class="line">annualCalendar.SetDayExcluded(annualDateTime, true);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>CronCalendar 使用表达式排除某些时间段不执行</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 排除每年的11月11日</span><br><span class="line">CronCalendar cronCalendar = new CronCalendar(&quot;* * * 11 11 ?&quot;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>先通过 AddCalendar 添加到调度器中，然后通过 ModifiedByCalendar 修改 Trigger，所以下面 Trigger 的配置在 11月11日是不会触发 Job 的。<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">await scheduler.AddCalendar(&quot;calendar&quot;, cronCalendar, true, true);</span><br><span class="line"></span><br><span class="line">ITrigger trigger2 = TriggerBuilder.Create()</span><br><span class="line">		.WithIdentity(&quot;trigger2&quot;, &quot;triggerGroup1&quot;)</span><br><span class="line">		.StartNow()</span><br><span class="line">		.WithCronSchedule(&quot;* * * 11-12 11 ?&quot;)</span><br><span class="line">		.ForJob(job)</span><br><span class="line">		.UsingJobData(triggerDataMap)</span><br><span class="line">		.ModifiedByCalendar(&quot;calendar&quot;)</span><br><span class="line">		.WithPriority(7)</span><br><span class="line">		.Build();</span><br></pre></td></tr></table></figure></p>
+<h3 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h3><ul>
+<li><a href="https://www.quartz-scheduler.net/documentation/quartz-3.x/tutorial/index.html" target="_blank" rel="noopener">Quartz.NET Documentation</a></li>
+<li><a href="https://github.com/beckjin/QuartzNetSamples/tree/master/QuartzNetTrigger" target="_blank" rel="noopener">案例 Demo-QuartzNetTrigger</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果对你有帮助就好</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/img/pay/wechatpay.png" alt="Beck Jin 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/img/pay/alipay.png" alt="Beck Jin 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Quartz/" rel="tag"># Quartz</a>
+          
+            <a href="/tags/作业调度/" rel="tag"># 作业调度</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/19/quartz-net-job/" rel="next" title="Quartz.NET 作业调度（二）：Job">
+                <i class="fa fa-chevron-left"></i> Quartz.NET 作业调度（二）：Job
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNDA3Ny8xMDYxNQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar.png"
+                alt="Beck Jin" />
+            
+              <p class="site-author-name" itemprop="name">Beck Jin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#TriggerBuilder"><span class="nav-number">1.</span> <span class="nav-text"><a href="#TriggerBuilder" class="headerlink" title="TriggerBuilder"></a>TriggerBuilder</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Identity"><span class="nav-number">1.1.</span> <span class="nav-text"><a href="#Identity" class="headerlink" title="Identity"></a>Identity</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#StartAt-amp-EndAt"><span class="nav-number">1.2.</span> <span class="nav-text"><a href="#StartAt-amp-EndAt" class="headerlink" title="StartAt &amp; EndAt"></a>StartAt &amp; EndAt</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UsingJobData"><span class="nav-number">1.3.</span> <span class="nav-text"><a href="#UsingJobData" class="headerlink" title="UsingJobData"></a>UsingJobData</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WithSchedule"><span class="nav-number">1.4.</span> <span class="nav-text"><a href="#WithSchedule" class="headerlink" title="WithSchedule"></a>WithSchedule</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#WithSimpleSchedule"><span class="nav-number">1.4.1.</span> <span class="nav-text"><a href="#WithSimpleSchedule" class="headerlink" title="WithSimpleSchedule"></a>WithSimpleSchedule</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#WithCalendarIntervalSchedule"><span class="nav-number">1.4.2.</span> <span class="nav-text"><a href="#WithCalendarIntervalSchedule" class="headerlink" title="WithCalendarIntervalSchedule"></a>WithCalendarIntervalSchedule</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#WithDailyTimeIntervalSchedule"><span class="nav-number">1.4.3.</span> <span class="nav-text"><a href="#WithDailyTimeIntervalSchedule" class="headerlink" title="WithDailyTimeIntervalSchedule"></a>WithDailyTimeIntervalSchedule</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#WithCronSchedule"><span class="nav-number">1.4.4.</span> <span class="nav-text"><a href="#WithCronSchedule" class="headerlink" title="WithCronSchedule"></a>WithCronSchedule</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Misfire-机制"><span class="nav-number">1.4.5.</span> <span class="nav-text"><a href="#Misfire-&#x673A;&#x5236;" class="headerlink" title="Misfire &#x673A;&#x5236;"></a>Misfire &#x673A;&#x5236;</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#WithSimpleSchedule-有-6-种-Misfire-机制："><span class="nav-number">1.4.5.1.</span> <span class="nav-text"><a href="#WithSimpleSchedule-&#x6709;-6-&#x79CD;-Misfire-&#x673A;&#x5236;&#xFF1A;" class="headerlink" title="WithSimpleSchedule &#x6709; 6 &#x79CD; Misfire &#x673A;&#x5236;&#xFF1A;"></a>WithSimpleSchedule &#x6709; 6 &#x79CD; Misfire &#x673A;&#x5236;&#xFF1A;</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#WithCalendarIntervalSchedule、WithDailyTimeIntervalSchedule、WithCronSchedule-有-3-种-Misfire-机制："><span class="nav-number">1.4.5.2.</span> <span class="nav-text"><a href="#WithCalendarIntervalSchedule&#x3001;WithDailyTimeIntervalSchedule&#x3001;WithCronSchedule-&#x6709;-3-&#x79CD;-Misfire-&#x673A;&#x5236;&#xFF1A;" class="headerlink" title="WithCalendarIntervalSchedule&#x3001;WithDailyTimeIntervalSchedule&#x3001;WithCronSchedule &#x6709; 3 &#x79CD; Misfire &#x673A;&#x5236;&#xFF1A;"></a>WithCalendarIntervalSchedule&#x3001;WithDailyTimeIntervalSchedule&#x3001;WithCronSchedule &#x6709; 3 &#x79CD; Misfire &#x673A;&#x5236;&#xFF1A;</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ForJob"><span class="nav-number">1.5.</span> <span class="nav-text"><a href="#ForJob" class="headerlink" title="ForJob"></a>ForJob</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Priority"><span class="nav-number">1.6.</span> <span class="nav-text"><a href="#Priority" class="headerlink" title="Priority"></a>Priority</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ModifiedByCalendar"><span class="nav-number">1.7.</span> <span class="nav-text"><a href="#ModifiedByCalendar" class="headerlink" title="ModifiedByCalendar"></a>ModifiedByCalendar</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接："><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Beck Jin</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("FCgGthOl6XN7xRjfK31raebD-gzGzoHsz", "20z736XSuGX562R2ky8uu4EU");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

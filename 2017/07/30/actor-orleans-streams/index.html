@@ -89,7 +89,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-streams/implicit.png">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-streams/explicit.png">
-<meta property="og:updated_time" content="2018-01-07T12:54:49.965Z">
+<meta property="og:updated_time" content="2018-03-24T09:46:29.220Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Orleans解决并发之痛（四）：Streams">
 <meta name="twitter:description" content="Orleans 提供了 Stream扩展编程模型。此模型提供了一套API，使处理流更简单和更健壮。Stream默认提供了两种Provider，不同的流类型可能使用不同的Provider来处理，Simple Message Stream Provider 和 Azure Queue Stream Provider。Stream Providers兼容现有的队列技术，比如： Event Hubs、Se">
@@ -358,7 +358,7 @@
       
         <p>Orleans 提供了 Stream扩展编程模型。此模型提供了一套API，使处理流更简单和更健壮。Stream默认提供了两种Provider，不同的流类型可能使用不同的Provider来处理，<a href="https://github.com/dotnet/orleans/blob/master/src/Orleans/Streams/SimpleMessageStream/SimpleMessageStreamProvider.cs" target="_blank" rel="noopener">Simple Message Stream Provider</a> 和 <a href="https://github.com/dotnet/orleans/blob/master/src/OrleansAzureUtils/Providers/Streams/AzureQueue/AzureQueueStreamProvider.cs" target="_blank" rel="noopener">Azure Queue Stream Provider</a>。Stream Providers兼容现有的队列技术，比如： <a href="http://azure.microsoft.com/en-us/services/event-hubs/" target="_blank" rel="noopener">Event Hubs</a>、<a href="http://azure.microsoft.com/en-us/services/service-bus/" target="_blank" rel="noopener">ServiceBus</a>、<a href="http://azure.microsoft.com/en-us/documentation/articles/storage-dotnet-how-to-use-queues/" target="_blank" rel="noopener">Azure Queues</a>、<a href="http://kafka.apache.org/" target="_blank" rel="noopener">Apache Kafka</a>，不再需要编写额外的代码来配合这些队列技术的使用。</p>
 <h3 id="关于为什么Orleans会提供Stream扩展编程模型？"><a href="#关于为什么Orleans会提供Stream扩展编程模型？" class="headerlink" title="关于为什么Orleans会提供Stream扩展编程模型？"></a>关于为什么Orleans会提供Stream扩展编程模型？</h3><p>当今已经有一系列技术可以来构建一个流处理系统。包括持久存储流数据方面，如：<a href="http://azure.microsoft.com/en-us/services/event-hubs/" target="_blank" rel="noopener">Event Hubs</a>、<a href="http://kafka.apache.org/" target="_blank" rel="noopener">Kafka</a>；数据流计算操作方面，如： <a href="http://azure.microsoft.com/en-us/services/stream-analytics/" target="_blank" rel="noopener">Azure Stream Analytics</a>、<a href="https://storm.apache.org/" target="_blank" rel="noopener">Apache Storm</a>、<a href="https://spark.apache.org/streaming/" target="_blank" rel="noopener">Apache Spark Streaming</a>， 而这些技术并不适合细粒度的自由格式的流数据计算， 或者支持的并不好，因为实际情况下可能需要对不同的数据流执行不同的操作，Orleans Streams目的就是解决这类问题，Stream编程模型和发布订阅模式挺相似。</p>
-<p>上述提到的一些技术我并没有详细学习，后面会了解并对比，如果已熟悉的可以先思考并给我普及普及。</p>
+<p>上述提到的一些技术我并没有详细学习，后面会了解并对比。</p>
 <p>Orleans Stream大概实现的步骤如下：</p>
 <blockquote>
 <ol>
@@ -598,7 +598,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
