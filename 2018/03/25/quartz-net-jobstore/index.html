@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Actor,Orleans,并发,分布式," />
+  <meta name="keywords" content="Quartz,作业调度," />
 
 
 
@@ -79,23 +79,27 @@
 
 
 
-<meta name="description" content="Orleans本身的设计是一个分布式的框架，多个Silo构成集群，Grains分布在多个Silo中。一旦一个Silo挂了，原来归属这个Silo的Grains会自动在其他Silo中激活。生产环境下还是需要以集群方式来部署。  在Orleans解决并发之痛（二）：Grain状态文章中提到内存存储State是不靠谱的，同样，以内存方式存储集群中Silo的成员关系也是不靠谱的，所以本文使用SQL Serv">
-<meta name="keywords" content="Actor,Orleans,并发,分布式">
+<meta name="description" content="Quartz.NET 中提供了 RAMJobStore 和 AdoJobStore 两种数据存储方式，默认是 RAMJobStore（内存存储），不需要任何其他配置。内存的方式一般可能测试环境用的比较多，生产环境可能更倾向于持久化存储，当然还是要根据实际需求来定。 我们也可以自定义 JobStore 方式，比如 MongoDB、DynamoDB、RavenDB、Redis 等等，只要实现 IJob">
+<meta name="keywords" content="Quartz,作业调度">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Orleans解决并发之痛（三）：集群">
-<meta property="og:url" content="http://www.beckjin.com/2017/07/23/actor-orleans-cluster/index.html">
+<meta property="og:title" content="Quartz.NET 作业调度（四）：持久化与集群">
+<meta property="og:url" content="http://www.beckjin.com/2018/03/25/quartz-net-jobstore/index.html">
 <meta property="og:site_name" content="Beck&#39;s Blog">
-<meta property="og:description" content="Orleans本身的设计是一个分布式的框架，多个Silo构成集群，Grains分布在多个Silo中。一旦一个Silo挂了，原来归属这个Silo的Grains会自动在其他Silo中激活。生产环境下还是需要以集群方式来部署。  在Orleans解决并发之痛（二）：Grain状态文章中提到内存存储State是不靠谱的，同样，以内存方式存储集群中Silo的成员关系也是不靠谱的，所以本文使用SQL Serv">
+<meta property="og:description" content="Quartz.NET 中提供了 RAMJobStore 和 AdoJobStore 两种数据存储方式，默认是 RAMJobStore（内存存储），不需要任何其他配置。内存的方式一般可能测试环境用的比较多，生产环境可能更倾向于持久化存储，当然还是要根据实际需求来定。 我们也可以自定义 JobStore 方式，比如 MongoDB、DynamoDB、RavenDB、Redis 等等，只要实现 IJob">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-cluster/cluster.png">
-<meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-cluster/systemStore.png">
-<meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-cluster/testResult.png">
-<meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-cluster/testResult2.png">
-<meta property="og:updated_time" content="2018-01-07T12:54:17.570Z">
+<meta property="og:image" content="http://www.beckjin.com/img/quartz-net-jobstore/ramJobStore.png">
+<meta property="og:image" content="http://www.beckjin.com/img/quartz-net-jobstore/quartzdb.png">
+<meta property="og:image" content="http://www.beckjin.com/img/quartz-net-jobstore/shutdownResult.png">
+<meta property="og:image" content="http://www.beckjin.com/img/quartz-net-jobstore/dbresult1.png">
+<meta property="og:image" content="http://www.beckjin.com/img/quartz-net-jobstore/restartResult.png">
+<meta property="og:image" content="http://www.beckjin.com/img/quartz-net-jobstore/dbresult2.png">
+<meta property="og:image" content="http://www.beckjin.com/img/quartz-net-jobstore/node1.png">
+<meta property="og:image" content="http://www.beckjin.com/img/quartz-net-jobstore/node2.png">
+<meta property="og:updated_time" content="2018-03-24T17:19:36.662Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Orleans解决并发之痛（三）：集群">
-<meta name="twitter:description" content="Orleans本身的设计是一个分布式的框架，多个Silo构成集群，Grains分布在多个Silo中。一旦一个Silo挂了，原来归属这个Silo的Grains会自动在其他Silo中激活。生产环境下还是需要以集群方式来部署。  在Orleans解决并发之痛（二）：Grain状态文章中提到内存存储State是不靠谱的，同样，以内存方式存储集群中Silo的成员关系也是不靠谱的，所以本文使用SQL Serv">
-<meta name="twitter:image" content="http://www.beckjin.com/img/actor-orleans-cluster/cluster.png">
+<meta name="twitter:title" content="Quartz.NET 作业调度（四）：持久化与集群">
+<meta name="twitter:description" content="Quartz.NET 中提供了 RAMJobStore 和 AdoJobStore 两种数据存储方式，默认是 RAMJobStore（内存存储），不需要任何其他配置。内存的方式一般可能测试环境用的比较多，生产环境可能更倾向于持久化存储，当然还是要根据实际需求来定。 我们也可以自定义 JobStore 方式，比如 MongoDB、DynamoDB、RavenDB、Redis 等等，只要实现 IJob">
+<meta name="twitter:image" content="http://www.beckjin.com/img/quartz-net-jobstore/ramJobStore.png">
 
 
 
@@ -125,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://www.beckjin.com/2017/07/23/actor-orleans-cluster/"/>
+  <link rel="canonical" href="http://www.beckjin.com/2018/03/25/quartz-net-jobstore/"/>
 
 
 
 
 
-  <title>Orleans解决并发之痛（三）：集群 | Beck's Blog</title>
+  <title>Quartz.NET 作业调度（四）：持久化与集群 | Beck's Blog</title>
   
 
 
@@ -258,7 +262,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2017/07/23/actor-orleans-cluster/">
+    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2018/03/25/quartz-net-jobstore/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
@@ -275,7 +279,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Orleans解决并发之痛（三）：集群</h2>
+          <h2 class="post-title" itemprop="name headline">Quartz.NET 作业调度（四）：持久化与集群</h2>
         
 
         <div class="post-meta">
@@ -287,8 +291,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-23T21:06:51+08:00">
-                2017-07-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-25T01:14:54+08:00">
+                2018-03-25
               </time>
             
 
@@ -310,8 +314,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Orleans/" itemprop="url" rel="index">
-                    <span itemprop="name">Orleans</span>
+                  <a href="/categories/Quartz-NET/" itemprop="url" rel="index">
+                    <span itemprop="name">Quartz.NET</span>
                   </a>
                 </span>
 
@@ -327,7 +331,7 @@
 
           
           
-             <span id="/2017/07/23/actor-orleans-cluster/" class="leancloud_visitors" data-flag-title="Orleans解决并发之痛（三）：集群">
+             <span id="/2018/03/25/quartz-net-jobstore/" class="leancloud_visitors" data-flag-title="Quartz.NET 作业调度（四）：持久化与集群">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -358,28 +362,27 @@
       
 
       
-        <p>Orleans本身的设计是一个分布式的框架，多个Silo构成集群，Grains分布在多个Silo中。一旦一个Silo挂了，原来归属这个Silo的Grains会自动在其他Silo中激活。生产环境下还是需要以集群方式来部署。</p>
-<p><img src="/img/actor-orleans-cluster/cluster.png" alt="cluster"></p>
-<p>在<a href="/2017/07/23/actor-orleans-grain-state/">Orleans解决并发之痛（二）：Grain状态</a>文章中提到内存存储State是不靠谱的，同样，以内存方式存储集群中Silo的成员关系也是不靠谱的，所以本文使用SQL Server来做Silo的成员关系存储，以内存方式存储成员关系存在主节点之说，其他节点的启动必须依赖主节点的启动状态，但以Azure Table、SQL Server 、ZooKeeper、Consul 等存储成员关系，所有的Silo都是平等的，不需要等待谁。</p>
-<p>之前在<a href="/2017/07/22/actor-orleans-one/">Orleans解决并发之痛（一）：单线程</a>Demo中是以内存存储集群成员关系的，有兴趣可以返回查看。</p>
-<p>这篇文章的Demo是<a href="/2017/07/23/actor-orleans-grain-state/">Orleans解决并发之痛（二）：Grain状态</a>的基础上完成的，所以在原来代码的基础上做一些调整即可。我们会启动3个Silo，构建成一个集群环境。实际上提供3个配置文件即可，配置文件稍做修改就可实现。</p>
-<h4 id="Silo配置文件"><a href="#Silo配置文件" class="headerlink" title="Silo配置文件"></a>Silo配置文件</h4><p>OrleansConfiguration1.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</span><br><span class="line">&lt;OrleansConfiguration xmlns=&quot;urn:orleans&quot;&gt;</span><br><span class="line">    &lt;Globals&gt;</span><br><span class="line">        &lt;SystemStore </span><br><span class="line">			SystemStoreType=&quot;SqlServer&quot; </span><br><span class="line">			DeploymentId=&quot;OrleansTest&quot; </span><br><span class="line">			DataConnectionString=&quot;Server=.;Database=OrleansStorage;User ID=sa;Password=123456;&quot;/&gt;</span><br><span class="line">      </span><br><span class="line">        &lt;StorageProviders&gt;</span><br><span class="line">            &lt;Provider Type=&quot;Orleans.Storage.AdoNetStorageProvider&quot;</span><br><span class="line">                      Name=&quot;OrleansStorage&quot;</span><br><span class="line">                      AdoInvariant=&quot;System.Data.SqlClient&quot;</span><br><span class="line">                      DataConnectionString=&quot;Server=.;Database=OrleansStorage;User ID=sa;Password=123456;&quot;/&gt;</span><br><span class="line">        &lt;/StorageProviders&gt;</span><br><span class="line">    &lt;/Globals&gt;</span><br><span class="line">    &lt;Defaults&gt;</span><br><span class="line">        &lt;Networking Address=&quot;localhost&quot; Port=&quot;11111&quot; /&gt;</span><br><span class="line">        &lt;ProxyingGateway Address=&quot;localhost&quot; Port=&quot;30000&quot; /&gt;</span><br><span class="line">    &lt;/Defaults&gt;</span><br><span class="line">&lt;/OrleansConfiguration&gt;</span><br></pre></td></tr></table></figure></p>
-<p>OrleansConfiguration2.xml和OrleansConfiguration3.xml除了Networking 、ProxyingGateway 配置有所区别，其他完全一样。</p>
-<p>OrleansConfiguration2.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;Networking Address=&quot;localhost&quot; Port=&quot;11112&quot; /&gt;</span><br><span class="line">&lt;ProxyingGateway Address=&quot;localhost&quot; Port=&quot;30001&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
-<p>OrleansConfiguration3.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;Networking Address=&quot;localhost&quot; Port=&quot;11113&quot; /&gt;</span><br><span class="line">&lt;ProxyingGateway Address=&quot;localhost&quot; Port=&quot;30002&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
-<p>这次配置文件中引入了一个SystemStore节点：<br><strong>SystemStoreType：</strong>存储的类型；如：AzureTable、SqlServer、ZooKeeper等；<br><strong>DeploymentId：</strong>部署的唯一Id标识，具有相同的DeploymentId的Silo会加入一个集群中；<br><strong>DataConnectionString：</strong>连接字符串；</p>
-<p>3台Silo启动成功后，在OrleansStorage库的OrleansMembershipTable表中会记录下成员关系：</p>
-<p><img src="/img/actor-orleans-cluster/systemStore.png" alt="systemStore"></p>
-<h4 id="Client配置文件"><a href="#Client配置文件" class="headerlink" title="Client配置文件"></a>Client配置文件</h4><p>ClientConfiguration.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</span><br><span class="line">&lt;ClientConfiguration xmlns=&quot;urn:orleans&quot;&gt;</span><br><span class="line">   &lt;SystemStore SystemStoreType =&quot;SqlServer&quot;</span><br><span class="line">                DeploymentId=&quot;OrleansTest&quot;</span><br><span class="line">                DataConnectionString=&quot;Data Source=.;Database=OrleansStorage;User ID=sa;Password=123456;&quot; </span><br><span class="line">				AdoInvariant=&quot;System.Data.SqlClient&quot; /&gt;</span><br><span class="line">&lt;/ClientConfiguration&gt;</span><br></pre></td></tr></table></figure></p>
-<p>Client通过DeploymentId标识连接Silo集群。具体最终调用那个Silo完成方法的调用，由其内部调配。当某一台Silo挂了，Grain会重新在另一个Silo上激活，达到高可用状态。</p>
-<h4 id="Client的测试代码："><a href="#Client的测试代码：" class="headerlink" title="Client的测试代码："></a>Client的测试代码：</h4><p>我们用一个死循环，创建很多Grain，来观察Silo控制台的输出效果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var random = new Random();</span><br><span class="line">while (true)</span><br><span class="line">&#123;</span><br><span class="line">	Thread.Sleep(1000);</span><br><span class="line">	var grainId = random.Next().ToString();</span><br><span class="line">	var grain = GrainClient.GrainFactory.GetGrain&lt;IPersonGrain&gt;(&quot;Test-&quot; + grainId);</span><br><span class="line">	grain.SayHelloAsync();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="测试结果："><a href="#测试结果：" class="headerlink" title="测试结果："></a>测试结果：</h4><p>从控制台输出结果来开，每台Silo上Grain的分配还是比较均匀的</p>
-<p><img src="/img/actor-orleans-cluster/testResult.png" alt="Test Result"></p>
-<p>当杀掉一个Silo后，服务依然是正常运行，具体Grain是否重新被分配有兴趣可以测试一下：<br><img src="/img/actor-orleans-cluster/testResult2.png" alt="Test Result2"></p>
-<h4 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h4><ul>
-<li><a href="http://www.infoq.com/cn/news/2014/11/intro-actor-model" target="_blank" rel="noopener">Actor模型</a></li>
-<li><a href="http://dotnet.github.io/orleans/" target="_blank" rel="noopener">Orleans</a></li>
-<li><a href="https://github.com/beckjin/OrleansSamples/tree/master/OrleansCluster" target="_blank" rel="noopener">案例Demo-OrleansCluster</a></li>
+        <p>Quartz.NET 中提供了 RAMJobStore 和 AdoJobStore 两种数据存储方式，默认是 RAMJobStore（内存存储），不需要任何其他配置。内存的方式一般可能测试环境用的比较多，生产环境可能更倾向于持久化存储，当然还是要根据实际需求来定。</p>
+<p>我们也可以自定义 JobStore 方式，比如 MongoDB、DynamoDB、RavenDB、Redis 等等，只要实现 IJobStore 接口即可。不过常用的网上基本都有人已经有现成的，如果想自己实现，可以参考 Quartz.NET 或者其他实现方式的源码。</p>
+<h3 id="RAMJobStore"><a href="#RAMJobStore" class="headerlink" title="RAMJobStore"></a>RAMJobStore</h3><p>RAMJobStore 是 JobStore 最简单的使用方式，所有 Job 和 Trigger 相关的数据都保存在内存中，性能上肯定是很高的。 内存方式的缺点也非常明显，如果重启或者宕机所有数据就会消失。所以在 JobStore 的选择上，要根据实际项目对数据的依赖性来决定到底用什么方式。</p>
+<p>在 <a href="https://www.jianshu.com/p/dca3da588993" target="_blank" rel="noopener">Quartz.NET 作业调度（二）：Job</a> 中提到通过 PersistJobDataAfterExecution 可以实现有状态的 Job。但基于 RAMJobStore 也只能保证程序不重启的情况下能保存状态，一旦重启，一切回到解放前，每次看到都是类似下面截图的效果。</p>
+<p><img src="/img/quartz-net-jobstore/ramJobStore.png" alt="RAMJobStore"></p>
+<h3 id="AdoJobStore"><a href="#AdoJobStore" class="headerlink" title="AdoJobStore"></a>AdoJobStore</h3><p>AdoJobStore 是通过 ADO.NET 将数据存储在数据库中，使用数据库的方式必然没有内存方式性能高，但通过创建合理的数据库索引，也不会差。官方为我们提供了对应的 SQL 语言 <a href="https://github.com/quartznet/quartznet/tree/master/database" target="_blank" rel="noopener">https://github.com/quartznet/quartznet/tree/master/database</a>，我们只需要在自己的数据库上执行，表和索引就全部创建完成了。<br><img src="/img/quartz-net-jobstore/quartzdb.png" alt="QuartzDB"></p>
+<p>除此之外，我们需要增加一个配置文件 quartz.config。调度器启动的时候会自动加载文件内的配置，<strong>注意这个文件需要修改属性 “复制输出到目录” =&gt; “如果较新则复制” 或 “始终复制”</strong>。以代码的方式设置这些配置属性也可以，个人觉得通过配置文件显得比较干净一些。优先级：代码设置 &gt; quartz.config</p>
+<p>说明：文件内的 “#”开头代表注释，在行最后加上 !END 表示之后的全部忽略<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#数据连接字符串</span><br><span class="line">quartz.dataSource.myDS.connectionString=Database=Quartz;Server=172.17.30.108;User ID=sa;Password=mingdao!@#123</span><br><span class="line">#数据库类型</span><br><span class="line">quartz.dataSource.myDS.provider=SqlServer</span><br><span class="line">#设置存储类型</span><br><span class="line">quartz.jobStore.type=Quartz.Impl.AdoJobStore.JobStoreTX, Quartz</span><br><span class="line">#驱动类型</span><br><span class="line">quartz.jobStore.driverDelegateType=Quartz.Impl.AdoJobStore.SqlServerDelegate, Quartz</span><br><span class="line">#数据源名称，于 quartz.dataSource 的属性名一样</span><br><span class="line">quartz.jobStore.dataSource=myDS</span><br><span class="line">#JobDataMaps 中的值只能是字符串，具体可以看官方推荐这样设置的原因</span><br><span class="line">quartz.jobStore.useProperties=true</span><br><span class="line">#数据存储序列号方式</span><br><span class="line">quartz.serializer.type=json</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">// 创建作业调度器</span><br><span class="line">ISchedulerFactory factory = new StdSchedulerFactory();</span><br><span class="line">IScheduler scheduler = await factory.GetScheduler();</span><br><span class="line"></span><br><span class="line">await scheduler.Start();</span><br><span class="line"></span><br><span class="line">var jobDataMap = new JobDataMap();</span><br><span class="line">jobDataMap.Add(&quot;times&quot;, &quot;1&quot;);</span><br><span class="line"></span><br><span class="line">// 创建一个作业</span><br><span class="line">IJobDetail job = JobBuilder.Create&lt;HelloJob&gt;()</span><br><span class="line">	.WithIdentity(&quot;job1&quot;, &quot;jobGroup1&quot;)</span><br><span class="line">	.UsingJobData(jobDataMap)</span><br><span class="line">	.Build();</span><br><span class="line"></span><br><span class="line">// 创建一个触发器</span><br><span class="line">ITrigger trigger = TriggerBuilder.Create()</span><br><span class="line">	.WithIdentity(&quot;trigger1&quot;, &quot;triggerGroup1&quot;)</span><br><span class="line">	.StartNow()</span><br><span class="line">	.WithSimpleSchedule(x =&gt; x</span><br><span class="line">		.WithIntervalInSeconds(1)</span><br><span class="line">		.WithRepeatCount(10))</span><br><span class="line">	.Build();</span><br><span class="line"></span><br><span class="line">var jobExist = await scheduler.CheckExists(job.Key);</span><br><span class="line">if (!jobExist)</span><br><span class="line">&#123;</span><br><span class="line">	await scheduler.ScheduleJob(job, trigger);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如下图，执行了一定次数后，应用程序被停止：</p>
+<p><img src="/img/quartz-net-jobstore/shutdownResult.png" alt="shutdown result"></p>
+<p><img src="/img/quartz-net-jobstore/dbresult1.png" alt="db result"></p>
+<p>通过数据库查看到 Job 和 Trigger 的基本信息、Job Data、Trigger 触发次数等。应用程序再次重启，Trigger 和 Job Data 的数据都是延续之前的。作业全部执行完毕后，Job 和 Trigger 失效，数据也会自动被删除。</p>
+<p><img src="/img/quartz-net-jobstore/restartResult.png" alt="restart result"></p>
+<p><img src="/img/quartz-net-jobstore/dbresult2.png" alt="db result"></p>
+<h3 id="Cluster"><a href="#Cluster" class="headerlink" title="Cluster"></a>Cluster</h3><p>Quartz.NET 中集群配置还是比较简单的，只需要增加两个配置属性就可以实现，但 Quartz.NET 中的集群可能和想象的不太一样，集群中的多个节点是不会同时工作的，只有一个节点是处于工作状态，其他节点属于待命状态，只有当工作节点挂了，其他节点中的一个才会自动升级为工作节点。</p>
+<p>官方并不推荐将多个节点部署到不同的服务器上，因为毕竟是作业调度程序，对时间一致性要求比较高，不同的服务器可能存在时间差异，所以如果部署到多台服务器要特别注意。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#是否是集群模式</span><br><span class="line">quartz.jobStore.clustered=true</span><br><span class="line">#自动生成唯一的instanceId</span><br><span class="line">quartz.scheduler.instanceId=AUTO</span><br></pre></td></tr></table></figure></p>
+<p>node1 和 node2 多次重启的效果：<br><img src="/img/quartz-net-jobstore/node1.png" alt="node1"><br><img src="/img/quartz-net-jobstore/node2.png" alt="node2"></p>
+<h3 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h3><ul>
+<li><a href="https://www.quartz-scheduler.net/documentation/quartz-3.x/tutorial/index.html" target="_blank" rel="noopener">Quartz.NET Documentation</a></li>
+<li><a href="https://github.com/beckjin/QuartzNetSamples/tree/master/QuartzNetJobStore" target="_blank" rel="noopener">案例 Demo-QuartzNetJobStore</a></li>
 </ul>
 
       
@@ -427,13 +430,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Actor/" rel="tag"># Actor</a>
+            <a href="/tags/Quartz/" rel="tag"># Quartz</a>
           
-            <a href="/tags/Orleans/" rel="tag"># Orleans</a>
-          
-            <a href="/tags/并发/" rel="tag"># 并发</a>
-          
-            <a href="/tags/分布式/" rel="tag"># 分布式</a>
+            <a href="/tags/作业调度/" rel="tag"># 作业调度</a>
           
         </div>
       
@@ -446,8 +445,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/23/actor-orleans-grain-state/" rel="next" title="Orleans解决并发之痛（二）：Grain状态">
-                <i class="fa fa-chevron-left"></i> Orleans解决并发之痛（二）：Grain状态
+              <a href="/2018/03/24/quartz-net-trigger/" rel="next" title="Quartz.NET 作业调度（三）：Trigger">
+                <i class="fa fa-chevron-left"></i> Quartz.NET 作业调度（三）：Trigger
               </a>
             
           </div>
@@ -455,10 +454,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/07/30/actor-orleans-streams/" rel="prev" title="Orleans解决并发之痛（四）：Streams">
-                Orleans解决并发之痛（四）：Streams <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -627,7 +622,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Silo配置文件"><span class="nav-number">1.</span> <span class="nav-text"><a href="#Silo&#x914D;&#x7F6E;&#x6587;&#x4EF6;" class="headerlink" title="Silo&#x914D;&#x7F6E;&#x6587;&#x4EF6;"></a>Silo&#x914D;&#x7F6E;&#x6587;&#x4EF6;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Client配置文件"><span class="nav-number">2.</span> <span class="nav-text"><a href="#Client&#x914D;&#x7F6E;&#x6587;&#x4EF6;" class="headerlink" title="Client&#x914D;&#x7F6E;&#x6587;&#x4EF6;"></a>Client&#x914D;&#x7F6E;&#x6587;&#x4EF6;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Client的测试代码："><span class="nav-number">3.</span> <span class="nav-text"><a href="#Client&#x7684;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#xFF1A;" class="headerlink" title="Client&#x7684;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#xFF1A;"></a>Client&#x7684;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#xFF1A;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试结果："><span class="nav-number">4.</span> <span class="nav-text"><a href="#&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#xFF1A;" class="headerlink" title="&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#xFF1A;"></a>&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#xFF1A;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考链接："><span class="nav-number">5.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#RAMJobStore"><span class="nav-number">1.</span> <span class="nav-text"><a href="#RAMJobStore" class="headerlink" title="RAMJobStore"></a>RAMJobStore</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AdoJobStore"><span class="nav-number">2.</span> <span class="nav-text"><a href="#AdoJobStore" class="headerlink" title="AdoJobStore"></a>AdoJobStore</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cluster"><span class="nav-number">3.</span> <span class="nav-text"><a href="#Cluster" class="headerlink" title="Cluster"></a>Cluster</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接："><span class="nav-number">4.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;</span></a></li></ol></div>
             
 
           </div>
