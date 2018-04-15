@@ -79,23 +79,22 @@
 
 
 
-<meta name="description" content="JobBuilderCreate通过 JobBuilder 的 Create 方法，指定一个作业任务（一个实现了 IJob 接口的 Job 类）。IJob 接口只有一个 Execute 方法，我们需要在 Execute 方法中完善我们要执行的业务代码。 12IJobDetail job = JobBuilder.Create&amp;lt;HelloJob&amp;gt;()				.Build(); 12345">
+<meta name="description" content="目前 Quartz.NET 最新版本已经 3.0.4 ，从 3.0 开始已经支持 .NET Core，所以在 .NET 版本 和 部署环境 上都有更多的选择。下面分别介绍基于.NET Framework 的 Windows 环境部署 和 基于.NET Core 的 Linux 环境部署。 Windows在介绍 Windows 环境部署之前需要先阅读一下 Topshelf 秒建 Windows 服务">
 <meta name="keywords" content="Quartz,作业调度">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Quartz.NET 作业调度（二）：Job">
-<meta property="og:url" content="http://www.beckjin.com/2018/03/19/quartz-net-job/index.html">
+<meta property="og:title" content="Quartz.NET 作业调度（五）：部署">
+<meta property="og:url" content="http://www.beckjin.com/2018/04/15/quartz-net-deploy/index.html">
 <meta property="og:site_name" content="Beck&#39;s Blog">
-<meta property="og:description" content="JobBuilderCreate通过 JobBuilder 的 Create 方法，指定一个作业任务（一个实现了 IJob 接口的 Job 类）。IJob 接口只有一个 Execute 方法，我们需要在 Execute 方法中完善我们要执行的业务代码。 12IJobDetail job = JobBuilder.Create&amp;lt;HelloJob&amp;gt;()				.Build(); 12345">
+<meta property="og:description" content="目前 Quartz.NET 最新版本已经 3.0.4 ，从 3.0 开始已经支持 .NET Core，所以在 .NET 版本 和 部署环境 上都有更多的选择。下面分别介绍基于.NET Framework 的 Windows 环境部署 和 基于.NET Core 的 Linux 环境部署。 Windows在介绍 Windows 环境部署之前需要先阅读一下 Topshelf 秒建 Windows 服务">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.beckjin.com/img/quartz-net-job/stateless.png">
-<meta property="og:image" content="http://www.beckjin.com/img/quartz-net-job/stateful.png">
-<meta property="og:image" content="http://www.beckjin.com/img/quartz-net-job/concurrency.png">
-<meta property="og:image" content="http://www.beckjin.com/img/quartz-net-job/noConcurrency.png">
-<meta property="og:updated_time" content="2018-03-20T16:46:34.610Z">
+<meta property="og:image" content="http://www.beckjin.com/img/quartz-net-deploy/wInstall.png">
+<meta property="og:image" content="http://www.beckjin.com/img/quartz-net-deploy/wResult.png">
+<meta property="og:image" content="http://www.beckjin.com/img/quartz-net-deploy/lResult.png">
+<meta property="og:updated_time" content="2018-04-15T11:32:03.966Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Quartz.NET 作业调度（二）：Job">
-<meta name="twitter:description" content="JobBuilderCreate通过 JobBuilder 的 Create 方法，指定一个作业任务（一个实现了 IJob 接口的 Job 类）。IJob 接口只有一个 Execute 方法，我们需要在 Execute 方法中完善我们要执行的业务代码。 12IJobDetail job = JobBuilder.Create&amp;lt;HelloJob&amp;gt;()				.Build(); 12345">
-<meta name="twitter:image" content="http://www.beckjin.com/img/quartz-net-job/stateless.png">
+<meta name="twitter:title" content="Quartz.NET 作业调度（五）：部署">
+<meta name="twitter:description" content="目前 Quartz.NET 最新版本已经 3.0.4 ，从 3.0 开始已经支持 .NET Core，所以在 .NET 版本 和 部署环境 上都有更多的选择。下面分别介绍基于.NET Framework 的 Windows 环境部署 和 基于.NET Core 的 Linux 环境部署。 Windows在介绍 Windows 环境部署之前需要先阅读一下 Topshelf 秒建 Windows 服务">
+<meta name="twitter:image" content="http://www.beckjin.com/img/quartz-net-deploy/wInstall.png">
 
 
 
@@ -125,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://www.beckjin.com/2018/03/19/quartz-net-job/"/>
+  <link rel="canonical" href="http://www.beckjin.com/2018/04/15/quartz-net-deploy/"/>
 
 
 
 
 
-  <title>Quartz.NET 作业调度（二）：Job | Beck's Blog</title>
+  <title>Quartz.NET 作业调度（五）：部署 | Beck's Blog</title>
   
 
 
@@ -258,7 +257,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2018/03/19/quartz-net-job/">
+    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2018/04/15/quartz-net-deploy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
@@ -275,7 +274,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Quartz.NET 作业调度（二）：Job</h2>
+          <h2 class="post-title" itemprop="name headline">Quartz.NET 作业调度（五）：部署</h2>
         
 
         <div class="post-meta">
@@ -287,8 +286,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-19T00:40:08+08:00">
-                2018-03-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-15T19:28:07+08:00">
+                2018-04-15
               </time>
             
 
@@ -327,7 +326,7 @@
 
           
           
-             <span id="/2018/03/19/quartz-net-job/" class="leancloud_visitors" data-flag-title="Quartz.NET 作业调度（二）：Job">
+             <span id="/2018/04/15/quartz-net-deploy/" class="leancloud_visitors" data-flag-title="Quartz.NET 作业调度（五）：部署">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -358,32 +357,31 @@
       
 
       
-        <h3 id="JobBuilder"><a href="#JobBuilder" class="headerlink" title="JobBuilder"></a>JobBuilder</h3><h4 id="Create"><a href="#Create" class="headerlink" title="Create"></a>Create</h4><p>通过 JobBuilder 的 Create 方法，指定一个作业任务（一个实现了 IJob 接口的 Job 类）。IJob 接口只有一个 Execute 方法，我们需要在 Execute 方法中完善我们要执行的业务代码。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">IJobDetail job = JobBuilder.Create&lt;HelloJob&gt;()</span><br><span class="line">				.Build();</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class HelloJob : IJob</span><br><span class="line">&#123;</span><br><span class="line">	public async Task Execute(IJobExecutionContext context)</span><br><span class="line">	&#123;</span><br><span class="line">		await Console.Out.WriteLineAsync(&quot;Hi,everybody&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Execute 方法中的 context 参数包含作业执行的所有上下文信息，我们可以通过 context 中的一些属性获取需要的数据。如：</p>
-<blockquote>
-<p>context.Scheduler 调度器信息<br>context.Trigger 触发器信息<br>context.JobDetail 作业信息<br>context.ScheduledFireTimeUtc 当前触发时间<br>context.NextFireTimeUtc 下一次将被触发时间<br>……</p>
-</blockquote>
-<h4 id="Identity"><a href="#Identity" class="headerlink" title="Identity"></a>Identity</h4><p>Job 注册到 Quartz 调度器的时候需要设置一个标识的 name，同时可以为 name 设置一个组，方便我们对 Job 分类，在同一个组内的 name 必须是唯一的。如果没有指定，name会自动生成，group 为 DEFAULT。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">IJobDetail job = JobBuilder.Create&lt;HelloJob&gt;()</span><br><span class="line">				.WithIdentity(&quot;job1&quot;, &quot;jobGroup1&quot;);</span><br><span class="line">				.Build();</span><br></pre></td></tr></table></figure></p>
-<h4 id="UsingJobData"><a href="#UsingJobData" class="headerlink" title="UsingJobData"></a>UsingJobData</h4><p>通过 JobBuilder 的 UsingJobData 方法我们可以为这个 Job 设置一些附属信息，当 Job 被执行的时候，我们在 Execute 方法中通过 context.JobDetail.JobDataMap 获取这些信息以供业务代码使用，也可以通过定义同名的属性，它将会自动注入到属性值。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var jobDataMap = new JobDataMap();</span><br><span class="line">jobDataMap.Add(&quot;name&quot;, &quot;beck&quot;);</span><br><span class="line"></span><br><span class="line">IJobDetail job = JobBuilder.Create&lt;HelloJob&gt;()</span><br><span class="line">                .WithIdentity(&quot;job1&quot;, &quot;jobGroup1&quot;);</span><br><span class="line">                .UsingJobData(jobDataMap)</span><br><span class="line">                .Build();</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class HelloJob : IJob</span><br><span class="line">&#123;</span><br><span class="line">    // 映射JobDetail.JobDataMap的name</span><br><span class="line">	public string Name &#123; get; set; &#125;</span><br><span class="line">	public async Task Execute(IJobExecutionContext context)</span><br><span class="line">	&#123;</span><br><span class="line">		//var name = context.JobDetail.JobDataMap[&quot;name&quot;].ToString();</span><br><span class="line">		await Console.Out.WriteLineAsync($&quot;Hi &#123;Name&#125;&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>注意</strong>：Job 和 Trigger 中都可以通过 UsingJobData 来设置附属信息，在 Execute 方法中，context.MergedJobDataMap 属性中既包含 Job 的 DataMap，也包含 Trigger 的  DataMap。当存在同名的参数时，Trigger 会覆盖 Job 的参数值。</p>
-<h4 id="StoreDurably"><a href="#StoreDurably" class="headerlink" title="StoreDurably"></a>StoreDurably</h4><p>默认情况下，当 Job 没有对应的 Trigger 时，Job 是不能直接被加入调度器中的，或者在 Trigger 过期之后， 没有关联 Trigger 的 Job 也会被删除。我们可以通过 JobBuilder 的 StoreDurably 使 Job 独立存储于调度器中。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">IJobDetail job = JobBuilder.Create&lt;HelloJob&gt;()</span><br><span class="line">                .WithIdentity(&quot;job1&quot;, &quot;jobGroup1&quot;)</span><br><span class="line">                .UsingJobData(jobDataMap)</span><br><span class="line">                .StoreDurably()</span><br><span class="line">                .Build();</span><br></pre></td></tr></table></figure></p>
-<h3 id="Job"><a href="#Job" class="headerlink" title="Job"></a>Job</h3><h4 id="State"><a href="#State" class="headerlink" title="State"></a>State</h4><p>Job 默认是无状态的，每次执行 Job ，context.JobDetail 获取到值都是原始数据，对其的任何修改都不会生效。<br>如：我们试图修改 JobDataMap 中的 times 属性，希望每次执行后都加1。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var jobDataMap = new JobDataMap();</span><br><span class="line">jobDataMap.Add(&quot;times&quot;, 1);</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class HelloJob : IJob</span><br><span class="line">&#123;</span><br><span class="line">	public int Times &#123; get; set; &#125;</span><br><span class="line">	public async Task Execute(IJobExecutionContext context)</span><br><span class="line">	&#123;</span><br><span class="line">		context.JobDetail.JobDataMap[&quot;times&quot;] = Times + 1;</span><br><span class="line">		await Console.Out.WriteLineAsync($&quot;execute &#123;Times&#125; times&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="/img/quartz-net-job/stateless.png" alt="无状态的结果"></p>
-<p>实际并不会有效，Job 注册之后，调度器内保存了这个对象，默认情况下是每次通过反射new一个新实例来执行的，所以每次修改必然不会有效。但我们可以通过在 Job 类上加上 <strong>PersistJobDataAfterExecution</strong> Attribute，就可以非常简单的把 Job 变成有状态。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[PersistJobDataAfterExecution]</span><br><span class="line">public class HelloJob : IJob</span><br><span class="line">&#123;</span><br><span class="line">	// ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><img src="/img/quartz-net-job/stateful.png" alt="有状态的结果"></p>
-<h4 id="Concurrency"><a href="#Concurrency" class="headerlink" title="Concurrency"></a>Concurrency</h4><p>当多个 Trigger 同时触发一个 Job 或者 一个 Job 执行较长，Trigger 条件已经被多次触发，这种情况下，Job 就出现了并发问题。在并发情况下，数据的准确性必然会有影响。</p>
-<p>我们设置 Trigger 触发周期为1s一次，在 Job 的 Exceute 方法中加入代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Thread.Sleep(2000);</span><br></pre></td></tr></table></figure></p>
-<p><img src="/img/quartz-net-job/concurrency.png" alt="并发的结果"></p>
-<p>很明显结果的错误的，但这时我们可以通过在 Job 类上加上 <strong>DisallowConcurrentExecution</strong>  Attribute，就可以完美解决并发问题。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[DisallowConcurrentExecution]</span><br><span class="line">public class HelloJob : IJob</span><br><span class="line">&#123;</span><br><span class="line">	// ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><img src="/img/quartz-net-job/noConcurrency.png" alt="无并发的结果"></p>
+        <p>目前 Quartz.NET 最新版本已经 3.0.4 ，从 3.0 开始已经支持 .NET Core，所以在 .NET 版本 和 部署环境 上都有更多的选择。下面分别介绍基于.NET Framework 的 Windows 环境部署 和 基于.NET Core 的 Linux 环境部署。</p>
+<h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><p>在介绍 Windows 环境部署之前需要先阅读一下 <a href="http://beckjin.com/2018/04/08/topshelf/" target="_blank" rel="noopener">Topshelf 秒建 Windows 服务</a>。通过 Topshelf 我们非常快速部署一个 Windows 服务。</p>
+<p>定义 TestSchedule 如下，代码功能和之前的 Demo 没什么区别，只是将里 Start 和 Shutdown 定义在了方法中。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">public class TestSchedule</span><br><span class="line">&#123;</span><br><span class="line">	readonly IScheduler scheduler = null;</span><br><span class="line"></span><br><span class="line">	public TestSchedule()</span><br><span class="line">	&#123;</span><br><span class="line">		// 创建作业调度器</span><br><span class="line">		scheduler = new StdSchedulerFactory().GetScheduler().Result;</span><br><span class="line">		var jobDataMap = new JobDataMap();</span><br><span class="line">		jobDataMap.Add(&quot;times&quot;, &quot;1&quot;);</span><br><span class="line"></span><br><span class="line">		// 创建一个作业</span><br><span class="line">		IJobDetail job = JobBuilder.Create&lt;TestJob&gt;()</span><br><span class="line">			.WithIdentity(&quot;job1&quot;, &quot;jobGroup1&quot;)</span><br><span class="line">			.UsingJobData(jobDataMap)</span><br><span class="line">			.Build();</span><br><span class="line"></span><br><span class="line">		// 创建一个触发器</span><br><span class="line">		ITrigger trigger = TriggerBuilder.Create()</span><br><span class="line">			.WithIdentity(&quot;trigger1&quot;, &quot;triggerGroup1&quot;)</span><br><span class="line">			.StartNow()</span><br><span class="line">			.WithSimpleSchedule(x =&gt; x</span><br><span class="line">				.WithIntervalInSeconds(1)</span><br><span class="line">				.WithRepeatCount(10))</span><br><span class="line">			.Build();</span><br><span class="line"></span><br><span class="line">		scheduler.ScheduleJob(job, trigger).Wait();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void Start()</span><br><span class="line">	&#123;</span><br><span class="line">		scheduler.Start().Wait();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void Stop()</span><br><span class="line">	&#123;</span><br><span class="line">		scheduler.Shutdown().Wait();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Main 方法中添加如下设置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">static void Main(string[] args)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	// 配置和运行宿主服务</span><br><span class="line">	HostFactory.Run(x =&gt;</span><br><span class="line">	&#123;</span><br><span class="line">		// 指定服务类型。这里设置为 TestSchedule</span><br><span class="line">		x.Service&lt;TestSchedule&gt;(s =&gt;</span><br><span class="line">		&#123;</span><br><span class="line">			// 通过 new TestSchedule() 构建一个服务实例 </span><br><span class="line">			s.ConstructUsing(name =&gt; new TestSchedule());</span><br><span class="line">			// 当服务启动后执行什么</span><br><span class="line">			s.WhenStarted(tc =&gt; tc.Start());</span><br><span class="line">			// 当服务停止后执行什么</span><br><span class="line">			s.WhenStopped(tc =&gt; tc.Stop());</span><br><span class="line">		&#125;);</span><br><span class="line"></span><br><span class="line">		// 服务用本地系统账号来运行</span><br><span class="line">		x.RunAsLocalSystem();</span><br><span class="line"></span><br><span class="line">		// 服务描述信息</span><br><span class="line">		x.SetDescription(&quot;TestSchedule&quot;);</span><br><span class="line">		// 服务显示名称</span><br><span class="line">		x.SetDisplayName(&quot;TestScheduleService&quot;);</span><br><span class="line">		// 服务名称</span><br><span class="line">		x.SetServiceName(&quot;TestScheduleService&quot;);</span><br><span class="line"></span><br><span class="line">	&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>开发环境下直接通过 F5 运行调试。如果希望部署成服务，只需要在 bin 目录下执行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xxx.exe install</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/quartz-net-deploy/wInstall.png" alt="安装"></p>
+<p>服务启动后我们通过日志记录运行结果如下：<br><img src="/img/quartz-net-deploy/wResult.png" alt="执行结果"></p>
+<h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><p>测试代码基于.Net Core 2.0 ，最终通过 Docker 来部署到 Linux 上。和 Windows 方式类似，创建一个控制台应用程序，Program.cs 主要代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">class Program</span><br><span class="line">&#123;</span><br><span class="line">	private static readonly ManualResetEvent manualResetEvent = new ManualResetEvent(false);</span><br><span class="line">	private static TestSchedule testSchedule;</span><br><span class="line"></span><br><span class="line">	static void Main(string[] args)</span><br><span class="line">	&#123;</span><br><span class="line">		testSchedule = new TestSchedule();</span><br><span class="line"></span><br><span class="line">		// 开启新线程执行 Schedule</span><br><span class="line">		Task.Run(Start);</span><br><span class="line"></span><br><span class="line">		Console.CancelKeyPress += (sender, e) =&gt;</span><br><span class="line">		&#123;</span><br><span class="line">			Task.Run(StopSilo);</span><br><span class="line">		&#125;;</span><br><span class="line"></span><br><span class="line">		AppDomain.CurrentDomain.ProcessExit += (s, e) =&gt;</span><br><span class="line">		&#123;</span><br><span class="line">			Task.Run(StopSilo);</span><br><span class="line">		&#125;;</span><br><span class="line"></span><br><span class="line">		// 进入阻塞状态，开始等待唤醒信号。（防止程序直接退出）</span><br><span class="line">		manualResetEvent.WaitOne();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	private static async Task Start()</span><br><span class="line">	&#123;</span><br><span class="line">		await testSchedule.Start();</span><br><span class="line">		Console.WriteLine(&quot;started&quot;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	private static async Task StopSilo()</span><br><span class="line">	&#123;</span><br><span class="line">		await testSchedule.Stop();</span><br><span class="line">		Console.WriteLine(&quot;stopped&quot;);</span><br><span class="line">		// 取消阻塞状态，发出唤醒信号</span><br><span class="line">		manualResetEvent.Set();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里需要注意 ManualResetEvent 的使用，它主要用于多线程协同和进程操作，这里可以理解为 Quartz 的执行提供守护进程。</p>
+<p>如果是Windows用户，可以把程序 Build 后打包到 Linux 上生成镜像，也可以通过 <a href="https://www.docker.com/docker-windows" target="_blank" rel="noopener">Docker for Windows</a> 在本地生成镜像。</p>
+<p>创建 Dockerfile：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">FROM microsoft/aspnetcore:2.0</span><br><span class="line"></span><br><span class="line">COPY bin/Release/PublishOutput  /app/</span><br><span class="line"></span><br><span class="line">WORKDIR /app</span><br><span class="line"></span><br><span class="line">ENTRYPOINT [&quot;dotnet&quot;, &quot;/app/App_NetCore.dll&quot;]</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>通过 FROM 指定了需要的运行环境；</li>
+<li>将发布好的代码 COPY 到镜像内的 /app/ 目录下（ bin/Release/PublishOutput  是程序默认发布的地址）；</li>
+<li>指定  /app/ 为工作目录；</li>
+<li>通过 ENTRYPOINT 指定程序启动运行的命令。</li>
+</ol>
+<p>接下来分别执行以下几条命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// docker build 默认会根据当前目录下的 Dockerfile 文件生成镜像，这里指定镜像名为 beckjin/test-quartznet-local</span><br><span class="line">docker build -t beckjin/test-quartznet-local .</span><br><span class="line"></span><br><span class="line">// 通过 docker tag 给 beckjin/test-quartznet-local 最新 build 的版本打上一个标签 beckjin/test-quartznet:0.0.1（可以理解为版本）</span><br><span class="line">docker tag beckjin/test-quartznet-local:latest beckjin/test-quartznet:0.0.1</span><br><span class="line"></span><br><span class="line">// 登录 docker hub 账号</span><br><span class="line">docker login -u xxx -p xxx </span><br><span class="line"></span><br><span class="line"> // 将镜像推到 docker hub 上</span><br><span class="line">docker push beckjin/test-quartznet:0.0.1</span><br><span class="line"></span><br><span class="line">// 执行 beckjin/test-quartznet:0.0.1 镜像</span><br><span class="line">docker run beckjin/test-quartznet:0.0.1</span><br></pre></td></tr></table></figure>
+<p>因为这个例子比较简单，这里直接使用 docker run 来执行。结果如下：</p>
+<p><img src="/img/quartz-net-deploy/lResult.png" alt="执行结果"></p>
 <h3 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h3><ul>
-<li><a href="https://www.quartz-scheduler.net/documentation/quartz-3.x/tutorial/index.html" target="_blank" rel="noopener">Quartz.NET Documentation</a></li>
-<li><a href="https://github.com/beckjin/QuartzNetSamples/tree/master/QuartzNetJob" target="_blank" rel="noopener">案例 Demo-QuartzNetJob</a></li>
+<li><a href="https://www.quartz-scheduler.net/" target="_blank" rel="noopener">Quartz.NET Documentation</a></li>
+<li><a href="http://beckjin.com/2018/04/08/topshelf/" target="_blank" rel="noopener">Topshelf 秒建 Windows 服务</a></li>
+<li><a href="https://github.com/beckjin/QuartzNetSamples/tree/master/QuartzNetDeploy" target="_blank" rel="noopener">案例 Demo-QuartzNetDeploy</a></li>
 </ul>
 
       
@@ -446,8 +444,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/02/10/owin-httplistener/" rel="next" title="OWIN：HttpListener">
-                <i class="fa fa-chevron-left"></i> OWIN：HttpListener
+              <a href="/2018/04/08/topshelf/" rel="next" title="Topshelf 秒建 Windows 服务">
+                <i class="fa fa-chevron-left"></i> Topshelf 秒建 Windows 服务
               </a>
             
           </div>
@@ -455,10 +453,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/24/quartz-net-trigger/" rel="prev" title="Quartz.NET 作业调度（三）：Trigger">
-                Quartz.NET 作业调度（三）：Trigger <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -627,7 +621,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#JobBuilder"><span class="nav-number">1.</span> <span class="nav-text"><a href="#JobBuilder" class="headerlink" title="JobBuilder"></a>JobBuilder</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Create"><span class="nav-number">1.1.</span> <span class="nav-text"><a href="#Create" class="headerlink" title="Create"></a>Create</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Identity"><span class="nav-number">1.2.</span> <span class="nav-text"><a href="#Identity" class="headerlink" title="Identity"></a>Identity</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UsingJobData"><span class="nav-number">1.3.</span> <span class="nav-text"><a href="#UsingJobData" class="headerlink" title="UsingJobData"></a>UsingJobData</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#StoreDurably"><span class="nav-number">1.4.</span> <span class="nav-text"><a href="#StoreDurably" class="headerlink" title="StoreDurably"></a>StoreDurably</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Job"><span class="nav-number">2.</span> <span class="nav-text"><a href="#Job" class="headerlink" title="Job"></a>Job</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#State"><span class="nav-number">2.1.</span> <span class="nav-text"><a href="#State" class="headerlink" title="State"></a>State</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Concurrency"><span class="nav-number">2.2.</span> <span class="nav-text"><a href="#Concurrency" class="headerlink" title="Concurrency"></a>Concurrency</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接："><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows"><span class="nav-number">1.</span> <span class="nav-text"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux"><span class="nav-number">2.</span> <span class="nav-text"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接："><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;</span></a></li></ol></div>
             
 
           </div>
