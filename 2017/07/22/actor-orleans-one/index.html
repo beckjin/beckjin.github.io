@@ -91,7 +91,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-one/actorSystem.png">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-one/configuration.png">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-one/testResult.png">
-<meta property="og:updated_time" content="2018-01-07T12:54:41.214Z">
+<meta property="og:updated_time" content="2018-05-19T12:12:50.709Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Orleans解决并发之痛（一）：单线程">
 <meta name="twitter:description" content="程序在运行过程中有时会莫名其妙出现代码的某些约束或者执行结果和理想状况不一样，正常逻辑怎么会出现这样的情况？到底发生了什么？好像见了鬼！瞬间好无助。  大多数出现正常逻辑很难解释的时候，我们可能会想到并发问题，因为好像只有并发才会能说服自己。为了验证和解决这个问题，我们可能会尝试一些方案，在并发的情况下我相信很多人都使用过锁，锁确实也能帮忙我们解决问题，不然它干嘛存在。 但随着业务逻辑的持续复杂，">
@@ -376,16 +376,16 @@
 <h3 id="再来扯一扯Orleans框架"><a href="#再来扯一扯Orleans框架" class="headerlink" title="再来扯一扯Orleans框架"></a>再来扯一扯Orleans框架</h3><blockquote>
 <p>Orleans 提供了一个简单的方法来构建大规模、高并发、分布式应用程序，被认为是Actor模型的分布式版本，是一种改进的Actor模型。在Orleans中，Actors被称作Grains，采用接口来表示，Actors的消息用异步方法来接收，方法返回值必须是Task or Task<t>。</t></p>
 </blockquote>
-<h5 id="Orleans几个核心角色："><a href="#Orleans几个核心角色：" class="headerlink" title="Orleans几个核心角色："></a>Orleans几个核心角色：</h5><h6 id="Grains（Actors）"><a href="#Grains（Actors）" class="headerlink" title="Grains（Actors）"></a>Grains（Actors）</h6><blockquote>
+<h4 id="Orleans几个核心角色："><a href="#Orleans几个核心角色：" class="headerlink" title="Orleans几个核心角色："></a>Orleans几个核心角色：</h4><h5 id="Grains（Actors）"><a href="#Grains（Actors）" class="headerlink" title="Grains（Actors）"></a>Grains（Actors）</h5><blockquote>
 <p>Grains是Orleans应用程序的业务逻辑实现与抽象，Grains是彼此孤立的原子单位，分布的，持久的。 一个典型的Grain是有状态和行为的一个单实例。</p>
 </blockquote>
-<h6 id="Silo"><a href="#Silo" class="headerlink" title="Silo"></a>Silo</h6><blockquote>
+<h5 id="Silo"><a href="#Silo" class="headerlink" title="Silo"></a>Silo</h5><blockquote>
 <p>Silo是一个主机服务，里面主要用于执行Grains，也就是说Grains开发完成后需要注册到Silo中，然后等待调用。它监听一个端口，用来监听从Silo到Silo的消息或者从客户端到Silo的消息的，典型的Silo就是，每台机器运行一个Silo，会对外暴露网关地址供调用。</p>
 </blockquote>
-<h6 id="Cluster（集群搭建的时候会具体介绍）"><a href="#Cluster（集群搭建的时候会具体介绍）" class="headerlink" title="Cluster（集群搭建的时候会具体介绍）"></a>Cluster（集群搭建的时候会具体介绍）</h6><blockquote>
+<h5 id="Cluster（集群搭建的时候会具体介绍）"><a href="#Cluster（集群搭建的时候会具体介绍）" class="headerlink" title="Cluster（集群搭建的时候会具体介绍）"></a>Cluster（集群搭建的时候会具体介绍）</h5><blockquote>
 <p>大量的Silo同时在一起工作就形成了Orleans的集群，Orleans运行完全自动化的集群管理。</p>
 </blockquote>
-<h6 id="Client"><a href="#Client" class="headerlink" title="Client"></a>Client</h6><blockquote>
+<h5 id="Client"><a href="#Client" class="headerlink" title="Client"></a>Client</h5><blockquote>
 <p>具体的应用客户端，可以是控制台、Web应用程序、WPF等一切.NET端技术。</p>
 </blockquote>
 <hr>
@@ -442,11 +442,11 @@
 <p>集群下可以配置多个Gateway节点，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;Gateway Address=&quot;gateway1&quot; Port=&quot;30000&quot;/&gt;</span><br><span class="line">&lt;Gateway Address=&quot;gateway2&quot; Port=&quot;30000&quot;/&gt;</span><br></pre></td></tr></table></figure></p>
 <p><strong>注意：</strong>配置文件需要设置属性 “复制到输出目录”</p>
 <p><img src="/img/actor-orleans-one/configuration.png" alt="configuration"></p>
-<h5 id="Grain说明："><a href="#Grain说明：" class="headerlink" title="Grain说明："></a>Grain说明：</h5><p>每个Grain都是单实例的，具有唯一标识。根据唯一标识获取Grain，这个标识可以是GUID、String、Long、混合类型。</p>
+<h4 id="Grain说明："><a href="#Grain说明：" class="headerlink" title="Grain说明："></a>Grain说明：</h4><p>每个Grain都是单实例的，具有唯一标识。根据唯一标识获取Grain，这个标识可以是GUID、String、Long、混合类型。</p>
 <p>在Grain内如果发送消息给其他Grain，需要使用 this.GrainFactory.GetGrain，不能通过 GrainClient.GrainFactory.GetGrain。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var test = GrainClient.GrainFactory.GetGrain&lt;ITest&gt;(0); // long类型的primaryKey 0</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class TestGrain : Orleans.Grain, ITest</span><br><span class="line">&#123;</span><br><span class="line">	private int num = 0;</span><br><span class="line"></span><br><span class="line">	public Task AddCount()</span><br><span class="line">	&#123;</span><br><span class="line">		num++;</span><br><span class="line">		Console.WriteLine(num);</span><br><span class="line">		return Task.CompletedTask;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="Client说明："><a href="#Client说明：" class="headerlink" title="Client说明："></a>Client说明：</h5><p>同时启动3个Task，每个Task内并行200次调用AddCount方法。如果没有做特殊的处理，num的结果肯定是乱的，并不会出现一直累加的效果。</p>
+<h4 id="Client说明："><a href="#Client说明：" class="headerlink" title="Client说明："></a>Client说明：</h4><p>同时启动3个Task，每个Task内并行200次调用AddCount方法。如果没有做特殊的处理，num的结果肯定是乱的，并不会出现一直累加的效果。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">private static void DoClientWork()</span><br><span class="line">&#123;</span><br><span class="line">	var t1 = Task.Factory.StartNew(() =&gt;</span><br><span class="line">	&#123;</span><br><span class="line">		AddCount();</span><br><span class="line">	&#125;);</span><br><span class="line">	var t2 = Task.Factory.StartNew(() =&gt;</span><br><span class="line">	&#123;</span><br><span class="line">		AddCount();</span><br><span class="line">	&#125;);</span><br><span class="line">	var t3 = Task.Factory.StartNew(() =&gt;</span><br><span class="line">	&#123;</span><br><span class="line">		AddCount();</span><br><span class="line">	&#125;);</span><br><span class="line">	Task.WaitAll(t1, t2, t3);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static void AddCount()</span><br><span class="line">&#123;</span><br><span class="line">	var test = GrainClient.GrainFactory.GetGrain&lt;ITest&gt;(0);</span><br><span class="line"></span><br><span class="line">	Parallel.For(0, 200, (i) =&gt;</span><br><span class="line">	&#123;</span><br><span class="line">		test.AddCount();</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>实际上执行最终的结果是600，并不会出现不一致的变化效果，这足以说明同一个Grain内部是单线程执行。</p>
 <p><img src="/img/actor-orleans-one/testResult.png" alt="Test Result"></p>
@@ -550,32 +550,6 @@
 
 
     <div class="post-spread">
-      
-        <!-- JiaThis Button BEGIN -->
-<div class="jiathis_style">
-<span class="jiathis_txt">分享到：</span>
-<a class="jiathis_button_fav">收藏夹</a>
-<a class="jiathis_button_copy">复制网址</a>
-<a class="jiathis_button_email">邮件</a>
-<a class="jiathis_button_weixin">微信</a>
-<a class="jiathis_button_qzone">QQ空间</a>
-<a class="jiathis_button_tqq">腾讯微博</a>
-<a class="jiathis_button_douban">豆瓣</a>
-<a class="jiathis_button_share">一键分享</a>
-
-<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-<a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript" >
-var jiathis_config={
-  data_track_clickback:true,
-  summary:"",
-  shortUrl:false,
-  hideMore:false
-}
-</script>
-<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
-<!-- JiaThis Button END -->
       
     </div>
   </div>
@@ -715,7 +689,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Orleans之前，先来扯一扯Actor模型"><span class="nav-number">1.</span> <span class="nav-text"><a href="#Orleans&#x4E4B;&#x524D;&#xFF0C;&#x5148;&#x6765;&#x626F;&#x4E00;&#x626F;Actor&#x6A21;&#x578B;" class="headerlink" title="Orleans&#x4E4B;&#x524D;&#xFF0C;&#x5148;&#x6765;&#x626F;&#x4E00;&#x626F;Actor&#x6A21;&#x578B;"></a>Orleans&#x4E4B;&#x524D;&#xFF0C;&#x5148;&#x6765;&#x626F;&#x4E00;&#x626F;Actor&#x6A21;&#x578B;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#再来扯一扯Orleans框架"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x518D;&#x6765;&#x626F;&#x4E00;&#x626F;Orleans&#x6846;&#x67B6;" class="headerlink" title="&#x518D;&#x6765;&#x626F;&#x4E00;&#x626F;Orleans&#x6846;&#x67B6;"></a>&#x518D;&#x6765;&#x626F;&#x4E00;&#x626F;Orleans&#x6846;&#x67B6;</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Orleans几个核心角色："><span class="nav-number">2.0.1.</span> <span class="nav-text"><a href="#Orleans&#x51E0;&#x4E2A;&#x6838;&#x5FC3;&#x89D2;&#x8272;&#xFF1A;" class="headerlink" title="Orleans&#x51E0;&#x4E2A;&#x6838;&#x5FC3;&#x89D2;&#x8272;&#xFF1A;"></a>Orleans&#x51E0;&#x4E2A;&#x6838;&#x5FC3;&#x89D2;&#x8272;&#xFF1A;</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Grains（Actors）"><span class="nav-number">2.0.1.1.</span> <span class="nav-text"><a href="#Grains&#xFF08;Actors&#xFF09;" class="headerlink" title="Grains&#xFF08;Actors&#xFF09;"></a>Grains&#xFF08;Actors&#xFF09;</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Silo"><span class="nav-number">2.0.1.2.</span> <span class="nav-text"><a href="#Silo" class="headerlink" title="Silo"></a>Silo</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Cluster（集群搭建的时候会具体介绍）"><span class="nav-number">2.0.1.3.</span> <span class="nav-text"><a href="#Cluster&#xFF08;&#x96C6;&#x7FA4;&#x642D;&#x5EFA;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x5177;&#x4F53;&#x4ECB;&#x7ECD;&#xFF09;" class="headerlink" title="Cluster&#xFF08;&#x96C6;&#x7FA4;&#x642D;&#x5EFA;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x5177;&#x4F53;&#x4ECB;&#x7ECD;&#xFF09;"></a>Cluster&#xFF08;&#x96C6;&#x7FA4;&#x642D;&#x5EFA;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x5177;&#x4F53;&#x4ECB;&#x7ECD;&#xFF09;</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Client"><span class="nav-number">2.0.1.4.</span> <span class="nav-text"><a href="#Client" class="headerlink" title="Client"></a>Client</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Grain说明："><span class="nav-number">2.0.2.</span> <span class="nav-text"><a href="#Grain&#x8BF4;&#x660E;&#xFF1A;" class="headerlink" title="Grain&#x8BF4;&#x660E;&#xFF1A;"></a>Grain&#x8BF4;&#x660E;&#xFF1A;</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Client说明："><span class="nav-number">2.0.3.</span> <span class="nav-text"><a href="#Client&#x8BF4;&#x660E;&#xFF1A;" class="headerlink" title="Client&#x8BF4;&#x660E;&#xFF1A;"></a>Client&#x8BF4;&#x660E;&#xFF1A;</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接："><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Orleans之前，先来扯一扯Actor模型"><span class="nav-number">1.</span> <span class="nav-text"><a href="#Orleans&#x4E4B;&#x524D;&#xFF0C;&#x5148;&#x6765;&#x626F;&#x4E00;&#x626F;Actor&#x6A21;&#x578B;" class="headerlink" title="Orleans&#x4E4B;&#x524D;&#xFF0C;&#x5148;&#x6765;&#x626F;&#x4E00;&#x626F;Actor&#x6A21;&#x578B;"></a>Orleans&#x4E4B;&#x524D;&#xFF0C;&#x5148;&#x6765;&#x626F;&#x4E00;&#x626F;Actor&#x6A21;&#x578B;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#再来扯一扯Orleans框架"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x518D;&#x6765;&#x626F;&#x4E00;&#x626F;Orleans&#x6846;&#x67B6;" class="headerlink" title="&#x518D;&#x6765;&#x626F;&#x4E00;&#x626F;Orleans&#x6846;&#x67B6;"></a>&#x518D;&#x6765;&#x626F;&#x4E00;&#x626F;Orleans&#x6846;&#x67B6;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Orleans几个核心角色："><span class="nav-number">2.1.</span> <span class="nav-text"><a href="#Orleans&#x51E0;&#x4E2A;&#x6838;&#x5FC3;&#x89D2;&#x8272;&#xFF1A;" class="headerlink" title="Orleans&#x51E0;&#x4E2A;&#x6838;&#x5FC3;&#x89D2;&#x8272;&#xFF1A;"></a>Orleans&#x51E0;&#x4E2A;&#x6838;&#x5FC3;&#x89D2;&#x8272;&#xFF1A;</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Grains（Actors）"><span class="nav-number">2.1.1.</span> <span class="nav-text"><a href="#Grains&#xFF08;Actors&#xFF09;" class="headerlink" title="Grains&#xFF08;Actors&#xFF09;"></a>Grains&#xFF08;Actors&#xFF09;</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Silo"><span class="nav-number">2.1.2.</span> <span class="nav-text"><a href="#Silo" class="headerlink" title="Silo"></a>Silo</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Cluster（集群搭建的时候会具体介绍）"><span class="nav-number">2.1.3.</span> <span class="nav-text"><a href="#Cluster&#xFF08;&#x96C6;&#x7FA4;&#x642D;&#x5EFA;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x5177;&#x4F53;&#x4ECB;&#x7ECD;&#xFF09;" class="headerlink" title="Cluster&#xFF08;&#x96C6;&#x7FA4;&#x642D;&#x5EFA;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x5177;&#x4F53;&#x4ECB;&#x7ECD;&#xFF09;"></a>Cluster&#xFF08;&#x96C6;&#x7FA4;&#x642D;&#x5EFA;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x5177;&#x4F53;&#x4ECB;&#x7ECD;&#xFF09;</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Client"><span class="nav-number">2.1.4.</span> <span class="nav-text"><a href="#Client" class="headerlink" title="Client"></a>Client</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Grain说明："><span class="nav-number">2.2.</span> <span class="nav-text"><a href="#Grain&#x8BF4;&#x660E;&#xFF1A;" class="headerlink" title="Grain&#x8BF4;&#x660E;&#xFF1A;"></a>Grain&#x8BF4;&#x660E;&#xFF1A;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Client说明："><span class="nav-number">2.3.</span> <span class="nav-text"><a href="#Client&#x8BF4;&#x660E;&#xFF1A;" class="headerlink" title="Client&#x8BF4;&#x660E;&#xFF1A;"></a>Client&#x8BF4;&#x660E;&#xFF1A;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接："><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;</span></a></li></ol></div>
             
 
           </div>
