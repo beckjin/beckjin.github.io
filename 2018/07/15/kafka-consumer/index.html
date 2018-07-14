@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content=".NET,Polly," />
+  <meta name="keywords" content="Kafka," />
 
 
 
@@ -79,21 +79,22 @@
 
 
 
-<meta name="description" content="熔断策略（Circuit-breaker）如果调用某个目标服务出现过多超时、异常等情况，可以采取一定时间内熔断该服务的调用，熔断期间的请求将不再继续调用目标服务，而是直接返回，节约资源，提高服务的稳定性，熔断周期结束后如果目标服务情况好转则恢复调用。 注意：为了服务的稳定性，在执行需要多次 Retry（重试策略）的情况下，最好组合熔断策略，预防可能存在的风险。 熔断状态  打开（Open） 熔断器">
-<meta name="keywords" content=".NET,Polly">
+<meta name="description" content="Kafka 与很多其它 MQ 不太一样，Kafka 中的 Topic 具有分区（Partition）的概念，一个 Topic 可以指定一个或多个分区，每个分区内的数据都是有序的，发布的消息最终落到哪个分区是有规则的，默认情况下随机（但其实也不完全随机，内部会有一些机制），实际情况下我们可能会对消息指定一个 Key， 相同 Key 的消息会落到一个分区上，不同的 Key 的消息也可能会落到相同的分区">
+<meta name="keywords" content="Kafka">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Polly 故障处理（二）： 熔断策略">
-<meta property="og:url" content="http://www.beckjin.com/2018/06/30/polly-circuit-breaker/index.html">
+<meta property="og:title" content="Kafka Consumer">
+<meta property="og:url" content="http://www.beckjin.com/2018/07/15/kafka-consumer/index.html">
 <meta property="og:site_name" content="Beck&#39;s Blog">
-<meta property="og:description" content="熔断策略（Circuit-breaker）如果调用某个目标服务出现过多超时、异常等情况，可以采取一定时间内熔断该服务的调用，熔断期间的请求将不再继续调用目标服务，而是直接返回，节约资源，提高服务的稳定性，熔断周期结束后如果目标服务情况好转则恢复调用。 注意：为了服务的稳定性，在执行需要多次 Retry（重试策略）的情况下，最好组合熔断策略，预防可能存在的风险。 熔断状态  打开（Open） 熔断器">
+<meta property="og:description" content="Kafka 与很多其它 MQ 不太一样，Kafka 中的 Topic 具有分区（Partition）的概念，一个 Topic 可以指定一个或多个分区，每个分区内的数据都是有序的，发布的消息最终落到哪个分区是有规则的，默认情况下随机（但其实也不完全随机，内部会有一些机制），实际情况下我们可能会对消息指定一个 Key， 相同 Key 的消息会落到一个分区上，不同的 Key 的消息也可能会落到相同的分区">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.beckjin.com/img/polly-circuit-breaker/status.png">
-<meta property="og:image" content="http://www.beckjin.com/img/polly-circuit-breaker/result.png">
-<meta property="og:updated_time" content="2018-06-30T07:17:11.719Z">
+<meta property="og:image" content="http://www.beckjin.com/img/kafka-consumer/topicPartition.png">
+<meta property="og:image" content="http://www.beckjin.com/img/kafka-consumer/consumerGroup.png">
+<meta property="og:image" content="http://www.beckjin.com/img/kafka-consumer/offsetReset.png">
+<meta property="og:updated_time" content="2018-07-14T16:17:54.959Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Polly 故障处理（二）： 熔断策略">
-<meta name="twitter:description" content="熔断策略（Circuit-breaker）如果调用某个目标服务出现过多超时、异常等情况，可以采取一定时间内熔断该服务的调用，熔断期间的请求将不再继续调用目标服务，而是直接返回，节约资源，提高服务的稳定性，熔断周期结束后如果目标服务情况好转则恢复调用。 注意：为了服务的稳定性，在执行需要多次 Retry（重试策略）的情况下，最好组合熔断策略，预防可能存在的风险。 熔断状态  打开（Open） 熔断器">
-<meta name="twitter:image" content="http://www.beckjin.com/img/polly-circuit-breaker/status.png">
+<meta name="twitter:title" content="Kafka Consumer">
+<meta name="twitter:description" content="Kafka 与很多其它 MQ 不太一样，Kafka 中的 Topic 具有分区（Partition）的概念，一个 Topic 可以指定一个或多个分区，每个分区内的数据都是有序的，发布的消息最终落到哪个分区是有规则的，默认情况下随机（但其实也不完全随机，内部会有一些机制），实际情况下我们可能会对消息指定一个 Key， 相同 Key 的消息会落到一个分区上，不同的 Key 的消息也可能会落到相同的分区">
+<meta name="twitter:image" content="http://www.beckjin.com/img/kafka-consumer/topicPartition.png">
 
 
 
@@ -123,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://www.beckjin.com/2018/06/30/polly-circuit-breaker/"/>
+  <link rel="canonical" href="http://www.beckjin.com/2018/07/15/kafka-consumer/"/>
 
 
 
 
 
-  <title>Polly 故障处理（二）： 熔断策略 | Beck's Blog</title>
+  <title>Kafka Consumer | Beck's Blog</title>
   
 
 
@@ -256,7 +257,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2018/06/30/polly-circuit-breaker/">
+    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2018/07/15/kafka-consumer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
@@ -273,7 +274,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Polly 故障处理（二）： 熔断策略</h2>
+          <h2 class="post-title" itemprop="name headline">Kafka Consumer</h2>
         
 
         <div class="post-meta">
@@ -285,8 +286,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-30T15:13:38+08:00">
-                2018-06-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-15T00:14:52+08:00">
+                2018-07-15
               </time>
             
 
@@ -308,8 +309,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Polly/" itemprop="url" rel="index">
-                    <span itemprop="name">Polly</span>
+                  <a href="/categories/Kafka/" itemprop="url" rel="index">
+                    <span itemprop="name">Kafka</span>
                   </a>
                 </span>
 
@@ -325,7 +326,7 @@
 
           
           
-             <span id="/2018/06/30/polly-circuit-breaker/" class="leancloud_visitors" data-flag-title="Polly 故障处理（二）： 熔断策略">
+             <span id="/2018/07/15/kafka-consumer/" class="leancloud_visitors" data-flag-title="Kafka Consumer">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -356,32 +357,42 @@
       
 
       
-        <h3 id="熔断策略（Circuit-breaker）"><a href="#熔断策略（Circuit-breaker）" class="headerlink" title="熔断策略（Circuit-breaker）"></a>熔断策略（Circuit-breaker）</h3><p>如果调用某个目标服务出现过多超时、异常等情况，可以采取一定时间内熔断该服务的调用，熔断期间的请求将不再继续调用目标服务，而是直接返回，节约资源，提高服务的稳定性，熔断周期结束后如果目标服务情况好转则恢复调用。</p>
-<p><strong>注意：</strong>为了服务的稳定性，在执行需要多次 Retry（<a href="http://beckjin.com/2018/05/14/polly-retry/" target="_blank" rel="noopener">重试策略</a>）的情况下，最好组合熔断策略，预防可能存在的风险。</p>
-<h4 id="熔断状态"><a href="#熔断状态" class="headerlink" title="熔断状态"></a>熔断状态</h4><p><img src="/img/polly-circuit-breaker/status.png" alt="熔断状态切换流程"></p>
+        <p>Kafka 与很多其它 MQ 不太一样，Kafka 中的 Topic 具有分区（Partition）的概念，一个 Topic 可以指定一个或多个分区，每个分区内的数据都是有序的，发布的消息最终落到哪个分区是有规则的，默认情况下随机（但其实也不完全随机，内部会有一些机制），实际情况下我们可能会对消息指定一个 Key， 相同 Key 的消息会落到一个分区上，不同的 Key 的消息也可能会落到相同的分区，分区与 Key 的关系的1对多，但 Key 与 分区的关系必须是1对1。</p>
+<p><img src="/img/kafka-consumer/topicPartition.png" alt="topic partition"></p>
+<h3 id="消费者组-Consumer-Group"><a href="#消费者组-Consumer-Group" class="headerlink" title="消费者组 (Consumer Group)"></a>消费者组 (Consumer Group)</h3><p>消费者并不是独立存在的，每一个消费者实例必定属于一个消费组。</p>
+<p><img src="/img/kafka-consumer/consumerGroup.png" alt="Consumer Group"></p>
+<p>消费组主要说明：</p>
+<ul>
+<li><p>Consumer Group 需要设定一个 group.id，Consumer Group 的唯一标识；</p>
+</li>
+<li><p>Consumer Group 下可以有一个或多个 Consumer 实例，Consumer 实例可以是一个进程，也可以是一个线程；</p>
+</li>
+<li><p>Consumer Group 可以订阅多个 Topic，但一个 Topic 下的一个分区只能分配给某个 Consumer 实例消费，不同的 Consumer Group 可以消费 Topic 下同一个分区的数据；</p>
+</li>
+<li><p>Consumer Group 最多的 Consumer 实例个数不应超过订阅的 Topic 的分区数，因为一个分区只能给一个 Consumer 实例消费，多出来的 Consumer 实例完全是浪费；</p>
+</li>
+</ul>
+<p><strong>在实际消费数据时，可以根据消费情况动态对 Topic 的分区数进行调整，从而达到更高的效率。</strong></p>
+<h3 id="消费组的偏移重置设定（auto-offset-reset）"><a href="#消费组的偏移重置设定（auto-offset-reset）" class="headerlink" title="消费组的偏移重置设定（auto.offset.reset）"></a>消费组的偏移重置设定（auto.offset.reset）</h3><p><img src="/img/kafka-consumer/offsetReset.png" alt="auto.offset.reset"></p>
+<h4 id="largest-默认-，也可以使用-latest、end"><a href="#largest-默认-，也可以使用-latest、end" class="headerlink" title="largest(默认) ，也可以使用 latest、end"></a>largest(默认) ，也可以使用 latest、end</h4><blockquote>
+<p>当各分区下有已提交的 offset 时，从提交的 offset 开始消费；无提交的 offset 时，消费新产生的该分区下的数据 </p>
+</blockquote>
+<p><strong>注意</strong> : 已提交的 offset 不是指 producer 发送的消息对应的 offset ，而是指消费者消费的消息对应的 offset 。</p>
+<p>这到底是什么意思？这里对两种情况进行解释一下：</p>
 <ol>
-<li>打开（Open）<blockquote>
-<p>熔断器打开状态，此时对目标服务的调用都直接返回错误，熔断周期内不会走网络请求，当熔断周期结束时进入半开状态；</p>
-</blockquote>
+<li><p>在没有启动 Consumer 实例的情况下，Producer 向某个 Topic 发布了消息。之后当 Consumer 实例启动时是不会消费之前发布的数据的，只有新发布的数据会被消费；</p>
 </li>
-<li>关闭（Closed）<blockquote>
-<p>关闭状态下正常发生网络请求，但会记录符合熔断条件的连续执行次数，如果错误数量达到设定的阈值（如果在没有达到阈值之前恢复正常，之前的累积次数将会归零），熔断状态进入到打开状态；</p>
-</blockquote>
-</li>
-<li>半开（Half-Open）<blockquote>
-<p>半开状态下允许定量的服务请求，如果调用都成功（或一定比例）则认为恢复了，关闭熔断器，否则认为还没好，又回到熔断器打开状态； </p>
-</blockquote>
+<li><p>在 Consumer 实例启动的情况下，当 Producer 向某个 Topic（n 个分区） 发布消息时，当 Consumer 实例挂掉时并没有对所有分区有过消费记录，在挂掉期间，如果 Producer 发布的消息恰好落到没有消费记录的分区，Consumer 实例重新启动后，这部分消息（<strong>落到没有消费记录分区</strong>）将不会消费，只有新发布的数据会被消费；</p>
 </li>
 </ol>
-<h4 id="熔断使用说明"><a href="#熔断使用说明" class="headerlink" title="熔断使用说明"></a>熔断使用说明</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 在连续3次异常后熔断，并保持1分钟的熔断状态，调用者将收到断路保护的异常信息</span><br><span class="line">Policy</span><br><span class="line">    .Handle&lt;SomeExceptionType&gt;()</span><br><span class="line">    .CircuitBreaker(3, TimeSpan.FromMinutes(1));</span><br></pre></td></tr></table></figure>
-<h4 id="熔断代码测试"><a href="#熔断代码测试" class="headerlink" title="熔断代码测试"></a>熔断代码测试</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">private static int times = 0;</span><br><span class="line">public static void TestPolicy()</span><br><span class="line">&#123;</span><br><span class="line">	var circuitBreakerPolicy = Policy</span><br><span class="line">			.Handle&lt;Exception&gt;()</span><br><span class="line">			.CircuitBreaker(</span><br><span class="line">				exceptionsAllowedBeforeBreaking: 4,             // 连续4次异常</span><br><span class="line">				durationOfBreak: TimeSpan.FromMinutes(1),       // 断开1分钟</span><br><span class="line">				onBreak: (exception, breakDelay) =&gt;             // 断路器打开时</span><br><span class="line">					Console.WriteLine($&quot;熔断: &#123;breakDelay.TotalMilliseconds &#125; ms, 异常: &quot; + exception.Message),</span><br><span class="line">				onReset: () =&gt;                                  // 熔断器关闭时</span><br><span class="line">					Console.WriteLine(&quot;熔断器关闭了&quot;),</span><br><span class="line">				onHalfOpen: () =&gt;                               // 熔断时间结束时，从断开状态进入半开状态</span><br><span class="line">					Console.WriteLine(&quot;熔断时间到，进入半开状态&quot;)</span><br><span class="line">			);</span><br><span class="line"></span><br><span class="line">	for (int i = 0; i &lt; 12; i++)  // 模拟多次调用，触发熔断</span><br><span class="line">	&#123;</span><br><span class="line">		try</span><br><span class="line">		&#123;</span><br><span class="line">			var result = circuitBreakerPolicy.Execute(Test);</span><br><span class="line">			Console.WriteLine(result);</span><br><span class="line">		&#125;</span><br><span class="line">		catch (Exception ex)</span><br><span class="line">		&#123;</span><br><span class="line">			Console.WriteLine(&quot;try-catch:&quot; + ex.Message);</span><br><span class="line">		&#125;</span><br><span class="line">		Thread.Sleep(500);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private static string Test()</span><br><span class="line">&#123;</span><br><span class="line">	times++;</span><br><span class="line"></span><br><span class="line">	if (times % 5 != 0) // 模仿某些错误情况下抛异常</span><br><span class="line">	&#123;</span><br><span class="line">		throw new Exception(&quot;exception message&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	return &quot;success&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="/img/polly-circuit-breaker/result.png" alt="Circuit breaker"></p>
-<h4 id="熔断高级配置"><a href="#熔断高级配置" class="headerlink" title="熔断高级配置"></a>熔断高级配置</h4><p>根据时间段内总请求数中的异常比例触发熔断：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var advancedCircuitBreakerPolicy = Policy</span><br><span class="line">	.Handle&lt;Exception&gt;()</span><br><span class="line">	.AdvancedCircuitBreaker(</span><br><span class="line">		failureThreshold: 0.5,                          // 至少50%有异常则熔断</span><br><span class="line">		samplingDuration: TimeSpan.FromSeconds(10),     // 10秒内</span><br><span class="line">		minimumThroughput: 8,                           // 最少共有多少次调用</span><br><span class="line">		durationOfBreak: TimeSpan.FromSeconds(30),</span><br><span class="line">		onBreak: (exception, breakDelay) =&gt;             // 断路器打开时</span><br><span class="line">			Console.WriteLine($&quot;熔断: &#123;breakDelay.TotalMilliseconds &#125; ms, 异常: &quot; + exception.Message),  </span><br><span class="line">		onReset: () =&gt;                                  // 熔断器关闭时</span><br><span class="line">			Console.WriteLine(&quot;熔断器关闭了&quot;),                                                            </span><br><span class="line">		onHalfOpen: () =&gt;                               // 熔断时间结束时，从断开状态进入半开状态</span><br><span class="line">			Console.WriteLine(&quot;熔断时间到，进入半开状态&quot;)                                                   </span><br><span class="line">	);</span><br></pre></td></tr></table></figure></p>
-<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><ul>
-<li><a href="https://github.com/App-vNext/Polly" target="_blank" rel="noopener">Polly</a></li>
-<li><a href="http://www.thepollyproject.org/" target="_blank" rel="noopener">Polly Project</a></li>
-<li><a href="https://github.com/beckjin/PollySamples" target="_blank" rel="noopener">PollySamples</a></li>
-</ul>
+<h4 id="smallest，也可以使用-earliest、beginning"><a href="#smallest，也可以使用-earliest、beginning" class="headerlink" title="smallest，也可以使用 earliest、beginning"></a>smallest，也可以使用 earliest、beginning</h4><blockquote>
+<p>当各分区下有已提交的 offset 时，从提交的 offset 开始消费；无提交的offset时，从头开始消费 </p>
+</blockquote>
+<h4 id="error"><a href="#error" class="headerlink" title="error"></a>error</h4><blockquote>
+<p>Topic 各分区都存在已提交的 offset 时，从 offset 后开始消费；只要有一个分区不存在已提交的 offset ，则抛出异常</p>
+</blockquote>
+<p>如果没有使用过 largest 或者 smallest 方式使 Topic 各分区下有已提交的 offset，设置成 error 必然是一直异常。</p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md" target="_blank" rel="noopener">Global configuration properties</a></p>
 
       
     </div>
@@ -428,9 +439,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/NET/" rel="tag"># .NET</a>
-          
-            <a href="/tags/Polly/" rel="tag"># Polly</a>
+            <a href="/tags/Kafka/" rel="tag"># Kafka</a>
           
         </div>
       
@@ -443,8 +452,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/19/es-cluster/" rel="next" title="Elasticsearch 集群">
-                <i class="fa fa-chevron-left"></i> Elasticsearch 集群
+              <a href="/2018/07/08/kafka-manager/" rel="next" title="kafka manager">
+                <i class="fa fa-chevron-left"></i> kafka manager
               </a>
             
           </div>
@@ -452,10 +461,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/07/08/kafka-manager/" rel="prev" title="kafka manager">
-                kafka manager <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -612,7 +617,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#熔断策略（Circuit-breaker）"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x7194;&#x65AD;&#x7B56;&#x7565;&#xFF08;Circuit-breaker&#xFF09;" class="headerlink" title="&#x7194;&#x65AD;&#x7B56;&#x7565;&#xFF08;Circuit-breaker&#xFF09;"></a>&#x7194;&#x65AD;&#x7B56;&#x7565;&#xFF08;Circuit-breaker&#xFF09;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#熔断状态"><span class="nav-number">1.1.</span> <span class="nav-text"><a href="#&#x7194;&#x65AD;&#x72B6;&#x6001;" class="headerlink" title="&#x7194;&#x65AD;&#x72B6;&#x6001;"></a>&#x7194;&#x65AD;&#x72B6;&#x6001;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#熔断使用说明"><span class="nav-number">1.2.</span> <span class="nav-text"><a href="#&#x7194;&#x65AD;&#x4F7F;&#x7528;&#x8BF4;&#x660E;" class="headerlink" title="&#x7194;&#x65AD;&#x4F7F;&#x7528;&#x8BF4;&#x660E;"></a>&#x7194;&#x65AD;&#x4F7F;&#x7528;&#x8BF4;&#x660E;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#熔断代码测试"><span class="nav-number">1.3.</span> <span class="nav-text"><a href="#&#x7194;&#x65AD;&#x4EE3;&#x7801;&#x6D4B;&#x8BD5;" class="headerlink" title="&#x7194;&#x65AD;&#x4EE3;&#x7801;&#x6D4B;&#x8BD5;"></a>&#x7194;&#x65AD;&#x4EE3;&#x7801;&#x6D4B;&#x8BD5;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#熔断高级配置"><span class="nav-number">1.4.</span> <span class="nav-text"><a href="#&#x7194;&#x65AD;&#x9AD8;&#x7EA7;&#x914D;&#x7F6E;" class="headerlink" title="&#x7194;&#x65AD;&#x9AD8;&#x7EA7;&#x914D;&#x7F6E;"></a>&#x7194;&#x65AD;&#x9AD8;&#x7EA7;&#x914D;&#x7F6E;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#消费者组-Consumer-Group"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x6D88;&#x8D39;&#x8005;&#x7EC4;-Consumer-Group" class="headerlink" title="&#x6D88;&#x8D39;&#x8005;&#x7EC4; (Consumer Group)"></a>&#x6D88;&#x8D39;&#x8005;&#x7EC4; (Consumer Group)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#消费组的偏移重置设定（auto-offset-reset）"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x6D88;&#x8D39;&#x7EC4;&#x7684;&#x504F;&#x79FB;&#x91CD;&#x7F6E;&#x8BBE;&#x5B9A;&#xFF08;auto-offset-reset&#xFF09;" class="headerlink" title="&#x6D88;&#x8D39;&#x7EC4;&#x7684;&#x504F;&#x79FB;&#x91CD;&#x7F6E;&#x8BBE;&#x5B9A;&#xFF08;auto.offset.reset&#xFF09;"></a>&#x6D88;&#x8D39;&#x7EC4;&#x7684;&#x504F;&#x79FB;&#x91CD;&#x7F6E;&#x8BBE;&#x5B9A;&#xFF08;auto.offset.reset&#xFF09;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#largest-默认-，也可以使用-latest、end"><span class="nav-number">2.1.</span> <span class="nav-text"><a href="#largest-&#x9ED8;&#x8BA4;-&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;-latest&#x3001;end" class="headerlink" title="largest(&#x9ED8;&#x8BA4;) &#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; latest&#x3001;end"></a>largest(&#x9ED8;&#x8BA4;) &#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; latest&#x3001;end</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#smallest，也可以使用-earliest、beginning"><span class="nav-number">2.2.</span> <span class="nav-text"><a href="#smallest&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;-earliest&#x3001;beginning" class="headerlink" title="smallest&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; earliest&#x3001;beginning"></a>smallest&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; earliest&#x3001;beginning</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#error"><span class="nav-number">2.3.</span> <span class="nav-text"><a href="#error" class="headerlink" title="error"></a>error</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接"><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;</span></a></li></ol></div>
             
 
           </div>
