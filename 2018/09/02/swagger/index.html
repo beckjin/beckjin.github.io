@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ASP.NET,C#,Swagger,Node.js," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="API 文档是前后端对接的基本，但如果还停留在手写文档的阶段，那就真的太 out 了。大家可能也尝试过各种 API 接口管理的工具，比如 postman 、apizza 等，但个人使用下来还是感觉麻烦了，长期来看我是拒绝的。  从目前 API 文档生成及管理上来看，Swagger 可算是不错的框架。今天来介绍一下 Swagger 的使用，以下使用 .NETCore Web API 为例，其他语言也">
+<meta name="keywords" content="ASP.NET,C#,Swagger,Node.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swagger 搭建 API 文档管理平台">
+<meta property="og:url" content="http://www.beckjin.com/2018/09/02/swagger/index.html">
+<meta property="og:site_name" content="Beck&#39;s Blog">
+<meta property="og:description" content="API 文档是前后端对接的基本，但如果还停留在手写文档的阶段，那就真的太 out 了。大家可能也尝试过各种 API 接口管理的工具，比如 postman 、apizza 等，但个人使用下来还是感觉麻烦了，长期来看我是拒绝的。  从目前 API 文档生成及管理上来看，Swagger 可算是不错的框架。今天来介绍一下 Swagger 的使用，以下使用 .NETCore Web API 为例，其他语言也">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.beckjin.com/img/swagger/reject.jpg">
+<meta property="og:image" content="http://www.beckjin.com/img/swagger/buildXml.png">
+<meta property="og:image" content="http://www.beckjin.com/img/swagger/swaggerUIByCode.png">
+<meta property="og:image" content="http://www.beckjin.com/img/swagger/manager.png">
+<meta property="og:image" content="http://www.beckjin.com/img/swagger/multiSwaggerFile.png">
+<meta property="og:updated_time" content="2018-09-01T16:58:06.070Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Swagger 搭建 API 文档管理平台">
+<meta name="twitter:description" content="API 文档是前后端对接的基本，但如果还停留在手写文档的阶段，那就真的太 out 了。大家可能也尝试过各种 API 接口管理的工具，比如 postman 、apizza 等，但个人使用下来还是感觉麻烦了，长期来看我是拒绝的。  从目前 API 文档生成及管理上来看，Swagger 可算是不错的框架。今天来介绍一下 Swagger 的使用，以下使用 .NETCore Web API 为例，其他语言也">
+<meta name="twitter:image" content="http://www.beckjin.com/img/swagger/reject.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.beckjin.com/2018/09/02/swagger/"/>
+
+
+
+
+
+  <title>Swagger 搭建 API 文档管理平台 | Beck's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Beck's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2018/09/02/swagger/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Beck Jin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beck's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Swagger 搭建 API 文档管理平台</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-02T00:50:10+08:00">
+                2018-09-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Swagger/" itemprop="url" rel="index">
+                    <span itemprop="name">Swagger</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/02/swagger/" class="leancloud_visitors" data-flag-title="Swagger 搭建 API 文档管理平台">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>API 文档是前后端对接的基本，但如果还停留在手写文档的阶段，那就真的太 out 了。大家可能也尝试过各种 API 接口管理的工具，比如 postman 、apizza 等，但个人使用下来还是感觉麻烦了，长期来看我是拒绝的。</p>
+<p><img src="/img/swagger/reject.jpg" alt="reject"></p>
+<p>从目前 API 文档生成及管理上来看，Swagger 可算是不错的框架。今天来介绍一下 Swagger 的使用，以下使用 .NETCore Web API 为例，其他语言也类似，最终都是依赖生成的 json/yaml 文件。</p>
+<h3 id="文档生成"><a href="#文档生成" class="headerlink" title="文档生成"></a>文档生成</h3><h4 id="内嵌代码方式生成文档"><a href="#内嵌代码方式生成文档" class="headerlink" title="内嵌代码方式生成文档"></a>内嵌代码方式生成文档</h4><ol>
+<li><p>新建 ASP.NET Core Web 应用程序，选择 API 类型</p>
+</li>
+<li><p>Nuget 安装 Swashbuckle.AspNetCore</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Install-Package Swashbuckle.AspNetCore</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 Startup.cs 中的 ConfigureServices 和 Configure 方法添加 Swagger  相关代码</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public void ConfigureServices(IServiceCollection services)</span><br><span class="line">&#123;</span><br><span class="line">	services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);</span><br><span class="line">       </span><br><span class="line">	// swagger.json 文档生成参数配置</span><br><span class="line">	services.AddSwaggerGen(options =&gt;</span><br><span class="line">	&#123;</span><br><span class="line">		options.SwaggerDoc(&quot;v1&quot;, new Info</span><br><span class="line">		&#123;</span><br><span class="line">			Title = &quot;SwaggerTest接口文档&quot;,</span><br><span class="line">			Version = &quot;1.0.0&quot;</span><br><span class="line">		&#125;);</span><br><span class="line">		</span><br><span class="line">		options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, &quot;SwaggerTest.XML&quot;));</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public void Configure(IApplicationBuilder app, IHostingEnvironment env)</span><br><span class="line">&#123;</span><br><span class="line">	if (env.IsDevelopment())</span><br><span class="line">	&#123;</span><br><span class="line">		app.UseDeveloperExceptionPage();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	app.UseMvc();</span><br><span class="line"></span><br><span class="line">	app.UseSwagger();</span><br><span class="line">	</span><br><span class="line">	// 通过SwaggerUI展示</span><br><span class="line">	app.UseSwaggerUI(options =&gt;</span><br><span class="line">	&#123;</span><br><span class="line">		options.SwaggerEndpoint(&quot;/swagger/v1/swagger.json&quot;, &quot;SwaggerTest&quot;);</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>项目属性中的 ”生成“ 勾选 “XML 文档文件”  （<em>Debug 和 Release 两种模式下都勾选上</em>）。这一步的目的是将代码注释生成文档，所以接口方法及参数都务必加上完整的注释<br><img src="/img/swagger/buildXml.png" alt="build xml"></p>
+</li>
+<li><p>运行项目，访问 <a href="http://localhost:62654/swagger/index.html" target="_blank" rel="noopener">http://localhost:62654/swagger/index.html</a><br><img src="/img/swagger/swaggerUIByCode.png" alt="swagger ui by code"></p>
+</li>
+</ol>
+<p>以上方式使用起来非常简单，但个人觉得存在以下问题：</p>
+<ol>
+<li><p>Startup 中需要加入 Swagger 相关的一些代码，不够整洁</p>
+</li>
+<li><p>如果有多个 API 服务，每个服务都需要添加类似代码，而且每个服务的文档地址独立，不能统一管理</p>
+</li>
+</ol>
+<h4 id="非内嵌代码方式生成文档"><a href="#非内嵌代码方式生成文档" class="headerlink" title="非内嵌代码方式生成文档"></a>非内嵌代码方式生成文档</h4><p><a href="https://github.com/swagger-api/swagger-ui" target="_blank" rel="noopener">Swagger UI</a> 本身是一个可以单独使用的前端项目。从 UseSwaggerUI 的参数配置来看：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">app.UseSwaggerUI(options =&gt;</span><br><span class="line">&#123;</span><br><span class="line">	options.SwaggerEndpoint(&quot;/swagger/v1/swagger.json&quot;, &quot;SwaggerTest&quot;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>其实只要将 “/swagger/v1/swagger.json”  这个文件引用进去即可，所以只需存在一种可以根据项目的 dll 文件生成 swagger.json 的方式，然后把生成的 swagger.json 引用到 Swagger UI 。<a href="https://github.com/RSuter/NSwag" target="_blank" rel="noopener">NSwag</a> 恰好可以满足这个需求。</p>
+<p>抛开内嵌代码的方式，假设现在是一个全新的 Web API 项目。</p>
+<ol>
+<li><p>下载  <a href="https://github.com/RSuter/NSwag" target="_blank" rel="noopener">NSwag</a> ，在 Downloads 中下载 NSwag command line tools。如下载后解压地址为： C:\Users\Administrator\Downloads\NSwag\</p>
+</li>
+<li><p>在项目根目录下新建 bat 文件并添加脚本，执行生成 swagger.json （<em>windows 环境</em>）</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">:: 生成的文档名，每个项目最好是唯一的</span><br><span class="line">SET FILE_NAME=swaggerTest</span><br><span class="line">:: 项目dll地址</span><br><span class="line">SET SOURCE_DLL=bin\Release\netcoreapp2.1\publish\SwaggerTest.dll</span><br><span class="line">:: 文档生成的目标文件夹</span><br><span class="line">SET TARGET_DIR=D:\ApiDoc\public\docs\</span><br><span class="line"></span><br><span class="line">:: Swagger文档配置</span><br><span class="line"></span><br><span class="line">:: 标题</span><br><span class="line">SET TITLE=SwaggerTest接口文档</span><br><span class="line">:: 描述</span><br><span class="line">SET DESCRIPTION=SwaggerTest接口文档描述</span><br><span class="line">:: 版本</span><br><span class="line">SET VERSION=1.0.0</span><br><span class="line">:: 接口测试请求的host地址，不同的api服务有不同的host</span><br><span class="line">SET HOST=localhost:5000</span><br><span class="line"></span><br><span class="line">:: 通过 dotnet-nswag 执行生成命令</span><br><span class="line">dotnet C:\Users\Administrator\Downloads\NSwag\NetCore21\dotnet-nswag.dll webapi2swagger /assembly:&quot;%SOURCE_DLL%&quot; /AspNetCore:true /output:%TARGET_DIR%%FILE_NAME%.json /InfoTitle:&quot;%TITLE%&quot; /InfoDescription:&quot;%DESCRIPTION%&quot; /InfoVersion:%VERSION% /ServiceHost:%HOST%</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>bat 脚本执行完成后，在 D:\ApiDoc\public\docs\ 目录下就会多出一个 swaggerTest.json，以这种方式我们并不需要修改任何代码。到目前为止，API 文档对应的 json 文件就有了，接下来就是把它通过 Swagger UI 展示出来。假设每个 API 项目都生成一个 json 文件到指定的目录，而 Swagger UI 本身支持配置多个文档 url 地址，这就意味着可以搭建出了一个 API 文档管理平台。</p>
+<p><img src="/img/swagger/manager.png" alt="API 文档管理平台"></p>
+<h4 id="文档管理"><a href="#文档管理" class="headerlink" title="文档管理"></a>文档管理</h4><ol>
+<li>下载 <a href="https://github.com/swagger-api/swagger-ui" target="_blank" rel="noopener">Swagger UI</a> 后解压</li>
+<li><p>搭建一个 Node.js 项目，使用 Express 或者 Koa 框架先不服务跑起来（其他语言的项目也可以，任意选择）</p>
+<ol>
+<li><p>将 swagger-ui dist 文件夹下的文件全部复制到项目的 public 文件夹下</p>
+</li>
+<li><p>安装 express </p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm i express --save</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">  1. 新建 index.js，添加如下代码</span><br></pre></td></tr></table></figure>
+<p> const express = require(‘express’);<br> const app = express();</p>
+<p> app.use(‘/‘, express.static(‘public’));</p>
+<p> app.listen(3000, function () {</p>
+<pre><code>console.log(&apos;app listening on http://localhost:3000&apos;);
+</code></pre><p> });</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">1. 启动服务</span><br></pre></td></tr></table></figure>
+<p> node index.js</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">完成以上步骤，Swagger UI 的站点就搭建完成了，访问 http://localhost:3000 会出现一个默认的 API 接口文档页面。</span><br><span class="line"></span><br><span class="line">打开 public/index.html 会发现有这么一段代码：</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+<p>const ui = SwaggerUIBundle({<br>    url: “<a href="https://petstore.swagger.io/v2/swagger.json" target="_blank" rel="noopener">https://petstore.swagger.io/v2/swagger.json</a>“,<br>    …<br>})<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">这里的 url 配置了一个默认的 swagger.json文件的地址，所以我们只需要把 url 替换成上面生成的 swaggerTest.json 地址就可以了，将 swaggerTest.json 复制到 public/docs 目录下</span><br><span class="line"></span><br><span class="line">![swagger file](/img/swagger/swaggerFile.png)</span><br></pre></td></tr></table></figure></p>
+<p>const ui = SwaggerUIBundle({<br>    url: “./docs/swaggerTest.json”,<br>    …<br>})<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">![wagger ui by tool](/img/swagger/swaggerUIByTool.png)</span><br><span class="line"></span><br><span class="line">如果有多个 json 文件就不能使用 url 参数，需要修改成 urls 参数，具体可参考 [Swagger UI 参数配置](https://github.com/swagger-api/swagger-ui/blob/master/docs/usage/configuration.md)，为了不需要每次手动调整 urls，所以需要动态读取 docs 文件夹下的文件，生成的文档只需要传到这个目录下就可以直接查看和测试。</span><br><span class="line"></span><br><span class="line">在 index.js 增加一个接口：</span><br></pre></td></tr></table></figure></p>
+<p>app.get(‘/getDocs’, function (req, res) {<br>    let docFileInfos = [];<br>    let pathDir = __dirname + ‘/public/docs’;<br>    try {<br>        let fileNames = fs.readdirSync(pathDir);<br>        fileNames.forEach(function (fileName) {<br>            let data = fs.readFileSync(pathDir + ‘/‘ + fileName, ‘utf8’);<br>            data = data.trim();<br>            let json = JSON.parse(data);<br>            docFileInfos.push({<br>                url: ‘./docs/‘ + fileName,<br>                name: json.info.title<br>            });<br>        });<br>    } catch (err) {<br>        console.log(err);<br>    }<br>    res.send(docFileInfos);<br>});<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public/index.html 引入 axios，并调用 getDocs 接口获取结果，将 response.data 赋给 SwaggerUIBundle 的 urls 参数。</span><br></pre></td></tr></table></figure></p>
+<p>axios.get(‘/getDocs’)<br>    .then(function (response) {<br>        if (response.status === 200 &amp;&amp; response.data.length) {<br>            …<br>        }<br>    });<br>```<br>当存在多个 json 文件的时候，可以从下拉选项中进去切换</p>
+<p><img src="/img/swagger/multiSwaggerFile.png" alt="multi swagger file"></p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><ul>
+<li><a href="https://github.com/RSuter/NSwag" target="_blank" rel="noopener">NSwag</a></li>
+<li><a href="https://github.com/swagger-api/swagger-ui" target="_blank" rel="noopener">Swagger UI</a></li>
+<li><a href="https://github.com/beckjin/SwaggerSample" target="_blank" rel="noopener">SwaggerSample</a></li>
+<li><a href="https://github.com/beckjin/APIDoc" target="_blank" rel="noopener">APIDocSample</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果对你有帮助就好</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/img/pay/wechatpay.png" alt="Beck Jin 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/img/pay/alipay.png" alt="Beck Jin 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ASP-NET/" rel="tag"># ASP.NET</a>
+          
+            <a href="/tags/C/" rel="tag"># C#</a>
+          
+            <a href="/tags/Swagger/" rel="tag"># Swagger</a>
+          
+            <a href="/tags/Node-js/" rel="tag"># Node.js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/12/aspnet-filter/" rel="next" title="ASP.NET Core Filters">
+                <i class="fa fa-chevron-left"></i> ASP.NET Core Filters
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNDA3Ny8xMDYxNQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar.png"
+                alt="Beck Jin" />
+            
+              <p class="site-author-name" itemprop="name">Beck Jin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/beckjin" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1798410296@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#文档生成"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x6587;&#x6863;&#x751F;&#x6210;" class="headerlink" title="&#x6587;&#x6863;&#x751F;&#x6210;"></a>&#x6587;&#x6863;&#x751F;&#x6210;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#内嵌代码方式生成文档"><span class="nav-number">1.1.</span> <span class="nav-text"><a href="#&#x5185;&#x5D4C;&#x4EE3;&#x7801;&#x65B9;&#x5F0F;&#x751F;&#x6210;&#x6587;&#x6863;" class="headerlink" title="&#x5185;&#x5D4C;&#x4EE3;&#x7801;&#x65B9;&#x5F0F;&#x751F;&#x6210;&#x6587;&#x6863;"></a>&#x5185;&#x5D4C;&#x4EE3;&#x7801;&#x65B9;&#x5F0F;&#x751F;&#x6210;&#x6587;&#x6863;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#非内嵌代码方式生成文档"><span class="nav-number">1.2.</span> <span class="nav-text"><a href="#&#x975E;&#x5185;&#x5D4C;&#x4EE3;&#x7801;&#x65B9;&#x5F0F;&#x751F;&#x6210;&#x6587;&#x6863;" class="headerlink" title="&#x975E;&#x5185;&#x5D4C;&#x4EE3;&#x7801;&#x65B9;&#x5F0F;&#x751F;&#x6210;&#x6587;&#x6863;"></a>&#x975E;&#x5185;&#x5D4C;&#x4EE3;&#x7801;&#x65B9;&#x5F0F;&#x751F;&#x6210;&#x6587;&#x6863;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文档管理"><span class="nav-number">1.3.</span> <span class="nav-text"><a href="#&#x6587;&#x6863;&#x7BA1;&#x7406;" class="headerlink" title="&#x6587;&#x6863;&#x7BA1;&#x7406;"></a>&#x6587;&#x6863;&#x7BA1;&#x7406;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Beck Jin</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("FCgGthOl6XN7xRjfK31raebD-gzGzoHsz", "20z736XSuGX562R2ky8uu4EU");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
