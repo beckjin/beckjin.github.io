@@ -92,7 +92,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/swagger/swaggerUIByCode.png">
 <meta property="og:image" content="http://www.beckjin.com/img/swagger/manager.png">
 <meta property="og:image" content="http://www.beckjin.com/img/swagger/multiSwaggerFile.png">
-<meta property="og:updated_time" content="2018-09-01T16:58:06.070Z">
+<meta property="og:updated_time" content="2018-09-01T17:03:27.950Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Swagger 搭建 API 文档管理平台">
 <meta name="twitter:description" content="API 文档是前后端对接的基本，但如果还停留在手写文档的阶段，那就真的太 out 了。大家可能也尝试过各种 API 接口管理的工具，比如 postman 、apizza 等，但个人使用下来还是感觉麻烦了，长期来看我是拒绝的。  从目前 API 文档生成及管理上来看，Swagger 可算是不错的框架。今天来介绍一下 Swagger 的使用，以下使用 .NETCore Web API 为例，其他语言也">
@@ -396,7 +396,7 @@
 </ol>
 <p>bat 脚本执行完成后，在 D:\ApiDoc\public\docs\ 目录下就会多出一个 swaggerTest.json，以这种方式我们并不需要修改任何代码。到目前为止，API 文档对应的 json 文件就有了，接下来就是把它通过 Swagger UI 展示出来。假设每个 API 项目都生成一个 json 文件到指定的目录，而 Swagger UI 本身支持配置多个文档 url 地址，这就意味着可以搭建出了一个 API 文档管理平台。</p>
 <p><img src="/img/swagger/manager.png" alt="API 文档管理平台"></p>
-<h4 id="文档管理"><a href="#文档管理" class="headerlink" title="文档管理"></a>文档管理</h4><ol>
+<h3 id="文档管理"><a href="#文档管理" class="headerlink" title="文档管理"></a>文档管理</h3><ol>
 <li>下载 <a href="https://github.com/swagger-api/swagger-ui" target="_blank" rel="noopener">Swagger UI</a> 后解压</li>
 <li><p>搭建一个 Node.js 项目，使用 Express 或者 Koa 框架先不服务跑起来（其他语言的项目也可以，任意选择）</p>
 <ol>
@@ -657,7 +657,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#文档生成"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x6587;&#x6863;&#x751F;&#x6210;" class="headerlink" title="&#x6587;&#x6863;&#x751F;&#x6210;"></a>&#x6587;&#x6863;&#x751F;&#x6210;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#内嵌代码方式生成文档"><span class="nav-number">1.1.</span> <span class="nav-text"><a href="#&#x5185;&#x5D4C;&#x4EE3;&#x7801;&#x65B9;&#x5F0F;&#x751F;&#x6210;&#x6587;&#x6863;" class="headerlink" title="&#x5185;&#x5D4C;&#x4EE3;&#x7801;&#x65B9;&#x5F0F;&#x751F;&#x6210;&#x6587;&#x6863;"></a>&#x5185;&#x5D4C;&#x4EE3;&#x7801;&#x65B9;&#x5F0F;&#x751F;&#x6210;&#x6587;&#x6863;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#非内嵌代码方式生成文档"><span class="nav-number">1.2.</span> <span class="nav-text"><a href="#&#x975E;&#x5185;&#x5D4C;&#x4EE3;&#x7801;&#x65B9;&#x5F0F;&#x751F;&#x6210;&#x6587;&#x6863;" class="headerlink" title="&#x975E;&#x5185;&#x5D4C;&#x4EE3;&#x7801;&#x65B9;&#x5F0F;&#x751F;&#x6210;&#x6587;&#x6863;"></a>&#x975E;&#x5185;&#x5D4C;&#x4EE3;&#x7801;&#x65B9;&#x5F0F;&#x751F;&#x6210;&#x6587;&#x6863;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文档管理"><span class="nav-number">1.3.</span> <span class="nav-text"><a href="#&#x6587;&#x6863;&#x7BA1;&#x7406;" class="headerlink" title="&#x6587;&#x6863;&#x7BA1;&#x7406;"></a>&#x6587;&#x6863;&#x7BA1;&#x7406;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#文档生成"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x6587;&#x6863;&#x751F;&#x6210;" class="headerlink" title="&#x6587;&#x6863;&#x751F;&#x6210;"></a>&#x6587;&#x6863;&#x751F;&#x6210;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#内嵌代码方式生成文档"><span class="nav-number">1.1.</span> <span class="nav-text"><a href="#&#x5185;&#x5D4C;&#x4EE3;&#x7801;&#x65B9;&#x5F0F;&#x751F;&#x6210;&#x6587;&#x6863;" class="headerlink" title="&#x5185;&#x5D4C;&#x4EE3;&#x7801;&#x65B9;&#x5F0F;&#x751F;&#x6210;&#x6587;&#x6863;"></a>&#x5185;&#x5D4C;&#x4EE3;&#x7801;&#x65B9;&#x5F0F;&#x751F;&#x6210;&#x6587;&#x6863;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#非内嵌代码方式生成文档"><span class="nav-number">1.2.</span> <span class="nav-text"><a href="#&#x975E;&#x5185;&#x5D4C;&#x4EE3;&#x7801;&#x65B9;&#x5F0F;&#x751F;&#x6210;&#x6587;&#x6863;" class="headerlink" title="&#x975E;&#x5185;&#x5D4C;&#x4EE3;&#x7801;&#x65B9;&#x5F0F;&#x751F;&#x6210;&#x6587;&#x6863;"></a>&#x975E;&#x5185;&#x5D4C;&#x4EE3;&#x7801;&#x65B9;&#x5F0F;&#x751F;&#x6210;&#x6587;&#x6863;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文档管理"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x6587;&#x6863;&#x7BA1;&#x7406;" class="headerlink" title="&#x6587;&#x6863;&#x7BA1;&#x7406;"></a>&#x6587;&#x6863;&#x7BA1;&#x7406;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接"><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;</span></a></li></ol></div>
             
 
           </div>
