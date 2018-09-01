@@ -92,7 +92,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/swagger/swaggerUIByCode.png">
 <meta property="og:image" content="http://www.beckjin.com/img/swagger/manager.png">
 <meta property="og:image" content="http://www.beckjin.com/img/swagger/multiSwaggerFile.png">
-<meta property="og:updated_time" content="2018-09-01T17:29:17.721Z">
+<meta property="og:updated_time" content="2018-09-01T17:33:43.993Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Swagger 搭建 API 文档管理平台">
 <meta name="twitter:description" content="API 文档是前后端对接的基本，但如果还停留在手写文档的阶段，那就真的太 out 了。大家可能也尝试过各种 API 接口管理的工具，比如 postman 、apizza 等，但个人使用下来还是感觉麻烦了，长期来看我是拒绝的。  从目前 API 文档生成及管理上来看，Swagger 可算是不错的框架。今天来介绍一下 Swagger 的使用，以下使用 .NETCore Web API 为例，其他语言也">
@@ -404,7 +404,7 @@
 <li><p>将 swagger-ui dist 文件夹下的文件全部复制到项目的 public 文件夹下</p>
 </li>
 <li><p>安装 express </p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">	npm i express --save</span><br><span class="line">	</span><br><span class="line">	``` </span><br><span class="line"></span><br><span class="line">1. 新建 index.js，添加如下代码</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">	npm i express</span><br><span class="line">	</span><br><span class="line">	``` </span><br><span class="line"></span><br><span class="line">1. 新建 index.js，添加如下代码</span><br></pre></td></tr></table></figure>
 <p> const express = require(‘express’);<br> const app = express();</p>
 <p> app.use(‘/‘, express.static(‘public’));</p>
 <p> app.listen(3000, function () {</p>
