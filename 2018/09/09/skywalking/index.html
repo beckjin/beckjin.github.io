@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ASP.NET,C#,SkyWalking," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="随着微服务架构的流行，一些微服务架构下的问题也会越来越突出，比如一个请求会涉及多个服务，而服务本身可能也会依赖其他服务，整个请求路径就构成了一个网状的调用链，而在整个调用链中一旦某个节点发生异常，整个调用链的稳定性就会受到影响，所以会深深的感受到 “银弹” 这个词是不存在的，每种架构都有其优缺点 。  面对以上情况， 我们就需要一些可以帮助理解系统行为、用于分析性能问题的工具，以便发生故障的时候，">
+<meta name="keywords" content="ASP.NET,C#,SkyWalking">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SkyWalking 分布式追踪系统">
+<meta property="og:url" content="http://www.beckjin.com/2018/09/09/skywalking/index.html">
+<meta property="og:site_name" content="Beck&#39;s Blog">
+<meta property="og:description" content="随着微服务架构的流行，一些微服务架构下的问题也会越来越突出，比如一个请求会涉及多个服务，而服务本身可能也会依赖其他服务，整个请求路径就构成了一个网状的调用链，而在整个调用链中一旦某个节点发生异常，整个调用链的稳定性就会受到影响，所以会深深的感受到 “银弹” 这个词是不存在的，每种架构都有其优缺点 。  面对以上情况， 我们就需要一些可以帮助理解系统行为、用于分析性能问题的工具，以便发生故障的时候，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.beckjin.com/img/skywalking/serviceMap.png">
+<meta property="og:image" content="http://www.beckjin.com/img/skywalking/architecture.png">
+<meta property="og:image" content="http://www.beckjin.com/img/skywalking/skywalkingConfig.png">
+<meta property="og:image" content="http://www.beckjin.com/img/skywalking/skywalkingBin.png">
+<meta property="og:image" content="http://www.beckjin.com/img/skywalking/skywalkingUI.png">
+<meta property="og:image" content="http://www.beckjin.com/img/skywalking/skywalkingJavaAgent.png">
+<meta property="og:image" content="http://www.beckjin.com/img/skywalking/skywalkingUIRequestLog.png">
+<meta property="og:image" content="http://www.beckjin.com/img/skywalking/serviceRequestMap.png">
+<meta property="og:image" content="http://www.beckjin.com/img/skywalking/skywalkingUISpans.png">
+<meta property="og:image" content="http://www.beckjin.com/img/skywalking/skywalkingUITopologyMap.png">
+<meta property="og:updated_time" content="2018-09-09T12:17:06.764Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SkyWalking 分布式追踪系统">
+<meta name="twitter:description" content="随着微服务架构的流行，一些微服务架构下的问题也会越来越突出，比如一个请求会涉及多个服务，而服务本身可能也会依赖其他服务，整个请求路径就构成了一个网状的调用链，而在整个调用链中一旦某个节点发生异常，整个调用链的稳定性就会受到影响，所以会深深的感受到 “银弹” 这个词是不存在的，每种架构都有其优缺点 。  面对以上情况， 我们就需要一些可以帮助理解系统行为、用于分析性能问题的工具，以便发生故障的时候，">
+<meta name="twitter:image" content="http://www.beckjin.com/img/skywalking/serviceMap.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.beckjin.com/2018/09/09/skywalking/"/>
+
+
+
+
+
+  <title>SkyWalking 分布式追踪系统 | Beck's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Beck's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2018/09/09/skywalking/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Beck Jin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beck's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">SkyWalking 分布式追踪系统</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-09T20:10:03+08:00">
+                2018-09-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SkyWalking/" itemprop="url" rel="index">
+                    <span itemprop="name">SkyWalking</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/09/skywalking/" class="leancloud_visitors" data-flag-title="SkyWalking 分布式追踪系统">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>随着微服务架构的流行，一些微服务架构下的问题也会越来越突出，比如一个请求会涉及多个服务，而服务本身可能也会依赖其他服务，整个请求路径就构成了一个网状的调用链，而在整个调用链中一旦某个节点发生异常，整个调用链的稳定性就会受到影响，所以会深深的感受到 “银弹” 这个词是不存在的，每种架构都有其优缺点 。</p>
+<p><img src="/img/skywalking/serviceMap.png" alt="service map"></p>
+<p>面对以上情况， 我们就需要一些可以帮助理解系统行为、用于分析性能问题的工具，以便发生故障的时候，能够快速定位和解决问题，这就是所谓的APM（应用性能管理）。</p>
+<p>目前主要的一些 APM 工具有: Cat、Zipkin、Pinpoint、SkyWalking，这里主要介绍一下 <a href="https://github.com/apache/incubator-skywalking" target="_blank" rel="noopener">SkyWalking</a> ，它是一款优秀的国产 APM 工具，包括了分布式追踪、性能指标分析、应用和服务依赖分析等。</p>
+<p>下面是 SkyWalking 5.x 的架构图，6.x 会有些变化，目前还没有 Release。</p>
+<p><img src="/img/skywalking/architecture.png" alt="5.x architecture"></p>
+<p><strong>说明：</strong>通过在应用程序中添加 SkyWalking Agent，就可以将接口、服务、数据库、MQ等进行追踪，将追踪结果通过 HTTP 或 gRPC 发送到 SkyWalking Collecter，SkyWalking Collecter 经过分析和聚合，将结果存储到 Elasticsearch 或  H2，SkyWalking  同时提供了一个 SkyWalking UI 的可视化界面，UI 以 GraphQL + HTTP 方式获取存储数据进行展示。</p>
+<p>上面的架构图看似模块有点多，但在实际使用时我们并不需要关注太多的实现方式，HTTP、gRPC 、GraphQL 这些都是其内部架构使用到的技术，我们只需安装 SkyWalking Collecter、Elasticsearch 或 H2，然后在需要追踪的服务内配置少量的代码（Java 项目通过修改 JVM 参数即可），最后通过 SkyWalking UI 查看结果。</p>
+<p>下面基于 Windows 环境使用 <a href="https://github.com/OpenSkywalking/skywalking-netcore" target="_blank" rel="noopener">SkyWalking-netcore</a> 来介绍一下 SkyWalking，可以把 <a href="https://github.com/OpenSkywalking/skywalking-netcore" target="_blank" rel="noopener">SkyWalking-netcore</a> 是 SkyWalking 的 .NET Core Agent。</p>
+<h3 id="环境要求"><a href="#环境要求" class="headerlink" title="环境要求"></a>环境要求</h3><ol>
+<li>JDK8+</li>
+<li>Elasticsearch 5.x</li>
+<li>8080,10800,11800,12800 端口不被占用</li>
+</ol>
+<p><a href="https://www.elastic.co/downloads/elasticsearch" target="_blank" rel="noopener">Elasticsearch下载安装</a> 参考官方教程， 安装完成后需要对 config/elasticsearch.yml 做如下修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 修改</span><br><span class="line"># 如果 cluster.name 不设置为 CollectorDBCluster ，则需要修改 SkyWalking 的配置文件</span><br><span class="line">cluster.name: CollectorDBCluster   </span><br><span class="line">network.host: 0.0.0.0</span><br><span class="line"># 增加</span><br><span class="line">thread_pool.bulk.queue_size: 1000</span><br></pre></td></tr></table></figure></p>
+<p>如果是 linux 环境，Elasticsearch 安装可能没有那么顺利，请参考 <a href="http://beckjin.com/2018/05/19/es-error-linux" target="_blank" rel="noopener">Linux 环境下安装 Elasticsearch 5.x、6.x 问题汇总</a>。</p>
+<h3 id="下载-SkyWalking"><a href="#下载-SkyWalking" class="headerlink" title="下载 SkyWalking"></a>下载 SkyWalking</h3><p>SkyWalking 个人建议直接下载官方编译好的，<a href="http://skywalking.apache.org/downloads/" target="_blank" rel="noopener">下载地址</a></p>
+<h3 id="启动-SkyWalking"><a href="#启动-SkyWalking" class="headerlink" title="启动 SkyWalking"></a>启动 SkyWalking</h3><p><img src="/img/skywalking/skywalkingConfig.png" alt="skywalking config"></p>
+<p>config/application.yml 内有所有的默认配置，可以发现默认是使用 Elasticsearch 进行数据存储的，所以在启动 SkyWalking 之前，确保 Elasticsearch 已启动。</p>
+<p>SkyWalking 的启动包括两部分，一个是 SkyWalking Collector ，一个是 SkyWalking UI，SkyWalking 解压后的 bin 目录：</p>
+<p><img src="/img/skywalking/skywalkingBin.png" alt="skywalking bin"></p>
+<p>bat 为 windows 环境使用，sh 为 linux 环境使用，我们可以分别其他 collectorService 和 webappService，也可以通过 startup 一次性全部启动，从 startup 中的命令可以知道其实就是分别启动  collectorService 和 webappService。</p>
+<p>如果一切顺利(<em>不顺利请多看几遍 <a href="https://github.com/apache/incubator-skywalking/blob/5.x/docs/cn/Quick-start-CN.md" target="_blank" rel="noopener">快速入门</a></em>)，这时候就可以通过 <a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a> 来查看 SkyWalking UI 了（默认全是0，截图是测试效果），默认账号/密码：admin/admin。</p>
+<p><img src="/img/skywalking/skywalkingUI.png" alt="skywalking ui"></p>
+<h3 id="Java-项目接入"><a href="#Java-项目接入" class="headerlink" title="Java 项目接入"></a>Java 项目接入</h3><p>参考 <a href="https://github.com/apache/incubator-skywalking/blob/5.x/docs/cn/Deploy-skywalking-agent-CN.md" target="_blank" rel="noopener">部署 skywalking javaagent</a>，skywalking-agent.jar 位于下载包的 agent 目录下，具体效果这里就不测试了<br><img src="/img/skywalking/skywalkingJavaAgent.png" alt="skywalking java agent"></p>
+<h3 id="NET-Core-项目接入"><a href="#NET-Core-项目接入" class="headerlink" title=".NET Core 项目接入"></a>.NET Core 项目接入</h3><p>参考 <a href="[https://github.com/OpenSkywalking/skywalking-netcore">skywalking-netcore</a></p>
+<p>新建一个.NET Core API 项目，安装 Nuget 包：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Install-Package SkyWalking.AspNetCore</span><br></pre></td></tr></table></figure>
+<p>修改 Startup.cs：</p>
+<pre><code>public void ConfigureServices(IServiceCollection services)
+{
+    //......
+    services.AddSkyWalking(option =&gt;
+    {
+        option.ApplicationCode = &quot;WebAPIService1&quot;;
+        option.DirectServers = &quot;localhost:11800&quot;;
+    });
+}
+</code></pre><p>这时候启动程序，请求的追踪结果就会被记录下来，通过 SkyWalking UI 查看</p>
+<p><img src="/img/skywalking/skywalkingUIRequestLog.png" alt="skywalking ui request log"></p>
+<p>单个服务的效果并不明显，看不出请求跨度、链路关系，下面是一个多服务的例子(<em><a href="https://github.com/beckjin/SkyWalkingSample" target="_blank" rel="noopener">下载源码</a></em>)，依赖关系图如下：</p>
+<p><img src="/img/skywalking/serviceRequestMap.png" alt="service request map"></p>
+<p>目前 SkyWalking 的 .NET Core Agent 支持通过 HttpClient 发送的请求和 通过 EntityFramework 进行数据库操作的跟踪，其他的作者在支持的路上。根据以上的关系图搭建好项目后，访问接口后结果如下：</p>
+<p><img src="/img/skywalking/skywalkingUISpans.png" alt="skywalking ui spans"></p>
+<p>一共有4各跨度，先访问 WenAPIService1，然后发送 HttpClient 请求，转到  WenAPIService2，WenAPIService2 执行操作 DB 的命令，每个跨度的耗时一目了然。</p>
+<p><img src="/img/skywalking/skywalkingUITopologyMap.png" alt="skywalking ui topology map"></p>
+<p>服务关系的拓扑图，调用链路径也非常清晰。</p>
+<p>SkyWalking UI 使用上并不复杂，搭建好之后每个操作使用一下就了解了。</p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="http://skywalking.apache.org" target="_blank" rel="noopener">Apache SkyWalking</a><br><a href="https://github.com/apache/incubator-skywalking" target="_blank" rel="noopener">SkyWalking-github</a><br><a href="https://github.com/OpenSkywalking/skywalking-netcore" target="_blank" rel="noopener">SkyWalking-netcore</a><br><a href="https://github.com/beckjin/SkyWalkingSample" target="_blank" rel="noopener">SkyWalking-sample</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果对你有帮助就好</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/img/pay/wechatpay.png" alt="Beck Jin 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/img/pay/alipay.png" alt="Beck Jin 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ASP-NET/" rel="tag"># ASP.NET</a>
+          
+            <a href="/tags/C/" rel="tag"># C#</a>
+          
+            <a href="/tags/SkyWalking/" rel="tag"># SkyWalking</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/02/swagger/" rel="next" title="Swagger 搭建 API 文档管理平台">
+                <i class="fa fa-chevron-left"></i> Swagger 搭建 API 文档管理平台
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNDA3Ny8xMDYxNQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar.png"
+                alt="Beck Jin" />
+            
+              <p class="site-author-name" itemprop="name">Beck Jin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/beckjin" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1798410296@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境要求"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x73AF;&#x5883;&#x8981;&#x6C42;" class="headerlink" title="&#x73AF;&#x5883;&#x8981;&#x6C42;"></a>&#x73AF;&#x5883;&#x8981;&#x6C42;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下载-SkyWalking"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x4E0B;&#x8F7D;-SkyWalking" class="headerlink" title="&#x4E0B;&#x8F7D; SkyWalking"></a>&#x4E0B;&#x8F7D; SkyWalking</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动-SkyWalking"><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x542F;&#x52A8;-SkyWalking" class="headerlink" title="&#x542F;&#x52A8; SkyWalking"></a>&#x542F;&#x52A8; SkyWalking</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-项目接入"><span class="nav-number">4.</span> <span class="nav-text"><a href="#Java-&#x9879;&#x76EE;&#x63A5;&#x5165;" class="headerlink" title="Java &#x9879;&#x76EE;&#x63A5;&#x5165;"></a>Java &#x9879;&#x76EE;&#x63A5;&#x5165;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NET-Core-项目接入"><span class="nav-number">5.</span> <span class="nav-text"><a href="#NET-Core-&#x9879;&#x76EE;&#x63A5;&#x5165;" class="headerlink" title=".NET Core &#x9879;&#x76EE;&#x63A5;&#x5165;"></a>.NET Core &#x9879;&#x76EE;&#x63A5;&#x5165;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接"><span class="nav-number">6.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Beck Jin</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("FCgGthOl6XN7xRjfK31raebD-gzGzoHsz", "20z736XSuGX562R2ky8uu4EU");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
