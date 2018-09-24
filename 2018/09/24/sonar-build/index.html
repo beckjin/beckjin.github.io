@@ -97,7 +97,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/sonar-build/codeSmell.png">
 <meta property="og:image" content="http://www.beckjin.com/img/sonar-build/apiDocResult2.png">
 <meta property="og:image" content="http://www.beckjin.com/img/sonar-build/tables.png">
-<meta property="og:updated_time" content="2018-09-24T14:57:06.469Z">
+<meta property="og:updated_time" content="2018-09-24T15:04:55.471Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SonarQube 代码质量管理平台（一）：搭建">
 <meta name="twitter:description" content="SonarQube 是一个开源的代码分析平台，用来持续分析和评测代码的质量，支持检测 Java、JavaScript、C#、C、C++ 等二十几种编程语言。通过 SonarQube 可以检测出项目中潜在的Bug、漏洞、代码规范、重复代码、缺乏单元测试的代码等问题，并提供了 UI 界面进行查看和管理。 架构 SonarQube 由4部分构成：  SonarQube Server  SonarQube">
@@ -404,7 +404,7 @@
 <p>   <img src="/img/sonar-build/startSonar.png" alt="StartSonar"></p>
 <p>   从启动日志中可以看出 SonarQube server 依赖于 Elasticsearch，但并不需要单独下载，SonarQube 的下载包内已包含，如果想复用之前安装过的 Elasticsearch，请根据需要调整配置文件  conf/sonar.properties 中  Elasticsearch 部分。</p>
 </li>
-<li><p>启动成功后访问： <a href="http://localhost:9000，默认登录账号/密码：admin/admin" target="_blank" rel="noopener">http://localhost:9000，默认登录账号/密码：admin/admin</a></p>
+<li><p>启动成功后访问： <a href="http://localhost:9000" target="_blank" rel="noopener">http://localhost:9000</a> ，默认登录账号/密码：admin/admin</p>
 </li>
 </ol>
 <p><img src="/img/sonar-build/sonarQubeUI.png" alt="SonarQube UI"></p>
@@ -416,7 +416,7 @@
 <p>在 sonar-project.properties 添加配置如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># Sonar项目标识，在 SonarQube实例下必须唯一</span><br><span class="line">sonar.projectKey=test</span><br><span class="line"></span><br><span class="line"># 在 SonarQube UI 中显示的项目名称</span><br><span class="line">sonar.projectName=ApiDoc</span><br><span class="line"></span><br><span class="line"># 项目版本</span><br><span class="line">sonar.projectVersion=1.0</span><br><span class="line"> </span><br><span class="line"># 项目代码与 sonar-project.properties 文件的相对路径</span><br><span class="line">sonar.sources=.</span><br><span class="line"> </span><br><span class="line"># 代码文件的编码</span><br><span class="line">sonar.sourceEncoding=UTF-8</span><br><span class="line"></span><br><span class="line"># 排除不参与代码分析的文件或目录</span><br><span class="line">sonar.exclusions=node_modules/**/*,.idea/**/*</span><br></pre></td></tr></table></figure></p>
 <p>在项目根目录下执行命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sonar-scanner</span><br></pre></td></tr></table></figure></p>
 <p><img src="/img/sonar-build/analyzed.png" alt="Analyzed"></p>
-<p>执行成功后，再次访问： <a href="http://localhost:9000，出现一个" target="_blank" rel="noopener">http://localhost:9000，出现一个</a> ApiDoc 项目的分析概要，并提示有一个不规范问题，测试覆盖率 0。</p>
+<p>执行成功后，再次访问： <a href="http://localhost:9000" target="_blank" rel="noopener">http://localhost:9000</a> ，出现一个 ApiDoc 项目的分析概要，并提示有一个不规范问题，测试覆盖率 0。</p>
 <p><strong>注意</strong>：日志中的  ”Analysis report compressed in 205ms, zip size=518 KB“说明了压缩后的分析报告大小，最终这部分数据会存储到 MySQL，MySQL 默认接受的最大数据包为 4M，如果压缩包过大，这里的提交就会失败，这时候需要修改 MySQL 的 max_allowed_packet 的值。</p>
 <p><img src="/img/sonar-build/apiDocResult.png" alt="ApiDoc Result"></p>
 <p><img src="/img/sonar-build/codeSmell.png" alt="Code Smell"></p>
