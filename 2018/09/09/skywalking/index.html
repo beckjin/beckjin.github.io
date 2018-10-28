@@ -97,7 +97,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/skywalking/serviceRequestMap.png">
 <meta property="og:image" content="http://www.beckjin.com/img/skywalking/skywalkingUISpans.png">
 <meta property="og:image" content="http://www.beckjin.com/img/skywalking/skywalkingUITopologyMap.png">
-<meta property="og:updated_time" content="2018-09-09T12:17:06.764Z">
+<meta property="og:updated_time" content="2018-10-28T02:33:11.223Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SkyWalking 分布式追踪系统">
 <meta name="twitter:description" content="随着微服务架构的流行，一些微服务架构下的问题也会越来越突出，比如一个请求会涉及多个服务，而服务本身可能也会依赖其他服务，整个请求路径就构成了一个网状的调用链，而在整个调用链中一旦某个节点发生异常，整个调用链的稳定性就会受到影响，所以会深深的感受到 “银弹” 这个词是不存在的，每种架构都有其优缺点 。  面对以上情况， 我们就需要一些可以帮助理解系统行为、用于分析性能问题的工具，以便发生故障的时候，">
@@ -372,7 +372,7 @@
 <p><img src="/img/skywalking/architecture.png" alt="5.x architecture"></p>
 <p><strong>说明：</strong>通过在应用程序中添加 SkyWalking Agent，就可以将接口、服务、数据库、MQ等进行追踪，将追踪结果通过 HTTP 或 gRPC 发送到 SkyWalking Collecter，SkyWalking Collecter 经过分析和聚合，将结果存储到 Elasticsearch 或  H2，SkyWalking  同时提供了一个 SkyWalking UI 的可视化界面，UI 以 GraphQL + HTTP 方式获取存储数据进行展示。</p>
 <p>上面的架构图看似模块有点多，但在实际使用时我们并不需要关注太多的实现方式，HTTP、gRPC 、GraphQL 这些都是其内部架构使用到的技术，我们只需安装 SkyWalking Collecter、Elasticsearch 或 H2，然后在需要追踪的服务内配置少量的代码（Java 项目通过修改 JVM 参数即可），最后通过 SkyWalking UI 查看结果。</p>
-<p>下面基于 Windows 环境使用 <a href="https://github.com/OpenSkywalking/skywalking-netcore" target="_blank" rel="noopener">SkyWalking-netcore</a> 来介绍一下 SkyWalking，可以把 <a href="https://github.com/OpenSkywalking/skywalking-netcore" target="_blank" rel="noopener">SkyWalking-netcore</a> 是 SkyWalking 的 .NET Core Agent。</p>
+<p>下面基于 Windows 环境使用 <a href="https://github.com/OpenSkywalking/skywalking-netcore" target="_blank" rel="noopener">SkyWalking-netcore</a> 来介绍一下 SkyWalking，<a href="https://github.com/OpenSkywalking/skywalking-netcore" target="_blank" rel="noopener">SkyWalking-netcore</a> 是 SkyWalking 的 .NET Core Agent。</p>
 <h3 id="环境要求"><a href="#环境要求" class="headerlink" title="环境要求"></a>环境要求</h3><ol>
 <li>JDK8+</li>
 <li>Elasticsearch 5.x</li>
@@ -476,8 +476,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/02/swagger/" rel="next" title="Swagger 搭建 API 文档管理平台">
-                <i class="fa fa-chevron-left"></i> Swagger 搭建 API 文档管理平台
+              <a href="/2018/09/09/skywalking-netcore-noinvade/" rel="next" title="SkyWalking-netcore 无入侵分布式追踪">
+                <i class="fa fa-chevron-left"></i> SkyWalking-netcore 无入侵分布式追踪
               </a>
             
           </div>
@@ -574,7 +574,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
