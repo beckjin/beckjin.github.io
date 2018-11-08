@@ -321,6 +321,16 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/01/28/quartz-net-test/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2018/01/28/quartz-net-test/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -801,8 +811,8 @@
 <!-- LOCAL: You can save these files to your site and update links -->
     
         
-        <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-        <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
     
 <!-- END LOCAL -->
 
@@ -816,10 +826,12 @@
     
       <script type="text/javascript">
       function renderGitment(){
-        var gitment = new Gitment({
+        var gitment = new Gitmint({
             id: '1517117619000', 
             owner: 'beckjin',
             repo: 'beckjin.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
             
             oauth: {
             
