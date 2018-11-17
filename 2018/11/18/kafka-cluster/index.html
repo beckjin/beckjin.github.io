@@ -95,7 +95,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/kafka-cluster/kafkaDir.png">
 <meta property="og:image" content="http://www.beckjin.com/img/kafka-cluster/startKafkaCluster.png">
 <meta property="og:image" content="http://www.beckjin.com/img/kafka-cluster/testResult.png">
-<meta property="og:updated_time" content="2018-11-17T18:54:48.051Z">
+<meta property="og:updated_time" content="2018-11-17T19:00:05.708Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kafka 集群">
 <meta name="twitter:description" content="Kafka 是一个分布式消息系统，具有高水平扩展和高吞吐量的特点。在Kafka 集群中，没有 “中心主节点” 的概念，集群中所有的节点都是对等的。  Kafka 几大概念Topic（主题）Kafka 中可将消息分类，每一类的消息称为一个 Topic，消费者可以对不同的 Topic 进行不同的处理。 Broker（代理）每个 Broker 即一个 Kafka 服务实例，多个 Broker 构成一个">
@@ -433,8 +433,7 @@
 <p>解决方案：在 bin\windows\kafka-run-class.bat 中找到  “set COMMAND=%JAVA%” 行，给 %CLASSPATH% 加上双引号<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set COMMAND=%JAVA% %KAFKA_HEAP_OPTS% %KAFKA_JVM_PERFORMANCE_OPTS% %KAFKA_JMX_OPTS% %KAFKA_LOG4J_OPTS% -cp &quot;%CLASSPATH%&quot; %KAFKA_OPTS% %*</span><br></pre></td></tr></table></figure></p>
 <p>通过以上的步骤，Kafka 集群搭建完成，接下来可以通过命令行或 Kafka 的 Java、C# 等语言的客户端进行消息的生产和消费测试。</p>
 <h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><ol>
-<li><p>创建 testTopic </p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\bin\windows\kafka-topics.bat --create --zookeeper localhost:2181,localhost:2182,localhost:2183 --replication-factor 1 --partitions 1 --topic testTopic</span><br></pre></td></tr></table></figure>
+<li>创建 testTopic  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\bin\windows\kafka-topics.bat --create --zookeeper localhost:2181,localhost:2182,localhost:2183 --replication-factor 1 --partitions 1 --topic testTopic</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <ol>
