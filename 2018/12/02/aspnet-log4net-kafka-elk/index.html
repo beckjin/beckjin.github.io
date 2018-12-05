@@ -92,7 +92,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-log4net-kafka-elk/elasticsearchInfo.png">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-log4net-kafka-elk/logstashTest.png">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-log4net-kafka-elk/kibanaLog.png">
-<meta property="og:updated_time" content="2018-12-04T00:11:13.859Z">
+<meta property="og:updated_time" content="2018-12-05T00:13:28.322Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ASP.NET Core 日志收集（log4net+Kafka+ELK）">
 <meta name="twitter:description" content="在开发环境中，记录日志这件事情常常被忽视，因为我们有强大的 IDE ，可以调试，可以断点，问题出现后一般都能很快解决。但在生产环境，异常一旦发生，如果不能重现，又没有提前做好日志记录，就会非常被动，问题的定位也可能需要花很多时间，问题最终也是不了了之。给对方的回复也许是这样的： 可能你的网络那个时间点有问题。 日志当然不只是为了定位问题，实际我们还可以通过日志进行一系列的分析，通过分析结果我们可以">
@@ -363,7 +363,7 @@
       
         <p>在开发环境中，记录日志这件事情常常被忽视，因为我们有强大的 IDE ，可以调试，可以断点，问题出现后一般都能很快解决。但在生产环境，异常一旦发生，如果不能重现，又没有提前做好日志记录，就会非常被动，问题的定位也可能需要花很多时间，问题最终也是不了了之。给对方的回复也许是这样的： <strong>可能你的网络那个时间点有问题</strong>。</p>
 <p>日志当然不只是为了定位问题，实际我们还可以通过日志进行一系列的分析，通过分析结果我们可以获得很多有效信息。这篇文章将介绍如何在 .NET Core 项目中使用 log4net 进行日志收集，虽然是 log4net ，但其他 log4xxx 也类似，毕竟 Kafka + ELK 这一套和语言无关。</p>
-<p>在使用 log4net 前，我们需要先搭建好 Kafka 和 ELK 环境，之前的文章介绍过 <a href="https://www.jianshu.com/p/4c853f80892b" target="_blank" rel="noopener">ELK + Filebeat 搭建日志系统</a>、<a href="https://www.jianshu.com/p/044571f793dd" target="_blank" rel="noopener">Elasticsearch 集群</a>、 <a href="https://www.jianshu.com/p/430454d9e30b" target="_blank" rel="noopener">Kafka 集群</a>，这里会将使用 Kafka 作日志存储，实际情况完全可以 log4net + Filebeat + ELK 、log4net + Redis + ELK 等组合。Kafka、Redis 、Filebeat 都有其自身的特点，根据项目情况选择一种适合的方案即可。</p>
+<p>在使用 log4net 前，我们需要先搭建好 Kafka 和 ELK 环境，之前的文章介绍过 <a href="https://www.jianshu.com/p/4c853f80892b" target="_blank" rel="noopener">ELK + Filebeat 搭建日志系统</a>、<a href="https://www.jianshu.com/p/044571f793dd" target="_blank" rel="noopener">Elasticsearch 集群</a>、 <a href="https://www.jianshu.com/p/430454d9e30b" target="_blank" rel="noopener">Kafka 集群</a>，这里会将使用 Kafka 作日志收集，实际情况完全可以 log4net + Filebeat + ELK 、log4net + Redis + ELK 等组合。Kafka、Redis 、Filebeat 都有其自身的特点，根据项目情况选择一种适合的方案即可。</p>
 <p><img src="/img/aspnet-log4net-kafka-elk/architecture.png" alt="architecture"></p>
 <p>以下 Kafka 和 ELK 的测试环境将基于 Windows 的非集群模式，集群模式请参考上面的文章。</p>
 <h3 id="基础环境搭建"><a href="#基础环境搭建" class="headerlink" title="基础环境搭建"></a>基础环境搭建</h3><p>下载 <a href="https://www.elastic.co/products" target="_blank" rel="noopener">ELK</a>  (<em>当前最新 6.5.1</em>)，<a href="http://kafka.apache.org/downloads.html" target="_blank" rel="noopener">Kafka</a>(<em>Binary downloads</em>) 、<a href="http://mirror.bit.edu.cn/apache/zookeeper/" target="_blank" rel="noopener">ZooKeeper</a> 最新版本，下载后分别解压。每个服务的配置文件这里不详细介绍了，使用默认配置即可。</p>
