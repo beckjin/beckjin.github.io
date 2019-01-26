@@ -94,7 +94,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-zuul/baseService2.png">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-zuul/clientBaseService1.png">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-zuul/clientBaseService2.png">
-<meta property="og:updated_time" content="2019-01-26T12:38:29.691Z">
+<meta property="og:updated_time" content="2019-01-26T12:51:02.426Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content=".NET Core + Spring Cloud：API 网关">
 <meta name="twitter:description" content="API网关是系统的唯一入口，调用任何服务的请求都需要经过网关层，最终才可能到达目标服务，既然是必经之路，那我们可以在网关层进行一些通用的操作，如：认证、鉴权、限流、智能路由、缓存、日志、监控、超时、熔断、重试等等，这样既使整个框架条理清晰，也让开发者更多注重功能的逻辑实现。 常见的 API 网关项目有：Kong、Tyk、Netflix zuul、Ocelot 等。在 Spring Cloud 中，">
@@ -364,7 +364,7 @@
 
       
         <p>API网关是系统的唯一入口，调用任何服务的请求都需要经过网关层，最终才可能到达目标服务，既然是必经之路，那我们可以在网关层进行一些通用的操作，如：认证、鉴权、限流、智能路由、缓存、日志、监控、超时、熔断、重试等等，这样既使整个框架条理清晰，也让开发者更多注重功能的逻辑实现。</p>
-<p>常见的 API 网关项目有：<a href="https://getkong.org/about/" target="_blank" rel="noopener">Kong</a>、<a href="https://tyk.io/" target="_blank" rel="noopener">Tyk</a>、<a href="https://github.com/Netflix/zuul" target="_blank" rel="noopener">Netflix zuul</a>、<a href="https://github.com/ThreeMammals/Ocelot" target="_blank" rel="noopener">Ocelot</a> 等。在 Spring Cloud 中，Zuul 是其核心组件，下面将介绍 .NET Core 中通过 Zuul 来进行统一 API 调用。</p>
+<p>常见的 API 网关项目有：<a href="https://getkong.org/" target="_blank" rel="noopener">Kong</a>、<a href="https://tyk.io/" target="_blank" rel="noopener">Tyk</a>、<a href="https://github.com/Netflix/zuul" target="_blank" rel="noopener">Netflix zuul</a>、<a href="https://github.com/ThreeMammals/Ocelot" target="_blank" rel="noopener">Ocelot</a> 等。在 Spring Cloud 中，Zuul 是其核心组件，下面将介绍 .NET Core 中通过 Zuul 来进行统一 API 调用。</p>
 <p><img src="/img/aspnet-zuul/gateway.png" alt="API Gateway"></p>
 <h3 id="搭建-Zuul-Server"><a href="#搭建-Zuul-Server" class="headerlink" title="搭建 Zuul Server"></a>搭建 Zuul Server</h3><p><em>Eureka Server 的搭建请参考 <a href="http://beckjin.com/2019/01/20/aspnet-eureka/" target="_blank" rel="noopener">.NET Core + Spring Cloud：服务注册与发现</a></em></p>
 <ol>
