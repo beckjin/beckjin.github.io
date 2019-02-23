@@ -97,7 +97,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-hystrix/fallback.png">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-hystrix/shortCircuited.png">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-hystrix/failure.png">
-<meta property="og:updated_time" content="2019-02-23T11:10:37.753Z">
+<meta property="og:updated_time" content="2019-02-23T11:14:57.290Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content=".NET Core + Spring Cloud：熔断降级">
 <meta name="twitter:description" content="在微服务架构下，服务之间彼此隔离，服务之间的调用通过网络请求，在众多服务中，可能因为网络或服务本身的原因引起某些接口异常是很常见的现象，接口超时或报错在实际情况下偶发也属正常，但如果短时间内不断的出现并积压，就可能引起服务崩溃。 Hystrix 是 Spring Cloud 中的核心组件，它提供了熔断、隔离、降级、请求缓存、监控等功能，能够在依赖的服务出现问题时保证系统依然可用。 如下图，当 De">
@@ -412,7 +412,8 @@
 <p> <img src="/img/aspnet-hystrix/hystrixDashboardStream.png" alt="hystrix dashboard"></p>
 </li>
 </ol>
-<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>正常情况请求 <a href="http://server1:5555/client-service/api/values/getvalue" target="_blank" rel="noopener">http://server1:5555/client-service/api/values/getvalue</a> 接口没问题：<br><img src="/img/aspnet-hystrix/success.png" alt="success"></p>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>正常情况请求 <a href="http://server1:5555/client-service/api/values/getvalue" target="_blank" rel="noopener">http://server1:5555/client-service/api/values/getvalue</a> 接口没问题：</p>
+<p><img src="/img/aspnet-hystrix/success.png" alt="success"></p>
 <p>我们可以针对某个 HystrixCommand 配置参数覆盖默认值，在 appsettings.json 添加如下配置，GetValueCommand 执行超时时间为 10ms，所以会存在偶发的 Timeout ，Timeout 时会返回 Fallback 方法结果：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&quot;hystrix&quot;: &#123;</span><br><span class="line">  &quot;command&quot;: &#123;</span><br><span class="line">    &quot;GetValueCommand&quot;: &#123;</span><br><span class="line">      &quot;execution&quot;: &#123;</span><br><span class="line">        &quot;isolation&quot;: &#123;</span><br><span class="line">          &quot;thread&quot;: &#123;</span><br><span class="line">            &quot;timeoutInMilliseconds&quot;: 10</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="/img/aspnet-hystrix/timeout.png" alt="timeout"></p>
