@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Beck&#39;s Blog</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://www.beckjin.com/"/>
+  <updated>2019-02-23T11:23:24.426Z</updated>
+  <id>http://www.beckjin.com/</id>
+  
+  <author>
+    <name>Beck Jin</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>.NET Core + Spring Cloud：熔断降级</title>
+    <link href="http://www.beckjin.com/2019/02/23/aspnet-hystrix/"/>
+    <id>http://www.beckjin.com/2019/02/23/aspnet-hystrix/</id>
+    <published>2019-02-23T11:05:22.000Z</published>
+    <updated>2019-02-23T11:23:24.426Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;在微服务架构下，服务之间彼此隔离，服务之间的调用通过网络请求，在众多服务中，可能因为网络或服务本身的原因引起某些接口异常是很常见的现象，接口超时或报错在实际情况下偶发也属正常，但如果短时间内不断的出现并积压，就可能引起服务崩溃。&lt;/p&gt;
+&lt;p&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="微服务" scheme="http://www.beckjin.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/tags/ASP-NET/"/>
+    
+      <category term="Steeltoe" scheme="http://www.beckjin.com/tags/Steeltoe/"/>
+    
+      <category term="Spring Cloud" scheme="http://www.beckjin.com/tags/Spring-Cloud/"/>
+    
+      <category term="Hystrix" scheme="http://www.beckjin.com/tags/Hystrix/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>.NET Core + Spring Cloud：API 网关</title>
+    <link href="http://www.beckjin.com/2019/01/26/aspnet-zuul/"/>
+    <id>http://www.beckjin.com/2019/01/26/aspnet-zuul/</id>
+    <published>2019-01-26T12:34:32.000Z</published>
+    <updated>2019-02-23T11:23:44.270Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;API网关是系统的唯一入口，调用任何服务的请求都需要经过网关层，最终才可能到达目标服务，既然是必经之路，那我们可以在网关层进行一些通用的操作，如：认证、鉴权、限流、智能路由、缓存、日志、监控、超时、熔断、重试等等，这样既使整个框架条理清晰，也让开发者更多注重功能的逻辑实现。
+        
+      
+    
+    </summary>
+    
+      <category term="微服务" scheme="http://www.beckjin.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/tags/ASP-NET/"/>
+    
+      <category term="Steeltoe" scheme="http://www.beckjin.com/tags/Steeltoe/"/>
+    
+      <category term="Spring Cloud" scheme="http://www.beckjin.com/tags/Spring-Cloud/"/>
+    
+      <category term="Zuul" scheme="http://www.beckjin.com/tags/Zuul/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>.NET Core + Spring Cloud：服务注册与发现</title>
+    <link href="http://www.beckjin.com/2019/01/20/aspnet-eureka/"/>
+    <id>http://www.beckjin.com/2019/01/20/aspnet-eureka/</id>
+    <published>2019-01-20T09:50:22.000Z</published>
+    <updated>2019-02-23T11:23:14.426Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;毫无疑问，微服务架构是目前的主流，在微服务架构下，服务治理、负载均衡、服务熔断、配置中心、API网关 等都是需要关注的问题，当然不是非要全部完善后才能进行微服务开发，在很多项目团队中，初期可能会将某个服务部署成集群，然后通过 Nginx
+        
+      
+    
+    </summary>
+    
+      <category term="微服务" scheme="http://www.beckjin.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/tags/ASP-NET/"/>
+    
+      <category term="Steeltoe" scheme="http://www.beckjin.com/tags/Steeltoe/"/>
+    
+      <category term="Spring Cloud" scheme="http://www.beckjin.com/tags/Spring-Cloud/"/>
+    
+      <category term="Eureka" scheme="http://www.beckjin.com/tags/Eureka/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RedLock 实现分布式锁</title>
+    <link href="http://www.beckjin.com/2019/01/06/redLock-net/"/>
+    <id>http://www.beckjin.com/2019/01/06/redLock-net/</id>
+    <published>2019-01-06T13:19:54.000Z</published>
+    <updated>2019-02-23T11:26:34.872Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;并发是程序开发中不可避免的问题，根据系统面向用户、功能场景的不同，并发的重视程度会有不同。从程序的角度来说，并发意味着相同的时间点执行了相同的代码，而有些情况是不被允许的，比如：转账、抢购占库存等，如果没有做好临界条件的验证，会带来非常严重的后果。追根结底是因为并发引起的数
+        
+      
+    
+    </summary>
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/categories/ASP-NET/"/>
+    
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/tags/ASP-NET/"/>
+    
+      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+    
+      <category term="RedLock" scheme="http://www.beckjin.com/tags/RedLock/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ASP.NET Core 日志收集（log4net+Kafka+ELK）</title>
+    <link href="http://www.beckjin.com/2018/12/02/aspnet-log4net-kafka-elk/"/>
+    <id>http://www.beckjin.com/2018/12/02/aspnet-log4net-kafka-elk/</id>
+    <published>2018-12-02T12:47:01.000Z</published>
+    <updated>2018-12-05T00:13:28.322Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;在开发环境中，记录日志这件事情常常被忽视，因为我们有强大的 IDE
+        
+      
+    
+    </summary>
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/categories/ASP-NET/"/>
+    
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/tags/ASP-NET/"/>
+    
+      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+    
+      <category term="WebApi" scheme="http://www.beckjin.com/tags/WebApi/"/>
+    
+      <category term="Kafka" scheme="http://www.beckjin.com/tags/Kafka/"/>
+    
+      <category term="log4net" scheme="http://www.beckjin.com/tags/log4net/"/>
+    
+      <category term="ELK" scheme="http://www.beckjin.com/tags/ELK/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Kafka 集群</title>
+    <link href="http://www.beckjin.com/2018/11/18/kafka-cluster/"/>
+    <id>http://www.beckjin.com/2018/11/18/kafka-cluster/</id>
+    <published>2018-11-17T18:50:55.000Z</published>
+    <updated>2018-12-04T00:10:19.661Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Kafka 是一个分布式消息系统，具有高水平扩展和高吞吐量的特点。在Kafka 集群中，没有 “中心主节点” 的概念，集群中所有的节点都是对等的。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/kafka-cluster/kafka.png&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Kafka" scheme="http://www.beckjin.com/categories/Kafka/"/>
+    
+    
+      <category term="Kafka" scheme="http://www.beckjin.com/tags/Kafka/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SkyWalking-netcore 无入侵分布式追踪</title>
+    <link href="http://www.beckjin.com/2018/10/28/skywalking-netcore-noinvade/"/>
+    <id>http://www.beckjin.com/2018/10/28/skywalking-netcore-noinvade/</id>
+    <published>2018-10-28T05:21:00.000Z</published>
+    <updated>2019-02-23T11:27:55.144Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;a href=&quot;https://github.com/OpenSkywalking/skywalking-netcore&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;SkyWalking-netcore&lt;/a&gt;
+        
+      
+    
+    </summary>
+    
+      <category term="微服务" scheme="http://www.beckjin.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/tags/ASP-NET/"/>
+    
+      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+    
+      <category term="SkyWalking" scheme="http://www.beckjin.com/tags/SkyWalking/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SonarQube 搭建代码质量管理平台（二）</title>
+    <link href="http://www.beckjin.com/2018/10/14/sonar-build-jenkins/"/>
+    <id>http://www.beckjin.com/2018/10/14/sonar-build-jenkins/</id>
+    <published>2018-10-14T09:36:26.000Z</published>
+    <updated>2019-02-23T11:28:21.820Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;通过 &lt;a href=&quot;http://beckjin.com/2018/09/24/sonar-build&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;SonarQube 搭建代码质量管理平台（一）&lt;/a&gt; 的介绍，如果每次都需要手动执行
+        
+      
+    
+    </summary>
+    
+      <category term="代码质量管理" scheme="http://www.beckjin.com/categories/%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E7%AE%A1%E7%90%86/"/>
+    
+    
+      <category term="SonarQube" scheme="http://www.beckjin.com/tags/SonarQube/"/>
+    
+      <category term="代码分析" scheme="http://www.beckjin.com/tags/%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SonarQube 搭建代码质量管理平台（一）</title>
+    <link href="http://www.beckjin.com/2018/09/24/sonar-build/"/>
+    <id>http://www.beckjin.com/2018/09/24/sonar-build/</id>
+    <published>2018-09-24T14:54:23.000Z</published>
+    <updated>2019-02-23T11:28:17.727Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;a href=&quot;https://www.sonarqube.org/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;SonarQube&lt;/a&gt; 是一个开源的代码分析平台，用来持续分析和评测代码的质量，支持检测
+        
+      
+    
+    </summary>
+    
+      <category term="代码质量管理" scheme="http://www.beckjin.com/categories/%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E7%AE%A1%E7%90%86/"/>
+    
+    
+      <category term="SonarQube" scheme="http://www.beckjin.com/tags/SonarQube/"/>
+    
+      <category term="代码分析" scheme="http://www.beckjin.com/tags/%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SkyWalking 分布式追踪系统</title>
+    <link href="http://www.beckjin.com/2018/09/09/skywalking/"/>
+    <id>http://www.beckjin.com/2018/09/09/skywalking/</id>
+    <published>2018-09-09T12:10:03.000Z</published>
+    <updated>2019-02-23T11:27:49.562Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;随着微服务架构的流行，一些微服务架构下的问题也会越来越突出，比如一个请求会涉及多个服务，而服务本身可能也会依赖其他服务，整个请求路径就构成了一个网状的调用链，而在整个调用链中一旦某个节点发生异常，整个调用链的稳定性就会受到影响，所以会深深的感受到 “银弹”
+        
+      
+    
+    </summary>
+    
+      <category term="微服务" scheme="http://www.beckjin.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/tags/ASP-NET/"/>
+    
+      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+    
+      <category term="SkyWalking" scheme="http://www.beckjin.com/tags/SkyWalking/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Swagger 搭建 API 文档管理平台</title>
+    <link href="http://www.beckjin.com/2018/09/02/swagger/"/>
+    <id>http://www.beckjin.com/2018/09/02/swagger/</id>
+    <published>2018-09-01T16:50:10.000Z</published>
+    <updated>2019-02-23T11:28:40.070Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;API 文档是前后端对接的基本，但如果还停留在手写文档的阶段，那就真的太 out 了。大家可能也尝试过各种 API 接口管理的工具，比如 postman 、apizza 等，但个人使用下来还是感觉麻烦了，长期来看我是拒绝的。&lt;/p&gt;
+&lt;p&gt;&lt;img
+        
+      
+    
+    </summary>
+    
+      <category term="API 文档管理" scheme="http://www.beckjin.com/categories/API-%E6%96%87%E6%A1%A3%E7%AE%A1%E7%90%86/"/>
+    
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/tags/ASP-NET/"/>
+    
+      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+    
+      <category term="Swagger" scheme="http://www.beckjin.com/tags/Swagger/"/>
+    
+      <category term="Node.js" scheme="http://www.beckjin.com/tags/Node-js/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ASP.NET Core Filters</title>
+    <link href="http://www.beckjin.com/2018/08/12/aspnet-filter/"/>
+    <id>http://www.beckjin.com/2018/08/12/aspnet-filter/</id>
+    <published>2018-08-11T16:58:40.000Z</published>
+    <updated>2018-08-11T17:00:35.975Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;ASP.NET MVC 中的过滤器（Filter）是 AOP（面向切面编程） 思想的一种实现，供我们在执行管道的特定阶段执行代码，通过使用过滤器可以实现 短路请求、缓存请求结果、日志统一记录、参数合法性验证、异常统一处理、返回值格式化
+        
+      
+    
+    </summary>
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/categories/ASP-NET/"/>
+    
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/tags/ASP-NET/"/>
+    
+      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+    
+      <category term="Filter" scheme="http://www.beckjin.com/tags/Filter/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ASP.NET Core API CORS</title>
+    <link href="http://www.beckjin.com/2018/08/04/aspnet-cors/"/>
+    <id>http://www.beckjin.com/2018/08/04/aspnet-cors/</id>
+    <published>2018-08-04T10:18:07.000Z</published>
+    <updated>2018-08-05T08:59:30.336Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;最近参与一个前后端分离的项目，后端基于 .NET Core 2.1 开发，在进行前后端对接的过程中，被跨域问题折腾得有点脾气了，这里把经验和大家分享一下。&lt;/p&gt;
+&lt;h3 id=&quot;GET-POST-请求&quot;&gt;&lt;a href=&quot;#GET-POST-请求&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/categories/ASP-NET/"/>
+    
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/tags/ASP-NET/"/>
+    
+      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+    
+      <category term="WebApi" scheme="http://www.beckjin.com/tags/WebApi/"/>
+    
+      <category term="CORS" scheme="http://www.beckjin.com/tags/CORS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Kafka Consumer</title>
+    <link href="http://www.beckjin.com/2018/07/15/kafka-consumer/"/>
+    <id>http://www.beckjin.com/2018/07/15/kafka-consumer/</id>
+    <published>2018-07-14T16:14:52.000Z</published>
+    <updated>2018-07-15T04:56:38.411Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Kafka 与很多其它 MQ 不太一样，Kafka 中的 Topic 具有分区（Partition）的概念，一个 Topic
+        
+      
+    
+    </summary>
+    
+      <category term="Kafka" scheme="http://www.beckjin.com/categories/Kafka/"/>
+    
+    
+      <category term="Kafka" scheme="http://www.beckjin.com/tags/Kafka/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>kafka manager</title>
+    <link href="http://www.beckjin.com/2018/07/08/kafka-manager/"/>
+    <id>http://www.beckjin.com/2018/07/08/kafka-manager/</id>
+    <published>2018-07-08T03:27:36.000Z</published>
+    <updated>2018-07-08T04:25:02.910Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;kafka manager 是雅虎开源一个可视化的 kafka 管理工具，懒人必备。当然如果你更倾向使用命令，会显得逼格更高，随你。&lt;/p&gt;
+&lt;h4 id=&quot;源码下载&quot;&gt;&lt;a href=&quot;#源码下载&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Kafka" scheme="http://www.beckjin.com/categories/Kafka/"/>
+    
+    
+      <category term="Kafka" scheme="http://www.beckjin.com/tags/Kafka/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Polly 故障处理（二）： 熔断策略</title>
+    <link href="http://www.beckjin.com/2018/06/30/polly-circuit-breaker/"/>
+    <id>http://www.beckjin.com/2018/06/30/polly-circuit-breaker/</id>
+    <published>2018-06-30T07:13:38.000Z</published>
+    <updated>2018-08-05T09:00:25.172Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;熔断策略（Circuit-breaker）&quot;&gt;&lt;a href=&quot;#熔断策略（Circuit-breaker）&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Polly" scheme="http://www.beckjin.com/categories/Polly/"/>
+    
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/tags/ASP-NET/"/>
+    
+      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+    
+      <category term="Polly" scheme="http://www.beckjin.com/tags/Polly/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Elasticsearch 集群</title>
+    <link href="http://www.beckjin.com/2018/05/19/es-cluster/"/>
+    <id>http://www.beckjin.com/2018/05/19/es-cluster/</id>
+    <published>2018-05-19T11:40:33.000Z</published>
+    <updated>2018-05-19T11:56:18.604Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;Cluster-集群&quot;&gt;&lt;a href=&quot;#Cluster-集群&quot; class=&quot;headerlink&quot; title=&quot;Cluster 集群&quot;&gt;&lt;/a&gt;Cluster 集群&lt;/h3&gt;&lt;p&gt;一个 Elasticsearch 
+        
+      
+    
+    </summary>
+    
+      <category term="ELK" scheme="http://www.beckjin.com/categories/ELK/"/>
+    
+    
+      <category term="Elasticsearch" scheme="http://www.beckjin.com/tags/Elasticsearch/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux 环境下安装 Elasticsearch 5.x、6.x 问题汇总</title>
+    <link href="http://www.beckjin.com/2018/05/19/es-error-linux/"/>
+    <id>http://www.beckjin.com/2018/05/19/es-error-linux/</id>
+    <published>2018-05-19T08:45:12.000Z</published>
+    <updated>2018-05-19T11:40:05.901Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h5 id=&quot;can-not-run-elasticsearch-as-root&quot;&gt;&lt;a href=&quot;#can-not-run-elasticsearch-as-root&quot; class=&quot;headerlink&quot; title=&quot;can not run elasticsearch
+        
+      
+    
+    </summary>
+    
+      <category term="ELK" scheme="http://www.beckjin.com/categories/ELK/"/>
+    
+    
+      <category term="Elasticsearch" scheme="http://www.beckjin.com/tags/Elasticsearch/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>elasticsearch-head 安装介绍</title>
+    <link href="http://www.beckjin.com/2018/05/18/es-head/"/>
+    <id>http://www.beckjin.com/2018/05/18/es-head/</id>
+    <published>2018-05-18T13:20:44.000Z</published>
+    <updated>2018-05-19T11:38:15.849Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;elasticsearch-head 是用于监控 Elasticsearch 状态的客户端插件，包括数据可视化、执行增删改查操作等。elasticsearch-head 插件的安装在 Linux 和 Windows 没什么区别，安装之前确保当前系统已经安装 nodejs
+        
+      
+    
+    </summary>
+    
+      <category term="ELK" scheme="http://www.beckjin.com/categories/ELK/"/>
+    
+    
+      <category term="Elasticsearch" scheme="http://www.beckjin.com/tags/Elasticsearch/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Polly 故障处理（一）：重试策略</title>
+    <link href="http://www.beckjin.com/2018/05/14/polly-retry/"/>
+    <id>http://www.beckjin.com/2018/05/14/polly-retry/</id>
+    <published>2018-05-13T16:19:58.000Z</published>
+    <updated>2018-08-05T09:00:23.515Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;在微服务架构下，我相信大家都应该遇到类似以下问题：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;某些接口异常，最终造成应用程序池奔溃；&lt;/li&gt;
+&lt;li&gt;某些接口不稳定、偶尔超时，数据获取异常；&lt;/li&gt;
+&lt;li&gt;某些服务不稳定，调用方连接不上；&lt;/li&gt;
+&lt;li&gt;
+        
+      
+    
+    </summary>
+    
+      <category term="Polly" scheme="http://www.beckjin.com/categories/Polly/"/>
+    
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/tags/ASP-NET/"/>
+    
+      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+    
+      <category term="Polly" scheme="http://www.beckjin.com/tags/Polly/"/>
+    
+  </entry>
+  
+</feed>
