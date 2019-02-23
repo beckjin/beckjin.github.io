@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.beckjin.com/"/>
-  <updated>2019-02-23T14:40:04.666Z</updated>
+  <updated>2019-02-23T11:23:24.426Z</updated>
   <id>http://www.beckjin.com/</id>
   
   <author>
@@ -15,33 +15,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>rss</title>
-    <link href="http://www.beckjin.com/2019/02/23/rss/"/>
-    <id>http://www.beckjin.com/2019/02/23/rss/</id>
-    <published>2019-02-23T14:20:44.000Z</published>
-    <updated>2019-02-23T14:40:04.666Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;测试&lt;/p&gt;
-
-        
-      
-    
-    </summary>
-    
-      <category term="ELK" scheme="http://www.beckjin.com/categories/ELK/"/>
-    
-    
-      <category term="Elasticsearch" scheme="http://www.beckjin.com/tags/Elasticsearch/"/>
-    
-  </entry>
   
   <entry>
     <title>.NET Core + Spring Cloud：熔断降级</title>
@@ -603,6 +576,42 @@
     
     
       <category term="Elasticsearch" scheme="http://www.beckjin.com/tags/Elasticsearch/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Polly 故障处理（一）：重试策略</title>
+    <link href="http://www.beckjin.com/2018/05/14/polly-retry/"/>
+    <id>http://www.beckjin.com/2018/05/14/polly-retry/</id>
+    <published>2018-05-13T16:19:58.000Z</published>
+    <updated>2018-08-05T09:00:23.515Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;在微服务架构下，我相信大家都应该遇到类似以下问题：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;某些接口异常，最终造成应用程序池奔溃；&lt;/li&gt;
+&lt;li&gt;某些接口不稳定、偶尔超时，数据获取异常；&lt;/li&gt;
+&lt;li&gt;某些服务不稳定，调用方连接不上；&lt;/li&gt;
+&lt;li&gt;
+        
+      
+    
+    </summary>
+    
+      <category term="Polly" scheme="http://www.beckjin.com/categories/Polly/"/>
+    
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/tags/ASP-NET/"/>
+    
+      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+    
+      <category term="Polly" scheme="http://www.beckjin.com/tags/Polly/"/>
     
   </entry>
   
