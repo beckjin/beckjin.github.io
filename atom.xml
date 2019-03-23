@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.beckjin.com/"/>
-  <updated>2019-02-23T11:23:24.426Z</updated>
+  <updated>2019-03-23T16:46:01.011Z</updated>
   <id>http://www.beckjin.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ASP.NET Core JWT 认证</title>
+    <link href="http://www.beckjin.com/2019/03/24/aspnet-jwt/"/>
+    <id>http://www.beckjin.com/2019/03/24/aspnet-jwt/</id>
+    <published>2019-03-23T16:43:16.000Z</published>
+    <updated>2019-03-23T16:46:01.011Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;JWT-介绍&quot;&gt;&lt;a href=&quot;#JWT-介绍&quot; class=&quot;headerlink&quot; title=&quot;JWT 介绍&quot;&gt;&lt;/a&gt;JWT 介绍&lt;/h3&gt;&lt;p&gt;&lt;a href=&quot;https://jwt.io/&quot; target=&quot;_blank&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/categories/ASP-NET/"/>
+    
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/tags/ASP-NET/"/>
+    
+      <category term="JWT" scheme="http://www.beckjin.com/tags/JWT/"/>
+    
+  </entry>
   
   <entry>
     <title>.NET Core + Spring Cloud：熔断降级</title>
@@ -349,9 +377,9 @@
     
       <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
     
-      <category term="Swagger" scheme="http://www.beckjin.com/tags/Swagger/"/>
-    
       <category term="Node.js" scheme="http://www.beckjin.com/tags/Node-js/"/>
+    
+      <category term="Swagger" scheme="http://www.beckjin.com/tags/Swagger/"/>
     
   </entry>
   
@@ -576,42 +604,6 @@
     
     
       <category term="Elasticsearch" scheme="http://www.beckjin.com/tags/Elasticsearch/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Polly 故障处理（一）：重试策略</title>
-    <link href="http://www.beckjin.com/2018/05/14/polly-retry/"/>
-    <id>http://www.beckjin.com/2018/05/14/polly-retry/</id>
-    <published>2018-05-13T16:19:58.000Z</published>
-    <updated>2018-08-05T09:00:23.515Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;在微服务架构下，我相信大家都应该遇到类似以下问题：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;ol&gt;
-&lt;li&gt;某些接口异常，最终造成应用程序池奔溃；&lt;/li&gt;
-&lt;li&gt;某些接口不稳定、偶尔超时，数据获取异常；&lt;/li&gt;
-&lt;li&gt;某些服务不稳定，调用方连接不上；&lt;/li&gt;
-&lt;li&gt;
-        
-      
-    
-    </summary>
-    
-      <category term="Polly" scheme="http://www.beckjin.com/categories/Polly/"/>
-    
-    
-      <category term="ASP.NET" scheme="http://www.beckjin.com/tags/ASP-NET/"/>
-    
-      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
-    
-      <category term="Polly" scheme="http://www.beckjin.com/tags/Polly/"/>
     
   </entry>
   
