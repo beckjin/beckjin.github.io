@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.beckjin.com/"/>
-  <updated>2019-03-23T16:46:01.011Z</updated>
+  <updated>2019-04-27T10:00:49.358Z</updated>
   <id>http://www.beckjin.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>算法：零钱兑换</title>
+    <link href="http://www.beckjin.com/2019/04/27/algorithm-coin-change/"/>
+    <id>http://www.beckjin.com/2019/04/27/algorithm-coin-change/</id>
+    <published>2019-04-27T09:58:08.000Z</published>
+    <updated>2019-04-27T10:00:49.358Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h4&gt;&lt;p&gt;给定不同面额的硬币(coins)和一个总金额(amount)
+        
+      
+    
+    </summary>
+    
+      <category term="算法" scheme="http://www.beckjin.com/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+    
+      <category term="算法" scheme="http://www.beckjin.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
   
   <entry>
     <title>ASP.NET Core JWT 认证</title>
@@ -574,42 +602,6 @@
     
     
       <category term="Elasticsearch" scheme="http://www.beckjin.com/tags/Elasticsearch/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Polly 故障处理（一）：重试策略</title>
-    <link href="http://www.beckjin.com/2018/05/14/polly-retry/"/>
-    <id>http://www.beckjin.com/2018/05/14/polly-retry/</id>
-    <published>2018-05-13T16:19:58.000Z</published>
-    <updated>2018-08-05T09:00:23.515Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;在微服务架构下，我相信大家都应该遇到类似以下问题：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;ol&gt;
-&lt;li&gt;某些接口异常，最终造成应用程序池奔溃；&lt;/li&gt;
-&lt;li&gt;某些接口不稳定、偶尔超时，数据获取异常；&lt;/li&gt;
-&lt;li&gt;某些服务不稳定，调用方连接不上；&lt;/li&gt;
-&lt;li&gt;
-        
-      
-    
-    </summary>
-    
-      <category term="Polly" scheme="http://www.beckjin.com/categories/Polly/"/>
-    
-    
-      <category term="ASP.NET" scheme="http://www.beckjin.com/tags/ASP-NET/"/>
-    
-      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
-    
-      <category term="Polly" scheme="http://www.beckjin.com/tags/Polly/"/>
     
   </entry>
   
