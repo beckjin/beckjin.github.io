@@ -97,7 +97,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-consul-discovery/serviceRegister.png">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-consul-discovery/result1.png">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-consul-discovery/result2.png">
-<meta property="og:updated_time" content="2019-05-18T15:44:24.108Z">
+<meta property="og:updated_time" content="2019-05-18T15:48:51.367Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content=".NET Core + Consul 服务注册与发现">
 <meta name="twitter:description" content="Consul 介绍在分布式架构中，服务治理是必须面对的问题，如果缺乏简单有效治理方案，各服务之间只能通过人肉配置的方式进行服务关系管理，当遇到服务关系变化时，就会变得极其麻烦且容易出错。 Consul 是一个用来实现分布式系统服务发现与配置的开源工具。它内置了服务注册与发现框架、分布一致性协议实现、健康检查、Key/Value存储、多数据中心方案，不再需要依赖其他工具（比如 ZooKeeper 等">
@@ -373,7 +373,61 @@
 <h3 id="Consul-集群搭建"><a href="#Consul-集群搭建" class="headerlink" title="Consul 集群搭建"></a>Consul 集群搭建</h3><p>这里使用 Docker 搭建 3个 Server 节点 + 1 个 Client 节点，API 服务通过 Client 节点进行服务注册和发现。</p>
 <h4 id="从-Docker-Hub-拉取-Consul-镜像"><a href="#从-Docker-Hub-拉取-Consul-镜像" class="headerlink" title="从 Docker Hub 拉取 Consul 镜像"></a>从 Docker Hub 拉取 Consul 镜像</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull consul</span><br></pre></td></tr></table></figure>
 <h4 id="启动-3个-Server-节点-1-个-Client-节点"><a href="#启动-3个-Server-节点-1-个-Client-节点" class="headerlink" title="启动 3个 Server 节点 + 1 个 Client 节点"></a>启动 3个 Server 节点 + 1 个 Client 节点</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// Server  节点 1</span><br><span class="line">docker run --name cs1 -p 8500:8500  -v /data/cs1:/data consul agent -server -bind 172.17.0.2 -node consul-server-1  -data-dir /data -bootstrap-expect 3 -client 0.0.0.0 -ui</span><br><span class="line"></span><br><span class="line">// Server  节点 2</span><br><span class="line">docker run --name cs2 -p 7500:8500  -v /data/cs2:/data consul agent -server -bind 172.17.0.3 -node consul-server-2  -data-dir /data -bootstrap-expect 3 -client 0.0.0.0 -ui -join 172.17.0.2</span><br><span class="line"></span><br><span class="line">// Server  节点 3</span><br><span class="line">docker run --name cs3 -p 6500:8500 -v /data/cs3:/data consul agent -server -bind 172.17.0.4 -node consul-server-3  -data-dir /data -bootstrap-expect 3 -client 0.0.0.0 -ui -join 172.17.0.2</span><br><span class="line"></span><br><span class="line">// Client 节点 1</span><br><span class="line">docker run --name cc1 -p 5500:8500 -v /data/cc1:/data consul agent -bind 172.17.0.5 -node consul-client-1 -data-dir /data -client 0.0.0.0 -ui -join 172.17.0.2</span><br></pre></td></tr></table></figure>
-<p>参数说明（–name、-p、-v 为 Docker 相关参数）：<br>|参数名|解释|<br>|———|——|<br>|<strong>–name</strong>|Docker 容器名称（每个 Consul 节点一个容器）|<br>|<strong>-p</strong>|容器内部 8500 端口映射到当前主机端口，因为使用的同一台主机，所以这里每个容器内的 8500 端口映射到当前主机的不同端口|<br>|<strong>-v</strong>|将节点相关注册数据挂载到当前主机的指定位置，否则重启后会丢失|<br>|<strong>-server</strong>|设置为 Server 类型节点，不加则为 Client 类型节点|<br>|<strong>-bind</strong>|指定节点绑定的地址|<br>|<strong>-node</strong>|指定节点名称|<br>|<strong>-data-dir</strong>|数据存放位置|<br>|<strong>-bootstrap-expect</strong>|集群期望的 Server 节点数，只有达到这个值才会选举 Leader|<br>|<strong>-client</strong>|注册或者查询等一系列客户端对它操作的IP，默认是127.0.0.1|<br>|<strong>-ui</strong>|启用 UI 界面|<br>|<strong>-join</strong>|指定要加入的节点地址（组建集群）|</p>
+<p>参数说明（–name、-p、-v 为 Docker 相关参数）：</p>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>–name</strong></td>
+<td>Docker 容器名称（每个 Consul 节点一个容器）</td>
+</tr>
+<tr>
+<td><strong>-p</strong></td>
+<td>容器内部 8500 端口映射到当前主机端口，因为使用的同一台主机，所以这里每个容器内的 8500 端口映射到当前主机的不同端口</td>
+</tr>
+<tr>
+<td><strong>-v</strong></td>
+<td>将节点相关注册数据挂载到当前主机的指定位置，否则重启后会丢失</td>
+</tr>
+<tr>
+<td><strong>-server</strong></td>
+<td>设置为 Server 类型节点，不加则为 Client 类型节点</td>
+</tr>
+<tr>
+<td><strong>-bind</strong></td>
+<td>指定节点绑定的地址</td>
+</tr>
+<tr>
+<td><strong>-node</strong></td>
+<td>指定节点名称</td>
+</tr>
+<tr>
+<td><strong>-data-dir</strong></td>
+<td>数据存放位置</td>
+</tr>
+<tr>
+<td><strong>-bootstrap-expect</strong></td>
+<td>集群期望的 Server 节点数，只有达到这个值才会选举 Leader</td>
+</tr>
+<tr>
+<td><strong>-client</strong></td>
+<td>注册或者查询等一系列客户端对它操作的IP，默认是127.0.0.1</td>
+</tr>
+<tr>
+<td><strong>-ui</strong></td>
+<td>启用 UI 界面</td>
+</tr>
+<tr>
+<td><strong>-join</strong></td>
+<td>指定要加入的节点地址（组建集群）</td>
+</tr>
+</tbody>
+</table>
 <h4 id="集群状态"><a href="#集群状态" class="headerlink" title="集群状态"></a>集群状态</h4><p>（<em>cs1  为容器名称，任意一个即可</em>）</p>
 <h5 id="查看节点状态和类型"><a href="#查看节点状态和类型" class="headerlink" title="查看节点状态和类型"></a>查看节点状态和类型</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -t cs1 consul members</span><br></pre></td></tr></table></figure>
 <p><img src="/img/aspnet-consul-discovery/consulMembers.png" alt="consul members"></p>
