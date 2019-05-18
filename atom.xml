@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.beckjin.com/"/>
-  <updated>2019-04-29T14:49:27.690Z</updated>
+  <updated>2019-05-18T15:44:24.108Z</updated>
   <id>http://www.beckjin.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>.NET Core + Consul 服务注册与发现</title>
+    <link href="http://www.beckjin.com/2019/05/18/aspnet-consul-discovery/"/>
+    <id>http://www.beckjin.com/2019/05/18/aspnet-consul-discovery/</id>
+    <published>2019-05-18T15:41:37.000Z</published>
+    <updated>2019-05-18T15:44:24.108Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;Consul-介绍&quot;&gt;&lt;a href=&quot;#Consul-介绍&quot; class=&quot;headerlink&quot; title=&quot;Consul 介绍&quot;&gt;&lt;/a&gt;Consul
+        
+      
+    
+    </summary>
+    
+      <category term="微服务" scheme="http://www.beckjin.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/tags/ASP-NET/"/>
+    
+      <category term="Consul" scheme="http://www.beckjin.com/tags/Consul/"/>
+    
+  </entry>
   
   <entry>
     <title>算法：零钱兑换</title>
@@ -375,9 +403,9 @@
     
       <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
     
-      <category term="Node.js" scheme="http://www.beckjin.com/tags/Node-js/"/>
-    
       <category term="Swagger" scheme="http://www.beckjin.com/tags/Swagger/"/>
+    
+      <category term="Node.js" scheme="http://www.beckjin.com/tags/Node-js/"/>
     
   </entry>
   
@@ -567,32 +595,6 @@
         
         
           &lt;h5 id=&quot;can-not-run-elasticsearch-as-root&quot;&gt;&lt;a href=&quot;#can-not-run-elasticsearch-as-root&quot; class=&quot;headerlink&quot; title=&quot;can not run elasticsearch
-        
-      
-    
-    </summary>
-    
-      <category term="ELK" scheme="http://www.beckjin.com/categories/ELK/"/>
-    
-    
-      <category term="Elasticsearch" scheme="http://www.beckjin.com/tags/Elasticsearch/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>elasticsearch-head 安装介绍</title>
-    <link href="http://www.beckjin.com/2018/05/18/es-head/"/>
-    <id>http://www.beckjin.com/2018/05/18/es-head/</id>
-    <published>2018-05-18T13:20:44.000Z</published>
-    <updated>2018-05-19T11:38:15.849Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;elasticsearch-head 是用于监控 Elasticsearch 状态的客户端插件，包括数据可视化、执行增删改查操作等。elasticsearch-head 插件的安装在 Linux 和 Windows 没什么区别，安装之前确保当前系统已经安装 nodejs
         
       
     
