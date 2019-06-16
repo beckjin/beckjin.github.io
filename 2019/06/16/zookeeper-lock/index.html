@@ -91,7 +91,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.beckjin.com/img/zookeeper-lock/lock.png">
 <meta property="og:image" content="http://www.beckjin.com/img/zookeeper-lock/result.png">
-<meta property="og:updated_time" content="2019-06-16T08:52:26.201Z">
+<meta property="og:updated_time" content="2019-06-16T08:55:08.537Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ZooKeeper 实现分布式锁">
 <meta name="twitter:description" content="ZooKeeper 是一个典型的分布式数据一致性解决方案，分布式应用程序可以基于 ZooKeeper 实现诸如数据发布/订阅、负载均衡、分布式协调/通知、集群管理、Master 选举、分布式锁等功能。 节点在介绍 ZooKeeper 分布式锁前需要先了解一下 ZooKeeper 中节点（Znode），ZooKeeper 的数据存储数据模型是一棵树（Znode Tree)，由斜杠（/）的进行分割的路">
@@ -362,7 +362,33 @@
       
         <p>ZooKeeper 是一个典型的分布式数据一致性解决方案，分布式应用程序可以基于 ZooKeeper 实现诸如数据发布/订阅、负载均衡、分布式协调/通知、集群管理、Master 选举、分布式锁等功能。</p>
 <h3 id="节点"><a href="#节点" class="headerlink" title="节点"></a>节点</h3><p>在介绍 ZooKeeper 分布式锁前需要先了解一下 ZooKeeper 中节点（Znode），ZooKeeper 的数据存储数据模型是一棵树（Znode Tree)，由斜杠（/）的进行分割的路径，就是一个 Znode（如 /locks/my_lock）。每个 Znode 上都会保存自己的数据内容，同时还会保存一系列属性信息。</p>
-<p>Znode 又分为以下四种类型：<br>| 类型| 描述 |<br>|–|–|<br>|持久节点|节点创建后，会一直存在，不会因客户端会话失效而删除|<br>|持久顺序节点|基本特性与持久节点一致，创建节点的过程中，ZooKeeper 会在其名字后自动追加一个单调增长的数字后缀，作为新的节点名|<br>|临时节点|客户端会话失效或连接关闭后，该节点会被自动删除|<br>|临时顺序节点|基本特性与临时节点一致，创建节点的过程中，ZooKeeper 会在其名字后自动追加一个单调增长的数字后缀，作为新的节点名|</p>
+<p>Znode 又分为以下四种类型：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>持久节点</td>
+<td>节点创建后，会一直存在，不会因客户端会话失效而删除</td>
+</tr>
+<tr>
+<td>持久顺序节点</td>
+<td>基本特性与持久节点一致，创建节点的过程中，ZooKeeper 会在其名字后自动追加一个单调增长的数字后缀，作为新的节点名</td>
+</tr>
+<tr>
+<td>临时节点</td>
+<td>客户端会话失效或连接关闭后，该节点会被自动删除</td>
+</tr>
+<tr>
+<td>临时顺序节点</td>
+<td>基本特性与临时节点一致，创建节点的过程中，ZooKeeper 会在其名字后自动追加一个单调增长的数字后缀，作为新的节点名</td>
+</tr>
+</tbody>
+</table>
 <h3 id="锁原理"><a href="#锁原理" class="headerlink" title="锁原理"></a>锁原理</h3><p>ZooKeeper 分布式锁是基于 <strong>临时顺序节点</strong> 来实现的，锁可理解为 ZooKeeper 上的一个节点，当需要获取锁时，就在这个锁节点下创建一个临时顺序节点。当存在多个客户端同时来获取锁，就按顺序依次创建多个临时顺序节点，但只有排列序号是第一的那个节点能获取锁成功，其他节点则按顺序分别监听前一个节点的变化，当被监听者释放锁时，监听者就可以马上获得锁。</p>
 <p>而且用临时顺序节点的另外一个用意是如果某个客户端创建临时顺序节点后，自己意外宕机了也没关系，ZooKeeper 感知到某个客户端宕机后会自动删除对应的临时顺序节点，相当于自动释放锁。</p>
 <p><img src="/img/zookeeper-lock/lock.png" alt="lock"></p>
