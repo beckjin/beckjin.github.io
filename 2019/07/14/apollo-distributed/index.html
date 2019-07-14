@@ -99,7 +99,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/apollo-distributed/eureka.png">
 <meta property="og:image" content="http://www.beckjin.com/img/apollo-distributed/apollo-manage.png">
 <meta property="og:image" content="http://www.beckjin.com/img/apollo-distributed/apollo-sys-info.png">
-<meta property="og:updated_time" content="2019-07-14T12:52:55.248Z">
+<meta property="og:updated_time" content="2019-07-14T14:00:42.953Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Apollo 配置中心：分布式部署">
 <meta name="twitter:description" content="Apollo（阿波罗）是携程框架部门研发的分布式配置中心，能够集中化管理应用不同环境、不同集群的配置，配置修改后能够实时推送到应用端，并且具备规范的权限、流程治理等特性，适用于微服务配置管理场景。 服务端架构 上图简要描述了 Apollo 的总体设计：  Config Service 提供配置的读取、推送等功能，服务对象是 Apollo 客户端 Admin Service 提供配置的修改、发布等功">
@@ -418,7 +418,7 @@
 <li><p>Apollo源码中已经提供了构建 Docker 镜像的 Dockerfile 文件，<code>apollo-configservice\src\main\docker\Dockfile</code>、<code>apollo-adminservice\src\main\docker\Dockfile</code>、<code>apollo-portal\src\main\docker\Dockfile</code> 可以直接使用，最终如下：</p>
 <p><img src="/img/apollo-distributed/image.png" alt="image.png"></p>
 </li>
-<li><p>分别构建 Docker 镜像，然后可以通过 docker push 推送到自己的 Docker 仓库，或者在要部署是机器上生成 Docker 镜像直接使用，最终得到 <code>apollo-configservice</code>、<code>apollo-adminservice</code>、<code>apollo-portal</code> 3个镜像。</p>
+<li><p>分别构建 Docker 镜像，然后可以通过 docker push 推送到自己的 Docker 仓库，比如 <a href="https://hub.docker.com/u/beckjin" target="_blank" rel="noopener">我的仓库</a> ，或者在要部署是机器上生成 Docker 镜像直接使用，最终得到 <code>apollo-configservice</code>、<code>apollo-adminservice</code>、<code>apollo-portal</code> 3个镜像。</p>
 <p><img src="/img/apollo-distributed/image-list.png" alt="镜像"></p>
 </li>
 </ol>
