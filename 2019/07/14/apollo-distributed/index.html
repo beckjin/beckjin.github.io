@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Apollo," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Beck's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Apollo（阿波罗）是携程框架部门研发的分布式配置中心，能够集中化管理应用不同环境、不同集群的配置，配置修改后能够实时推送到应用端，并且具备规范的权限、流程治理等特性，适用于微服务配置管理场景。 服务端架构 上图简要描述了 Apollo 的总体设计：  Config Service 提供配置的读取、推送等功能，服务对象是 Apollo 客户端 Admin Service 提供配置的修改、发布等功">
+<meta name="keywords" content="Apollo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Apollo 配置中心：分布式部署">
+<meta property="og:url" content="http://www.beckjin.com/2019/07/14/apollo-distributed/index.html">
+<meta property="og:site_name" content="Beck&#39;s Blog">
+<meta property="og:description" content="Apollo（阿波罗）是携程框架部门研发的分布式配置中心，能够集中化管理应用不同环境、不同集群的配置，配置修改后能够实时推送到应用端，并且具备规范的权限、流程治理等特性，适用于微服务配置管理场景。 服务端架构 上图简要描述了 Apollo 的总体设计：  Config Service 提供配置的读取、推送等功能，服务对象是 Apollo 客户端 Admin Service 提供配置的修改、发布等功">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.beckjin.com/img/apollo-distributed/server-architecture.png">
+<meta property="og:image" content="http://www.beckjin.com/img/apollo-distributed/deploy.png">
+<meta property="og:image" content="http://www.beckjin.com/img/apollo-distributed/client-architecture.png">
+<meta property="og:image" content="http://www.beckjin.com/img/apollo-distributed/sql-file.png">
+<meta property="og:image" content="http://www.beckjin.com/img/apollo-distributed/database.png">
+<meta property="og:image" content="http://www.beckjin.com/img/apollo-distributed/image.png">
+<meta property="og:image" content="http://www.beckjin.com/img/apollo-distributed/image-list.png">
+<meta property="og:image" content="http://www.beckjin.com/img/apollo-distributed/eureka.png">
+<meta property="og:image" content="http://www.beckjin.com/img/apollo-distributed/apollo-manage.png">
+<meta property="og:image" content="http://www.beckjin.com/img/apollo-distributed/apollo-sys-info.png">
+<meta property="og:updated_time" content="2019-07-14T12:32:24.128Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Apollo 配置中心：分布式部署">
+<meta name="twitter:description" content="Apollo（阿波罗）是携程框架部门研发的分布式配置中心，能够集中化管理应用不同环境、不同集群的配置，配置修改后能够实时推送到应用端，并且具备规范的权限、流程治理等特性，适用于微服务配置管理场景。 服务端架构 上图简要描述了 Apollo 的总体设计：  Config Service 提供配置的读取、推送等功能，服务对象是 Apollo 客户端 Admin Service 提供配置的修改、发布等功">
+<meta name="twitter:image" content="http://www.beckjin.com/img/apollo-distributed/server-architecture.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.beckjin.com/2019/07/14/apollo-distributed/"/>
+
+
+
+
+
+  <title>Apollo 配置中心：分布式部署 | Beck's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+	<a href="https://github.com/beckjin" target="_blank" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+	
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Beck's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2019/07/14/apollo-distributed/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Beck Jin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beck's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Apollo 配置中心：分布式部署</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-14T20:23:51+08:00">
+                2019-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Apollo/" itemprop="url" rel="index">
+                    <span itemprop="name">Apollo</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/07/14/apollo-distributed/" class="leancloud_visitors" data-flag-title="Apollo 配置中心：分布式部署">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="https://github.com/ctripcorp/apollo" target="_blank" rel="noopener">Apollo</a>（阿波罗）是携程框架部门研发的分布式配置中心，能够集中化管理应用不同环境、不同集群的配置，配置修改后能够实时推送到应用端，并且具备规范的权限、流程治理等特性，适用于微服务配置管理场景。</p>
+<h3 id="服务端架构"><a href="#服务端架构" class="headerlink" title="服务端架构"></a>服务端架构</h3><p><img src="/img/apollo-distributed/server-architecture.png" alt="服务端架构图"></p>
+<p>上图简要描述了 Apollo 的总体设计：</p>
+<ul>
+<li>Config Service 提供配置的读取、推送等功能，服务对象是 Apollo 客户端</li>
+<li>Admin Service 提供配置的修改、发布等功能，服务对象是 Apollo Portal（管理界面）</li>
+<li>Config Service 和 Admin Service 在生产环境都是多实例、无状态部署，所以需要将自己注册到 Eureka 中并保持心跳</li>
+<li>在 Eureka 之上有一层 Meta Server 用于封装 Eureka 的服务发现接口</li>
+<li>Client 通过域名访问 Meta Server 获取 Config Service 服务列表（IP+Port），而后直接通过 IP+Port 访问服务，同时在 Client 侧会做 load balance、错误重试</li>
+<li>Portal 通过域名访问 Meta Server 获取 Admin Service 服务列表 IP+Port，而后直接通过 IP+Port 访问服务，同时在 Portal 侧会做 load balance、错误重试</li>
+</ul>
+<h3 id="部署策略"><a href="#部署策略" class="headerlink" title="部署策略"></a>部署策略</h3><p><img src="/img/apollo-distributed/deploy.png" alt="部署策略图"></p>
+<p>上图描述了 Apollo 的部署策略：</p>
+<ul>
+<li>PortalDB 主要保存权限、支持的环境等数据，Apollo Portal 环境只需要部署一套，管理所有环境（DEV、FAT、UAT、PRO）</li>
+<li>ConfigDB 保存应用相关的配置数据，每个环境需要独立的 ConfigDB 数据库</li>
+<li>为保证稳定性，PortalDB 和 ConfigDB 需要支持 Master-Slave 模式</li>
+<li>为简化部署，实际上会把 Config Service、Eureka 和 Meta Server 部署在同一个 JVM 进程中，Admin Service 部署在另一个 JVM 线程中</li>
+<li>Meta Server、Eureka 、Config Service 和 Admin Service 在生产环境可部署在两个机房，实现双活</li>
+</ul>
+<h3 id="客户端架构"><a href="#客户端架构" class="headerlink" title="客户端架构"></a>客户端架构</h3><p><img src="/img/apollo-distributed/client-architecture.png" alt="客户端架构图"></p>
+<p>上图简要描述了 Apollo 客户端的实现原理：</p>
+<ul>
+<li>客户端和服务端保持了一个长连接，从而能第一时间获得配置更新的推送</li>
+<li>客户端会定时从 Apollo 配置中心服务端拉取应用的最新配置（防止推送机制失效导致配置不更新）</li>
+<li>客户端从 Apollo 配置中心服务端获取到应用的最新配置后，会保存在内存中</li>
+<li>客户端会把从服务端获取到的配置在本地文件系统缓存一份，在遇到服务不可用，或网络不通的时候，依然能从本地恢复配置</li>
+<li>应用程序从 Apollo 客户端获取最新的配置、订阅配置更新通知</li>
+</ul>
+<h3 id="分布式部署"><a href="#分布式部署" class="headerlink" title="分布式部署"></a>分布式部署</h3><p>通过以上的介绍，可以看出 Apollo 的整体架构并不简单，但其实也不用担心，在部署上也并没那么复杂。接下来主要介绍 Apollo 的分布式部署，之后的文章中会介绍如何在 Java、.NET 客户端中使用，部署将使用 Docker 的方式，所以读者最好有一定的 Docker 基础。</p>
+<p>有 Apollo 用户已经提供了现成的 <a href="https://github.com/ctripcorp/apollo/wiki/%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97#15-docker%E9%83%A8%E7%BD%B2" target="_blank" rel="noopener">Dcoker 镜像</a> ，我们可以直接使用。不过这里还是将通过编译源代码的方式来介绍，目的是从最原始操作开始，了解整个过程的实现。</p>
+<h4 id="环境要求"><a href="#环境要求" class="headerlink" title="环境要求"></a>环境要求</h4><ul>
+<li>JDK 1.8+ (<em>安装后，修改 Path 环境变量</em>)</li>
+<li>Maven 3.5+ (<em>安装后，修改 Path 环境变量，建议修改 Maven  源地址，加快下载速度</em>)</li>
+<li>MySQL 5.6.5+</li>
+<li>Docker </li>
+</ul>
+<p><strong>JDK 和 Maven 只在编译 Apollo 源代码时使用，实际使用 Docker 部署并不需要。</strong></p>
+<h4 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h4><p>从部署策略图中可以看出，搭建 Apollo 环境需要使用到 PortalDB、ConfigDB 两个数据库，这两个数据库的初始脚本官方源码中已提供：</p>
+<p><img src="/img/apollo-distributed/sql-file.png" alt="数据库脚本"></p>
+<p>我们需要在自己的数据库上执行以上两个文件的脚本，这里将搭建一个基于 PRO 的分布式环境（ <em>如果需要支持多个环境，需要在对应环境的数据库上建 ConfigDB，服务启动改成对应环境的数据库连接，更多请参考 <a href="https://github.com/ctripcorp/apollo/wiki/%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97#2131-%E8%B0%83%E6%95%B4apolloportaldb%E9%85%8D%E7%BD%AE" target="_blank" rel="noopener">调整ApolloPortalDB配置</a> 和 <a href="https://github.com/ctripcorp/apollo/wiki/%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97#2132-%E8%B0%83%E6%95%B4apolloconfigdb%E9%85%8D%E7%BD%AE" target="_blank" rel="noopener">调整ApolloConfigDB配置</a></em> ），如下：</p>
+<p><img src="/img/apollo-distributed/database.png" alt="数据库"></p>
+<h4 id="构建-Docker-镜像"><a href="#构建-Docker-镜像" class="headerlink" title="构建 Docker 镜像"></a>构建 Docker 镜像</h4><ol>
+<li><p>下载最新 <a href="https://github.com/ctripcorp/apollo" target="_blank" rel="noopener">apollo master 分支</a> 代码（<strong>当前是 1.5.0-SNAPSHOT</strong>），网上很多介绍都需要修改源代码后再进行编译，这个版本已有哥们提交了 <a href="https://github.com/ctripcorp/apollo/pull/2343" target="_blank" rel="noopener">Merge Request</a> ，使在 Docker 部署上更简化了。如有特殊需要，也可自行修改源码。</p>
+</li>
+<li><p>下载完成后在根目录下执行 .\scripts\build.bat（我是在 windows 进行编译的），编译成功后在 apollo-adminservice、apollo-configservice、apollo-portal 下的 target 目录会生成对应压缩包 <code>pollo-configservice-1.5.0-SNAPSHOT-github.zip</code>、<code>apollo-adminservice-1.5.0-SNAPSHOT-github.zip</code>、<code>apollo-portal-1.5.0-SNAPSHOT-github.zip</code>，这个几个文件就是我们在构建 Docker 镜像需要的</p>
+</li>
+<li><p>Apollo源码中已经提供了构建 Docker 镜像的 Dockerfile 文件，<code>apollo-configservice\src\main\docker\Dockfile</code>、<code>apollo-adminservice\src\main\docker\Dockfile</code>、<code>apollo-portal\src\main\docker\Dockfile</code> 可以直接使用，最终如下：</p>
+<p><img src="/img/apollo-distributed/image.png" alt="image.png"></p>
+</li>
+<li><p>分别构建 Docker 镜像，然后可以通过 docker push 推送到自己的 Docker 仓库，或者在要部署是机器上生成 Docker 镜像直接使用，最终得到 <code>apollo-configservice</code>、<code>apollo-adminservice</code>、<code>apollo-portal</code> 3个镜像。</p>
+<p><img src="/img/apollo-distributed/image-list.png" alt="镜像"></p>
+</li>
+</ol>
+<h4 id="编写-docker-compose"><a href="#编写-docker-compose" class="headerlink" title="编写 docker-compose"></a>编写 docker-compose</h4><h5 id="apollo-configservice-amp-amp-apollo-adminservice"><a href="#apollo-configservice-amp-amp-apollo-adminservice" class="headerlink" title="apollo-configservice &amp;&amp; apollo-adminservice"></a>apollo-configservice &amp;&amp; apollo-adminservice</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">version: &apos;3&apos;</span><br><span class="line">services:</span><br><span class="line">  apollo-configservice:</span><br><span class="line">    image: apollo-configservice:latest # 镜像地址，这里使用的是直接在当前主机上构建的镜像</span><br><span class="line">    ports:</span><br><span class="line">      - &quot;8080:8080&quot;</span><br><span class="line">    volumes:</span><br><span class="line">      # 日志挂载</span><br><span class="line">      - /usr/local/apollo/servers/server2/logs/apollo-configservice:/opt/logs</span><br><span class="line">    environment:</span><br><span class="line">      # 可通过 SERVER_PORT 指定默认启动端口，ports 也需要对应修改</span><br><span class="line">      # SERVER_PORT: 8080</span><br><span class="line">      # 指定 homePageUrl 为当前宿主的 apollo-adminservice 地址，不然会出现无法访问</span><br><span class="line">      JAVA_OPTS: &quot;-Deureka.instance.homePageUrl=http://$&#123;当前主机IP&#125;:8090&quot;</span><br><span class="line">      # 数据库连接地址</span><br><span class="line">      DS_URL: &quot;jdbc:mysql://$&#123;数据库IP&#125;:$&#123;数据库Port&#125;/ApolloConfigDB?characterEncoding=utf8&quot;</span><br><span class="line">      # 数据库用户名</span><br><span class="line">      DS_USERNAME: &quot;apollo&quot;</span><br><span class="line">      # 数据库密码 </span><br><span class="line">      DS_PASSWORD: &quot;123456&quot;</span><br><span class="line">      </span><br><span class="line">  apollo-adminservice:</span><br><span class="line">    image: apollo-adminservice:latest # 镜像地址，这里使用的是直接在当前主机上构建的镜像</span><br><span class="line">    ports:</span><br><span class="line">      - &quot;8090:8090&quot;</span><br><span class="line">    volumes:</span><br><span class="line">      # 日志挂载</span><br><span class="line">      - /usr/local/apollo/servers/server2/logs/apollo-adminservice:/opt/logs</span><br><span class="line">    environment:</span><br><span class="line">      # 指定 homePageUrl 为当前宿主的 apollo-adminservice 地址，不然会出现无法访问</span><br><span class="line">      JAVA_OPTS: &quot;-Deureka.instance.homePageUrl=http://$&#123;当前主机IP&#125;:8090&quot;</span><br><span class="line">      # 数据库连接地址</span><br><span class="line">      DS_URL: &quot;jdbc:mysql://$&#123;数据库IP&#125;:$&#123;数据库Port&#125;/ApolloConfigDB?characterEncoding=utf8&quot;</span><br><span class="line">      # 数据库用户名</span><br><span class="line">      DS_USERNAME: &quot;apollo&quot;</span><br><span class="line">      # 数据库密码 </span><br><span class="line">      DS_PASSWORD: &quot;123456&quot;</span><br><span class="line">    depends_on:</span><br><span class="line">      - apollo-configservice</span><br></pre></td></tr></table></figure>
+<h5 id="apollo-portal"><a href="#apollo-portal" class="headerlink" title="apollo-portal"></a>apollo-portal</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">version: &apos;3&apos;</span><br><span class="line">services:</span><br><span class="line">  apollo-portal:</span><br><span class="line">    image: apollo-portal:latest # 镜像地址，这里使用的是直接在当前主机上构建的镜像</span><br><span class="line">    container_name: apollo-portal</span><br><span class="line">    ports:</span><br><span class="line">      - &quot;8070:8070&quot;</span><br><span class="line">    volumes:</span><br><span class="line">      # 日志挂载</span><br><span class="line">      - /usr/local/apollo/servers/server1/logs/apollo-portal:/opt/logs  </span><br><span class="line">    environment:</span><br><span class="line">      # 数据库连接地址</span><br><span class="line">      DS_URL: &quot;jdbc:mysql://$&#123;数据库IP&#125;:$&#123;数据库Port&#125;/ApolloPortalDB?characterEncoding=utf8&quot; </span><br><span class="line">      # 数据库用户名</span><br><span class="line">      DS_USERNAME: &quot;apollo&quot;</span><br><span class="line">      # 数据库密码      </span><br><span class="line">      DS_PASSWORD: &quot;123456&quot;</span><br><span class="line">      # META_SERVER 地址，如 http://192.168.100.234:8080,http://192.168.100.234:8081（多个可用,分隔，建议使用 LB 域名）,</span><br><span class="line">      PRO_META: &quot;http://$&#123;实例1的 apollo-configservice 地址&#125;,http://$&#123;实例2的 apollo-configservice 地址&#125;&quot;</span><br></pre></td></tr></table></figure>
+<h4 id="初始数据库数据修改"><a href="#初始数据库数据修改" class="headerlink" title="初始数据库数据修改"></a>初始数据库数据修改</h4><p> ApolloPortalDB 库的 ServerConfig 表 <code>apollo.portal.envs</code> 和 <code>configView.memberOnly.envs</code> 值修改为：<code>pro</code>；（因为这里我们搭建的是 PRO 的分布式环境）</p>
+<p> ApolloConfigDB 库的 ServerConfig 表 <code>eureka.service.url</code> 值修改为：<code>http://${实例1的 apollo-configservice 地址}/eureka/,http://${实例2的 apollo-configservice 地址}/eureka/</code>；</p>
+<h4 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h4><p>这里将在同一个机器上启动 1 个 apollo-portal 实例（端口 8070），2 个 apollo-configservice（端口 8080、8081）和 2 个 apollo-adminservice（端口 8090、8091）。</p>
+<p><em>注意：启动的过程会比较慢，一般会在 100~200s 左右</em></p>
+<p><img src="/img/apollo-distributed/eureka.png" alt="eureka 服务注册"></p>
+<p>通过访问 <code>http://${apollo-portal 服务IP}:8070</code> ，输入默认用户名密码 apollo/admin 登录：(<em>当前的测试脚本提供一个默认的测试项目，新版本的 sql 脚本可能没有 SampleApp</em>)</p>
+<p><img src="/img/apollo-distributed/apollo-manage.png" alt="Apollo 管理界面"></p>
+<p>通过 管理员工具 =&gt; 系统信息 可查看当前环境信息：</p>
+<p><img src="/img/apollo-distributed/apollo-sys-info.png" alt="系统信息"></p>
+<p>可以看出 Config Services 和 Admin Services 都是两个实例，我们可以模拟 kill 其中一台，服务依然是可以正常使用的。</p>
+<p>接下来就可以创建应用，添加配置信息，提供给客户端使用，具体客户端如何使用后续将会继续介绍。</p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><ul>
+<li><a href="https://github.com/ctripcorp/apollo" target="_blank" rel="noopener">Apollo</a></li>
+<li><a href="https://github.com/ctripcorp/apollo/wiki/%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97" target="_blank" rel="noopener">Apollo 分布式部署指南</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果对你有帮助就好</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/img/pay/wechatpay.png" alt="Beck Jin 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/img/pay/alipay.png" alt="Beck Jin 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Apollo/" rel="tag"># Apollo</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/16/zookeeper-lock/" rel="next" title="ZooKeeper 实现分布式锁">
+                <i class="fa fa-chevron-left"></i> ZooKeeper 实现分布式锁
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar.png"
+                alt="Beck Jin" />
+            
+              <p class="site-author-name" itemprop="name">Beck Jin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/beckjin" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1798410296@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#服务端架构"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x670D;&#x52A1;&#x7AEF;&#x67B6;&#x6784;" class="headerlink" title="&#x670D;&#x52A1;&#x7AEF;&#x67B6;&#x6784;"></a>&#x670D;&#x52A1;&#x7AEF;&#x67B6;&#x6784;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署策略"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x90E8;&#x7F72;&#x7B56;&#x7565;" class="headerlink" title="&#x90E8;&#x7F72;&#x7B56;&#x7565;"></a>&#x90E8;&#x7F72;&#x7B56;&#x7565;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端架构"><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x5BA2;&#x6237;&#x7AEF;&#x67B6;&#x6784;" class="headerlink" title="&#x5BA2;&#x6237;&#x7AEF;&#x67B6;&#x6784;"></a>&#x5BA2;&#x6237;&#x7AEF;&#x67B6;&#x6784;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分布式部署"><span class="nav-number">4.</span> <span class="nav-text"><a href="#&#x5206;&#x5E03;&#x5F0F;&#x90E8;&#x7F72;" class="headerlink" title="&#x5206;&#x5E03;&#x5F0F;&#x90E8;&#x7F72;"></a>&#x5206;&#x5E03;&#x5F0F;&#x90E8;&#x7F72;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#环境要求"><span class="nav-number">4.1.</span> <span class="nav-text"><a href="#&#x73AF;&#x5883;&#x8981;&#x6C42;" class="headerlink" title="&#x73AF;&#x5883;&#x8981;&#x6C42;"></a>&#x73AF;&#x5883;&#x8981;&#x6C42;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建数据库"><span class="nav-number">4.2.</span> <span class="nav-text"><a href="#&#x521B;&#x5EFA;&#x6570;&#x636E;&#x5E93;" class="headerlink" title="&#x521B;&#x5EFA;&#x6570;&#x636E;&#x5E93;"></a>&#x521B;&#x5EFA;&#x6570;&#x636E;&#x5E93;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构建-Docker-镜像"><span class="nav-number">4.3.</span> <span class="nav-text"><a href="#&#x6784;&#x5EFA;-Docker-&#x955C;&#x50CF;" class="headerlink" title="&#x6784;&#x5EFA; Docker &#x955C;&#x50CF;"></a>&#x6784;&#x5EFA; Docker &#x955C;&#x50CF;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编写-docker-compose"><span class="nav-number">4.4.</span> <span class="nav-text"><a href="#&#x7F16;&#x5199;-docker-compose" class="headerlink" title="&#x7F16;&#x5199; docker-compose"></a>&#x7F16;&#x5199; docker-compose</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#apollo-configservice-amp-amp-apollo-adminservice"><span class="nav-number">4.4.1.</span> <span class="nav-text"><a href="#apollo-configservice-amp-amp-apollo-adminservice" class="headerlink" title="apollo-configservice &amp;&amp; apollo-adminservice"></a>apollo-configservice &amp;&amp; apollo-adminservice</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#apollo-portal"><span class="nav-number">4.4.2.</span> <span class="nav-text"><a href="#apollo-portal" class="headerlink" title="apollo-portal"></a>apollo-portal</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#初始数据库数据修改"><span class="nav-number">4.5.</span> <span class="nav-text"><a href="#&#x521D;&#x59CB;&#x6570;&#x636E;&#x5E93;&#x6570;&#x636E;&#x4FEE;&#x6539;" class="headerlink" title="&#x521D;&#x59CB;&#x6570;&#x636E;&#x5E93;&#x6570;&#x636E;&#x4FEE;&#x6539;"></a>&#x521D;&#x59CB;&#x6570;&#x636E;&#x5E93;&#x6570;&#x636E;&#x4FEE;&#x6539;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动服务"><span class="nav-number">4.6.</span> <span class="nav-text"><a href="#&#x542F;&#x52A8;&#x670D;&#x52A1;" class="headerlink" title="&#x542F;&#x52A8;&#x670D;&#x52A1;"></a>&#x542F;&#x52A8;&#x670D;&#x52A1;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接"><span class="nav-number">5.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Beck Jin</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+		<link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+		<script src="https://www.wenjunjiang.win/js/gitment.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitment({
+            id: '1563107031000', 
+            owner: 'beckjin',
+            repo: 'beckjin.github.io',
+            
+            oauth: {
+            
+            
+                client_secret: 'f3317552363ce12638c39c095f521db7ecfcb46d',
+            
+                client_id: 'bee5c835ae9ab1ab1fc9'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("FCgGthOl6XN7xRjfK31raebD-gzGzoHsz", "20z736XSuGX562R2ky8uu4EU");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

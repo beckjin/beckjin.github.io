@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.beckjin.com/"/>
-  <updated>2019-06-16T09:03:14.732Z</updated>
+  <updated>2019-07-14T12:32:24.128Z</updated>
   <id>http://www.beckjin.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Apollo 配置中心：分布式部署</title>
+    <link href="http://www.beckjin.com/2019/07/14/apollo-distributed/"/>
+    <id>http://www.beckjin.com/2019/07/14/apollo-distributed/</id>
+    <published>2019-07-14T12:23:51.000Z</published>
+    <updated>2019-07-14T12:32:24.128Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;a href=&quot;https://github.com/ctripcorp/apollo&quot; target=&quot;_blank&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Apollo" scheme="http://www.beckjin.com/categories/Apollo/"/>
+    
+    
+      <category term="Apollo" scheme="http://www.beckjin.com/tags/Apollo/"/>
+    
+  </entry>
   
   <entry>
     <title>ZooKeeper 实现分布式锁</title>
@@ -587,32 +613,6 @@
       <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
     
       <category term="Polly" scheme="http://www.beckjin.com/tags/Polly/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Elasticsearch 集群</title>
-    <link href="http://www.beckjin.com/2018/05/19/es-cluster/"/>
-    <id>http://www.beckjin.com/2018/05/19/es-cluster/</id>
-    <published>2018-05-19T11:40:33.000Z</published>
-    <updated>2018-05-19T11:56:18.604Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;Cluster-集群&quot;&gt;&lt;a href=&quot;#Cluster-集群&quot; class=&quot;headerlink&quot; title=&quot;Cluster 集群&quot;&gt;&lt;/a&gt;Cluster 集群&lt;/h3&gt;&lt;p&gt;一个 Elasticsearch 
-        
-      
-    
-    </summary>
-    
-      <category term="ELK" scheme="http://www.beckjin.com/categories/ELK/"/>
-    
-    
-      <category term="Elasticsearch" scheme="http://www.beckjin.com/tags/Elasticsearch/"/>
     
   </entry>
   
