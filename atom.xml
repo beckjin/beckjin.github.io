@@ -316,9 +316,9 @@
     
       <category term="WebApi" scheme="http://www.beckjin.com/tags/WebApi/"/>
     
-      <category term="log4net" scheme="http://www.beckjin.com/tags/log4net/"/>
-    
       <category term="Kafka" scheme="http://www.beckjin.com/tags/Kafka/"/>
+    
+      <category term="log4net" scheme="http://www.beckjin.com/tags/log4net/"/>
     
       <category term="ELK" scheme="http://www.beckjin.com/tags/ELK/"/>
     
@@ -464,9 +464,9 @@
     
       <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
     
-      <category term="Node.js" scheme="http://www.beckjin.com/tags/Node-js/"/>
-    
       <category term="Swagger" scheme="http://www.beckjin.com/tags/Swagger/"/>
+    
+      <category term="Node.js" scheme="http://www.beckjin.com/tags/Node-js/"/>
     
   </entry>
   
