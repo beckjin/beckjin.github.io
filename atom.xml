@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.beckjin.com/"/>
-  <updated>2019-07-14T14:00:42.953Z</updated>
+  <updated>2019-07-20T08:33:48.058Z</updated>
   <id>http://www.beckjin.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://www.beckjin.com/2019/07/14/apollo-distributed/"/>
     <id>http://www.beckjin.com/2019/07/14/apollo-distributed/</id>
     <published>2019-07-14T12:23:51.000Z</published>
-    <updated>2019-07-14T14:00:42.953Z</updated>
+    <updated>2019-07-20T08:33:48.058Z</updated>
     
     <summary type="html">
     
@@ -316,9 +316,9 @@
     
       <category term="WebApi" scheme="http://www.beckjin.com/tags/WebApi/"/>
     
-      <category term="Kafka" scheme="http://www.beckjin.com/tags/Kafka/"/>
-    
       <category term="log4net" scheme="http://www.beckjin.com/tags/log4net/"/>
+    
+      <category term="Kafka" scheme="http://www.beckjin.com/tags/Kafka/"/>
     
       <category term="ELK" scheme="http://www.beckjin.com/tags/ELK/"/>
     
@@ -464,9 +464,9 @@
     
       <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
     
-      <category term="Swagger" scheme="http://www.beckjin.com/tags/Swagger/"/>
-    
       <category term="Node.js" scheme="http://www.beckjin.com/tags/Node-js/"/>
+    
+      <category term="Swagger" scheme="http://www.beckjin.com/tags/Swagger/"/>
     
   </entry>
   
