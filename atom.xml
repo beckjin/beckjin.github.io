@@ -490,9 +490,9 @@
     
       <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
     
-      <category term="Swagger" scheme="http://www.beckjin.com/tags/Swagger/"/>
-    
       <category term="Node.js" scheme="http://www.beckjin.com/tags/Node-js/"/>
+    
+      <category term="Swagger" scheme="http://www.beckjin.com/tags/Swagger/"/>
     
   </entry>
   
