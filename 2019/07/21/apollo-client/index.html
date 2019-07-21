@@ -94,7 +94,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/apollo-client/wmOptions.png">
 <meta property="og:image" content="http://www.beckjin.com/img/apollo-client/javaConfigData.png">
 <meta property="og:image" content="http://www.beckjin.com/img/apollo-client/netConfigData.png">
-<meta property="og:updated_time" content="2019-07-21T06:33:18.465Z">
+<meta property="og:updated_time" content="2019-07-21T06:46:23.927Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Apollo 配置中心：客户端接入">
 <meta name="twitter:description" content="通过上篇文章 分布式部署 的介绍 ，接下来就可以在程序中接入 Apollo 客户端进行调用，这边文章主要介绍在 Java 和 .NET Core 中如何接入，更多可参考 其它语言客户端接入指南。 创建应用在客户端接入 Apollo 之前，先在  Apollo 管理后台创建一个 demo-apollo 应用，并添加配置项，如下：  创建 Namespace在 Apollo 中，还可以通过建 Name">
@@ -376,22 +376,16 @@
 <li><p>添加 apollo-client 依赖</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">   &lt;groupId&gt;com.ctrip.framework.apollo&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;apollo-client&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;1.4.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
 </li>
-</ol>
-<ol>
 <li><p>基于前面创建好的应用 <strong>demo-apollo</strong> 和 Namespace <strong>TEST1.Common</strong>，在 application.properties 中添加 Apollo 相关配置。（<em>如果不需要本应用外的 Namespace，只需要配置 app.id</em>)</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 对应 Apollo 中应用的 AppId</span><br><span class="line">app.id=demo-apollo</span><br><span class="line">apollo.bootstrap.enabled=true</span><br><span class="line"># 添加 application 本身 和 TEST1.Common Namespace 的配置</span><br><span class="line">apollo.bootstrap.namespaces=application,TEST1.Common</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong>namespaces 中的顺序是有讲究的，如果 application 和 TEST1.Common 中有相同 key ，那么 application 会覆盖掉 TEST1.Common 中相同 key 的值。</p>
 </li>
-</ol>
-<p>   <strong>注意：</strong>namespaces 中的顺序是有讲究的，如果 application 和 TEST1.Common 中有相同 key ，那么 application 会覆盖掉 TEST1.Common 中相同 key 的值。</p>
-<ol>
 <li><p>将配置信息注入到 ConfigBean 的属性上</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@Getter</span><br><span class="line">@Setter</span><br><span class="line">@ToString</span><br><span class="line">public class ConfigBean &#123;</span><br><span class="line"></span><br><span class="line">	@Value(&quot;$&#123;name:name取不到时的默认值&#125;&quot;)</span><br><span class="line">	private String name;</span><br><span class="line"></span><br><span class="line">	@Value(&quot;$&#123;company:name取不到时的默认值&#125;&quot;)</span><br><span class="line">	private String company;</span><br><span class="line"></span><br><span class="line">	@Value(&quot;$&#123;url:url取不到时的默认值&#125;&quot;)</span><br><span class="line">	private String url;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@EnableApolloConfig</span><br><span class="line">public class AppConfig &#123;</span><br><span class="line"></span><br><span class="line">	@Bean</span><br><span class="line">	public ConfigBean getConfigBean() &#123;</span><br><span class="line">		return new ConfigBean();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 添加 @Configuration、@EnableApolloConfig，标记配置信息来源 Apollo，@Value 指定 Apollo 中对应 key 的值映射到什么属性。</p>
+<p><em>在 ConfigBean 中使用了 lombok，简化属性的 Get、Set 生成，使用 lombok 需要在 IDEA 中添加 Lombok plugin</em></p>
 </li>
-</ol>
-<p>   添加  @Configuration、@EnableApolloConfig，标记配置信息来源 Apollo，@Value 指定 Apollo 中对应 key 的值映射到什么属性。</p>
-<p>   <em>在 ConfigBean 中使用了 lombok，简化属性的 Get、Set 生成，使用 lombok 需要在 IDEA 中添加 Lombok plugin</em></p>
-<ol>
 <li><p>添加获取配置信息接口</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@RestController</span><br><span class="line">@RequestMapping(&quot;/test&quot;)</span><br><span class="line">public class TestController &#123;</span><br><span class="line"></span><br><span class="line">	@Autowired</span><br><span class="line">	private AppConfig appConfig;</span><br><span class="line"></span><br><span class="line">	@GetMapping(value = &quot;/get-config&quot;)</span><br><span class="line">	public ConfigBean getConfig() &#123;</span><br><span class="line">		return appConfig.getConfigBean();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在启动项目前需要设置  VM options，指定 env 和 appllo meta：</p>
@@ -408,20 +402,14 @@
 <li><p>在 appsettings.json 添加 Apollo 配置信息</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;apollo&quot;: &#123;</span><br><span class="line">		&quot;AppId&quot;: &quot;demo-apollo&quot;, // 应用id</span><br><span class="line">		&quot;MetaServer&quot;: &quot;http://apollo.beckjin.com:8888/&quot;, </span><br><span class="line">		&quot;Env&quot;: &quot;PRO&quot; </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
-</ol>
-<ol>
 <li><p>修改 Program.cs</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public static IWebHostBuilder CreateWebHostBuilder(string[] args) =&gt;</span><br><span class="line">	WebHost.CreateDefaultBuilder(args)</span><br><span class="line">	 .ConfigureAppConfiguration(builder =&gt; builder</span><br><span class="line">	   .AddApollo(builder.Build().GetSection(&quot;apollo&quot;))</span><br><span class="line">	   .AddNamespace(&quot;TEST1.Common&quot;) // 引入 TEST1.Common 命名空间</span><br><span class="line">	   .AddDefault()) // 默认 namespace: application</span><br><span class="line">	   .UseStartup&lt;Startup&gt;();</span><br></pre></td></tr></table></figure>
+<p> 以上配置如果 Default 中具有 TEST1.Common 相同的 key，那么 Default 会覆盖掉 TEST1.Common 中相同 key 的值。</p>
 </li>
-</ol>
-<pre><code>以上配置如果 Default 中具有 TEST1.Common 相同的 key，那么 Default 会覆盖掉 TEST1.Common 中相同 key 的值。
-</code></pre><ol>
 <li><p>添加获取配置信息接口</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public class ValuesController : ControllerBase</span><br><span class="line">&#123;</span><br><span class="line">	private IConfiguration _configration;</span><br><span class="line"></span><br><span class="line">	public ValuesController(IConfiguration configuration)</span><br><span class="line">	&#123;</span><br><span class="line">		_configration = configuration;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	[HttpGet]</span><br><span class="line">	public async Task&lt;object&gt; Get()</span><br><span class="line">	&#123;</span><br><span class="line">		await Task.CompletedTask;</span><br><span class="line"></span><br><span class="line">		return new</span><br><span class="line">		&#123;</span><br><span class="line">			Name = _configration[&quot;name&quot;],</span><br><span class="line">			Company = _configration[&quot;company&quot;],</span><br><span class="line">			Url = _configration[&quot;url&quot;]</span><br><span class="line">		&#125;;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>服务启动成功后，配置信息会注入到 IConfiguration 中，可以从容器中的 IConfiguration 对象获取具体配置。</p>
 </li>
-</ol>
-<p>   服务启动成功后，配置信息会注入到 IConfiguration 中，可以从容器中的 IConfiguration 对象获取具体配置。</p>
-<ol>
 <li><p>启动并调用接口</p>
 <p><img src="/img/apollo-client/netConfigData.png" alt="config data"></p>
 </li>
