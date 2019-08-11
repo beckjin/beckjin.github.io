@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.beckjin.com/"/>
-  <updated>2019-08-06T14:48:29.285Z</updated>
+  <updated>2019-08-11T09:39:33.783Z</updated>
   <id>http://www.beckjin.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>VS 扩展开发：Grpc Proto To Nuget Package</title>
+    <link href="http://www.beckjin.com/2019/08/11/aspnet-ptp/"/>
+    <id>http://www.beckjin.com/2019/08/11/aspnet-ptp/</id>
+    <published>2019-08-11T09:07:32.000Z</published>
+    <updated>2019-08-11T09:39:33.783Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h3&gt;&lt;p&gt;一直以来我们使用 &lt;a href=&quot;https://grpc.io/&quot; target=&quot;_blank&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/categories/ASP-NET/"/>
+    
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/tags/ASP-NET/"/>
+    
+      <category term="VSIX" scheme="http://www.beckjin.com/tags/VSIX/"/>
+    
+  </entry>
   
   <entry>
     <title>ASP.NET 自定义项目模板</title>
@@ -584,32 +612,6 @@
       <category term="WebApi" scheme="http://www.beckjin.com/tags/WebApi/"/>
     
       <category term="CORS" scheme="http://www.beckjin.com/tags/CORS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Kafka Consumer</title>
-    <link href="http://www.beckjin.com/2018/07/15/kafka-consumer/"/>
-    <id>http://www.beckjin.com/2018/07/15/kafka-consumer/</id>
-    <published>2018-07-14T16:14:52.000Z</published>
-    <updated>2018-07-15T04:56:38.411Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;Kafka 与很多其它 MQ 不太一样，Kafka 中的 Topic 具有分区（Partition）的概念，一个 Topic
-        
-      
-    
-    </summary>
-    
-      <category term="Kafka" scheme="http://www.beckjin.com/categories/Kafka/"/>
-    
-    
-      <category term="Kafka" scheme="http://www.beckjin.com/tags/Kafka/"/>
     
   </entry>
   
