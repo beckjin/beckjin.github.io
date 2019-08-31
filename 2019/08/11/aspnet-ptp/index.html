@@ -84,20 +84,20 @@
 <meta name="description" content="背景一直以来我们使用 gRPC 来进行微服务开发，对 gRPC 有过了解应该清楚它依赖 proto 接口定义文件来实现的，在进行服务调用之前，需要先通过 proto 文件来生成当前服务使用语言的客户端代码，然后就可以实现调用本地方法一样调用远程服务。（目前已存在不用生成客户端代码就可以调用方法的方式，但与本文的重点不一样） 在 .NET 开发中，我们目前的方式是通过  proto 文件生成客户端代">
 <meta name="keywords" content="ASP.NET,VSIX">
 <meta property="og:type" content="article">
-<meta property="og:title" content="VS 扩展开发：Grpc Proto To Nuget Package">
+<meta property="og:title" content="VS 扩展开发：Grpc Proto To NuGet Package">
 <meta property="og:url" content="http://www.beckjin.com/2019/08/11/aspnet-ptp/index.html">
 <meta property="og:site_name" content="Beck&#39;s Blog">
 <meta property="og:description" content="背景一直以来我们使用 gRPC 来进行微服务开发，对 gRPC 有过了解应该清楚它依赖 proto 接口定义文件来实现的，在进行服务调用之前，需要先通过 proto 文件来生成当前服务使用语言的客户端代码，然后就可以实现调用本地方法一样调用远程服务。（目前已存在不用生成客户端代码就可以调用方法的方式，但与本文的重点不一样） 在 .NET 开发中，我们目前的方式是通过  proto 文件生成客户端代">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-ptp/templateStructure.png">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-ptp/template.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-ptp/grpcProtoToNugetPackage.png">
+<meta property="og:image" content="http://www.beckjin.com/img/aspnet-ptp/grpcProtoToNuGetPackage.png">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-ptp/nugetPackageSetting.png">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-ptp/publishedPackages.png">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-ptp/installMyHelloworld.png">
-<meta property="og:updated_time" content="2019-08-11T09:39:33.783Z">
+<meta property="og:updated_time" content="2019-08-31T17:21:52.716Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="VS 扩展开发：Grpc Proto To Nuget Package">
+<meta name="twitter:title" content="VS 扩展开发：Grpc Proto To NuGet Package">
 <meta name="twitter:description" content="背景一直以来我们使用 gRPC 来进行微服务开发，对 gRPC 有过了解应该清楚它依赖 proto 接口定义文件来实现的，在进行服务调用之前，需要先通过 proto 文件来生成当前服务使用语言的客户端代码，然后就可以实现调用本地方法一样调用远程服务。（目前已存在不用生成客户端代码就可以调用方法的方式，但与本文的重点不一样） 在 .NET 开发中，我们目前的方式是通过  proto 文件生成客户端代">
 <meta name="twitter:image" content="http://www.beckjin.com/img/aspnet-ptp/templateStructure.png">
 
@@ -135,7 +135,7 @@
 
 
 
-  <title>VS 扩展开发：Grpc Proto To Nuget Package | Beck's Blog</title>
+  <title>VS 扩展开发：Grpc Proto To NuGet Package | Beck's Blog</title>
   
 
 
@@ -281,7 +281,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">VS 扩展开发：Grpc Proto To Nuget Package</h2>
+          <h2 class="post-title" itemprop="name headline">VS 扩展开发：Grpc Proto To NuGet Package</h2>
         
 
         <div class="post-meta">
@@ -333,7 +333,7 @@
 
           
           
-             <span id="/2019/08/11/aspnet-ptp/" class="leancloud_visitors" data-flag-title="VS 扩展开发：Grpc Proto To Nuget Package">
+             <span id="/2019/08/11/aspnet-ptp/" class="leancloud_visitors" data-flag-title="VS 扩展开发：Grpc Proto To NuGet Package">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -365,63 +365,63 @@
 
       
         <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>一直以来我们使用 <a href="https://grpc.io/" target="_blank" rel="noopener">gRPC</a> 来进行微服务开发，对 gRPC 有过了解应该清楚它依赖 <code>proto</code> 接口定义文件来实现的，在进行服务调用之前，需要先通过 <code>proto</code> 文件来生成当前服务使用语言的客户端代码，然后就可以实现调用本地方法一样调用远程服务。（<em>目前已存在不用生成客户端代码就可以调用方法的方式，但与本文的重点不一样</em>）</p>
-<p>在 .NET 开发中，我们目前的方式是通过  <code>proto</code> 文件生成客户端代码并建成 Nuget Package ，然后推送到自己的私有 Nuget 仓库，最后在服务内进行 Nuget Package 安装来引用服务，这样不至于需要调用此服务的服务每次都 copy 代码，希望简化一些工作量。</p>
-<p>但问题又来了，要实现推送到自己的私有 Nuget 仓库的步骤实在太多，这样依然效率低下，最后决定团队内决定自己开发一个 VS 插件 <a href="https://marketplace.visualstudio.com/items?itemName=Mingdao.ptp" target="_blank" rel="noopener">Grpc Proto To Nuget Package</a> ，目的是一键生成 Nuget Package 并发布到私有仓库。</p>
+<p>在 .NET 开发中，我们目前的方式是通过  <code>proto</code> 文件生成客户端代码并建成 NuGet Package ，然后推送到自己的私有 NuGet 仓库，最后在服务内进行 NuGet Package 安装来引用服务，这样不至于需要调用此服务的服务每次都 copy 代码，希望简化一些工作量。</p>
+<p>但问题又来了，要实现推送到自己的私有 NuGet 仓库的步骤实在太多，这样依然效率低下，最后决定团队内决定自己开发一个 VS 插件 <a href="https://marketplace.visualstudio.com/items?itemName=Mingdao.ptp" target="_blank" rel="noopener">Grpc Proto To NuGet Package</a> ，目的是一键生成 NuGet Package 并发布到私有仓库。</p>
 <h3 id="实现方案"><a href="#实现方案" class="headerlink" title="实现方案"></a>实现方案</h3><ol>
 <li><p>创建 Grpc 客户端项目模板，关于 .NET 项目模板创建可参考文章：<a href="http://beckjin.com/2019/08/04/aspnet-template/" target="_blank" rel="noopener">ASP.NET 自定义项目模板</a> ；</p>
 </li>
-<li><p>创建 VS 扩展插件 <code>Grpc Proto To Nuget Package</code>；</p>
+<li><p>创建 VS 扩展插件 <code>Grpc Proto To NuGet Package</code>；</p>
 </li>
-<li><p>右键选中 <code>protos</code> 文件夹 (<code>proto</code> 接口定义文件存放位置，文件夹名固定为 <code>protos</code> )，在右键菜单中点击 <code>Grpc Proto To Nuget Package</code>，配置私有 Nuget 仓库源地址和 API Key，然后会自动创建基于项目模板的临时项目，同时会把 <code>protos</code> 文件夹复制到临时项目中，执行生成客户端代码命令（<em>注：公共的 <code>proto</code> 文件可放在 <code>protos/common</code> 下，否则都需要放在 <code>protos</code> 文件夹根目录</em>）；</p>
+<li><p>右键选中 <code>protos</code> 文件夹 (<code>proto</code> 接口定义文件存放位置，文件夹名固定为 <code>protos</code> )，在右键菜单中点击 <code>Grpc Proto To NuGet Package</code>，配置私有 NuGet 仓库源地址和 API Key，然后会自动创建基于项目模板的临时项目，同时会把 <code>protos</code> 文件夹复制到临时项目中，执行生成客户端代码命令（<em>注：公共的 <code>proto</code> 文件可放在 <code>protos/common</code> 下，否则都需要放在 <code>protos</code> 文件夹根目录</em>）；</p>
 </li>
 <li><p>介于 Grpc 客户端调用需要对 channel 进行复用，所以同时会基于 T4 模板自动生成复用 channel 的 client 代码，使在调用时不用考虑 channel 复用问题 ；</p>
 </li>
-<li><p>最终通过 <code>dotnet build</code> 和 <code>dotnet nuget push</code> 将客户端代码的 Nuget Package 推送到私有仓库；</p>
+<li><p>最终通过 <code>dotnet build</code> 和 <code>dotnet nuget push</code> 将客户端代码的 NuGet Package 推送到私有仓库；</p>
 </li>
 <li><p>删除临时项目。</p>
 </li>
 </ol>
 <h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><ol>
-<li><p>下载最新 <a href="https://github.com/mingdaocom/GrpcProtoToNugetPackage/releases" target="_blank" rel="noopener">GrpcProtoToNugetPackageTemplate.zip</a> ASP.NET 的项目模板；</p>
+<li><p>下载最新 <a href="https://github.com/mingdaocom/GrpcProtoToNuGetPackage/releases" target="_blank" rel="noopener">GrpcProtoToNuGetPackageTemplate.zip</a> ASP.NET 的项目模板；</p>
 </li>
-<li><p>解压 <code>GrpcProtoToNugetPackageTemplate.zip</code>，在安装之前最好对以下文件进行必要的修改，主要是团队相关信息：</p>
-<p><code>Content/.template.config/template.json</code>:  author<br><code>Grpc.Proto.To.Nuget.Package.nuspec</code>:  authors<br><code>GrpcProtoToNugetPackage.csproj</code>: Authors、Company、RepositoryUrl，其他看情况修改如：<code>TargetFrameworks</code> .</p>
+<li><p>解压 <code>GrpcProtoToNuGetPackageTemplate.zip</code>，在安装之前最好对以下文件进行必要的修改，主要是团队相关信息：</p>
+<p><code>Content/.template.config/template.json</code>:  author<br><code>Grpc.Proto.To.NuGet.Package.nuspec</code>:  authors<br><code>GrpcProtoToNuGetPackage.csproj</code>: Authors、Company、RepositoryUrl，其他看情况修改如：<code>TargetFrameworks</code> .</p>
 <p><img src="/img/aspnet-ptp/templateStructure.png" alt="模板结构"></p>
 </li>
-<li><p>执行 <code>nuget pack Grpc.Proto.To.Nuget.Package.nuspec</code>（nuget 如果不存在，需要下载并将 nuget.exe 添加到环境变量） 生成 <code>Grpc.Proto.To.Nuget.Package.1.0.0.nupkg</code>；</p>
+<li><p>执行 <code>nuget pack Grpc.Proto.To.NuGet.Package.nuspec</code>（nuget 如果不存在，需要下载并将 nuget.exe 添加到环境变量） 生成 <code>Grpc.Proto.To.NuGet.Package.1.0.0.nupkg</code>；</p>
 </li>
-<li><p>执行 <code>dotnet new -i Grpc.Proto.To.Nuget.Package.1.0.0.nupkg</code> 进行模板安装；</p>
+<li><p>执行 <code>dotnet new -i Grpc.Proto.To.NuGet.Package.1.0.0.nupkg</code> 进行模板安装；</p>
 </li>
-<li><p>安装成功后，可通过 <code>dotnew new -u</code> 进行查看现有的项目模板，如下：<code>Grpc.Proto.To.Nuget.Package</code> 即安装的项目模板，如果需要卸载，执行 <code>dotnew new -u Grpc.Proto.To.Nuget.Package</code></p>
-<p><img src="/img/aspnet-ptp/template.png" alt="Grpc.Proto.To.Nuget.Package.Template"></p>
+<li><p>安装成功后，可通过 <code>dotnew new -u</code> 进行查看现有的项目模板，如下：<code>Grpc.Proto.To.NuGet.Package</code> 即安装的项目模板，如果需要卸载，执行 <code>dotnew new -u Grpc.Proto.To.NuGet.Package</code></p>
+<p><img src="/img/aspnet-ptp/template.png" alt="Grpc.Proto.To.NuGet.Package.Template"></p>
 </li>
-<li><p>下载最新版 <a href="https://github.com/mingdaocom/GrpcProtoToNugetPackage/releases" target="_blank" rel="noopener">GrpcProtoToNugetPackage.vsix</a>，在关闭所有 VS 窗口下安装此插件；</p>
+<li><p>下载最新版 <a href="https://github.com/mingdaocom/GrpcProtoToNuGetPackage/releases" target="_blank" rel="noopener">GrpcProtoToNuGetPackage.vsix</a>，在关闭所有 VS 窗口下安装此插件；</p>
 </li>
 <li><p>安装成功后，VS 中打开含 <code>proto</code> 文件的项目（注：<code>proto</code> 文件必须放在 <code>protos</code> 文件夹下）；</p>
 </li>
-<li><p>在 <code>protos</code> 文件夹右键选择 <code>Grpc Proto To Nuget Package</code>，如下：</p>
-<p><img src="/img/aspnet-ptp/grpcProtoToNugetPackage.png" alt="Grpc.Proto.To.Nuget.Package"></p>
+<li><p>在 <code>protos</code> 文件夹右键选择 <code>Grpc Proto To NuGet Package</code>，如下：</p>
+<p><img src="/img/aspnet-ptp/grpcProtoToNuGetPackage.png" alt="Grpc.Proto.To.NuGet.Package"></p>
 </li>
-<li><p>点击后会弹出配置窗口，设置 Nuget Package 要推送到的 <code>源地址</code> 和 <code>APIKey</code>（只需首次设置）</p>
+<li><p>点击后会弹出配置窗口，设置 NuGet Package 要推送到的 <code>源地址</code> 和 <code>APIKey</code>（只需首次设置）</p>
 <p><em>可在 <a href="https://www.nuget.org" target="_blank" rel="noopener">https://www.nuget.org</a> 官网注册账号，并创建 API Key 进行测试，不过这样是推送的公共平台上。</em></p>
-<p><img src="/img/aspnet-ptp/nugetPackageSetting.png" alt="Nuget Package Setting"></p>
+<p><img src="/img/aspnet-ptp/nugetPackageSetting.png" alt="NuGet Package Setting"></p>
 </li>
-<li><p>输入 Nuget Package 版本号（目前需要手动输入）</p>
-<p>执行过程中使用的资源文件会暂存到 <code>C:\TempGrpcNuget</code> 目录下。首次会创建 <code>repository.json</code> 保存 Nuget 仓库的配置信息，接下来每次会根据包名创建一个临时项目用于生成对应 Nuget Package，如果有问题，一般是因不符合规范导致编译不通过，这时候可在临时项目中通过 <code>dotnet build</code> 进行编译或通过 VS 添加现有项目查看具体问题。</p>
+<li><p>设置 NuGet Package 版本号（默认为当前最大版本的 revision 位加 1）</p>
+<p>执行过程中使用的资源文件会暂存到 <code>C:\TempGrpcNuGet</code> 目录下。首次会创建 <code>repository.json</code> 保存 NuGet 仓库的配置信息，接下来每次会根据包名创建一个临时项目用于生成对应 NuGet Package，如果有问题，一般是因不符合规范导致编译不通过，这时候可在临时项目中通过 <code>dotnet build</code> 进行编译或通过 VS 添加现有项目查看具体问题。</p>
 </li>
 <li><p>执行，注意执行结果内的输出日志，确保推送到远端仓库 OK</p>
 <p> <img src="/img/aspnet-ptp/publishedPackages.png" alt="Published Packages"></p>
 </li>
-<li><p>Nuget Package 安装与使用</p>
+<li><p>NuGet Package 安装与使用</p>
 <p><img src="/img/aspnet-ptp/installMyHelloworld.png" alt="Install MyHelloworld"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">static void Main(string[] args)</span><br><span class="line">&#123;</span><br><span class="line">	// client 集合</span><br><span class="line">	var clientContainer = new ClientContainer(&quot;127.0.0.1:1234&quot;);</span><br><span class="line"></span><br><span class="line">	// GreeterClient，如果有多个 Client，也是直接从 clientContainer 中获取</span><br><span class="line">	var greeterClient = clientContainer.GreeterClient;</span><br><span class="line"></span><br><span class="line">	var response = greeterClient.SayHello(new HelloRequest</span><br><span class="line">	&#123;</span><br><span class="line">		Name = &quot;BeckJin&quot;</span><br><span class="line">	&#125;);</span><br><span class="line"></span><br><span class="line">	Console.WriteLine(response.Message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>以上主要是实现方案及使用方法的具体说明，实际使用 <code>Grpc Proto To Nuget Package</code> 只需如下 3 步：</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>以上主要是实现方案及使用方法的具体说明，实际使用 <code>Grpc Proto To NuGet Package</code> 只需如下 3 步：</p>
 <ol>
-<li>安装 <code>GrpcProtoToNugetPackageTemplate</code> 项目模板；</li>
-<li>安装 <code>Grpc Proto To Nuget Package</code> VS 插件；</li>
-<li>配置私有 Nuget 仓库；</li>
+<li>安装 <code>GrpcProtoToNuGetPackageTemplate</code> 项目模板；</li>
+<li>安装 <code>Grpc Proto To NuGet Package</code> VS 插件；</li>
+<li>配置私有 NuGet 仓库；</li>
 </ol>
 
       

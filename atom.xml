@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.beckjin.com/"/>
-  <updated>2019-08-11T09:39:33.783Z</updated>
+  <updated>2019-08-31T17:21:52.716Z</updated>
   <id>http://www.beckjin.com/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>VS 扩展开发：Grpc Proto To Nuget Package</title>
+    <title>VS 扩展开发：Grpc Proto To NuGet Package</title>
     <link href="http://www.beckjin.com/2019/08/11/aspnet-ptp/"/>
     <id>http://www.beckjin.com/2019/08/11/aspnet-ptp/</id>
     <published>2019-08-11T09:07:32.000Z</published>
-    <updated>2019-08-11T09:39:33.783Z</updated>
+    <updated>2019-08-31T17:21:52.716Z</updated>
     
     <summary type="html">
     
