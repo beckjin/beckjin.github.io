@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.beckjin.com/"/>
-  <updated>2019-09-07T09:52:48.246Z</updated>
+  <updated>2019-09-07T09:56:55.489Z</updated>
   <id>http://www.beckjin.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://www.beckjin.com/2019/09/07/polly-http-client/"/>
     <id>http://www.beckjin.com/2019/09/07/polly-http-client/</id>
     <published>2019-09-07T08:43:17.000Z</published>
-    <updated>2019-09-07T09:52:48.246Z</updated>
+    <updated>2019-09-07T09:56:55.489Z</updated>
     
     <summary type="html">
     
@@ -29,7 +29,7 @@
       
         
         
-          &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;&lt;code&gt;HttpClientFactory&lt;/code&gt; 是 ASP.NET CORE 2.1 中新增加的功能，目的是为了解决直接使用
+          &lt;p&gt;&lt;code&gt;HttpClientFactory&lt;/code&gt; 是 ASP.NET CORE 2.1 中新增加的功能，目的是为了解决直接使用 &lt;code&gt;HttpClient&lt;/code&gt; 可能带来的一系列问题（&lt;em&gt;&lt;a
         
       
     

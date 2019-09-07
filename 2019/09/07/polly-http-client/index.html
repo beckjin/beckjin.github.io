@@ -81,23 +81,23 @@
 
 
 
-<meta name="description" content="前言HttpClientFactory 是 ASP.NET CORE 2.1 中新增加的功能，目的是为了解决直接使用 HttpClient 可能带来的一系列问题（优雅通过 HttpClientFactory 使用 HttpClient），本文主要介绍 HttpClientFactory 整合 Polly 的使用，实现对 Http 请求的超时、重试、熔断、降级等操作。 HttpClientFacto">
+<meta name="description" content="HttpClientFactory 是 ASP.NET CORE 2.1 中新增加的功能，目的是为了解决直接使用 HttpClient 可能带来的一系列问题（优雅通过 HttpClientFactory 使用 HttpClient），本文主要介绍 HttpClientFactory 整合 Polly 的使用，实现对 Http 请求的超时、重试、熔断、降级等操作。 HttpClientFactory">
 <meta name="keywords" content="ASP.NET,C#,Polly">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HttpClientFactory + Polly 实现熔断降级">
 <meta property="og:url" content="http://www.beckjin.com/2019/09/07/polly-http-client/index.html">
 <meta property="og:site_name" content="Beck&#39;s Blog">
-<meta property="og:description" content="前言HttpClientFactory 是 ASP.NET CORE 2.1 中新增加的功能，目的是为了解决直接使用 HttpClient 可能带来的一系列问题（优雅通过 HttpClientFactory 使用 HttpClient），本文主要介绍 HttpClientFactory 整合 Polly 的使用，实现对 Http 请求的超时、重试、熔断、降级等操作。 HttpClientFacto">
+<meta property="og:description" content="HttpClientFactory 是 ASP.NET CORE 2.1 中新增加的功能，目的是为了解决直接使用 HttpClient 可能带来的一系列问题（优雅通过 HttpClientFactory 使用 HttpClient），本文主要介绍 HttpClientFactory 整合 Polly 的使用，实现对 Http 请求的超时、重试、熔断、降级等操作。 HttpClientFactory">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.beckjin.com/img/polly-http-client/retry.png">
 <meta property="og:image" content="http://www.beckjin.com/img/polly-http-client/circuitBreakerOpen.png">
 <meta property="og:image" content="http://www.beckjin.com/img/polly-http-client/circuitBreakerHalfOpen.png">
 <meta property="og:image" content="http://www.beckjin.com/img/polly-http-client/circuitBreakerClosed.png">
 <meta property="og:image" content="http://www.beckjin.com/img/polly-http-client/fallback.png">
-<meta property="og:updated_time" content="2019-09-07T09:52:48.246Z">
+<meta property="og:updated_time" content="2019-09-07T09:56:55.489Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HttpClientFactory + Polly 实现熔断降级">
-<meta name="twitter:description" content="前言HttpClientFactory 是 ASP.NET CORE 2.1 中新增加的功能，目的是为了解决直接使用 HttpClient 可能带来的一系列问题（优雅通过 HttpClientFactory 使用 HttpClient），本文主要介绍 HttpClientFactory 整合 Polly 的使用，实现对 Http 请求的超时、重试、熔断、降级等操作。 HttpClientFacto">
+<meta name="twitter:description" content="HttpClientFactory 是 ASP.NET CORE 2.1 中新增加的功能，目的是为了解决直接使用 HttpClient 可能带来的一系列问题（优雅通过 HttpClientFactory 使用 HttpClient），本文主要介绍 HttpClientFactory 整合 Polly 的使用，实现对 Http 请求的超时、重试、熔断、降级等操作。 HttpClientFactory">
 <meta name="twitter:image" content="http://www.beckjin.com/img/polly-http-client/retry.png">
 
 
@@ -363,7 +363,7 @@
       
 
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>HttpClientFactory</code> 是 ASP.NET CORE 2.1 中新增加的功能，目的是为了解决直接使用 <code>HttpClient</code> 可能带来的一系列问题（<em><a href="https://www.jianshu.com/p/732aee097c6b" target="_blank" rel="noopener">优雅通过 HttpClientFactory 使用 HttpClient</a></em>），本文主要介绍 <code>HttpClientFactory</code> 整合 <a href="https://github.com/App-vNext/Polly" target="_blank" rel="noopener">Polly</a> 的使用，实现对 Http 请求的超时、重试、熔断、降级等操作。</p>
+        <p><code>HttpClientFactory</code> 是 ASP.NET CORE 2.1 中新增加的功能，目的是为了解决直接使用 <code>HttpClient</code> 可能带来的一系列问题（<em><a href="https://www.jianshu.com/p/732aee097c6b" target="_blank" rel="noopener">优雅通过 HttpClientFactory 使用 HttpClient</a></em>），本文主要介绍 <code>HttpClientFactory</code> 整合 <a href="https://github.com/App-vNext/Polly" target="_blank" rel="noopener">Polly</a> 的使用，实现对 Http 请求的超时、重试、熔断、降级等操作。</p>
 <h3 id="HttpClientFactory-集成-Polly"><a href="#HttpClientFactory-集成-Polly" class="headerlink" title="HttpClientFactory 集成 Polly"></a>HttpClientFactory 集成 Polly</h3><ol>
 <li><p>创建 .NET Core API 项目（这里使用的是 .NET Core 2.2）；</p>
 </li>
@@ -639,7 +639,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x524D;&#x8A00;" class="headerlink" title="&#x524D;&#x8A00;"></a>&#x524D;&#x8A00;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HttpClientFactory-集成-Polly"><span class="nav-number">2.</span> <span class="nav-text"><a href="#HttpClientFactory-&#x96C6;&#x6210;-Polly" class="headerlink" title="HttpClientFactory &#x96C6;&#x6210; Polly"></a>HttpClientFactory &#x96C6;&#x6210; Polly</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接"><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#HttpClientFactory-集成-Polly"><span class="nav-number">1.</span> <span class="nav-text"><a href="#HttpClientFactory-&#x96C6;&#x6210;-Polly" class="headerlink" title="HttpClientFactory &#x96C6;&#x6210; Polly"></a>HttpClientFactory &#x96C6;&#x6210; Polly</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;</span></a></li></ol></div>
             
 
           </div>
