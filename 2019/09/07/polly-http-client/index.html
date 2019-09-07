@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="ASP.NET,C#,Nuget Server," />
+  <meta name="keywords" content="ASP.NET,C#,Polly," />
 
 
 
@@ -81,24 +81,24 @@
 
 
 
-<meta name="description" content="A：你把xx项目的xx代码发我一份吧，我这边也有那个功能B：好的。（ctrl+c、ctrl+v 甩过去）    A：我这边的逻辑怎么和你不一样？你那边是不是偷偷修改了什么B：艹，我怎么知道你那么也有这个逻辑。。。A：怪我咯？？？  类似这些情况目前在开发团队中或多或少总会存在，开发过程中对于copy代码这件事，可能苦于目前工作量大，开发交付时间紧张，选择一个目前认为高效的方式，不copy能怎样呢">
-<meta name="keywords" content="ASP.NET,C#,Nuget Server">
+<meta name="description" content="前言HttpClientFactory 是 ASP.NET CORE 2.1 中新增加的功能，目的是为了解决直接使用 HttpClient 可能带来的一系列问题（优雅通过 HttpClientFactory 使用 HttpClient），本文主要介绍 HttpClientFactory 整合 Polly 的使用，实现对 Http 请求的超时、重试、熔断、降级等操作。 HttpClientFacto">
+<meta name="keywords" content="ASP.NET,C#,Polly">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ASP.NET 代码共享：Nuget Server">
-<meta property="og:url" content="http://www.beckjin.com/2017/03/25/cross-project-code-share/index.html">
+<meta property="og:title" content="HttpClientFactory + Polly 实现熔断降级">
+<meta property="og:url" content="http://www.beckjin.com/2019/09/07/polly-http-client/index.html">
 <meta property="og:site_name" content="Beck&#39;s Blog">
-<meta property="og:description" content="A：你把xx项目的xx代码发我一份吧，我这边也有那个功能B：好的。（ctrl+c、ctrl+v 甩过去）    A：我这边的逻辑怎么和你不一样？你那边是不是偷偷修改了什么B：艹，我怎么知道你那么也有这个逻辑。。。A：怪我咯？？？  类似这些情况目前在开发团队中或多或少总会存在，开发过程中对于copy代码这件事，可能苦于目前工作量大，开发交付时间紧张，选择一个目前认为高效的方式，不copy能怎样呢">
+<meta property="og:description" content="前言HttpClientFactory 是 ASP.NET CORE 2.1 中新增加的功能，目的是为了解决直接使用 HttpClient 可能带来的一系列问题（优雅通过 HttpClientFactory 使用 HttpClient），本文主要介绍 HttpClientFactory 整合 Polly 的使用，实现对 Http 请求的超时、重试、熔断、降级等操作。 HttpClientFacto">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.beckjin.com/img/cross-project-code-share/lib.png">
-<meta property="og:image" content="http://www.beckjin.com/img/cross-project-code-share/structure.png">
-<meta property="og:image" content="http://www.beckjin.com/img/cross-project-code-share/release.png">
-<meta property="og:image" content="http://www.beckjin.com/img/cross-project-code-share/package.png">
-<meta property="og:image" content="http://www.beckjin.com/img/cross-project-code-share/publish.png">
-<meta property="og:updated_time" content="2018-08-05T08:58:46.794Z">
+<meta property="og:image" content="http://www.beckjin.com/img/polly-http-client/retry.png">
+<meta property="og:image" content="http://www.beckjin.com/img/polly-http-client/circuitBreakerOpen.png">
+<meta property="og:image" content="http://www.beckjin.com/img/polly-http-client/circuitBreakerHalfOpen.png">
+<meta property="og:image" content="http://www.beckjin.com/img/polly-http-client/circuitBreakerClosed.png">
+<meta property="og:image" content="http://www.beckjin.com/img/polly-http-client/fallback.png">
+<meta property="og:updated_time" content="2019-09-07T08:45:07.342Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ASP.NET 代码共享：Nuget Server">
-<meta name="twitter:description" content="A：你把xx项目的xx代码发我一份吧，我这边也有那个功能B：好的。（ctrl+c、ctrl+v 甩过去）    A：我这边的逻辑怎么和你不一样？你那边是不是偷偷修改了什么B：艹，我怎么知道你那么也有这个逻辑。。。A：怪我咯？？？  类似这些情况目前在开发团队中或多或少总会存在，开发过程中对于copy代码这件事，可能苦于目前工作量大，开发交付时间紧张，选择一个目前认为高效的方式，不copy能怎样呢">
-<meta name="twitter:image" content="http://www.beckjin.com/img/cross-project-code-share/lib.png">
+<meta name="twitter:title" content="HttpClientFactory + Polly 实现熔断降级">
+<meta name="twitter:description" content="前言HttpClientFactory 是 ASP.NET CORE 2.1 中新增加的功能，目的是为了解决直接使用 HttpClient 可能带来的一系列问题（优雅通过 HttpClientFactory 使用 HttpClient），本文主要介绍 HttpClientFactory 整合 Polly 的使用，实现对 Http 请求的超时、重试、熔断、降级等操作。 HttpClientFacto">
+<meta name="twitter:image" content="http://www.beckjin.com/img/polly-http-client/retry.png">
 
 
 
@@ -128,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://www.beckjin.com/2017/03/25/cross-project-code-share/"/>
+  <link rel="canonical" href="http://www.beckjin.com/2019/09/07/polly-http-client/"/>
 
 
 
 
 
-  <title>ASP.NET 代码共享：Nuget Server | Beck's Blog</title>
+  <title>HttpClientFactory + Polly 实现熔断降级 | Beck's Blog</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2017/03/25/cross-project-code-share/">
+    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2019/09/07/polly-http-client/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
@@ -280,7 +280,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">ASP.NET 代码共享：Nuget Server</h2>
+          <h2 class="post-title" itemprop="name headline">HttpClientFactory + Polly 实现熔断降级</h2>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-25T23:04:05+08:00">
-                2017-03-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-07T16:43:17+08:00">
+                2019-09-07
               </time>
             
 
@@ -332,7 +332,7 @@
 
           
           
-             <span id="/2017/03/25/cross-project-code-share/" class="leancloud_visitors" data-flag-title="ASP.NET 代码共享：Nuget Server">
+             <span id="/2019/09/07/polly-http-client/" class="leancloud_visitors" data-flag-title="HttpClientFactory + Polly 实现熔断降级">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -363,60 +363,44 @@
       
 
       
-        <blockquote>
-<p>A：你把xx项目的xx代码发我一份吧，我这边也有那个功能<br>B：好的。（ctrl+c、ctrl+v 甩过去）</p>
-</blockquote>
-<hr>
-<blockquote>
-<p>A：我这边的逻辑怎么和你不一样？你那边是不是偷偷修改了什么<br>B：艹，我怎么知道你那么也有这个逻辑。。。<br>A：怪我咯？？？</p>
-</blockquote>
-<p>类似这些情况目前在开发团队中或多或少总会存在，开发过程中对于copy代码这件事，可能苦于目前工作量大，开发交付时间紧张，选择一个目前认为高效的方式，不copy能怎样呢？心里当然是知道肯定存在解决方案的。</p>
-<h3 id="我们解决问题的方式是搭建自己的-Nuget-Server"><a href="#我们解决问题的方式是搭建自己的-Nuget-Server" class="headerlink" title="我们解决问题的方式是搭建自己的 Nuget Server"></a>我们解决问题的方式是搭建自己的 Nuget Server</h3><p>通过 Nuget Server的方式可以帮助我们进行代码统一管理，功能变化的代码版本控制，Server端版本升级时对引用方目前使用的版本进行兼容即可。每个项目公共功能的代码使用只需要一键安装就来了。如果Server端版本升了，引用方根据项目本身的需要，看是否需要升级到新版本。</p>
-<ol>
-<li><p>创建一个项目，用来管理通过 Nuget Server 发布的代码，代码本身通过github管理，理论上每次发布新版本Nuget包都有一个分支代码和该版本对应；</p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>HttpClientFactory</code> 是 ASP.NET CORE 2.1 中新增加的功能，目的是为了解决直接使用 <code>HttpClient</code> 可能带来的一系列问题（<em><a href="https://www.jianshu.com/p/732aee097c6b" target="_blank" rel="noopener">优雅通过 HttpClientFactory 使用 HttpClient</a></em>），本文主要介绍 <code>HttpClientFactory</code> 整合 <a href="https://github.com/App-vNext/Polly" target="_blank" rel="noopener">Polly</a> 的使用，实现对 Http 请求的超时、重试、熔断、降级等操作。</p>
+<h3 id="HttpClientFactory-集成-Polly"><a href="#HttpClientFactory-集成-Polly" class="headerlink" title="HttpClientFactory 集成 Polly"></a>HttpClientFactory 集成 Polly</h3><ol>
+<li><p>创建 .NET Core API 项目（这里使用的是 .NET Core 2.2）；</p>
 </li>
-<li><p>创建类库，我们使用场景是需要同时支持 .Net Framework和 .Net Core 项目的使用（.Net Framework 4.5.2及以上可以使用，.Net Standard 1.5及以上可以使用），而且希望功能性相关代码只维护一份</p>
+<li><p>安装  <code>Microsoft.Extensions.Http.Polly</code> NuGet Package;</p>
+</li>
+<li><p>在 Startup.cs 的 ConfigureServices 方法中添加 HttpClient 相关代码：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">public void ConfigureServices(IServiceCollection services)</span><br><span class="line">&#123;</span><br><span class="line">		var fallbackResponse = new HttpResponseMessage</span><br><span class="line">		&#123;</span><br><span class="line">				Content = new StringContent(&quot;Fallback&quot;),</span><br><span class="line">				StatusCode = HttpStatusCode.GatewayTimeout</span><br><span class="line">		&#125;;</span><br><span class="line"></span><br><span class="line">		services.AddHttpClient(&quot;github&quot;, client =&gt;</span><br><span class="line">		&#123;</span><br><span class="line">				client.BaseAddress = new Uri(&quot;https://www.github.com&quot;);</span><br><span class="line">		&#125;)</span><br><span class="line">		// 降级</span><br><span class="line">		.AddPolicyHandler(Policy&lt;HttpResponseMessage&gt;.Handle&lt;Exception&gt;().FallbackAsync(fallbackResponse, async b =&gt;</span><br><span class="line">		 &#123;</span><br><span class="line">				 await Task.CompletedTask;</span><br><span class="line">				 _logger.LogWarning($&quot;Fallback: &#123;b.Exception.Message&#125;&quot;);</span><br><span class="line">		 &#125;))</span><br><span class="line">		// 熔断</span><br><span class="line">		.AddPolicyHandler(Policy&lt;HttpResponseMessage&gt;.Handle&lt;TimeoutRejectedException&gt;().CircuitBreakerAsync(5, TimeSpan.FromSeconds(3), (ex, ts) =&gt;</span><br><span class="line">		&#123;</span><br><span class="line">				_logger.LogWarning($&quot;Open Circuit Breaker：&#123;ts.TotalMilliseconds&#125;&quot;);</span><br><span class="line">		&#125;, () =&gt;</span><br><span class="line">		&#123;</span><br><span class="line">				_logger.LogWarning($&quot;Closed Circuit Breaker&quot;);</span><br><span class="line">		&#125;, () =&gt;</span><br><span class="line">		&#123;</span><br><span class="line">				_logger.LogWarning($&quot;HalfOpen Circuit Breaker&quot;);</span><br><span class="line">		&#125;))</span><br><span class="line">		// 重试</span><br><span class="line">		.AddPolicyHandler(Policy&lt;HttpResponseMessage&gt;</span><br><span class="line">				.Handle&lt;TimeoutRejectedException&gt;()</span><br><span class="line">				.WaitAndRetryAsync(</span><br><span class="line">								new[]</span><br><span class="line">								&#123;</span><br><span class="line">										TimeSpan.FromMilliseconds(100),</span><br><span class="line">										TimeSpan.FromMilliseconds(200)</span><br><span class="line">								&#125;</span><br><span class="line">						)</span><br><span class="line">		)</span><br><span class="line">		// 超时</span><br><span class="line">		.AddPolicyHandler(Policy.TimeoutAsync&lt;HttpResponseMessage&gt;(TimeSpan.FromSeconds(0.5)));</span><br><span class="line"></span><br><span class="line">		services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>说明（<em>这部分代码在实际使用中建议重新封装，不应该每次都为当前定义的 <code>HttpClient</code> 设置一堆重复代码</em>）：</p>
 <ul>
-<li>尝试1：使用可移植类库来实现，经过一系列的测试，失败了；</li>
-<li>尝试2：使用standard类库来实现，经过一系列的测试，依然失败；</li>
-<li><p>尝试3：</p>
-<ul>
-<li><p>创建两个类库，一个基于.Net Framework 4.5.2，一个基于.Net Standard 1.5；</p>
-<p><img src="/img/cross-project-code-share/lib.png" alt="lib.png"></p>
-</li>
-<li><p>把.Net Standard 1.5的类库中的.csproj 文件复制到.Net Framework 4.5.2的类库中，创建一个与.Net Framework 4.5.2中的.csproj同名的.project.json，彻底删除上一步中创建的Net Standard 1.5类库；</p>
-<p><img src="/img/cross-project-code-share/structure.png" alt="structure.png"></p>
-</li>
-<li><p>project.json 内容如下：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> &quot;frameworks&quot;:  &#123;&quot;net452&quot;: &#123; &#125; &#125;,</span><br><span class="line"> &quot;runtimes&quot;: &#123;&quot;win&quot;: &#123;&#125;&#125;,</span><br><span class="line"> &quot;dependencies&quot;: &#123;&#125;  //根据这个类库的依赖项决定</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>添加现有项目（位于.Net Framework 4.5.2的类库下的Netstandard1.5.csproj），移除Netstandard1.5类库无效依赖，最终就达到了两个类库服用一份代码；</p>
-</li>
-<li><p>Build的时候还是会失败的，Properties/AssemblyInfo.cs 对于Netstandard1.5类库来说是没用的，所以把这个文件的生成操作设置成 “无”；</p>
-</li>
-<li><p>重新Build，成功了。</p>
-</li>
+<li>通过 <code>services.AddHttpClient</code> 定义一个名为 <code>github</code> 的 <code>HttpClient</code> ，后续可通过名称获取到这个 HttpClient 对象来发送 Http 请求；</li>
+<li>通过 <code>AddPolicyHandler</code>（<em>其他扩展方法参考：<a href="https://github.com/App-vNext/Polly/wiki/Polly-and-HttpClientFactory" target="_blank" rel="noopener">Polly and HttpClientFactory</a>  <code>AddTransientHttpErrorPolicy</code>、<code>AddPolicyHandlerFromRegistry</code> 的使用介绍</em>） 为此 <code>HttpClient</code> 添加 <code>Polly</code> 策略；</li>
+<li>设置降级策略，当出现任何异常，返回 <code>fallbackResponse</code>；</li>
+<li>设置熔断策略，当连续出现 <code>TimeoutRejectedException</code> 异常 5 次，熔断 3s；</li>
+<li>设置重试策略，当出现 <code>TimeoutRejectedException</code> 分别等待 100ms、200ms 后重试；</li>
+<li>设置超时策略，请求超时为 0.5s，超时默认会抛出 <code>TimeoutRejectedException</code>；</li>
+<li>当多个策略叠加时，最先起作用的是最后添加的；</li>
 </ul>
 </li>
-</ul>
+<li><p>使用 HttpClient </p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class ValuesController : ControllerBase</span><br><span class="line">&#123;</span><br><span class="line">		private readonly IHttpClientFactory _httpClientFactory;</span><br><span class="line"></span><br><span class="line">		public ValuesController(IHttpClientFactory httpClientFactory)</span><br><span class="line">		&#123;</span><br><span class="line">				_httpClientFactory = httpClientFactory;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		[HttpGet]</span><br><span class="line">		public async Task&lt;ActionResult&gt; Get()</span><br><span class="line">		&#123;</span><br><span class="line">				var client = _httpClientFactory.CreateClient(&quot;github&quot;);</span><br><span class="line">				var request = new HttpRequestMessage(HttpMethod.Get, &quot;/&quot;);</span><br><span class="line">				var response = await client.SendAsync(request);</span><br><span class="line">				var result = await response.Content.ReadAsStringAsync();</span><br><span class="line">				return Ok(result);</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>说明：从 <code>HttpClientFactory</code> 中获取定义好的名为 <code>github</code> 的 <code>HttpClient</code> 对象，和普通的 <code>HttpClient</code> 的区别是此 <code>HttpClient</code> 已具有定义的各种 <code>Polly</code> 策略，其他没任何区别；</p>
 </li>
-<li><p>编写功能性代码。在任何一个类库中写都可以，因为本质是一份代码，从哪个类库看都是一样的。完成后自己先做好测试；</p>
-</li>
-<li><p>在Release模式下Build（build的时候最好把两个类库的程序集名称和默认命名空间都修改成一致，还需要设置生成xml文件，xml文件内包含所有代码的注释，方便调用者使用）；</p>
-</li>
-<li><p>将类库中Release文件夹中的dll和xml拖拽到 NuGet Package Manager 的内容区域，需按规定的目录格式，如果当前Package有依赖其他Package，则需要Edit dependencies</p>
-<p>   <img src="/img/cross-project-code-share/release.png" alt="release.png"></p>
-<p>   <img src="/img/cross-project-code-share/package.png" alt="package.png"></p>
-</li>
-<li><p>发布到本地 Nuget Server，Publish Url只要内网之间可以访问就行；</p>
-<p>   <img src="/img/cross-project-code-share/publish.png" alt="publish.png"></p>
-</li>
-<li><p>引用方在vs中配置本地的 Nuget 源，然后就可以安装/升级/卸载 Nuget Server上的包了。</p>
+<li><p>效果测试</p>
+<p><strong>Timeout Retry</strong></p>
+<p><img src="/img/polly-http-client/retry.png" alt="Retry"></p>
+<p><strong>Timeout Circuit Breaker</strong></p>
+<p><img src="/img/polly-http-client/circuitBreakerOpen.png" alt="Open"></p>
+<p><img src="/img/polly-http-client/circuitBreakerHalfOpen.png" alt="HalfOpen"></p>
+<p><img src="/img/polly-http-client/circuitBreakerClosed.png" alt="Closed"></p>
+<p><strong>Fallback</strong></p>
+<p><img src="/img/polly-http-client/fallback.png" alt="Fallback"></p>
 </li>
 </ol>
-<h3 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h3><ul>
-<li><a href="https://docs.microsoft.com/zh-cn/nuget/" target="_blank" rel="noopener">Nuget介绍</a></li>
-<li><a href="https://github.com/NuGetPackageExplorer/NuGetPackageExplorer" target="_blank" rel="noopener">NuGetPackageExplorer下载安装</a></li>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><ul>
+<li><a href="https://github.com/App-vNext/Polly" target="_blank" rel="noopener">Polly</a></li>
+<li><a href="https://github.com/App-vNext/Polly/wiki/Polly-and-HttpClientFactory" target="_blank" rel="noopener">Polly and HttpClientFactory</a></li>
+<li><a href="https://www.jianshu.com/p/732aee097c6b" target="_blank" rel="noopener">优雅通过 HttpClientFactory 使用 HttpClient</a></li>
 </ul>
 
       
@@ -468,7 +452,7 @@
           
             <a href="/tags/C/" rel="tag"># C#</a>
           
-            <a href="/tags/Nuget-Server/" rel="tag"># Nuget Server</a>
+            <a href="/tags/Polly/" rel="tag"># Polly</a>
           
         </div>
       
@@ -481,15 +465,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/08/11/aspnet-ptp/" rel="next" title="VS 扩展开发：Grpc Proto To NuGet Package">
+                <i class="fa fa-chevron-left"></i> VS 扩展开发：Grpc Proto To NuGet Package
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/04/16/cross-project-data-share/" rel="prev" title="ASP.NET 微服务：gRPC">
-                ASP.NET 微服务：gRPC <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -655,7 +639,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#我们解决问题的方式是搭建自己的-Nuget-Server"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x6211;&#x4EEC;&#x89E3;&#x51B3;&#x95EE;&#x9898;&#x7684;&#x65B9;&#x5F0F;&#x662F;&#x642D;&#x5EFA;&#x81EA;&#x5DF1;&#x7684;-Nuget-Server" class="headerlink" title="&#x6211;&#x4EEC;&#x89E3;&#x51B3;&#x95EE;&#x9898;&#x7684;&#x65B9;&#x5F0F;&#x662F;&#x642D;&#x5EFA;&#x81EA;&#x5DF1;&#x7684; Nuget Server"></a>&#x6211;&#x4EEC;&#x89E3;&#x51B3;&#x95EE;&#x9898;&#x7684;&#x65B9;&#x5F0F;&#x662F;&#x642D;&#x5EFA;&#x81EA;&#x5DF1;&#x7684; Nuget Server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接："><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x524D;&#x8A00;" class="headerlink" title="&#x524D;&#x8A00;"></a>&#x524D;&#x8A00;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HttpClientFactory-集成-Polly"><span class="nav-number">2.</span> <span class="nav-text"><a href="#HttpClientFactory-&#x96C6;&#x6210;-Polly" class="headerlink" title="HttpClientFactory &#x96C6;&#x6210; Polly"></a>HttpClientFactory &#x96C6;&#x6210; Polly</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接"><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;</span></a></li></ol></div>
             
 
           </div>
@@ -869,7 +853,7 @@
       <script type="text/javascript">
       function renderGitment(){
         var gitment = new Gitment({
-            id: '1490454245000', 
+            id: '1567845797000', 
             owner: 'beckjin',
             repo: 'beckjin.github.io',
             

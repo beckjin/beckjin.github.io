@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.beckjin.com/"/>
-  <updated>2019-08-31T18:29:06.766Z</updated>
+  <updated>2019-09-07T08:45:07.342Z</updated>
   <id>http://www.beckjin.com/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>HttpClientFactory + Polly 实现熔断降级</title>
+    <link href="http://www.beckjin.com/2019/09/07/polly-http-client/"/>
+    <id>http://www.beckjin.com/2019/09/07/polly-http-client/</id>
+    <published>2019-09-07T08:43:17.000Z</published>
+    <updated>2019-09-07T08:45:07.342Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;&lt;code&gt;HttpClientFactory&lt;/code&gt; 是 ASP.NET CORE 2.1 中新增加的功能，目的是为了解决直接使用
+        
+      
+    
+    </summary>
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/categories/ASP-NET/"/>
+    
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/tags/ASP-NET/"/>
+    
+      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+    
+      <category term="Polly" scheme="http://www.beckjin.com/tags/Polly/"/>
+    
+  </entry>
   
   <entry>
     <title>VS 扩展开发：Grpc Proto To NuGet Package</title>
@@ -579,39 +609,6 @@
       <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
     
       <category term="Filter" scheme="http://www.beckjin.com/tags/Filter/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ASP.NET Core API CORS</title>
-    <link href="http://www.beckjin.com/2018/08/04/aspnet-cors/"/>
-    <id>http://www.beckjin.com/2018/08/04/aspnet-cors/</id>
-    <published>2018-08-04T10:18:07.000Z</published>
-    <updated>2018-08-05T08:59:30.336Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;最近参与一个前后端分离的项目，后端基于 .NET Core 2.1 开发，在进行前后端对接的过程中，被跨域问题折腾得有点脾气了，这里把经验和大家分享一下。&lt;/p&gt;
-&lt;h3 id=&quot;GET-POST-请求&quot;&gt;&lt;a href=&quot;#GET-POST-请求&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="ASP.NET" scheme="http://www.beckjin.com/categories/ASP-NET/"/>
-    
-    
-      <category term="ASP.NET" scheme="http://www.beckjin.com/tags/ASP-NET/"/>
-    
-      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
-    
-      <category term="WebApi" scheme="http://www.beckjin.com/tags/WebApi/"/>
-    
-      <category term="CORS" scheme="http://www.beckjin.com/tags/CORS/"/>
     
   </entry>
   
