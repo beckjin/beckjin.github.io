@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.beckjin.com/"/>
-  <updated>2019-09-07T09:56:55.489Z</updated>
+  <updated>2019-09-25T14:05:08.102Z</updated>
   <id>http://www.beckjin.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>聊聊 Docker Swarm 部署 gRPC 服务的坑</title>
+    <link href="http://www.beckjin.com/2019/09/25/grpc-docker-swarm/"/>
+    <id>http://www.beckjin.com/2019/09/25/grpc-docker-swarm/</id>
+    <published>2019-09-25T13:43:48.000Z</published>
+    <updated>2019-09-25T14:05:08.102Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;a href=&quot;https://grpc.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;gRPC&lt;/a&gt; 是一个高性能、开源和通用的 RPC 框架，面向移动和 HTTP/2 设计，也是目前流行的微服务架构中比较突出的跨语言 RPC
+        
+      
+    
+    </summary>
+    
+      <category term="微服务" scheme="http://www.beckjin.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+    
+      <category term="gRPC" scheme="http://www.beckjin.com/tags/gRPC/"/>
+    
+      <category term="Docker" scheme="http://www.beckjin.com/tags/Docker/"/>
+    
+  </entry>
   
   <entry>
     <title>HttpClientFactory + Polly 实现熔断降级</title>
@@ -576,39 +604,9 @@
     
       <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
     
-      <category term="Node.js" scheme="http://www.beckjin.com/tags/Node-js/"/>
-    
       <category term="Swagger" scheme="http://www.beckjin.com/tags/Swagger/"/>
     
-  </entry>
-  
-  <entry>
-    <title>ASP.NET Core Filters</title>
-    <link href="http://www.beckjin.com/2018/08/12/aspnet-filter/"/>
-    <id>http://www.beckjin.com/2018/08/12/aspnet-filter/</id>
-    <published>2018-08-11T16:58:40.000Z</published>
-    <updated>2018-08-11T17:00:35.975Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;ASP.NET MVC 中的过滤器（Filter）是 AOP（面向切面编程） 思想的一种实现，供我们在执行管道的特定阶段执行代码，通过使用过滤器可以实现 短路请求、缓存请求结果、日志统一记录、参数合法性验证、异常统一处理、返回值格式化
-        
-      
-    
-    </summary>
-    
-      <category term="ASP.NET" scheme="http://www.beckjin.com/categories/ASP-NET/"/>
-    
-    
-      <category term="ASP.NET" scheme="http://www.beckjin.com/tags/ASP-NET/"/>
-    
-      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
-    
-      <category term="Filter" scheme="http://www.beckjin.com/tags/Filter/"/>
+      <category term="Node.js" scheme="http://www.beckjin.com/tags/Node-js/"/>
     
   </entry>
   
