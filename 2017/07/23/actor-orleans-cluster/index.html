@@ -81,22 +81,22 @@
 
 
 
-<meta name="description" content="Orleans本身的设计是一个分布式的框架，多个Silo构成集群，Grains分布在多个Silo中。一旦一个Silo挂了，原来归属这个Silo的Grains会自动在其他Silo中激活。生产环境下还是需要以集群方式来部署。  在Orleans解决并发之痛（二）：Grain状态文章中提到内存存储State是不靠谱的，同样，以内存方式存储集群中Silo的成员关系也是不靠谱的，所以本文使用SQL Serv">
+<meta name="description" content="Orleans 本身的设计是一个分布式的框架，多个 Silo 构成集群，Grains 分布在多个 Silo 中。一旦一个 Silo 挂了，原来归属这个 Silo 的 Grains 会自动在其他 Silo 中激活。生产环境下还是需要以集群方式来部署。  在[ Orleans 解决并发之痛（二）：Grain 状态] (/2017/07/23/actor-orleans-grain-state/) 文章">
 <meta name="keywords" content="ASP.NET,C#,Actor,Orleans,并发">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Orleans解决并发之痛（三）：集群">
+<meta property="og:title" content="Orleans 解决并发之痛（三）：集群">
 <meta property="og:url" content="http://www.beckjin.com/2017/07/23/actor-orleans-cluster/index.html">
 <meta property="og:site_name" content="Beck&#39;s Blog">
-<meta property="og:description" content="Orleans本身的设计是一个分布式的框架，多个Silo构成集群，Grains分布在多个Silo中。一旦一个Silo挂了，原来归属这个Silo的Grains会自动在其他Silo中激活。生产环境下还是需要以集群方式来部署。  在Orleans解决并发之痛（二）：Grain状态文章中提到内存存储State是不靠谱的，同样，以内存方式存储集群中Silo的成员关系也是不靠谱的，所以本文使用SQL Serv">
+<meta property="og:description" content="Orleans 本身的设计是一个分布式的框架，多个 Silo 构成集群，Grains 分布在多个 Silo 中。一旦一个 Silo 挂了，原来归属这个 Silo 的 Grains 会自动在其他 Silo 中激活。生产环境下还是需要以集群方式来部署。  在[ Orleans 解决并发之痛（二）：Grain 状态] (/2017/07/23/actor-orleans-grain-state/) 文章">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-cluster/cluster.png">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-cluster/systemStore.png">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-cluster/testResult.png">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-cluster/testResult2.png">
-<meta property="og:updated_time" content="2018-08-05T08:58:57.421Z">
+<meta property="og:updated_time" content="2019-09-28T10:30:00.934Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Orleans解决并发之痛（三）：集群">
-<meta name="twitter:description" content="Orleans本身的设计是一个分布式的框架，多个Silo构成集群，Grains分布在多个Silo中。一旦一个Silo挂了，原来归属这个Silo的Grains会自动在其他Silo中激活。生产环境下还是需要以集群方式来部署。  在Orleans解决并发之痛（二）：Grain状态文章中提到内存存储State是不靠谱的，同样，以内存方式存储集群中Silo的成员关系也是不靠谱的，所以本文使用SQL Serv">
+<meta name="twitter:title" content="Orleans 解决并发之痛（三）：集群">
+<meta name="twitter:description" content="Orleans 本身的设计是一个分布式的框架，多个 Silo 构成集群，Grains 分布在多个 Silo 中。一旦一个 Silo 挂了，原来归属这个 Silo 的 Grains 会自动在其他 Silo 中激活。生产环境下还是需要以集群方式来部署。  在[ Orleans 解决并发之痛（二）：Grain 状态] (/2017/07/23/actor-orleans-grain-state/) 文章">
 <meta name="twitter:image" content="http://www.beckjin.com/img/actor-orleans-cluster/cluster.png">
 
 
@@ -133,7 +133,7 @@
 
 
 
-  <title>Orleans解决并发之痛（三）：集群 | Beck's Blog</title>
+  <title>Orleans 解决并发之痛（三）：集群 | Beck's Blog</title>
   
 
 
@@ -279,7 +279,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Orleans解决并发之痛（三）：集群</h2>
+          <h2 class="post-title" itemprop="name headline">Orleans 解决并发之痛（三）：集群</h2>
         
 
         <div class="post-meta">
@@ -331,7 +331,7 @@
 
           
           
-             <span id="/2017/07/23/actor-orleans-cluster/" class="leancloud_visitors" data-flag-title="Orleans解决并发之痛（三）：集群">
+             <span id="/2017/07/23/actor-orleans-cluster/" class="leancloud_visitors" data-flag-title="Orleans 解决并发之痛（三）：集群">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -362,28 +362,28 @@
       
 
       
-        <p>Orleans本身的设计是一个分布式的框架，多个Silo构成集群，Grains分布在多个Silo中。一旦一个Silo挂了，原来归属这个Silo的Grains会自动在其他Silo中激活。生产环境下还是需要以集群方式来部署。</p>
+        <p>Orleans 本身的设计是一个分布式的框架，多个 Silo 构成集群，Grains 分布在多个 Silo 中。一旦一个 Silo 挂了，原来归属这个 Silo 的 Grains 会自动在其他 Silo 中激活。生产环境下还是需要以集群方式来部署。</p>
 <p><img src="/img/actor-orleans-cluster/cluster.png" alt="cluster"></p>
-<p>在<a href="/2017/07/23/actor-orleans-grain-state/">Orleans解决并发之痛（二）：Grain状态</a>文章中提到内存存储State是不靠谱的，同样，以内存方式存储集群中Silo的成员关系也是不靠谱的，所以本文使用SQL Server来做Silo的成员关系存储，以内存方式存储成员关系存在主节点之说，其他节点的启动必须依赖主节点的启动状态，但以Azure Table、SQL Server 、ZooKeeper、Consul 等存储成员关系，所有的Silo都是平等的，不需要等待谁。</p>
-<p>之前在<a href="/2017/07/22/actor-orleans-one/">Orleans解决并发之痛（一）：单线程</a>Demo中是以内存存储集群成员关系的，有兴趣可以返回查看。</p>
-<p>这篇文章的Demo是<a href="/2017/07/23/actor-orleans-grain-state/">Orleans解决并发之痛（二）：Grain状态</a>的基础上完成的，所以在原来代码的基础上做一些调整即可。我们会启动3个Silo，构建成一个集群环境。实际上提供3个配置文件即可，配置文件稍做修改就可实现。</p>
-<h4 id="Silo配置文件"><a href="#Silo配置文件" class="headerlink" title="Silo配置文件"></a>Silo配置文件</h4><p>OrleansConfiguration1.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</span><br><span class="line">&lt;OrleansConfiguration xmlns=&quot;urn:orleans&quot;&gt;</span><br><span class="line">    &lt;Globals&gt;</span><br><span class="line">        &lt;SystemStore </span><br><span class="line">			SystemStoreType=&quot;SqlServer&quot; </span><br><span class="line">			DeploymentId=&quot;OrleansTest&quot; </span><br><span class="line">			DataConnectionString=&quot;Server=.;Database=OrleansStorage;User ID=sa;Password=123456;&quot;/&gt;</span><br><span class="line">      </span><br><span class="line">        &lt;StorageProviders&gt;</span><br><span class="line">            &lt;Provider Type=&quot;Orleans.Storage.AdoNetStorageProvider&quot;</span><br><span class="line">                      Name=&quot;OrleansStorage&quot;</span><br><span class="line">                      AdoInvariant=&quot;System.Data.SqlClient&quot;</span><br><span class="line">                      DataConnectionString=&quot;Server=.;Database=OrleansStorage;User ID=sa;Password=123456;&quot;/&gt;</span><br><span class="line">        &lt;/StorageProviders&gt;</span><br><span class="line">    &lt;/Globals&gt;</span><br><span class="line">    &lt;Defaults&gt;</span><br><span class="line">        &lt;Networking Address=&quot;localhost&quot; Port=&quot;11111&quot; /&gt;</span><br><span class="line">        &lt;ProxyingGateway Address=&quot;localhost&quot; Port=&quot;30000&quot; /&gt;</span><br><span class="line">    &lt;/Defaults&gt;</span><br><span class="line">&lt;/OrleansConfiguration&gt;</span><br></pre></td></tr></table></figure></p>
-<p>OrleansConfiguration2.xml和OrleansConfiguration3.xml除了Networking 、ProxyingGateway 配置有所区别，其他完全一样。</p>
+<p>在[ Orleans 解决并发之痛（二）：Grain 状态] (/2017/07/23/actor-orleans-grain-state/) 文章中提到内存存储State是不靠谱的，同样，以内存方式存储集群中 Silo 的成员关系也是不靠谱的，所以本文使用 SQL Server 来做 Silo 的成员关系存储，以内存方式存储成员关系存在主节点之说，其他节点的启动必须依赖主节点的启动状态，但以 Azure Table、SQL Server 、ZooKeeper、Consul 等存储成员关系，所有的 Silo 都是平等的，不需要等待谁。</p>
+<p>之前在 <a href="/2017/07/22/actor-orleans-one/">Orleans 解决并发之痛（一）：单线程</a> Demo 中是以内存存储集群成员关系的，有兴趣可以返回查看。</p>
+<p>这篇文章的 Demo 是 <a href="/2017/07/23/actor-orleans-grain-state/">Orleans 解决并发之痛（二）：Grain 状态</a> 的基础上完成的，所以在原来代码的基础上做一些调整即可。我们会启动3个 Silo，构建成一个集群环境，实际上提供3个配置文件即可，配置文件稍做修改就可实现。</p>
+<h4 id="Silo-配置文件"><a href="#Silo-配置文件" class="headerlink" title="Silo 配置文件"></a>Silo 配置文件</h4><p>OrleansConfiguration1.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</span><br><span class="line">&lt;OrleansConfiguration xmlns=&quot;urn:orleans&quot;&gt;</span><br><span class="line">    &lt;Globals&gt;</span><br><span class="line">        &lt;SystemStore </span><br><span class="line">			SystemStoreType=&quot;SqlServer&quot; </span><br><span class="line">			DeploymentId=&quot;OrleansTest&quot; </span><br><span class="line">			DataConnectionString=&quot;Server=.;Database=OrleansStorage;User ID=sa;Password=123456;&quot;/&gt;</span><br><span class="line">      </span><br><span class="line">        &lt;StorageProviders&gt;</span><br><span class="line">            &lt;Provider Type=&quot;Orleans.Storage.AdoNetStorageProvider&quot;</span><br><span class="line">                      Name=&quot;OrleansStorage&quot;</span><br><span class="line">                      AdoInvariant=&quot;System.Data.SqlClient&quot;</span><br><span class="line">                      DataConnectionString=&quot;Server=.;Database=OrleansStorage;User ID=sa;Password=123456;&quot;/&gt;</span><br><span class="line">        &lt;/StorageProviders&gt;</span><br><span class="line">    &lt;/Globals&gt;</span><br><span class="line">    &lt;Defaults&gt;</span><br><span class="line">        &lt;Networking Address=&quot;localhost&quot; Port=&quot;11111&quot; /&gt;</span><br><span class="line">        &lt;ProxyingGateway Address=&quot;localhost&quot; Port=&quot;30000&quot; /&gt;</span><br><span class="line">    &lt;/Defaults&gt;</span><br><span class="line">&lt;/OrleansConfiguration&gt;</span><br></pre></td></tr></table></figure></p>
+<p>OrleansConfiguration2.xml 和 OrleansConfiguration3.xml 除了 Networking 、ProxyingGateway 配置有所区别，其他完全一样。</p>
 <p>OrleansConfiguration2.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;Networking Address=&quot;localhost&quot; Port=&quot;11112&quot; /&gt;</span><br><span class="line">&lt;ProxyingGateway Address=&quot;localhost&quot; Port=&quot;30001&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
 <p>OrleansConfiguration3.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;Networking Address=&quot;localhost&quot; Port=&quot;11113&quot; /&gt;</span><br><span class="line">&lt;ProxyingGateway Address=&quot;localhost&quot; Port=&quot;30002&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
-<p>这次配置文件中引入了一个SystemStore节点：<br><strong>SystemStoreType：</strong>存储的类型；如：AzureTable、SqlServer、ZooKeeper等；<br><strong>DeploymentId：</strong>部署的唯一Id标识，具有相同的DeploymentId的Silo会加入一个集群中；<br><strong>DataConnectionString：</strong>连接字符串；</p>
-<p>3台Silo启动成功后，在OrleansStorage库的OrleansMembershipTable表中会记录下成员关系：</p>
+<p>这次配置文件中引入了一个 SystemStore 节点：<br><strong>SystemStoreType：</strong>存储的类型；如：AzureTable、SqlServer、ZooKeeper等；<br><strong>DeploymentId：</strong>部署的唯一 Id 标识，具有相同的 DeploymentId 的 Silo 会加入一个集群中；<br><strong>DataConnectionString：</strong>连接字符串；</p>
+<p>3台 Silo 启动成功后，在 OrleansStorage 库的 OrleansMembershipTable 表中会记录下成员关系：</p>
 <p><img src="/img/actor-orleans-cluster/systemStore.png" alt="systemStore"></p>
 <h4 id="Client配置文件"><a href="#Client配置文件" class="headerlink" title="Client配置文件"></a>Client配置文件</h4><p>ClientConfiguration.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</span><br><span class="line">&lt;ClientConfiguration xmlns=&quot;urn:orleans&quot;&gt;</span><br><span class="line">   &lt;SystemStore SystemStoreType =&quot;SqlServer&quot;</span><br><span class="line">                DeploymentId=&quot;OrleansTest&quot;</span><br><span class="line">                DataConnectionString=&quot;Data Source=.;Database=OrleansStorage;User ID=sa;Password=123456;&quot; </span><br><span class="line">				AdoInvariant=&quot;System.Data.SqlClient&quot; /&gt;</span><br><span class="line">&lt;/ClientConfiguration&gt;</span><br></pre></td></tr></table></figure></p>
-<p>Client通过DeploymentId标识连接Silo集群。具体最终调用那个Silo完成方法的调用，由其内部调配。当某一台Silo挂了，Grain会重新在另一个Silo上激活，达到高可用状态。</p>
-<h4 id="Client的测试代码："><a href="#Client的测试代码：" class="headerlink" title="Client的测试代码："></a>Client的测试代码：</h4><p>我们用一个死循环，创建很多Grain，来观察Silo控制台的输出效果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var random = new Random();</span><br><span class="line">while (true)</span><br><span class="line">&#123;</span><br><span class="line">	Thread.Sleep(1000);</span><br><span class="line">	var grainId = random.Next().ToString();</span><br><span class="line">	var grain = GrainClient.GrainFactory.GetGrain&lt;IPersonGrain&gt;(&quot;Test-&quot; + grainId);</span><br><span class="line">	grain.SayHelloAsync();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="测试结果："><a href="#测试结果：" class="headerlink" title="测试结果："></a>测试结果：</h4><p>从控制台输出结果来开，每台Silo上Grain的分配还是比较均匀的</p>
+<p>Client 通过 DeploymentId 标识连接 Silo 集群。具体最终调用那个 Silo 完成方法的调用，由其内部调配。当某一台 Silo 挂了，Grain 会重新在另一个 Silo 上激活，达到高可用状态。</p>
+<h4 id="Client-的测试代码："><a href="#Client-的测试代码：" class="headerlink" title="Client 的测试代码："></a>Client 的测试代码：</h4><p>我们用一个死循环，创建很多 Grain，来观察 Silo 控制台的输出效果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var random = new Random();</span><br><span class="line">while (true)</span><br><span class="line">&#123;</span><br><span class="line">	Thread.Sleep(1000);</span><br><span class="line">	var grainId = random.Next().ToString();</span><br><span class="line">	var grain = GrainClient.GrainFactory.GetGrain&lt;IPersonGrain&gt;(&quot;Test-&quot; + grainId);</span><br><span class="line">	grain.SayHelloAsync();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="测试结果："><a href="#测试结果：" class="headerlink" title="测试结果："></a>测试结果：</h4><p>从控制台输出结果来开，每台 Silo 上 Grain 的分配还是比较均匀的</p>
 <p><img src="/img/actor-orleans-cluster/testResult.png" alt="Test Result"></p>
-<p>当杀掉一个Silo后，服务依然是正常运行，具体Grain是否重新被分配有兴趣可以测试一下：<br><img src="/img/actor-orleans-cluster/testResult2.png" alt="Test Result2"></p>
+<p>当杀掉一个 Silo 后，服务依然是正常运行，具体 Grain 是否重新被分配有兴趣可以测试一下：<br><img src="/img/actor-orleans-cluster/testResult2.png" alt="Test Result2"></p>
 <h4 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h4><ul>
-<li><a href="http://www.infoq.com/cn/news/2014/11/intro-actor-model" target="_blank" rel="noopener">Actor模型</a></li>
+<li><a href="http://www.infoq.com/cn/news/2014/11/intro-actor-model" target="_blank" rel="noopener">Actor 模型</a></li>
 <li><a href="http://dotnet.github.io/orleans/" target="_blank" rel="noopener">Orleans</a></li>
-<li><a href="https://github.com/beckjin/OrleansSamples/tree/master/OrleansCluster" target="_blank" rel="noopener">案例Demo-OrleansCluster</a></li>
+<li><a href="https://github.com/beckjin/OrleansSamples/tree/master/OrleansCluster" target="_blank" rel="noopener">案例 Demo-OrleansCluster</a></li>
 </ul>
 
       
@@ -452,8 +452,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/23/actor-orleans-grain-state/" rel="next" title="Orleans解决并发之痛（二）：Grain状态">
-                <i class="fa fa-chevron-left"></i> Orleans解决并发之痛（二）：Grain状态
+              <a href="/2017/07/23/actor-orleans-grain-state/" rel="next" title="Orleans 解决并发之痛（二）：Grain 状态">
+                <i class="fa fa-chevron-left"></i> Orleans 解决并发之痛（二）：Grain 状态
               </a>
             
           </div>
@@ -462,8 +462,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/07/30/actor-orleans-streams/" rel="prev" title="Orleans解决并发之痛（四）：Streams">
-                Orleans解决并发之痛（四）：Streams <i class="fa fa-chevron-right"></i>
+              <a href="/2017/07/30/actor-orleans-streams/" rel="prev" title="Orleans 解决并发之痛（四）：Streams">
+                Orleans 解决并发之痛（四）：Streams <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -630,7 +630,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Silo配置文件"><span class="nav-number">1.</span> <span class="nav-text"><a href="#Silo&#x914D;&#x7F6E;&#x6587;&#x4EF6;" class="headerlink" title="Silo&#x914D;&#x7F6E;&#x6587;&#x4EF6;"></a>Silo&#x914D;&#x7F6E;&#x6587;&#x4EF6;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Client配置文件"><span class="nav-number">2.</span> <span class="nav-text"><a href="#Client&#x914D;&#x7F6E;&#x6587;&#x4EF6;" class="headerlink" title="Client&#x914D;&#x7F6E;&#x6587;&#x4EF6;"></a>Client&#x914D;&#x7F6E;&#x6587;&#x4EF6;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Client的测试代码："><span class="nav-number">3.</span> <span class="nav-text"><a href="#Client&#x7684;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#xFF1A;" class="headerlink" title="Client&#x7684;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#xFF1A;"></a>Client&#x7684;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#xFF1A;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试结果："><span class="nav-number">4.</span> <span class="nav-text"><a href="#&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#xFF1A;" class="headerlink" title="&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#xFF1A;"></a>&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#xFF1A;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考链接："><span class="nav-number">5.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Silo-配置文件"><span class="nav-number">1.</span> <span class="nav-text"><a href="#Silo-&#x914D;&#x7F6E;&#x6587;&#x4EF6;" class="headerlink" title="Silo &#x914D;&#x7F6E;&#x6587;&#x4EF6;"></a>Silo &#x914D;&#x7F6E;&#x6587;&#x4EF6;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Client配置文件"><span class="nav-number">2.</span> <span class="nav-text"><a href="#Client&#x914D;&#x7F6E;&#x6587;&#x4EF6;" class="headerlink" title="Client&#x914D;&#x7F6E;&#x6587;&#x4EF6;"></a>Client&#x914D;&#x7F6E;&#x6587;&#x4EF6;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Client-的测试代码："><span class="nav-number">3.</span> <span class="nav-text"><a href="#Client-&#x7684;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#xFF1A;" class="headerlink" title="Client &#x7684;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#xFF1A;"></a>Client &#x7684;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#xFF1A;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试结果："><span class="nav-number">4.</span> <span class="nav-text"><a href="#&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#xFF1A;" class="headerlink" title="&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#xFF1A;"></a>&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#xFF1A;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考链接："><span class="nav-number">5.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;</span></a></li></ol></div>
             
 
           </div>

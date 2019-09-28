@@ -81,22 +81,22 @@
 
 
 
-<meta name="description" content="通过前面几篇文章的介绍，可能会疑问怎么在实际开发中调用Grain，之前Demo的Client都是基于控制台应用程序，实际开发下可能是基于Web Form、Web API、MVC……，由于一时短路了，没有联想到控制台应用程序的方式怎么切到其他方式调用。 这篇文章将会介绍基于Web API的方式调用Grain，但相比Web API，我可能更倾向于gRPC，Web API基于Http，相比RPC性能上会">
+<meta name="description" content="通过前面几篇文章的介绍，可能会疑问怎么在实际开发中调用 Grain，之前 Demo 的 Client 都是基于控制台应用程序，实际开发下可能是基于 Web Form、Web API、MVC……，由于一时短路了，没有联想到控制台应用程序的方式怎么切到其他方式调用。 这篇文章将会介绍基于 Web API 的方式调用 Grain，但相比 Web API，我可能更倾向于 gRPC，Web API 基于 H">
 <meta name="keywords" content="ASP.NET,C#,Actor,Orleans,并发">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Orleans解决并发之痛（五）：Web API">
+<meta property="og:title" content="Orleans 解决并发之痛（五）：Web API">
 <meta property="og:url" content="http://www.beckjin.com/2017/08/19/actor-orleans-webapi/index.html">
 <meta property="og:site_name" content="Beck&#39;s Blog">
-<meta property="og:description" content="通过前面几篇文章的介绍，可能会疑问怎么在实际开发中调用Grain，之前Demo的Client都是基于控制台应用程序，实际开发下可能是基于Web Form、Web API、MVC……，由于一时短路了，没有联想到控制台应用程序的方式怎么切到其他方式调用。 这篇文章将会介绍基于Web API的方式调用Grain，但相比Web API，我可能更倾向于gRPC，Web API基于Http，相比RPC性能上会">
+<meta property="og:description" content="通过前面几篇文章的介绍，可能会疑问怎么在实际开发中调用 Grain，之前 Demo 的 Client 都是基于控制台应用程序，实际开发下可能是基于 Web Form、Web API、MVC……，由于一时短路了，没有联想到控制台应用程序的方式怎么切到其他方式调用。 这篇文章将会介绍基于 Web API 的方式调用 Grain，但相比 Web API，我可能更倾向于 gRPC，Web API 基于 H">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-webapi/simple.png">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-webapi/project.png">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-webapi/flow.png">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-webapi/testResult.png">
-<meta property="og:updated_time" content="2019-09-28T09:38:51.653Z">
+<meta property="og:updated_time" content="2019-09-28T10:33:59.985Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Orleans解决并发之痛（五）：Web API">
-<meta name="twitter:description" content="通过前面几篇文章的介绍，可能会疑问怎么在实际开发中调用Grain，之前Demo的Client都是基于控制台应用程序，实际开发下可能是基于Web Form、Web API、MVC……，由于一时短路了，没有联想到控制台应用程序的方式怎么切到其他方式调用。 这篇文章将会介绍基于Web API的方式调用Grain，但相比Web API，我可能更倾向于gRPC，Web API基于Http，相比RPC性能上会">
+<meta name="twitter:title" content="Orleans 解决并发之痛（五）：Web API">
+<meta name="twitter:description" content="通过前面几篇文章的介绍，可能会疑问怎么在实际开发中调用 Grain，之前 Demo 的 Client 都是基于控制台应用程序，实际开发下可能是基于 Web Form、Web API、MVC……，由于一时短路了，没有联想到控制台应用程序的方式怎么切到其他方式调用。 这篇文章将会介绍基于 Web API 的方式调用 Grain，但相比 Web API，我可能更倾向于 gRPC，Web API 基于 H">
 <meta name="twitter:image" content="http://www.beckjin.com/img/actor-orleans-webapi/simple.png">
 
 
@@ -133,7 +133,7 @@
 
 
 
-  <title>Orleans解决并发之痛（五）：Web API | Beck's Blog</title>
+  <title>Orleans 解决并发之痛（五）：Web API | Beck's Blog</title>
   
 
 
@@ -279,7 +279,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Orleans解决并发之痛（五）：Web API</h2>
+          <h2 class="post-title" itemprop="name headline">Orleans 解决并发之痛（五）：Web API</h2>
         
 
         <div class="post-meta">
@@ -331,7 +331,7 @@
 
           
           
-             <span id="/2017/08/19/actor-orleans-webapi/" class="leancloud_visitors" data-flag-title="Orleans解决并发之痛（五）：Web API">
+             <span id="/2017/08/19/actor-orleans-webapi/" class="leancloud_visitors" data-flag-title="Orleans 解决并发之痛（五）：Web API">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -362,19 +362,19 @@
       
 
       
-        <p>通过前面几篇文章的介绍，可能会疑问怎么在实际开发中调用Grain，之前Demo的Client都是基于控制台应用程序，实际开发下可能是基于Web Form、Web API、MVC……，由于一时短路了，没有联想到控制台应用程序的方式怎么切到其他方式调用。</p>
-<p>这篇文章将会介绍基于Web API的方式调用Grain，但相比Web API，我可能更倾向于gRPC，Web API基于Http，相比RPC性能上会弱一些，RPC方式接口调用上也会更方便，不过这次还是希望装逼的方式可以简单点。有兴趣可以看看这篇文章 <a href="http://beckjin.com/2017/04/16/cross-project-data-share/" target="_blank" rel="noopener">跨项目数据共享(跨语言)</a> 。</p>
+        <p>通过前面几篇文章的介绍，可能会疑问怎么在实际开发中调用 Grain，之前 Demo 的 Client 都是基于控制台应用程序，实际开发下可能是基于 Web Form、Web API、MVC……，由于一时短路了，没有联想到控制台应用程序的方式怎么切到其他方式调用。</p>
+<p>这篇文章将会介绍基于 Web API 的方式调用 Grain，但相比 Web API，我可能更倾向于 gRPC，Web API 基于 Http，相比 RPC 性能上会弱一些，RPC 方式接口调用上也会更方便，不过这次还是希望装逼的方式可以简单点。有兴趣可以看看这篇文章 <a href="https://www.jianshu.com/p/df494e1c90e2" target="_blank" rel="noopener">ASP.NET 微服务：gRPC</a> 。</p>
 <p><img src="/img/actor-orleans-webapi/simple.png" alt="-"></p>
 <p>我们可以基于 <a href="https://github.com/beckjin/OrleansSamples/tree/master/OrleansState" target="_blank" rel="noopener">Demo-OrleansState</a> 来调整代码：</p>
 <blockquote>
 <ol>
-<li>将Client控制台程序删除；</li>
-<li>新建解决方案文件夹 Orleans，并将Grains、Interfaces、Silo 程序集移到文件夹内，这样看上去清晰一点；</li>
+<li>将 Client 控制台程序删除；</li>
+<li>新建解决方案文件夹 Orleans，并将 Grains、Interfaces、Silo 程序集移到文件夹内，这样看上去清晰一点；</li>
 <li>创建类库 Business，普通的业务逻辑代码；</li>
-<li>创建空的Web API项目；</li>
+<li>创建空的 Web API 项目；</li>
 </ol>
 </blockquote>
-<p><strong>注意：</strong> Silo目前依然是控制台应用程序。<br>如果项目是基于.Net Framework，之后可以将Silo使用 <a href="http://topshelf-project.com/" target="_blank" rel="noopener">Topshelf</a> 以Windows服务方式部署；如果是基于.Net Core，可以使用Docker来部署；据官方提供的Sample <a href="https://github.com/dotnet/orleans/tree/master/Samples/HelloWorld.NetCore" target="_blank" rel="noopener">HelloWorld.NetCore</a>，Orleans 2.0.0将支持.Net Core，目前是1.5.0。</p>
+<p><strong>注意：</strong> Silo 目前依然是控制台应用程序。<br>如果项目是基于 .NET Framework，之后可以将 Silo 使用 <a href="http://topshelf-project.com/" target="_blank" rel="noopener">Topshelf</a> 以 Windows 服务方式部署；如果是基于 .NET Core，可以使用 Docker 来部署；据官方提供的 Sample <a href="https://github.com/dotnet/orleans/tree/master/Samples/HelloWorld.NetCore" target="_blank" rel="noopener">HelloWorld.NetCore</a>，Orleans 2.0.0 将支持 .NET Core，目前是 1.5.0。</p>
 <h6 id="项目结构："><a href="#项目结构：" class="headerlink" title="项目结构："></a>项目结构：</h6><p><img src="/img/actor-orleans-webapi/project.png" alt="项目代码结构"></p>
 <h6 id="依赖引用："><a href="#依赖引用：" class="headerlink" title="依赖引用："></a>依赖引用：</h6><table>
 <thead>
@@ -401,18 +401,18 @@
 </tbody>
 </table>
 <p><img src="/img/actor-orleans-webapi/flow.png" alt="依赖引用关系图"></p>
-<h6 id="配置连接Silo："><a href="#配置连接Silo：" class="headerlink" title="配置连接Silo："></a>配置连接Silo：</h6><p>WebAPI项目在启动的时候，需要同时连接上Silo，才能调用Grain里面的方法。ClientConfiguration.xml和之前的控制台程序一样即可，在Global.asax的Application_Start修改代码如下：</p>
+<h6 id="配置连接-Silo："><a href="#配置连接-Silo：" class="headerlink" title="配置连接 Silo："></a>配置连接 Silo：</h6><p>WebAPI 项目在启动的时候，需要同时连接上 Silo，才能调用 Grain 里面的方法。ClientConfiguration.xml 和之前的控制台程序一样即可，在 Global.asax 的 Application_Start 修改代码如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">protected void Application_Start()</span><br><span class="line">&#123;</span><br><span class="line">	var config = ClientConfiguration.LoadFromFile(Server.MapPath(@&quot;~/ClientConfiguration.xml&quot;));</span><br><span class="line">	GrainClient.Initialize(config);</span><br><span class="line">	System.Web.Http.GlobalConfiguration.Configure(WebApiConfig.Register);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="Business调用Grain："><a href="#Business调用Grain：" class="headerlink" title="Business调用Grain："></a>Business调用Grain：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class Persion</span><br><span class="line">&#123;</span><br><span class="line">	public string SayHello(string name)</span><br><span class="line">	&#123;</span><br><span class="line">		var grain = GrainClient.GrainFactory.GetGrain&lt;IPersonGrain&gt;(name);</span><br><span class="line">		grain.SayHelloAsync();</span><br><span class="line">		return &quot;success&quot;;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="WebAPI调用Business层方法："><a href="#WebAPI调用Business层方法：" class="headerlink" title="WebAPI调用Business层方法："></a>WebAPI调用Business层方法：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class PersonController : ApiController</span><br><span class="line">&#123;</span><br><span class="line">	[HttpGet]</span><br><span class="line">	public string SayHello(string name)</span><br><span class="line">	&#123;</span><br><span class="line">		return new Business.Persion().SayHello(name);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>根据实际接口定义规范，修改WebApiConfig.cs，假设routeTemplate配置如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">routeTemplate: &quot;api/&#123;controller&#125;/&#123;action&#125;&quot;</span><br></pre></td></tr></table></figure></p>
-<h6 id="测试："><a href="#测试：" class="headerlink" title="测试："></a>测试：</h6><p>启动 Silo和WebAPI后，在浏览器内数据地址：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:&#123;WebAPI启动的端口号&#125;/api/person/sayHello?name=beck</span><br></pre></td></tr></table></figure>
+<h6 id="Business-调用-Grain："><a href="#Business-调用-Grain：" class="headerlink" title="Business 调用 Grain："></a>Business 调用 Grain：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class Persion</span><br><span class="line">&#123;</span><br><span class="line">	public string SayHello(string name)</span><br><span class="line">	&#123;</span><br><span class="line">		var grain = GrainClient.GrainFactory.GetGrain&lt;IPersonGrain&gt;(name);</span><br><span class="line">		grain.SayHelloAsync();</span><br><span class="line">		return &quot;success&quot;;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="WebAPI-调用-Business-层方法："><a href="#WebAPI-调用-Business-层方法：" class="headerlink" title="WebAPI 调用 Business 层方法："></a>WebAPI 调用 Business 层方法：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class PersonController : ApiController</span><br><span class="line">&#123;</span><br><span class="line">	[HttpGet]</span><br><span class="line">	public string SayHello(string name)</span><br><span class="line">	&#123;</span><br><span class="line">		return new Business.Persion().SayHello(name);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>根据实际接口定义规范，修改 WebApiConfig.cs，假设 routeTemplate 配置如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">routeTemplate: &quot;api/&#123;controller&#125;/&#123;action&#125;&quot;</span><br></pre></td></tr></table></figure></p>
+<h6 id="测试："><a href="#测试：" class="headerlink" title="测试："></a>测试：</h6><p>启动 Silo 和 WebAPI 后，在浏览器内数据地址：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:&#123;WebAPI 启动的端口号&#125;/api/person/sayHello?name=beck</span><br></pre></td></tr></table></figure>
 <p><img src="/img/actor-orleans-webapi/testResult.png" alt="服务端显示结果"></p>
 <h6 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h6><ul>
-<li><a href="http://www.infoq.com/cn/news/2014/11/intro-actor-model" target="_blank" rel="noopener">Actor模型</a></li>
+<li><a href="http://www.infoq.com/cn/news/2014/11/intro-actor-model" target="_blank" rel="noopener">Actor 模型</a></li>
 <li><a href="http://dotnet.github.io/orleans/" target="_blank" rel="noopener">Orleans</a></li>
-<li><a href="https://github.com/beckjin/OrleansSamples/tree/master/OrleansWebAPI" target="_blank" rel="noopener">案例Demo-OrleansWebAPI</a></li>
+<li><a href="https://github.com/beckjin/OrleansSamples/tree/master/OrleansWebAPI" target="_blank" rel="noopener">案例 Demo-OrleansWebAPI</a></li>
 </ul>
 
       
@@ -481,8 +481,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/30/actor-orleans-streams/" rel="next" title="Orleans解决并发之痛（四）：Streams">
-                <i class="fa fa-chevron-left"></i> Orleans解决并发之痛（四）：Streams
+              <a href="/2017/07/30/actor-orleans-streams/" rel="next" title="Orleans 解决并发之痛（四）：Streams">
+                <i class="fa fa-chevron-left"></i> Orleans 解决并发之痛（四）：Streams
               </a>
             
           </div>
@@ -659,7 +659,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#项目结构："><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x9879;&#x76EE;&#x7ED3;&#x6784;&#xFF1A;" class="headerlink" title="&#x9879;&#x76EE;&#x7ED3;&#x6784;&#xFF1A;"></a>&#x9879;&#x76EE;&#x7ED3;&#x6784;&#xFF1A;</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#依赖引用："><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x4F9D;&#x8D56;&#x5F15;&#x7528;&#xFF1A;" class="headerlink" title="&#x4F9D;&#x8D56;&#x5F15;&#x7528;&#xFF1A;"></a>&#x4F9D;&#x8D56;&#x5F15;&#x7528;&#xFF1A;</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#配置连接Silo："><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x914D;&#x7F6E;&#x8FDE;&#x63A5;Silo&#xFF1A;" class="headerlink" title="&#x914D;&#x7F6E;&#x8FDE;&#x63A5;Silo&#xFF1A;"></a>&#x914D;&#x7F6E;&#x8FDE;&#x63A5;Silo&#xFF1A;</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Business调用Grain："><span class="nav-number">4.</span> <span class="nav-text"><a href="#Business&#x8C03;&#x7528;Grain&#xFF1A;" class="headerlink" title="Business&#x8C03;&#x7528;Grain&#xFF1A;"></a>Business&#x8C03;&#x7528;Grain&#xFF1A;</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#WebAPI调用Business层方法："><span class="nav-number">5.</span> <span class="nav-text"><a href="#WebAPI&#x8C03;&#x7528;Business&#x5C42;&#x65B9;&#x6CD5;&#xFF1A;" class="headerlink" title="WebAPI&#x8C03;&#x7528;Business&#x5C42;&#x65B9;&#x6CD5;&#xFF1A;"></a>WebAPI&#x8C03;&#x7528;Business&#x5C42;&#x65B9;&#x6CD5;&#xFF1A;</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#测试："><span class="nav-number">6.</span> <span class="nav-text"><a href="#&#x6D4B;&#x8BD5;&#xFF1A;" class="headerlink" title="&#x6D4B;&#x8BD5;&#xFF1A;"></a>&#x6D4B;&#x8BD5;&#xFF1A;</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#参考链接："><span class="nav-number">7.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#项目结构："><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x9879;&#x76EE;&#x7ED3;&#x6784;&#xFF1A;" class="headerlink" title="&#x9879;&#x76EE;&#x7ED3;&#x6784;&#xFF1A;"></a>&#x9879;&#x76EE;&#x7ED3;&#x6784;&#xFF1A;</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#依赖引用："><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x4F9D;&#x8D56;&#x5F15;&#x7528;&#xFF1A;" class="headerlink" title="&#x4F9D;&#x8D56;&#x5F15;&#x7528;&#xFF1A;"></a>&#x4F9D;&#x8D56;&#x5F15;&#x7528;&#xFF1A;</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#配置连接-Silo："><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x914D;&#x7F6E;&#x8FDE;&#x63A5;-Silo&#xFF1A;" class="headerlink" title="&#x914D;&#x7F6E;&#x8FDE;&#x63A5; Silo&#xFF1A;"></a>&#x914D;&#x7F6E;&#x8FDE;&#x63A5; Silo&#xFF1A;</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Business-调用-Grain："><span class="nav-number">4.</span> <span class="nav-text"><a href="#Business-&#x8C03;&#x7528;-Grain&#xFF1A;" class="headerlink" title="Business &#x8C03;&#x7528; Grain&#xFF1A;"></a>Business &#x8C03;&#x7528; Grain&#xFF1A;</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#WebAPI-调用-Business-层方法："><span class="nav-number">5.</span> <span class="nav-text"><a href="#WebAPI-&#x8C03;&#x7528;-Business-&#x5C42;&#x65B9;&#x6CD5;&#xFF1A;" class="headerlink" title="WebAPI &#x8C03;&#x7528; Business &#x5C42;&#x65B9;&#x6CD5;&#xFF1A;"></a>WebAPI &#x8C03;&#x7528; Business &#x5C42;&#x65B9;&#x6CD5;&#xFF1A;</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#测试："><span class="nav-number">6.</span> <span class="nav-text"><a href="#&#x6D4B;&#x8BD5;&#xFF1A;" class="headerlink" title="&#x6D4B;&#x8BD5;&#xFF1A;"></a>&#x6D4B;&#x8BD5;&#xFF1A;</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#参考链接："><span class="nav-number">7.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;</span></a></li></ol></div>
             
 
           </div>

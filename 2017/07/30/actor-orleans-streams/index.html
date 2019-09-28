@@ -84,16 +84,16 @@
 <meta name="description" content="Orleans 提供了 Stream 扩展编程模型。此模型提供了一套 API，使处理流更简单和更健壮。Stream 默认提供了两种 Provider，Simple Message Stream Provider 和 Azure Queue Stream Provider，不同的流类型可能使用不同的 Provider 来处理。Stream Providers 兼容现有的队列技术，比如： Event">
 <meta name="keywords" content="ASP.NET,C#,Actor,Orleans,并发">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Orleans解决并发之痛（四）：Streams">
+<meta property="og:title" content="Orleans 解决并发之痛（四）：Streams">
 <meta property="og:url" content="http://www.beckjin.com/2017/07/30/actor-orleans-streams/index.html">
 <meta property="og:site_name" content="Beck&#39;s Blog">
 <meta property="og:description" content="Orleans 提供了 Stream 扩展编程模型。此模型提供了一套 API，使处理流更简单和更健壮。Stream 默认提供了两种 Provider，Simple Message Stream Provider 和 Azure Queue Stream Provider，不同的流类型可能使用不同的 Provider 来处理。Stream Providers 兼容现有的队列技术，比如： Event">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-streams/implicit.png">
 <meta property="og:image" content="http://www.beckjin.com/img/actor-orleans-streams/explicit.png">
-<meta property="og:updated_time" content="2018-10-21T07:01:07.200Z">
+<meta property="og:updated_time" content="2019-09-28T10:32:28.183Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Orleans解决并发之痛（四）：Streams">
+<meta name="twitter:title" content="Orleans 解决并发之痛（四）：Streams">
 <meta name="twitter:description" content="Orleans 提供了 Stream 扩展编程模型。此模型提供了一套 API，使处理流更简单和更健壮。Stream 默认提供了两种 Provider，Simple Message Stream Provider 和 Azure Queue Stream Provider，不同的流类型可能使用不同的 Provider 来处理。Stream Providers 兼容现有的队列技术，比如： Event">
 <meta name="twitter:image" content="http://www.beckjin.com/img/actor-orleans-streams/implicit.png">
 
@@ -131,7 +131,7 @@
 
 
 
-  <title>Orleans解决并发之痛（四）：Streams | Beck's Blog</title>
+  <title>Orleans 解决并发之痛（四）：Streams | Beck's Blog</title>
   
 
 
@@ -277,7 +277,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Orleans解决并发之痛（四）：Streams</h2>
+          <h2 class="post-title" itemprop="name headline">Orleans 解决并发之痛（四）：Streams</h2>
         
 
         <div class="post-meta">
@@ -329,7 +329,7 @@
 
           
           
-             <span id="/2017/07/30/actor-orleans-streams/" class="leancloud_visitors" data-flag-title="Orleans解决并发之痛（四）：Streams">
+             <span id="/2017/07/30/actor-orleans-streams/" class="leancloud_visitors" data-flag-title="Orleans 解决并发之痛（四）：Streams">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -372,7 +372,7 @@
 <li>发布者向某个Stream发布消息</li>
 </ol>
 </blockquote>
-<h3 id="Silo-配置文件-OrleansConfiguration-xml-修改"><a href="#Silo-配置文件-OrleansConfiguration-xml-修改" class="headerlink" title="Silo 配置文件 OrleansConfiguration.xml 修改"></a>Silo 配置文件 OrleansConfiguration.xml 修改</h3><p>在Globals节点中添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;StorageProviders&gt;</span><br><span class="line">	&lt;Provider Type=&quot;Orleans.Storage.MemoryStorage&quot; Name=&quot;PubSubStore&quot; /&gt;</span><br><span class="line">&lt;/StorageProviders&gt;</span><br><span class="line">&lt;StreamProviders&gt;</span><br><span class="line">	&lt;Provider Type=&quot;Orleans.Providers.Streams.SimpleMessageStream.SimpleMessageStreamProvider&quot; Name=&quot;SMSProvider&quot;/&gt;</span><br><span class="line">&lt;/StreamProviders&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Silo-配置文件-OrleansConfiguration-xml-修改"><a href="#Silo-配置文件-OrleansConfiguration-xml-修改" class="headerlink" title="Silo 配置文件 OrleansConfiguration.xml 修改"></a>Silo 配置文件 OrleansConfiguration.xml 修改</h3><p>在 Globals 节点中添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;StorageProviders&gt;</span><br><span class="line">	&lt;Provider Type=&quot;Orleans.Storage.MemoryStorage&quot; Name=&quot;PubSubStore&quot; /&gt;</span><br><span class="line">&lt;/StorageProviders&gt;</span><br><span class="line">&lt;StreamProviders&gt;</span><br><span class="line">	&lt;Provider Type=&quot;Orleans.Providers.Streams.SimpleMessageStream.SimpleMessageStreamProvider&quot; Name=&quot;SMSProvider&quot;/&gt;</span><br><span class="line">&lt;/StreamProviders&gt;</span><br></pre></td></tr></table></figure></p>
 <p>Name 为 PubSubStore（<em>名字任意</em>） 的 StorageProvider 是必须的，Stream 内部需要它来跟踪所有流订阅，记录各个流的发布者和订阅者的关系，本例测试使用 MemoryStorage，实际生产环境不能使用 Memory 方式。</p>
 <p>Name 为 SMSProvider（<em>名字任意</em>）的 StreamProvider 指定了消息的发布形式，Orleans 当前提供的两种 StreamProvider：<strong>Simple Message Stream Provider</strong> 和 <strong>Azure Queue Stream Provider</strong> 都是可靠的。</p>
 <p><strong>Simple Message Stream Provider</strong>：不保证可靠的交付，失败的消息不会自动重新发送，但可以根据返回的Task状态来判断是否重新发送，事件执行顺序遵循 FIFO 原则。</p>
@@ -408,9 +408,9 @@
 <h4 id="显示订阅下，需要增加另一个客户端先完成订阅，可启动多个来创建多个订阅者："><a href="#显示订阅下，需要增加另一个客户端先完成订阅，可启动多个来创建多个订阅者：" class="headerlink" title="显示订阅下，需要增加另一个客户端先完成订阅，可启动多个来创建多个订阅者："></a>显示订阅下，需要增加另一个客户端先完成订阅，可启动多个来创建多个订阅者：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var subscriberGrain = GrainClient.GrainFactory.GetGrain&lt;IExplicitSubscriberGrain&gt;(Guid.Empty);</span><br><span class="line">var streamHandle = subscriberGrain.SubscribeAsync().Result;</span><br><span class="line">Console.WriteLine(&quot;Press enter to exit...&quot;);</span><br><span class="line">Console.ReadLine();</span><br><span class="line">streamHandle.UnsubscribeAsync();</span><br></pre></td></tr></table></figure>
 <p><img src="/img/actor-orleans-streams/explicit.png" alt="显示订阅下发布消息"></p>
 <h3 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h3><ul>
-<li><a href="http://www.infoq.com/cn/news/2014/11/intro-actor-model" target="_blank" rel="noopener">Actor模型</a></li>
+<li><a href="http://www.infoq.com/cn/news/2014/11/intro-actor-model" target="_blank" rel="noopener">Actor 模型</a></li>
 <li><a href="http://dotnet.github.io/orleans/" target="_blank" rel="noopener">Orleans</a></li>
-<li><a href="https://github.com/beckjin/OrleansSamples/tree/master/OrleansStreams" target="_blank" rel="noopener">案例Demo-OrleansStreams</a></li>
+<li><a href="https://github.com/beckjin/OrleansSamples/tree/master/OrleansStreams" target="_blank" rel="noopener">案例 Demo-OrleansStreams</a></li>
 </ul>
 
       
@@ -479,8 +479,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/23/actor-orleans-cluster/" rel="next" title="Orleans解决并发之痛（三）：集群">
-                <i class="fa fa-chevron-left"></i> Orleans解决并发之痛（三）：集群
+              <a href="/2017/07/23/actor-orleans-cluster/" rel="next" title="Orleans 解决并发之痛（三）：集群">
+                <i class="fa fa-chevron-left"></i> Orleans 解决并发之痛（三）：集群
               </a>
             
           </div>
@@ -489,8 +489,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/08/19/actor-orleans-webapi/" rel="prev" title="Orleans解决并发之痛（五）：Web API">
-                Orleans解决并发之痛（五）：Web API <i class="fa fa-chevron-right"></i>
+              <a href="/2017/08/19/actor-orleans-webapi/" rel="prev" title="Orleans 解决并发之痛（五）：Web API">
+                Orleans 解决并发之痛（五）：Web API <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
