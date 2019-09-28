@@ -96,7 +96,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-jwt/tokenDecoded.png">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-jwt/unauthorized.png">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-jwt/success.png">
-<meta property="og:updated_time" content="2019-03-23T16:46:01.011Z">
+<meta property="og:updated_time" content="2019-09-28T09:39:51.746Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ASP.NET Core JWT 认证">
 <meta name="twitter:description" content="JWT 介绍JWT（JSON Web Token）是一种开放标准，它以 JSON 对象的方式在各方之间安全地传输信息。通俗的说，就是通过数字签名算法生产一个字符串，然后在网络请求的中被携带到服务端进行身份认证，功能上来说和 SessionId 认证方式很像。 JWT 与 SessionId 认证对比SessionId 认证方式一般做法是用户登录成功后，服务端生成一个 SessionId，然后将 S">
@@ -395,7 +395,7 @@
 <h3 id="NET-Core-集成-JWT"><a href="#NET-Core-集成-JWT" class="headerlink" title=".NET Core 集成 JWT"></a>.NET Core 集成 JWT</h3><h4 id="搭建-JWTServer"><a href="#搭建-JWTServer" class="headerlink" title="搭建 JWTServer"></a>搭建 JWTServer</h4><ol>
 <li><p>创建 JWTServer（.NET Core Web API）项目 <em>（用来进行身份认证及生成 Token）</em>；</p>
 </li>
-<li><p>Nuget 安装 Microsoft.AspNetCore.Authentication.JwtBearer</p>
+<li><p>NuGet 安装 Microsoft.AspNetCore.Authentication.JwtBearer</p>
 </li>
 <li><p>配置文件中加入 JWT 相关参数</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&quot;JwtSetting&quot;: &#123;</span><br><span class="line">	&quot;SecurityKey&quot;: &quot;d0ecd23c-dfdb-4005-a2ea-0fea210c858a&quot;, // 密钥</span><br><span class="line">	&quot;Issuer&quot;: &quot;jwtIssuertest&quot;, 		// 颁发者</span><br><span class="line">	&quot;Audience&quot;: &quot;jwtAudiencetest&quot;, 	// 接收者</span><br><span class="line">	&quot;ExpireSeconds&quot;: 20 			// 过期时间（20s）</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
@@ -416,7 +416,7 @@
 <h4 id="搭建-TestApi"><a href="#搭建-TestApi" class="headerlink" title="搭建 TestApi"></a>搭建 TestApi</h4><ol>
 <li><p>创建 TestApi（.NET Core Web API）项目 <em>（模拟需要身份认证的 API 接口）</em></p>
 </li>
-<li><p>Nuget 安装 Microsoft.AspNetCore.Authentication.JwtBearer</p>
+<li><p>NuGet 安装 Microsoft.AspNetCore.Authentication.JwtBearer</p>
 </li>
 <li><p>配置文件中加入 JWT 相关参数</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&quot;JwtSetting&quot;: &#123;</span><br><span class="line">	&quot;SecurityKey&quot;: &quot;d0ecd23c-dfdb-4005-a2ea-0fea210c858a&quot;, // 密钥</span><br><span class="line">	&quot;Issuer&quot;: &quot;jwtIssuertest&quot;, 		// 颁发者</span><br><span class="line">	&quot;Audience&quot;: &quot;jwtAudiencetest&quot; 	// 接收者</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>

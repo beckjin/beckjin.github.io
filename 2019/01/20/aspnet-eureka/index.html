@@ -98,7 +98,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-eureka/eurekaClientService.png">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-eureka/clientBaseService1.png">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-eureka/clientBaseService2.png">
-<meta property="og:updated_time" content="2019-02-23T11:23:14.426Z">
+<meta property="og:updated_time" content="2019-09-28T09:39:25.512Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content=".NET Core + Spring Cloud：服务注册与发现">
 <meta name="twitter:description" content="毫无疑问，微服务架构是目前的主流，在微服务架构下，服务治理、负载均衡、服务熔断、配置中心、API网关 等都是需要关注的问题，当然不是非要全部完善后才能进行微服务开发，在很多项目团队中，初期可能会将某个服务部署成集群，然后通过 Nginx 代理做到负载均衡提供服务，但随着微服务体量逐渐庞大，以上提到需要关注的问题就越来越明显。在 .NET Core 环境下，目前比较流行的微服务架构：Consul（服">
@@ -399,7 +399,7 @@
 <h3 id="创建-NET-Core-基础服务"><a href="#创建-NET-Core-基础服务" class="headerlink" title="创建 .NET Core 基础服务"></a>创建 .NET Core 基础服务</h3><p><em>基础服务只提供服务，不引用其他服务</em></p>
 <ol>
 <li>创建 .NET Core WebApi 项目</li>
-<li>Nuget 添加 Steeltoe.Discovery.ClientCore 引用（目前版本 2.1.1）</li>
+<li>NuGet 添加 Steeltoe.Discovery.ClientCore 引用（目前版本 2.1.1）</li>
 <li><p>修改 Startup.cs 的 ConfigureServices 方法，添加 AddDiscoveryClient </p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public void ConfigureServices(IServiceCollection services)</span><br><span class="line">&#123;</span><br><span class="line">	services.AddDiscoveryClient(Configuration);</span><br><span class="line">	services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>

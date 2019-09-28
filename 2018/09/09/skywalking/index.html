@@ -100,7 +100,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/skywalking/serviceRequestMap.png">
 <meta property="og:image" content="http://www.beckjin.com/img/skywalking/skywalkingSpans.png">
 <meta property="og:image" content="http://www.beckjin.com/img/skywalking/skywalkingTopologyMap.png">
-<meta property="og:updated_time" content="2019-03-30T16:34:31.808Z">
+<meta property="og:updated_time" content="2019-09-28T09:42:29.179Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SkyWalking 分布式追踪系统">
 <meta name="twitter:description" content="随着微服务架构的流行，一些微服务架构下的问题也会越来越突出，比如一个请求会涉及多个服务，而服务本身可能也会依赖其他服务，整个请求路径就构成了一个网状的调用链，而在整个调用链中一旦某个节点发生异常，整个调用链的稳定性就会受到影响，所以会深深的感受到 “银弹” 这个词是不存在的，每种架构都有其优缺点 。  面对以上情况， 我们就需要一些可以帮助理解系统行为、用于分析性能问题的工具，以便发生故障的时候，">
@@ -396,7 +396,7 @@
 <h3 id="Java-项目接入"><a href="#Java-项目接入" class="headerlink" title="Java 项目接入"></a>Java 项目接入</h3><p>参考 <a href="https://github.com/apache/incubator-skywalking/blob/5.x/docs/cn/Deploy-skywalking-agent-CN.md" target="_blank" rel="noopener">部署 skywalking javaagent</a>，skywalking-agent.jar 位于下载包的 agent 目录下，具体效果这里就不测试了<br><img src="/img/skywalking/skywalkingJavaAgent.png" alt="skywalking java agent"></p>
 <h3 id="NET-项目接入"><a href="#NET-项目接入" class="headerlink" title=".NET 项目接入"></a>.NET 项目接入</h3><p>这里以 .NET Core 项目来测试，基于 .NET Framework 的项目目前也是支持的，只是相对不完善一些，参考 <a href="https://github.com/SkyAPM/SkyAPM-dotnet" target="_blank" rel="noopener">SkyAPM-dotnet</a></p>
 <ol>
-<li><p>新建一个.NET Core API 项目，安装 Nuget 包：</p>
+<li><p>新建一个.NET Core API 项目，安装 NuGet 包：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Install-Package SkyAPM.Agent.AspNetCore</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>添加项目环境变量（实际情况应该是在 CI 流程中设置环境变量，参考：<a href="https://github.com/SkyAPM/SkyAPM-dotnet#examples）" target="_blank" rel="noopener">https://github.com/SkyAPM/SkyAPM-dotnet#examples）</a></p>

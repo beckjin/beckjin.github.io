@@ -91,7 +91,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.beckjin.com/img/quartz-net-test/structure.png">
 <meta property="og:image" content="http://www.beckjin.com/img/quartz-net-test/result.png">
-<meta property="og:updated_time" content="2018-08-05T09:00:41.905Z">
+<meta property="og:updated_time" content="2019-09-28T09:42:11.864Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Quartz.NET 作业调度（一）：Test">
 <meta name="twitter:description" content="Quartz.NET 是一个开源的作业调度框架，是 Java 作业调度框架  Quartz 的.NET 版本，对于周期性的任务，其作业和触发器的结合，极大的简化了代码的编写，大多时候我们只需要关注作业本身的逻辑。Quartz.NET  支持持久化、集群。Quartz.NET 3.0 已经开始支持 .NET Core/.NET Standard 2.0。 体系结构 Job 为作业的接口，JobDet">
@@ -363,7 +363,7 @@
         <p><a href="https://www.quartz-scheduler.net/" target="_blank" rel="noopener">Quartz.NET</a> 是一个开源的作业调度框架，是 Java 作业调度框架  <a href="http://www.quartz-scheduler.org/" target="_blank" rel="noopener">Quartz</a> 的.NET 版本，对于周期性的任务，其作业和触发器的结合，极大的简化了代码的编写，大多时候我们只需要关注作业本身的逻辑。<a href="https://www.quartz-scheduler.net/" target="_blank" rel="noopener">Quartz.NET</a>  支持持久化、集群。<a href="https://www.quartz-scheduler.net/2017/12/30/quartznet-3.0-released.html" target="_blank" rel="noopener">Quartz.NET 3.0</a> 已经开始支持 .NET Core/.NET Standard 2.0。</p>
 <h4 id="体系结构"><a href="#体系结构" class="headerlink" title="体系结构"></a>体系结构</h4><p><img src="/img/quartz-net-test/structure.png" alt="体系结构"></p>
 <p>Job 为作业的接口，JobDetail 用来描述 Job 的实现类及其它相关的静态信息；Trigger 作为作业的定时管理工具，一个 Trigger 只能对应一个作业实例，而一个作业实例可对应多个 Trigger ；Scheduler 做为定时任务容器，它包含了所有触发器和作业，每个 Scheduler 都存有 JobDetail 和 Trigger<br> 的注册，一个 Scheduler 中可以注册多个 JobDetail 和多个 Trigger 。</p>
-<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>创建一个基于 .NET Core 2.0 控制台程序，Nuget 安装 Quartz 即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Install-Package Quartz</span><br></pre></td></tr></table></figure></p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>创建一个基于 .NET Core 2.0 控制台程序，NuGet 安装 Quartz 即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Install-Package Quartz</span><br></pre></td></tr></table></figure></p>
 <h4 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h4><h5 id="主要接口和类说明："><a href="#主要接口和类说明：" class="headerlink" title="主要接口和类说明："></a>主要接口和类说明：</h5><blockquote>
 <p>IScheduler ：和调度器交互的主要接口<br>JobBuilder：定义 JobDetail 实例<br>IJobDetail：定义 Job 实例及其它相关的静态信息<br>IJob：自定义的作业模块所要继承的接口，调度器会调用这个实现<br>TriggerBuilder：定义 Trigger 实例<br>ITrigger：定义 Job 被触发的时间</p>
 </blockquote>

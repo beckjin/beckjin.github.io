@@ -102,7 +102,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/sonar-build-jenkins/buildSteps.png">
 <meta property="og:image" content="http://www.beckjin.com/img/sonar-build-jenkins/analysisResult.png">
 <meta property="og:image" content="http://www.beckjin.com/img/sonar-build-jenkins/triggerTime.png">
-<meta property="og:updated_time" content="2019-02-23T11:28:21.820Z">
+<meta property="og:updated_time" content="2019-09-28T09:42:46.361Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SonarQube 搭建代码质量管理平台（二）">
 <meta name="twitter:description" content="通过 SonarQube 搭建代码质量管理平台（一） 的介绍，如果每次都需要手动执行 sonar-scanner ，想想也是醉了，所以我们需要进一步完善 SonarQube 进行自动化代码分析。 从官方文档的 Scanners 部分可以看出，Scanner 支持 MSBuild、Maven、Gradle、Ant、Jenkins 等。本文将介绍使用 Jenkins 进行自动化代码分析， 测试项目的代">
@@ -415,7 +415,7 @@
 <p><strong>SonarScanner for MSBuild</strong>：选择基于 .NET Framework，因为 Test 项目是基于 .NET Framework；<br><strong>Project key</strong>： 在 SoanrQube 中的项目 key；<br><strong>Project name</strong>：在 SoanrQube 显示的项目名称，如果不填，则显示 Project key；<br><strong>Project version</strong>：版本号；<br><strong>Additional arguments</strong>：其他参数，比如可以设置只检测某种语言(/d:sonar.language=cs)、排除哪些文件(夹) 等，<a href="https://docs.sonarqube.org/display/SONAR/Analysis+Parameters" target="_blank" rel="noopener">参考</a>；</p>
 </li>
 <li><p>执行 Windows 批处理命令</p>
-<p> 先通过 nuget restore（<em>如果没有安装 nuget 命令的需要提前安装</em>） 还原依赖的 Nuget 包，然后使用 MSBuild 批处理命令重新生成项目。这一步 Build 可能会出现各种奇葩的问题，主要就是少了一些依赖包，建议在安装 Jenkins 的机器安装上 VS，然后将 MSBuild 加入环境变量，我的机器添加了两个路径：</p>
+<p> 先通过 nuget restore（<em>如果没有安装 nuget 命令的需要提前安装</em>） 还原依赖的 NuGet 包，然后使用 MSBuild 批处理命令重新生成项目。这一步 Build 可能会出现各种奇葩的问题，主要就是少了一些依赖包，建议在安装 Jenkins 的机器安装上 VS，然后将 MSBuild 加入环境变量，我的机器添加了两个路径：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin</span><br><span class="line">C:\Program Files (x86)\NuGet</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>SonarScanner for MSBuild - End Analysis</p>

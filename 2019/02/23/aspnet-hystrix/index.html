@@ -99,7 +99,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-hystrix/fallback.png">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-hystrix/shortCircuited.png">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-hystrix/failure.png">
-<meta property="og:updated_time" content="2019-02-23T11:23:24.426Z">
+<meta property="og:updated_time" content="2019-09-28T09:39:37.821Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content=".NET Core + Spring Cloud：熔断降级">
 <meta name="twitter:description" content="在微服务架构下，服务之间彼此隔离，服务之间的调用通过网络请求，在众多服务中，可能因为网络或服务本身的原因引起某些接口异常是很常见的现象，接口超时或报错在实际情况下偶发也属正常，但如果短时间内不断的出现并积压，就可能引起服务崩溃。 Hystrix 是 Spring Cloud 中的核心组件，它提供了熔断、隔离、降级、请求缓存、监控等功能，能够在依赖的服务出现问题时保证系统依然可用。 如下图，当 De">
@@ -376,7 +376,7 @@
 <p><img src="/img/aspnet-hystrix/eureka1.png" alt="eureka"></p>
 <p>修改 client-service ：</p>
 <ol>
-<li><p>Nuget 添加引用，MetricsEventsCore 主要对 stream 的监测使用（后面会说明）</p>
+<li><p>NuGet 添加引用，MetricsEventsCore 主要对 stream 的监测使用（后面会说明）</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Install-Package Steeltoe.CircuitBreaker.HystrixCore</span><br><span class="line">Install-Package Steeltoe.CircuitBreaker.Hystrix.MetricsEventsCore</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>创建 HystrixCommand</p>

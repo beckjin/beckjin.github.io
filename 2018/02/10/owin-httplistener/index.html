@@ -93,7 +93,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/owin-httplistener/owin.jpg">
 <meta property="og:image" content="http://www.beckjin.com/img/owin-httplistener/iisResult.png">
 <meta property="og:image" content="http://www.beckjin.com/img/owin-httplistener/httpListenerResult.png">
-<meta property="og:updated_time" content="2018-08-05T09:00:13.059Z">
+<meta property="og:updated_time" content="2019-09-28T09:41:48.632Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OWIN：HttpListener">
 <meta name="twitter:description" content="概述OWIN (Open Web Server Interface for .NET) 是一个规范和标准，OWIN 定义了Web服务器与Web应用之间的标准接口，将应用与服务器解耦，使得便携式Web应用以及跨平台的愿望成为现实，标准的 OWIN 应用可以在任何 OWIN 兼容的服务器上运行，不再依赖与 Windows 和 IIS 。 微软的 Katana、Identity、SignalR 等技术都">
@@ -383,7 +383,7 @@
 <h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><p>下面我们分别以 IIS 为 Server 和 HttpListener 为 Server 来测试。可能我们比较熟悉的是以 IIS 作为 Server，按照上面的4层结构，应用部署到 IIS 的时候并没有设置Host，其实不用奇怪，因为 IIS 比较特殊，它既是 Server，也充当了 Host。</p>
 <h5 id="IIS"><a href="#IIS" class="headerlink" title="IIS"></a>IIS</h5><h6 id="实现步骤："><a href="#实现步骤：" class="headerlink" title="实现步骤："></a>实现步骤：</h6><ol>
 <li>新建一个空Web应用程序；</li>
-<li>Nuget 安装 Microsoft.Owin.Host.SystemWeb；</li>
+<li>NuGet 安装 Microsoft.Owin.Host.SystemWeb；</li>
 <li>根目录下新建 Startup.cs 启动类</li>
 </ol>
 <p>注册中间件到 OWIN 管道的三种方式：</p>
@@ -404,7 +404,7 @@
 <h6 id="结果："><a href="#结果：" class="headerlink" title="结果："></a>结果：</h6><p>F5 运行<br><img src="/img/owin-httplistener/iisResult.png" alt="IIS Server"></p>
 <h5 id="HttpListener"><a href="#HttpListener" class="headerlink" title="HttpListener"></a>HttpListener</h5><h6 id="实现步骤：-1"><a href="#实现步骤：-1" class="headerlink" title="实现步骤："></a>实现步骤：</h6><ol>
 <li>新建一个控制台应用程序；</li>
-<li>Nuget 安装 Microsoft.Owin.Hosting 、Microsoft.Owin.Host.HttpListener；</li>
+<li>NuGet 安装 Microsoft.Owin.Hosting 、Microsoft.Owin.Host.HttpListener；</li>
 <li>设置 StartOptions</li>
 <li>Startup函数注册</li>
 <li>中间件注册</li>
