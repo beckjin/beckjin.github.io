@@ -100,7 +100,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/skywalking/serviceRequestMap.png">
 <meta property="og:image" content="http://www.beckjin.com/img/skywalking/skywalkingSpans.png">
 <meta property="og:image" content="http://www.beckjin.com/img/skywalking/skywalkingTopologyMap.png">
-<meta property="og:updated_time" content="2019-09-28T09:42:29.179Z">
+<meta property="og:updated_time" content="2019-09-28T13:45:11.554Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SkyWalking 分布式追踪系统">
 <meta name="twitter:description" content="随着微服务架构的流行，一些微服务架构下的问题也会越来越突出，比如一个请求会涉及多个服务，而服务本身可能也会依赖其他服务，整个请求路径就构成了一个网状的调用链，而在整个调用链中一旦某个节点发生异常，整个调用链的稳定性就会受到影响，所以会深深的感受到 “银弹” 这个词是不存在的，每种架构都有其优缺点 。  面对以上情况， 我们就需要一些可以帮助理解系统行为、用于分析性能问题的工具，以便发生故障的时候，">
@@ -404,7 +404,7 @@
 <p><img src="/img/skywalking/hostingStartupAssemblies.png" alt="hostingStartupAssemblies"></p>
 </li>
 <li><p>项目根目录下添加 skyapm.json 文件（来自官方例子），设置为 “如果较新则复制”，添加 SkyWalking 的配置信息，<a href="https://github.com/SkyAPM/SkyAPM-dotnet/blob/master/src/SkyApm.Utilities.Configuration/ConfigurationBuilderExtensions.cs" target="_blank" rel="noopener">更多默认配置参考</a>。（<em>不过从源码可以看出其实也不需要创建单独的 skyapm.json，直接在 appsettings.json 增加 SkyWalking 节点配置也是没问题的</em>）</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;SkyWalking&quot;: &#123;</span><br><span class="line">	&quot;ServiceName&quot;: &quot;WebAPIServiceA&quot;, // 服务名</span><br><span class="line">	&quot;Transport&quot;: &#123;</span><br><span class="line">	  &quot;gRPC&quot;: &#123;</span><br><span class="line">		&quot;Servers&quot;: &quot;localhost:11800&quot;  // 服务地址</span><br><span class="line">	  &#125;</span><br><span class="line">	&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;SkyWalking&quot;: &#123;</span><br><span class="line">    &quot;ServiceName&quot;: &quot;WebAPIServiceA&quot;, // 服务名</span><br><span class="line">    &quot;Transport&quot;: &#123;</span><br><span class="line">      &quot;gRPC&quot;: &#123;</span><br><span class="line">        &quot;Servers&quot;: &quot;localhost:11800&quot;  // 服务地址</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>动程序，请求的追踪结果就会被记录下来，通过 SkyWalking UI 查看：</p>
 <p><img src="/img/skywalking/skywalkingRequestLog.png" alt="skywalking request log"></p>
