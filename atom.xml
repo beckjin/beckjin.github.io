@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.beckjin.com/"/>
-  <updated>2019-09-25T14:36:45.551Z</updated>
+  <updated>2019-10-26T09:42:35.002Z</updated>
   <id>http://www.beckjin.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>gRPC 流式调用</title>
+    <link href="http://www.beckjin.com/2019/10/26/grpc-streaming/"/>
+    <id>http://www.beckjin.com/2019/10/26/grpc-streaming/</id>
+    <published>2019-10-26T09:38:56.000Z</published>
+    <updated>2019-10-26T09:42:35.002Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;gRPC 使用 &lt;a href=&quot;https://developers.google.com/protocol-buffers/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Protocol buffers&lt;/a&gt;
+        
+      
+    
+    </summary>
+    
+      <category term="微服务" scheme="http://www.beckjin.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/tags/ASP-NET/"/>
+    
+      <category term="gRPC" scheme="http://www.beckjin.com/tags/gRPC/"/>
+    
+  </entry>
   
   <entry>
     <title>聊聊 Docker Swarm 部署 gRPC 服务的坑</title>
@@ -135,7 +163,7 @@
     <link href="http://www.beckjin.com/2019/07/21/apollo-client/"/>
     <id>http://www.beckjin.com/2019/07/21/apollo-client/</id>
     <published>2019-07-21T06:22:43.000Z</published>
-    <updated>2019-09-28T13:12:41.078Z</updated>
+    <updated>2019-09-28T14:51:20.581Z</updated>
     
     <summary type="html">
     
@@ -433,7 +461,7 @@
     <link href="http://www.beckjin.com/2018/12/02/aspnet-log4net-kafka-elk/"/>
     <id>http://www.beckjin.com/2018/12/02/aspnet-log4net-kafka-elk/</id>
     <published>2018-12-02T12:47:01.000Z</published>
-    <updated>2019-09-28T13:30:43.617Z</updated>
+    <updated>2019-09-28T15:01:57.017Z</updated>
     
     <summary type="html">
     
@@ -574,39 +602,6 @@
       <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
     
       <category term="SkyWalking" scheme="http://www.beckjin.com/tags/SkyWalking/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Swagger 搭建 API 文档管理平台</title>
-    <link href="http://www.beckjin.com/2018/09/02/swagger/"/>
-    <id>http://www.beckjin.com/2018/09/02/swagger/</id>
-    <published>2018-09-01T16:50:10.000Z</published>
-    <updated>2019-09-28T13:46:58.414Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;API 文档是前后端对接的基本，但如果还停留在手写文档的阶段，那就真的太 out 了。大家可能也尝试过各种 API 接口管理的工具，比如 postman 、apizza 等，但个人使用下来还是感觉麻烦了，长期来看我是拒绝的。&lt;/p&gt;
-&lt;p&gt;&lt;img
-        
-      
-    
-    </summary>
-    
-      <category term="API 文档管理" scheme="http://www.beckjin.com/categories/API-%E6%96%87%E6%A1%A3%E7%AE%A1%E7%90%86/"/>
-    
-    
-      <category term="ASP.NET" scheme="http://www.beckjin.com/tags/ASP-NET/"/>
-    
-      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
-    
-      <category term="Swagger" scheme="http://www.beckjin.com/tags/Swagger/"/>
-    
-      <category term="Node.js" scheme="http://www.beckjin.com/tags/Node-js/"/>
     
   </entry>
   
