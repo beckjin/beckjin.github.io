@@ -91,7 +91,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.beckjin.com/img/quartz-net-trigger/corn.png">
 <meta property="og:image" content="http://www.beckjin.com/img/quartz-net-trigger/priority.png">
-<meta property="og:updated_time" content="2019-09-28T14:25:44.908Z">
+<meta property="og:updated_time" content="2019-10-26T09:59:50.657Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Quartz.NET 作业调度（三）：Trigger">
 <meta name="twitter:description" content="在  Quartz 中，Trigger 即 Job 执行的触发器。和 JobBuilder 类似，我们可以通过 TriggerBuilder 来创建各种情况需要的触发器。Trigger 结合 Job，才能实现完美的作业调度。1await scheduler.ScheduleJob(job, trigger); TriggerBuilderIdentityTrigger 和 Job 类似，都需要设置">
@@ -374,6 +374,12 @@
 <p>先瞄一眼下面表达式及含义：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">* * * * * ?  		// 每秒</span><br><span class="line">0/5 * * * * ?  		// 每5秒</span><br><span class="line">0 * * * * ?  		// 每分钟</span><br><span class="line">0 0/30 8-22 * * ?  	// 每天8~22点每30分钟</span><br></pre></td></tr></table></figure>
 <p>下面对部分符号进行说明：</p>
+<style>
+table th:first-of-type {
+    width: 60px;
+}
+</style>
+
 <table>
 <thead>
 <tr>

@@ -91,7 +91,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.beckjin.com/img/zookeeper-lock/lock.png">
 <meta property="og:image" content="http://www.beckjin.com/img/zookeeper-lock/result.png">
-<meta property="og:updated_time" content="2019-09-28T13:50:36.813Z">
+<meta property="og:updated_time" content="2019-10-26T09:54:06.974Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ZooKeeper 实现分布式锁">
 <meta name="twitter:description" content="ZooKeeper 是一个典型的分布式数据一致性解决方案，分布式应用程序可以基于 ZooKeeper 实现诸如数据发布/订阅、负载均衡、分布式协调/通知、集群管理、Master 选举、分布式锁等功能。 节点在介绍 ZooKeeper 分布式锁前需要先了解一下 ZooKeeper 中节点（Znode），ZooKeeper 的数据存储数据模型是一棵树（Znode Tree)，由斜杠（/）的进行分割的路">
@@ -363,6 +363,12 @@
         <p>ZooKeeper 是一个典型的分布式数据一致性解决方案，分布式应用程序可以基于 ZooKeeper 实现诸如数据发布/订阅、负载均衡、分布式协调/通知、集群管理、Master 选举、分布式锁等功能。</p>
 <h3 id="节点"><a href="#节点" class="headerlink" title="节点"></a>节点</h3><p>在介绍 ZooKeeper 分布式锁前需要先了解一下 ZooKeeper 中节点（Znode），ZooKeeper 的数据存储数据模型是一棵树（Znode Tree)，由斜杠（/）的进行分割的路径，就是一个 Znode（如 /locks/my_lock）。每个 Znode 上都会保存自己的数据内容，同时还会保存一系列属性信息。</p>
 <p>Znode 又分为以下四种类型：</p>
+<style>
+table th:first-of-type {
+    width: 130px;
+}
+</style>
+
 <table>
 <thead>
 <tr>

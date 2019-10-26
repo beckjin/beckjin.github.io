@@ -97,7 +97,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-consul-discovery/serviceRegister.png">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-consul-discovery/result1.png">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-consul-discovery/result2.png">
-<meta property="og:updated_time" content="2019-09-28T14:11:45.092Z">
+<meta property="og:updated_time" content="2019-10-26T09:52:54.521Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content=".NET Core + Consul 服务注册与发现">
 <meta name="twitter:description" content="Consul 介绍在分布式架构中，服务治理是必须面对的问题，如果缺乏简单有效治理方案，各服务之间只能通过人肉配置的方式进行服务关系管理，当遇到服务关系变化时，就会变得极其麻烦且容易出错。 Consul 是一个用来实现分布式系统服务发现与配置的开源工具。它内置了服务注册与发现框架、分布一致性协议实现、健康检查、Key/Value存储、多数据中心方案，不再需要依赖其他工具（比如 ZooKeeper 等">
@@ -374,6 +374,12 @@
 <h4 id="从-Docker-Hub-拉取-Consul-镜像"><a href="#从-Docker-Hub-拉取-Consul-镜像" class="headerlink" title="从 Docker Hub 拉取 Consul 镜像"></a>从 Docker Hub 拉取 Consul 镜像</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull consul</span><br></pre></td></tr></table></figure>
 <h4 id="启动-3个-Server-节点-1-个-Client-节点"><a href="#启动-3个-Server-节点-1-个-Client-节点" class="headerlink" title="启动 3个 Server 节点 + 1 个 Client 节点"></a>启动 3个 Server 节点 + 1 个 Client 节点</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// Server  节点 1</span><br><span class="line">docker run --name cs1 -p 8500:8500  -v /data/cs1:/data consul agent -server -bind 172.17.0.2 -node consul-server-1  -data-dir /data -bootstrap-expect 3 -client 0.0.0.0 -ui</span><br><span class="line"></span><br><span class="line">// Server  节点 2</span><br><span class="line">docker run --name cs2 -p 7500:8500  -v /data/cs2:/data consul agent -server -bind 172.17.0.3 -node consul-server-2  -data-dir /data -bootstrap-expect 3 -client 0.0.0.0 -ui -join 172.17.0.2</span><br><span class="line"></span><br><span class="line">// Server  节点 3</span><br><span class="line">docker run --name cs3 -p 6500:8500 -v /data/cs3:/data consul agent -server -bind 172.17.0.4 -node consul-server-3  -data-dir /data -bootstrap-expect 3 -client 0.0.0.0 -ui -join 172.17.0.2</span><br><span class="line"></span><br><span class="line">// Client 节点 1</span><br><span class="line">docker run --name cc1 -p 5500:8500 -v /data/cc1:/data consul agent -bind 172.17.0.5 -node consul-client-1 -data-dir /data -client 0.0.0.0 -ui -join 172.17.0.2</span><br></pre></td></tr></table></figure>
 <p>参数说明（–name、-p、-v 为 Docker 相关参数）：</p>
+<style>
+table th:first-of-type {
+    width: 140px;
+}
+</style>
+
 <table>
 <thead>
 <tr>
