@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.beckjin.com/"/>
-  <updated>2019-10-26T14:37:50.807Z</updated>
+  <updated>2019-11-16T07:32:26.312Z</updated>
   <id>http://www.beckjin.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ASP.NET Core 自定义配置源</title>
+    <link href="http://www.beckjin.com/2019/11/16/aspnet-custom-provider/"/>
+    <id>http://www.beckjin.com/2019/11/16/aspnet-custom-provider/</id>
+    <published>2019-11-16T07:29:49.000Z</published>
+    <updated>2019-11-16T07:32:26.312Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;正如大家所知，在 .NET Core 中配置文件改成了 &lt;strong&gt;appsettings.json&lt;/strong&gt;，表面上和 .NET Framework 的 &lt;strong&gt;web.config&lt;/strong&gt; 或
+        
+      
+    
+    </summary>
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/categories/ASP-NET/"/>
+    
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/tags/ASP-NET/"/>
+    
+      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+    
+  </entry>
   
   <entry>
     <title>gRPC 流式调用</title>
@@ -572,36 +600,6 @@
       <category term="SonarQube" scheme="http://www.beckjin.com/tags/SonarQube/"/>
     
       <category term="代码分析" scheme="http://www.beckjin.com/tags/%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SkyWalking 分布式追踪系统</title>
-    <link href="http://www.beckjin.com/2018/09/09/skywalking/"/>
-    <id>http://www.beckjin.com/2018/09/09/skywalking/</id>
-    <published>2018-09-09T12:10:03.000Z</published>
-    <updated>2019-09-28T13:45:11.554Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;随着微服务架构的流行，一些微服务架构下的问题也会越来越突出，比如一个请求会涉及多个服务，而服务本身可能也会依赖其他服务，整个请求路径就构成了一个网状的调用链，而在整个调用链中一旦某个节点发生异常，整个调用链的稳定性就会受到影响，所以会深深的感受到 “银弹”
-        
-      
-    
-    </summary>
-    
-      <category term="微服务" scheme="http://www.beckjin.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
-    
-    
-      <category term="ASP.NET" scheme="http://www.beckjin.com/tags/ASP-NET/"/>
-    
-      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
-    
-      <category term="SkyWalking" scheme="http://www.beckjin.com/tags/SkyWalking/"/>
     
   </entry>
   
