@@ -93,7 +93,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-custom-provider/providers.png">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-custom-provider/customConfigurationProvider.png">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-custom-provider/result.png">
-<meta property="og:updated_time" content="2019-11-16T07:32:26.312Z">
+<meta property="og:updated_time" content="2019-11-23T07:38:59.016Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ASP.NET Core 自定义配置源">
 <meta name="twitter:description" content="正如大家所知，在 .NET Core 中配置文件改成了 appsettings.json，表面上和 .NET Framework 的 web.config 或 app.config 好像没有太大的区别，只是一种是 json ，一种是 xml，但其实 .NET Core 的配置体系是一种全新的设计，灵活且具扩展性。这里主要介绍一下在 .NET Core 的配置体系下如何扩展自定义配置源，配置源其实就">
@@ -368,7 +368,7 @@
 <h4 id="ConfigurationSource"><a href="#ConfigurationSource" class="headerlink" title="ConfigurationSource"></a>ConfigurationSource</h4><p>实现 <code>IConfigurationSource</code> 接口，提供对应的 <code>ConfigurationProvider</code> 具体实例。</p>
 <h4 id="ConfigurationBuilder"><a href="#ConfigurationBuilder" class="headerlink" title="ConfigurationBuilder"></a>ConfigurationBuilder</h4><p>实现 <code>IConfigurationBuilder</code> 接口，负责将 <code>ConfigurationSource</code>  添加到配置源集合，再根据配置源集合构建出 <code>ConfigurationRoot</code> 对象，实现 <code>IConfigurationRoot</code> 接口。</p>
 <h4 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h4><p>实现 <code>IConfiguration</code> 接口，<code>Configuration</code> 对象在逻辑上体现出树形化层次结构，配置信息均已键/值对的方式提供使用。</p>
-<p><strong>注 ：*</strong><code>IConfigurationRoot</code> 、<code>IConfigurationSection</code> 均继承于 <code>IConfiguration</code>，<code>IConfigurationRoot</code>  表示配置的根节点，<code>IConfigurationSection</code>  则表示配置的非根节点*</p>
+<p><strong>注 ：</strong> <em><code>IConfigurationRoot</code> 、<code>IConfigurationSection</code> 均继承于 <code>IConfiguration</code>，<code>IConfigurationRoot</code>  表示配置的根节点，<code>IConfigurationSection</code>  则表示配置的非根节点</em></p>
 <p>所以他们之间的关系就是 <code>ConfigurationProvider</code> 实现配置提供，然后通过 <code>ConfigurationSource</code> 构造配置源实例，接着通过 <code>ConfigurationBuilder</code> 将配置源实例 <code>ConfigurationSource</code> 添加到配置源集合中并构造出 <code>ConfigurationRoot</code>，最终以 <code>Configuration</code> 对象提供给程序使用。</p>
 <p><img src="/img/aspnet-custom-provider/relation.png" alt="relation"></p>
 <p>默认情况下，<code>Configuration</code> 对象的 <code>Providers</code> 属性包含如下 <code>Provider</code>：</p>
@@ -471,6 +471,10 @@ public IEnumerable&lt;string&gt; Get()
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/11/23/aspnet-etcd-provider/" rel="prev" title="ASP.NET Core etcd 配置源">
+                ASP.NET Core etcd 配置源 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -557,7 +561,7 @@ public IEnumerable&lt;string&gt; Get()
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-count">51</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -579,7 +583,7 @@ public IEnumerable&lt;string&gt; Get()
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-count">51</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
