@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.beckjin.com/"/>
-  <updated>2019-12-01T08:55:23.934Z</updated>
+  <updated>2019-12-22T08:04:54.558Z</updated>
   <id>http://www.beckjin.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ASP.NET Core gRPC 拦截器</title>
+    <link href="http://www.beckjin.com/2019/12/22/grpc-interceptor/"/>
+    <id>http://www.beckjin.com/2019/12/22/grpc-interceptor/</id>
+    <published>2019-12-22T07:48:41.000Z</published>
+    <updated>2019-12-22T08:04:54.558Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;gRPC 作为一套独立的 RPC 框架，像拦截器这种功能当然也是不可或缺的，框架自带的拦截器更多是基于框架本身出发，对于 gRPC 来说最突出的就是需要支持各种不同 RPC 调用方式的拦截，如：&lt;strong&gt;简单 RPC 调用&lt;/strong&gt;、&lt;strong&gt;流式
+        
+      
+    
+    </summary>
+    
+      <category term="微服务" scheme="http://www.beckjin.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+    
+      <category term="ASP.NET" scheme="http://www.beckjin.com/tags/ASP-NET/"/>
+    
+      <category term="gRPC" scheme="http://www.beckjin.com/tags/gRPC/"/>
+    
+  </entry>
   
   <entry>
     <title>ASP.NET Core 数据验证：FluentValidation</title>
@@ -105,11 +133,11 @@
   </entry>
   
   <entry>
-    <title>gRPC 流式调用</title>
+    <title>ASP.NET Core gRPC 流式调用</title>
     <link href="http://www.beckjin.com/2019/10/26/grpc-streaming/"/>
     <id>http://www.beckjin.com/2019/10/26/grpc-streaming/</id>
     <published>2019-10-26T09:38:56.000Z</published>
-    <updated>2019-10-26T14:37:50.807Z</updated>
+    <updated>2019-12-22T08:03:13.724Z</updated>
     
     <summary type="html">
     
@@ -577,33 +605,6 @@
       <category term="Kafka" scheme="http://www.beckjin.com/tags/Kafka/"/>
     
       <category term="ELK" scheme="http://www.beckjin.com/tags/ELK/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Kafka 集群</title>
-    <link href="http://www.beckjin.com/2018/11/18/kafka-cluster/"/>
-    <id>http://www.beckjin.com/2018/11/18/kafka-cluster/</id>
-    <published>2018-11-17T18:50:55.000Z</published>
-    <updated>2018-12-04T00:10:19.661Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;Kafka 是一个分布式消息系统，具有高水平扩展和高吞吐量的特点。在Kafka 集群中，没有 “中心主节点” 的概念，集群中所有的节点都是对等的。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/img/kafka-cluster/kafka.png&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="Kafka" scheme="http://www.beckjin.com/categories/Kafka/"/>
-    
-    
-      <category term="Kafka" scheme="http://www.beckjin.com/tags/Kafka/"/>
     
   </entry>
   
