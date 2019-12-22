@@ -90,7 +90,7 @@
 <meta property="og:description" content="gRPC 作为一套独立的 RPC 框架，像拦截器这种功能当然也是不可或缺的，框架自带的拦截器更多是基于框架本身出发，对于 gRPC 来说最突出的就是需要支持各种不同 RPC 调用方式的拦截，如：简单 RPC 调用、流式 RPC 调用，流式调用又分 客户端流式调用、服务端流式调用、双向流式调用，关于流式调用更多介绍可参考：ASP.NET Core gRPC 流式调用。 拦截器分类不论是基于 .NET">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.beckjin.com/img/grpc-interceptor/result.png">
-<meta property="og:updated_time" content="2019-12-22T08:11:26.469Z">
+<meta property="og:updated_time" content="2019-12-22T08:31:40.042Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ASP.NET Core gRPC 拦截器">
 <meta name="twitter:description" content="gRPC 作为一套独立的 RPC 框架，像拦截器这种功能当然也是不可或缺的，框架自带的拦截器更多是基于框架本身出发，对于 gRPC 来说最突出的就是需要支持各种不同 RPC 调用方式的拦截，如：简单 RPC 调用、流式 RPC 调用，流式调用又分 客户端流式调用、服务端流式调用、双向流式调用，关于流式调用更多介绍可参考：ASP.NET Core gRPC 流式调用。 拦截器分类不论是基于 .NET">
@@ -371,6 +371,9 @@
 <p>客户端配置拦截通过 <code>channel</code> 的 <code>Intercept</code> 方法，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var channel = GrpcChannel.ForAddress(&quot;https://localhost:5001&quot;);</span><br><span class="line">var invoker = channel.Intercept(new ClientInterceptor());</span><br><span class="line">var client = new Greeter.GreeterClient(invoker);</span><br></pre></td></tr></table></figure></p>
 <p><em>服务端和服务端拦截器的配置都可支持多个，如果同时指定多个拦截器会按照添加顺序依次执行</em></p>
 <p><img src="/img/grpc-interceptor/result.png" alt="result"></p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><ul>
+<li><a href="https://github.com/beckjin/gRPCSamples/tree/master/Interceptor" target="_blank" rel="noopener">gRPC Interceptor Sample</a></li>
+</ul>
 
       
     </div>
@@ -606,7 +609,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#拦截器分类"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x62E6;&#x622A;&#x5668;&#x5206;&#x7C7B;" class="headerlink" title="&#x62E6;&#x622A;&#x5668;&#x5206;&#x7C7B;"></a>&#x62E6;&#x622A;&#x5668;&#x5206;&#x7C7B;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务端拦截器实现"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x670D;&#x52A1;&#x7AEF;&#x62E6;&#x622A;&#x5668;&#x5B9E;&#x73B0;" class="headerlink" title="&#x670D;&#x52A1;&#x7AEF;&#x62E6;&#x622A;&#x5668;&#x5B9E;&#x73B0;"></a>&#x670D;&#x52A1;&#x7AEF;&#x62E6;&#x622A;&#x5668;&#x5B9E;&#x73B0;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端拦截器实现"><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x5BA2;&#x6237;&#x7AEF;&#x62E6;&#x622A;&#x5668;&#x5B9E;&#x73B0;" class="headerlink" title="&#x5BA2;&#x6237;&#x7AEF;&#x62E6;&#x622A;&#x5668;&#x5B9E;&#x73B0;"></a>&#x5BA2;&#x6237;&#x7AEF;&#x62E6;&#x622A;&#x5668;&#x5B9E;&#x73B0;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拦截器配置"><span class="nav-number">4.</span> <span class="nav-text"><a href="#&#x62E6;&#x622A;&#x5668;&#x914D;&#x7F6E;" class="headerlink" title="&#x62E6;&#x622A;&#x5668;&#x914D;&#x7F6E;"></a>&#x62E6;&#x622A;&#x5668;&#x914D;&#x7F6E;</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#拦截器分类"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x62E6;&#x622A;&#x5668;&#x5206;&#x7C7B;" class="headerlink" title="&#x62E6;&#x622A;&#x5668;&#x5206;&#x7C7B;"></a>&#x62E6;&#x622A;&#x5668;&#x5206;&#x7C7B;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务端拦截器实现"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x670D;&#x52A1;&#x7AEF;&#x62E6;&#x622A;&#x5668;&#x5B9E;&#x73B0;" class="headerlink" title="&#x670D;&#x52A1;&#x7AEF;&#x62E6;&#x622A;&#x5668;&#x5B9E;&#x73B0;"></a>&#x670D;&#x52A1;&#x7AEF;&#x62E6;&#x622A;&#x5668;&#x5B9E;&#x73B0;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端拦截器实现"><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x5BA2;&#x6237;&#x7AEF;&#x62E6;&#x622A;&#x5668;&#x5B9E;&#x73B0;" class="headerlink" title="&#x5BA2;&#x6237;&#x7AEF;&#x62E6;&#x622A;&#x5668;&#x5B9E;&#x73B0;"></a>&#x5BA2;&#x6237;&#x7AEF;&#x62E6;&#x622A;&#x5668;&#x5B9E;&#x73B0;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拦截器配置"><span class="nav-number">4.</span> <span class="nav-text"><a href="#&#x62E6;&#x622A;&#x5668;&#x914D;&#x7F6E;" class="headerlink" title="&#x62E6;&#x622A;&#x5668;&#x914D;&#x7F6E;"></a>&#x62E6;&#x622A;&#x5668;&#x914D;&#x7F6E;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接"><span class="nav-number">5.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;</span></a></li></ol></div>
             
 
           </div>
