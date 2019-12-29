@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="ASP.NET,C#,RedLock,分布式锁," />
+  <meta name="keywords" content="C#,RedLock,分布式锁," />
 
 
 
@@ -82,7 +82,7 @@
 
 
 <meta name="description" content="并发是程序开发中不可避免的问题，根据系统面向用户、功能场景的不同，并发的重视程度会有不同。从程序的角度来说，并发意味着相同的时间点执行了相同的代码，而有些情况是不被允许的，比如：转账、抢购占库存等，如果没有做好临界条件的验证，会带来非常严重的后果。追根结底是因为并发引起的数据不一致问题，面对并发，我们通常会采用锁来优化。 场景模拟如下模拟抢购的示例代码（C#）： 12345678910111213">
-<meta name="keywords" content="ASP.NET,C#,RedLock,分布式锁">
+<meta name="keywords" content="C#,RedLock,分布式锁">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RedLock 实现分布式锁">
 <meta property="og:url" content="http://www.beckjin.com/2019/01/06/redLock-net/index.html">
@@ -92,7 +92,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/redLock-net/concurrent.png">
 <meta property="og:image" content="http://www.beckjin.com/img/redLock-net/concurrentWithLock.png">
 <meta property="og:image" content="http://www.beckjin.com/img/redLock-net/redLock.png">
-<meta property="og:updated_time" content="2019-09-28T13:44:45.403Z">
+<meta property="og:updated_time" content="2019-12-29T13:44:56.329Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RedLock 实现分布式锁">
 <meta name="twitter:description" content="并发是程序开发中不可避免的问题，根据系统面向用户、功能场景的不同，并发的重视程度会有不同。从程序的角度来说，并发意味着相同的时间点执行了相同的代码，而有些情况是不被允许的，比如：转账、抢购占库存等，如果没有做好临界条件的验证，会带来非常严重的后果。追根结底是因为并发引起的数据不一致问题，面对并发，我们通常会采用锁来优化。 场景模拟如下模拟抢购的示例代码（C#）： 12345678910111213">
@@ -313,8 +313,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ASP-NET/" itemprop="url" rel="index">
-                    <span itemprop="name">ASP.NET</span>
+                  <a href="/categories/NET-Core/" itemprop="url" rel="index">
+                    <span itemprop="name">.NET Core</span>
                   </a>
                 </span>
 
@@ -377,7 +377,7 @@
 <p>获取锁：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET resource_name my_random_value NX PX 30000</span><br></pre></td></tr></table></figure></p>
 <p>释放锁：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if redis.call(&quot;get&quot;,KEYS[1]) == ARGV[1] then</span><br><span class="line">  return redis.call(&quot;del&quot;,KEYS[1])</span><br><span class="line">else</span><br><span class="line">  return 0</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
 <h4 id="RedLock-net-集成"><a href="#RedLock-net-集成" class="headerlink" title="RedLock.net 集成"></a>RedLock.net 集成</h4><ol>
-<li><p>创建 .NETCore API 项目</p>
+<li><p>创建 .NET Core API 项目</p>
 </li>
 <li><p>NuGet 安装 RedLock.net</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Install-Package RedLock.net</span><br></pre></td></tr></table></figure>
@@ -458,8 +458,6 @@
     <footer class="post-footer">
       
         <div class="post-tags">
-          
-            <a href="/tags/ASP-NET/" rel="tag"># ASP.NET</a>
           
             <a href="/tags/C/" rel="tag"># C#</a>
           
@@ -578,7 +576,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -589,7 +587,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -600,7 +598,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-count">51</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="ASP.NET,C#,SkyWalking," />
+  <meta name="keywords" content="C#,DiagnosticSource," />
 
 
 
@@ -81,20 +81,21 @@
 
 
 
-<meta name="description" content="SkyWalking-netcore 最近更新的版本改成了无入侵的集成方式，主要思想应该是分离开发和监测，开发只管代码部分，监测的问题是代码程序之外的工作。 基于之前  SkyWalking 分布式追踪系统 的介绍，一些概念性的内容、环境搭建这里就不重复说明。以下介绍都是基于 Windows 环境的，如果是 macOS/Linux ，请参考 官方文档 。 安装 SkyWalking .NET Co">
-<meta name="keywords" content="ASP.NET,C#,SkyWalking">
+<meta name="description" content="最近在研究全链路监控的实现方式，目的是计划在项目中加入全链路日志的支持，说到这个问题肯定有人会想到 APM，如：SkyWalking、Cat、Zipkin、Pinpoint 、Elastic APM 等，确实市面上已经存在现成的全链路监控框架可以直接使用，不过说实话，在免费领域  .NET 这方面的实现确是还不够成熟，当然和很多组件本身实现方式也有关，并没有预置埋点。SkyAPM-dotnet 是">
+<meta name="keywords" content="C#,DiagnosticSource">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SkyWalking-netcore 无入侵分布式追踪">
-<meta property="og:url" content="http://www.beckjin.com/2018/10/28/skywalking-netcore-noinvade/index.html">
+<meta property="og:title" content="ASP.NET Core 诊断跟踪：DiagnosticSource">
+<meta property="og:url" content="http://www.beckjin.com/2019/12/29/aspnet-diagnostics/index.html">
 <meta property="og:site_name" content="Beck&#39;s Blog">
-<meta property="og:description" content="SkyWalking-netcore 最近更新的版本改成了无入侵的集成方式，主要思想应该是分离开发和监测，开发只管代码部分，监测的问题是代码程序之外的工作。 基于之前  SkyWalking 分布式追踪系统 的介绍，一些概念性的内容、环境搭建这里就不重复说明。以下介绍都是基于 Windows 环境的，如果是 macOS/Linux ，请参考 官方文档 。 安装 SkyWalking .NET Co">
+<meta property="og:description" content="最近在研究全链路监控的实现方式，目的是计划在项目中加入全链路日志的支持，说到这个问题肯定有人会想到 APM，如：SkyWalking、Cat、Zipkin、Pinpoint 、Elastic APM 等，确实市面上已经存在现成的全链路监控框架可以直接使用，不过说实话，在免费领域  .NET 这方面的实现确是还不够成熟，当然和很多组件本身实现方式也有关，并没有预置埋点。SkyAPM-dotnet 是">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.beckjin.com/img/skywalking-netcore-noinvade/agentTest.png">
-<meta property="og:updated_time" content="2019-02-23T11:27:55.144Z">
+<meta property="og:image" content="http://www.beckjin.com/img/aspnet-diagnostics/skyApmDiagnostics.png">
+<meta property="og:image" content="http://www.beckjin.com/img/aspnet-diagnostics/result.png">
+<meta property="og:updated_time" content="2019-12-29T13:32:43.158Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SkyWalking-netcore 无入侵分布式追踪">
-<meta name="twitter:description" content="SkyWalking-netcore 最近更新的版本改成了无入侵的集成方式，主要思想应该是分离开发和监测，开发只管代码部分，监测的问题是代码程序之外的工作。 基于之前  SkyWalking 分布式追踪系统 的介绍，一些概念性的内容、环境搭建这里就不重复说明。以下介绍都是基于 Windows 环境的，如果是 macOS/Linux ，请参考 官方文档 。 安装 SkyWalking .NET Co">
-<meta name="twitter:image" content="http://www.beckjin.com/img/skywalking-netcore-noinvade/agentTest.png">
+<meta name="twitter:title" content="ASP.NET Core 诊断跟踪：DiagnosticSource">
+<meta name="twitter:description" content="最近在研究全链路监控的实现方式，目的是计划在项目中加入全链路日志的支持，说到这个问题肯定有人会想到 APM，如：SkyWalking、Cat、Zipkin、Pinpoint 、Elastic APM 等，确实市面上已经存在现成的全链路监控框架可以直接使用，不过说实话，在免费领域  .NET 这方面的实现确是还不够成熟，当然和很多组件本身实现方式也有关，并没有预置埋点。SkyAPM-dotnet 是">
+<meta name="twitter:image" content="http://www.beckjin.com/img/aspnet-diagnostics/skyApmDiagnostics.png">
 
 
 
@@ -124,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://www.beckjin.com/2018/10/28/skywalking-netcore-noinvade/"/>
+  <link rel="canonical" href="http://www.beckjin.com/2019/12/29/aspnet-diagnostics/"/>
 
 
 
 
 
-  <title>SkyWalking-netcore 无入侵分布式追踪 | Beck's Blog</title>
+  <title>ASP.NET Core 诊断跟踪：DiagnosticSource | Beck's Blog</title>
   
 
 
@@ -259,7 +260,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2018/10/28/skywalking-netcore-noinvade/">
+    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2019/12/29/aspnet-diagnostics/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
@@ -276,7 +277,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">SkyWalking-netcore 无入侵分布式追踪</h2>
+          <h2 class="post-title" itemprop="name headline">ASP.NET Core 诊断跟踪：DiagnosticSource</h2>
         
 
         <div class="post-meta">
@@ -288,8 +289,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-28T13:21:00+08:00">
-                2018-10-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-29T21:16:50+08:00">
+                2019-12-29
               </time>
             
 
@@ -311,8 +312,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/微服务/" itemprop="url" rel="index">
-                    <span itemprop="name">微服务</span>
+                  <a href="/categories/NET-Core/" itemprop="url" rel="index">
+                    <span itemprop="name">.NET Core</span>
                   </a>
                 </span>
 
@@ -328,7 +329,7 @@
 
           
           
-             <span id="/2018/10/28/skywalking-netcore-noinvade/" class="leancloud_visitors" data-flag-title="SkyWalking-netcore 无入侵分布式追踪">
+             <span id="/2019/12/29/aspnet-diagnostics/" class="leancloud_visitors" data-flag-title="ASP.NET Core 诊断跟踪：DiagnosticSource">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -359,42 +360,63 @@
       
 
       
-        <p><a href="https://github.com/OpenSkywalking/skywalking-netcore" target="_blank" rel="noopener">SkyWalking-netcore</a> 最近更新的版本改成了无入侵的集成方式，主要思想应该是分离开发和监测，开发只管代码部分，监测的问题是代码程序之外的工作。</p>
-<p>基于之前  <a href="http://beckjin.com/2018/09/09/skywalking/" target="_blank" rel="noopener">SkyWalking 分布式追踪系统</a> 的介绍，一些概念性的内容、环境搭建这里就不重复说明。以下介绍都是基于 Windows 环境的，如果是 macOS/Linux ，请参考 <a href="https://github.com/OpenSkywalking/skywalking-netcore/blob/master/README.md" target="_blank" rel="noopener">官方文档</a> 。</p>
-<h3 id="安装-SkyWalking-NET-Core-Agent"><a href="#安装-SkyWalking-NET-Core-Agent" class="headerlink" title="安装 SkyWalking .NET Core Agent"></a>安装 SkyWalking .NET Core Agent</h3><p>首先通过以下命令安装 SkyWalking DotNet CLI</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dotnet tool install -g SkyWalking.DotNet.CLI</span><br></pre></td></tr></table></figure>
-<p>CLI 安装成功之后，执行以下命令安装 Agent 到当前机器上</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dotnet skywalking install</span><br></pre></td></tr></table></figure>
-<p><strong>这一步的安装需要注意以下几项：</strong></p>
-<ol>
-<li>使用管理员权限运行 cmd；</li>
-<li>必须切到 C 盘路径下执行命令；</li>
-<li>如果出现  “Access to the path ‘06806e6c49431d12b85aaa5db07b8705d5b317’ is denied” 错误，请删除 “C:/Users/用户名/AppData/Local/Temp/skywalking.agent.aspnetcore” 后，重新执行；</li>
+        <p>最近在研究全链路监控的实现方式，目的是计划在项目中加入全链路日志的支持，说到这个问题肯定有人会想到 APM，如：<a href="http://skywalking.apache.org/" target="_blank" rel="noopener">SkyWalking</a>、<a href="https://github.com/dianping/cat" target="_blank" rel="noopener">Cat</a>、<a href="https://github.com/openzipkin/zipkin" target="_blank" rel="noopener">Zipkin</a>、<a href="https://github.com/naver/pinpoint" target="_blank" rel="noopener">Pinpoint</a> 、<a href="https://www.elastic.co/cn/products/apm" target="_blank" rel="noopener">Elastic APM</a> 等，确实市面上已经存在现成的全链路监控框架可以直接使用，不过说实话，在免费领域  .NET 这方面的实现确是还不够成熟，当然和很多组件本身实现方式也有关，并没有预置埋点。<a href="https://github.com/SkyAPM/SkyAPM-dotnet" target="_blank" rel="noopener">SkyAPM-dotnet</a> 是目前支持组件诊断分析较多的一个实现，如下图：</p>
+<p><img src="/img/aspnet-diagnostics/skyApmDiagnostics.png" alt="SkyApm.Diagnostics"></p>
+<p>基于对 SkyWalking 的 <a href="https://github.com/SkyAPM/SkyAPM-dotnet" target="_blank" rel="noopener">SkyAPM-dotnet</a> 和 Elastic APM 的 <a href="https://github.com/elastic/apm-agent-dotnet" target="_blank" rel="noopener">apm-agent-dotnet</a> 源码阅读，它们本质上都是基于 <code>DiagnosticSource</code> 来实现的诊断跟踪，本身也定义了一套较规范的标准，如果需要实现更多组件的诊断跟踪，基本上是可以直接基于这套标准扩展即可，所以本文就主要介绍 <code>DiagnosticSource</code> 的使用，初步了解实现原理。</p>
+<h3 id="DiagnosticSource-是什么"><a href="#DiagnosticSource-是什么" class="headerlink" title="DiagnosticSource 是什么"></a>DiagnosticSource 是什么</h3><p>简单来说 <code>DiagnosticSource</code> 一个基于观察者模式的日志模块，日志写入 <code>DiagnosticSource</code>，然后供订阅者消费。<code>DiagnosticSource</code> 只是一个抽象类，它定义了记录事件所需的方法，实际核心的是 <code>DiagnosticListener</code> 实现类，每个 <code>DiagnosticListener</code>  都具有一个 <code>Name</code> 属性（诊断器名），一个应用程序中可包含多个 <code>DiagnosticListener</code> ，每个 <code>DiagnosticListener</code> 有自己唯一的诊断器名标识。 <code>DiagnosticListener</code> 充当发布者角色，通过 <code>Write</code> 向 <code>DiagnosticSource</code> 写入日志，同时提供了 <code>Subscribe</code> 方法设置订阅者来消费 <code>DiagnosticSource</code> 中的日志。</p>
+<h3 id="DiagnosticSource-事件发布"><a href="#DiagnosticSource-事件发布" class="headerlink" title="DiagnosticSource 事件发布"></a>DiagnosticSource 事件发布</h3><ol>
+<li><p>在事件发布前需要先创建 <code>DiagnosticSource</code>，如下定义了一个诊断器名为 <code>TestDiagnosticListener</code> 的 <code>DiagnosticListener</code>：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private static readonly DiagnosticSource testDiagnosticListener = new DiagnosticListener(&quot;TestDiagnosticListener&quot;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>判断当前诊断器的某个事件名是否存在消费者监听：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bool IsEnabled(string name);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>携带数据对象写入诊断器 DiagnosticSource 中：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void Write(string name, object value);</span><br></pre></td></tr></table></figure>
+<p> 使用示例：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if (testDiagnosticListener.IsEnabled(&quot;RequestStart&quot;))</span><br><span class="line">&#123;</span><br><span class="line">  testDiagnosticListener.Write(&quot;RequestStart&quot;, &quot;hello world&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
-<p>最终输出 “<strong>SkyWalking .NET Core Agent was successfully installed.</strong>” 才代表成功。</p>
-<h3 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h3><p>新建一个.NET Core API 项目 SkyWalking.Agent.Test，其他什么都不需要操作。</p>
-<h3 id="创建配置文件"><a href="#创建配置文件" class="headerlink" title="创建配置文件"></a>创建配置文件</h3><p>在 SkyWalking.Agent.Test 项目根目录下创建连接 Collector Server 的配置文件，官方提供命令的创建方式，其实就是生成一个 skywalking.json 文件，我们也完全可以手动添加。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dotnet skywalking config [application_code] [collector_server]</span><br></pre></td></tr></table></figure></p>
-<p><strong>application_code</strong>：应用名 <em>(如：SkyWalking.Agent.Test)</em><br><strong>collector_server</strong>:  server 地址 <em>(如：localhost:11800)</em>，SkyWalking 的环境搭建请参考  <a href="http://beckjin.com/2018/09/09/skywalking/" target="_blank" rel="noopener">SkyWalking 分布式追踪系统</a> </p>
-<p>最终生成的 skywalking.json 如下，ApplicationCode 和 Transport.gRPC.Servers 是我们设置的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;SkyWalking&quot;: &#123;</span><br><span class="line">    &quot;ApplicationCode&quot;: &quot;SkyWalking.Agent.Test&quot;,</span><br><span class="line">    &quot;SpanLimitPerSegment&quot;: 300,</span><br><span class="line">    &quot;Sampling&quot;: &#123;</span><br><span class="line">      &quot;SamplePer3Secs&quot;: -1</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;Logging&quot;: &#123;</span><br><span class="line">      &quot;Level&quot;: &quot;Information&quot;,</span><br><span class="line">      &quot;FilePath&quot;: &quot;logs\\SkyWalking-&#123;Date&#125;.log&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;Transport&quot;: &#123;</span><br><span class="line">      &quot;Interval&quot;: 3000,</span><br><span class="line">      &quot;PendingSegmentLimit&quot;: 30000,</span><br><span class="line">      &quot;PendingSegmentTimeout&quot;: 1000,</span><br><span class="line">      &quot;gRPC&quot;: &#123;</span><br><span class="line">        &quot;Servers&quot;: &quot;localhost:11800&quot;,</span><br><span class="line">        &quot;Timeout&quot;: 2000,</span><br><span class="line">        &quot;ConnectTimeout&quot;: 10000</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>从源码中发现，配置的加载顺序是先加载默认配置（<em>可以进入 AddSkyWalkingDefaultConfig 查看源码，里面含 skywalking.json 所有默认配置项</em>），然后加载 appsettings.json、skywalking.json，所有 skywalking.json 的默认配置完全可以先去掉，需要的时候再设置，更简洁点其实我们并需要 skywalking.json ，只需要使用 appsettings.json 就可以。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">builder.AddSkyWalkingDefaultConfig();</span><br><span class="line"></span><br><span class="line">builder.AddJsonFile(&quot;appsettings.json&quot;, true).AddJsonFile($&quot;appsettings.&#123;environmentProvider.EnvironmentName&#125;.json&quot;, true);</span><br><span class="line"></span><br><span class="line">builder.AddJsonFile(&quot;skywalking.json&quot;, true).AddJsonFile($&quot;skywalking.&#123;environmentProvider.EnvironmentName&#125;.json&quot;, true);</span><br></pre></td></tr></table></figure>
-<p>简化版的配置如下，只需要在 appsettings.json 加入 SkyWalking 所需的配置项：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;Logging&quot;: &#123;</span><br><span class="line">    &quot;LogLevel&quot;: &#123;</span><br><span class="line">      &quot;Default&quot;: &quot;Debug&quot;,</span><br><span class="line">      &quot;System&quot;: &quot;Information&quot;,</span><br><span class="line">      &quot;Microsoft&quot;: &quot;Information&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;SkyWalking&quot;: &#123;</span><br><span class="line">    &quot;ApplicationCode&quot;: &quot;SkyWalking.Agent.AspNetCore.Test&quot;,</span><br><span class="line">    &quot;Transport&quot;: &#123;</span><br><span class="line">      &quot;gRPC&quot;: &#123;</span><br><span class="line">        &quot;Servers&quot;: &quot;localhost:11800&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><em>实际的开发项目我们可能并不直接使用 appsettings.json 来管理所有的配置，比如我们可能使用 consul、apollo 等注册中心来管理配置，所以个人感觉是需要支持注册中心方式，已提交</em>   <a href="https://github.com/OpenSkywalking/skywalking-netcore/issues/98" target="_blank" rel="noopener">issue</a>  </p>
-<h3 id="启动项目"><a href="#启动项目" class="headerlink" title="启动项目"></a>启动项目</h3><p>我们将使用命令行方式启动项目，在启动项目之前，有一些项目需要的环境变量需要设置一下（<em>如果通过VS启动，可以在 属性=&gt; 调试 =&gt; 环境变量 进行设置</em>）：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// enable SkyWalking.Agent.AspNetCore</span><br><span class="line">set ASPNETCORE_HOSTINGSTARTUPASSEMBLIES=SkyWalking.Agent.AspNetCore</span><br><span class="line">set DOTNET_ADDITIONAL_DEPS=%PROGRAMFILES%\dotnet\x64\additionalDeps\skywalking.agent.aspnetcore</span><br><span class="line"></span><br><span class="line">dotnet run</span><br></pre></td></tr></table></figure>
-<p>启动成功后，我们可以先通过日志查看是否已成功连接 collector server，SkyWalking.Agent 的默认日志在项目根目录的 logs 文件夹下，如果发现最后显示 Connected collector server[localhost:11800] 就代表连接成功。</p>
-<p>接下来我们可以访问 API 自带的默认接口 <a href="http://localhost:5000/api/values" target="_blank" rel="noopener">http://localhost:5000/api/values</a> ，多请求几次，然后访问 <a href="http://localhost:8080/，我们的应用已经进入监控。" target="_blank" rel="noopener">http://localhost:8080/，我们的应用已经进入监控。</a></p>
-<p><img src="/img/skywalking-netcore-noinvade/agentTest.png" alt="SkyWalking.Agent.AspNetCore.Test"></p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>最开始提到最新发布的版本提供无入侵的集成方式，从整个过程来看，主要分为以下几步：</p>
-<ol>
-<li>将 Agent 安装到运行的机器；</li>
-<li>修改项目配置文件，加入 SkyWalking 相关配置；</li>
-<li>启动项目请设置 SkyWalking 需要的环境变量；</li>
+<h3 id="DiagnosticSource-事件消费"><a href="#DiagnosticSource-事件消费" class="headerlink" title="DiagnosticSource 事件消费"></a>DiagnosticSource 事件消费</h3><ol>
+<li><p>定义 <code>DiagnosticListener</code> 事件消费处理接口，实现类中的 <code>ListenerName</code> 必须与对应 <code>DiagnosticListener</code> 的诊断器名一致：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public interface IDiagnosticProcessor</span><br><span class="line">&#123;</span><br><span class="line">  string ListenerName &#123; get; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>定义诊断器名为 <code>TestDiagnosticListener</code> 的 <code>DiagnosticListener</code> 事件消费处理逻辑：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class TestDiagnosticProcessor : IDiagnosticProcessor</span><br><span class="line">&#123;</span><br><span class="line">  public string ListenerName &#123; get; &#125; = &quot;TestDiagnosticListener&quot;;</span><br><span class="line"></span><br><span class="line">  [DiagnosticName(&quot;RequestStart&quot;)]</span><br><span class="line">  public void RequestStart([Object]string name)</span><br><span class="line">  &#123;</span><br><span class="line">    Console.WriteLine(name);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建 <code>IObserver&lt;DiagnosticListener&gt;</code> 实现类订阅所有类型的 <code>DiagnosticListener</code>，通过 <code>OnNext</code> 方法的 <code>DiagnosticListener</code> 对象获取当前的诊断器名，不同(<em>诊断器名不同</em>) <code>DiagnosticListener</code> 发布的事件设置不同的订阅者，主要代码如下（<a href="https://github.com/beckjin/DiagnosticSample/blob/master/DiagnosticSourceDemo/Processors/DiagnosticListenerObserver.cs" target="_blank" rel="noopener">完整代码</a>）：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class DiagnosticListenerObserver : IObserver&lt;DiagnosticListener&gt;</span><br><span class="line">&#123;</span><br><span class="line">  private readonly IEnumerable&lt;IDiagnosticProcessor&gt; _diagnosticProcessors;</span><br><span class="line"></span><br><span class="line">  public DiagnosticListenerObserver(IEnumerable&lt;IDiagnosticProcessor&gt; diagnosticProcessors)</span><br><span class="line">  &#123;</span><br><span class="line">    _diagnosticProcessors = diagnosticProcessors;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public void OnNext(DiagnosticListener value)</span><br><span class="line">  &#123;</span><br><span class="line">    var diagnosticProcessor = _diagnosticProcessors?.FirstOrDefault(_ =&gt; _.ListenerName == value.Name);</span><br><span class="line">    if (diagnosticProcessor == null) return;</span><br><span class="line"></span><br><span class="line">    value.Subscribe(new DiagnosticEventObserver(diagnosticProcessor));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>事件订阅者需要创建基于 <code>IObserver&lt;KeyValuePair&lt;string, object&gt;&gt;</code> 的实现类，根据触发的事件名（<code>value.Key</code>）和已订阅的事件处理集合（<code>_eventCollection</code>）进行匹对查找，匹配上的通过反射执行对应的消费方法，主要代码如下（<a href="https://github.com/beckjin/DiagnosticSample/blob/master/DiagnosticSourceDemo/Processors/DiagnosticEventObserver.cs" target="_blank" rel="noopener">完整代码</a>）：<br> ```<br> public class DiagnosticEventObserver : IObserver<keyvaluepair<string, object="">&gt;<br> {<br>   private readonly DiagnosticEventCollection _eventCollection;</keyvaluepair<string,></p>
+<p>   public DiagnosticEventObserver(IDiagnosticProcessor diagnosticProcessor)<br>   {</p>
+<pre><code>_eventCollection = new DiagnosticEventCollection(diagnosticProcessor);
+</code></pre><p>   }</p>
+<p>   public void OnNext(KeyValuePair<string, object=""> value)<br>   {</string,></p>
+<pre><code>var diagnosticEvent = _eventCollection.GetDiagnosticEvent(value.Key);
+if (diagnosticEvent == null) return;
+
+try
+{
+  diagnosticEvent.Invoke(value.Value);
+}
+catch (Exception ex)
+{
+  Console.WriteLine(ex.Message);
+}
+</code></pre><p>   }<br> }</p>
+</li>
+<li><p>最后需要通过 <code>DiagnosticListener.AllListeners.Subscribe</code> 设置 <code>DiagnosticListenerObserver</code> 对象；</p>
+</li>
+<li><p>执行结果：</p>
+<p> <img src="/img/aspnet-diagnostics/result.png" alt="result"></p>
+</li>
 </ol>
-<p>关于第二步，如果 collector server 本身是在 localhost 上运行的，那就连修改项目配置文件这一步都不需要，因为默认参数的 collector server 就是 localhost:11800，ApplicationCode 也是可以通过环境变量进行设置的（set SKYWALKING__APPLICATIONCODE=SkyWalking.Agent.AspNetCore.Test）</p>
-<p>关于第三步，一般情况下公司可能会有 CI 工具，环境变量的设置可以在 CI 工具上完成。但问题又来了，如果没有 CI 工具或者 CI 工具的构建流程不能随意修改，那怎么办？基于这个问题，其实可以通过修改源码来实现，不过还是希望作者可以稍微调整支持一下，已提 <a href="https://github.com/OpenSkywalking/skywalking-netcore/issues/99" target="_blank" rel="noopener">issue</a> 。</p>
-<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="http://skywalking.apache.org" target="_blank" rel="noopener">Apache SkyWalking</a><br><a href="https://github.com/apache/incubator-skywalking" target="_blank" rel="noopener">SkyWalking-github</a><br><a href="https://github.com/OpenSkywalking/skywalking-netcore" target="_blank" rel="noopener">SkyWalking-netcore</a></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>通过以上示例，我们完全可以参考基于这样的标准在组件封装（<strong>MongoDB、Dapper、Kafka、Redis …</strong>）过程中自己埋点（<strong>创建相应的 <code>DiagnosticListener</code> 并发布事件</strong>），然后订阅者根据需求监听需要的事件，从而达到诊断日志全链路收集的目的。</p>
+<p>注：本文涉及的代码主要是参考了 <a href="https://github.com/SkyAPM/SkyAPM-dotnet" target="_blank" rel="noopener">SkyAPM-dotnet</a> 。 </p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><ul>
+<li><a href="https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.DiagnosticSource/src/DiagnosticSourceUsersGuide.md" target="_blank" rel="noopener">DiagnosticSourceUsersGuide</a></li>
+<li><a href="https://github.com/beckjin/DiagnosticSample" target="_blank" rel="noopener">DiagnosticSource Sample 源码</a></li>
+</ul>
 
       
     </div>
@@ -441,11 +463,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/ASP-NET/" rel="tag"># ASP.NET</a>
-          
             <a href="/tags/C/" rel="tag"># C#</a>
           
-            <a href="/tags/SkyWalking/" rel="tag"># SkyWalking</a>
+            <a href="/tags/DiagnosticSource/" rel="tag"># DiagnosticSource</a>
           
         </div>
       
@@ -458,8 +478,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/10/14/sonar-build-jenkins/" rel="next" title="SonarQube 搭建代码质量管理平台（二）">
-                <i class="fa fa-chevron-left"></i> SonarQube 搭建代码质量管理平台（二）
+              <a href="/2019/12/22/grpc-interceptor/" rel="next" title="ASP.NET Core gRPC 拦截器">
+                <i class="fa fa-chevron-left"></i> ASP.NET Core gRPC 拦截器
               </a>
             
           </div>
@@ -467,10 +487,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/11/18/kafka-cluster/" rel="prev" title="Kafka 集群">
-                Kafka 集群 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -558,7 +574,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -569,7 +585,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -580,7 +596,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-count">51</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -636,7 +652,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-SkyWalking-NET-Core-Agent"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x5B89;&#x88C5;-SkyWalking-NET-Core-Agent" class="headerlink" title="&#x5B89;&#x88C5; SkyWalking .NET Core Agent"></a>&#x5B89;&#x88C5; SkyWalking .NET Core Agent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建项目"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x521B;&#x5EFA;&#x9879;&#x76EE;" class="headerlink" title="&#x521B;&#x5EFA;&#x9879;&#x76EE;"></a>&#x521B;&#x5EFA;&#x9879;&#x76EE;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建配置文件"><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x521B;&#x5EFA;&#x914D;&#x7F6E;&#x6587;&#x4EF6;" class="headerlink" title="&#x521B;&#x5EFA;&#x914D;&#x7F6E;&#x6587;&#x4EF6;"></a>&#x521B;&#x5EFA;&#x914D;&#x7F6E;&#x6587;&#x4EF6;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动项目"><span class="nav-number">4.</span> <span class="nav-text"><a href="#&#x542F;&#x52A8;&#x9879;&#x76EE;" class="headerlink" title="&#x542F;&#x52A8;&#x9879;&#x76EE;"></a>&#x542F;&#x52A8;&#x9879;&#x76EE;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text"><a href="#&#x603B;&#x7ED3;" class="headerlink" title="&#x603B;&#x7ED3;"></a>&#x603B;&#x7ED3;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接"><span class="nav-number">6.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#DiagnosticSource-是什么"><span class="nav-number">1.</span> <span class="nav-text"><a href="#DiagnosticSource-&#x662F;&#x4EC0;&#x4E48;" class="headerlink" title="DiagnosticSource &#x662F;&#x4EC0;&#x4E48;"></a>DiagnosticSource &#x662F;&#x4EC0;&#x4E48;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DiagnosticSource-事件发布"><span class="nav-number">2.</span> <span class="nav-text"><a href="#DiagnosticSource-&#x4E8B;&#x4EF6;&#x53D1;&#x5E03;" class="headerlink" title="DiagnosticSource &#x4E8B;&#x4EF6;&#x53D1;&#x5E03;"></a>DiagnosticSource &#x4E8B;&#x4EF6;&#x53D1;&#x5E03;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DiagnosticSource-事件消费"><span class="nav-number">3.</span> <span class="nav-text"><a href="#DiagnosticSource-&#x4E8B;&#x4EF6;&#x6D88;&#x8D39;" class="headerlink" title="DiagnosticSource &#x4E8B;&#x4EF6;&#x6D88;&#x8D39;"></a>DiagnosticSource &#x4E8B;&#x4EF6;&#x6D88;&#x8D39;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text"><a href="#&#x603B;&#x7ED3;" class="headerlink" title="&#x603B;&#x7ED3;"></a>&#x603B;&#x7ED3;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接"><span class="nav-number">5.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x94FE;&#x63A5;" class="headerlink" title="&#x53C2;&#x8003;&#x94FE;&#x63A5;"></a>&#x53C2;&#x8003;&#x94FE;&#x63A5;</span></a></li></ol></div>
             
 
           </div>
@@ -665,10 +681,6 @@
   
 </div>
 
-<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="powered-by">
-	<i class="fa fa-user-md"></i><span id="busuanzi_container_site_pv"> 本站访客数：<span id="busuanzi_value_site_pv"></span></span>
-</div>
 
 
 
@@ -678,6 +690,26 @@
 
 
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
 
 
 
@@ -823,8 +855,8 @@
 <!-- LOCAL: You can save these files to your site and update links -->
     
         
-		<link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
-		<script src="https://www.wenjunjiang.win/js/gitment.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.min.css" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitment.browser.min.js" crossorigin="anonymous"></script>
     
 <!-- END LOCAL -->
 
@@ -834,7 +866,7 @@
       <script type="text/javascript">
       function renderGitment(){
         var gitment = new Gitment({
-            id: '1540704060000', 
+            id: '1577625410000', 
             owner: 'beckjin',
             repo: 'beckjin.github.io',
             
