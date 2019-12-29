@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.beckjin.com/"/>
-  <updated>2019-12-29T13:57:06.541Z</updated>
+  <updated>2019-12-29T14:11:51.133Z</updated>
   <id>http://www.beckjin.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://www.beckjin.com/2019/12/29/aspnet-diagnostics/"/>
     <id>http://www.beckjin.com/2019/12/29/aspnet-diagnostics/</id>
     <published>2019-12-29T13:16:50.000Z</published>
-    <updated>2019-12-29T13:57:06.541Z</updated>
+    <updated>2019-12-29T14:11:51.133Z</updated>
     
     <summary type="html">
     
@@ -35,7 +35,7 @@
     
     </summary>
     
-      <category term=".NET Core" scheme="http://www.beckjin.com/categories/NET-Core/"/>
+      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
     
     
       <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
@@ -49,7 +49,7 @@
     <link href="http://www.beckjin.com/2019/12/22/grpc-interceptor/"/>
     <id>http://www.beckjin.com/2019/12/22/grpc-interceptor/</id>
     <published>2019-12-22T07:48:41.000Z</published>
-    <updated>2019-12-29T13:36:48.263Z</updated>
+    <updated>2019-12-29T14:18:32.838Z</updated>
     
     <summary type="html">
     
@@ -63,10 +63,8 @@
     
     </summary>
     
-      <category term="微服务" scheme="http://www.beckjin.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
     
-    
-      <category term=".NET Core" scheme="http://www.beckjin.com/tags/NET-Core/"/>
     
       <category term="gRPC" scheme="http://www.beckjin.com/tags/gRPC/"/>
     
@@ -77,7 +75,7 @@
     <link href="http://www.beckjin.com/2019/12/01/aspnet-fluent-validation/"/>
     <id>http://www.beckjin.com/2019/12/01/aspnet-fluent-validation/</id>
     <published>2019-12-01T08:29:28.000Z</published>
-    <updated>2019-12-29T13:38:45.423Z</updated>
+    <updated>2019-12-29T14:12:23.019Z</updated>
     
     <summary type="html">
     
@@ -91,7 +89,7 @@
     
     </summary>
     
-      <category term=".NET Core" scheme="http://www.beckjin.com/categories/NET-Core/"/>
+      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
     
     
       <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
@@ -105,7 +103,7 @@
     <link href="http://www.beckjin.com/2019/11/23/aspnet-etcd-provider/"/>
     <id>http://www.beckjin.com/2019/11/23/aspnet-etcd-provider/</id>
     <published>2019-11-23T07:37:58.000Z</published>
-    <updated>2019-12-29T13:39:10.449Z</updated>
+    <updated>2019-12-29T14:11:55.669Z</updated>
     
     <summary type="html">
     
@@ -119,7 +117,7 @@
     
     </summary>
     
-      <category term=".NET Core" scheme="http://www.beckjin.com/categories/NET-Core/"/>
+      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
     
     
       <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
@@ -133,7 +131,7 @@
     <link href="http://www.beckjin.com/2019/11/16/aspnet-custom-provider/"/>
     <id>http://www.beckjin.com/2019/11/16/aspnet-custom-provider/</id>
     <published>2019-11-16T07:29:49.000Z</published>
-    <updated>2019-12-29T13:39:30.439Z</updated>
+    <updated>2019-12-29T14:11:46.361Z</updated>
     
     <summary type="html">
     
@@ -147,7 +145,7 @@
     
     </summary>
     
-      <category term=".NET Core" scheme="http://www.beckjin.com/categories/NET-Core/"/>
+      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
     
     
       <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
@@ -159,7 +157,7 @@
     <link href="http://www.beckjin.com/2019/10/26/grpc-streaming/"/>
     <id>http://www.beckjin.com/2019/10/26/grpc-streaming/</id>
     <published>2019-10-26T09:38:56.000Z</published>
-    <updated>2019-12-29T13:36:38.647Z</updated>
+    <updated>2019-12-29T14:18:49.661Z</updated>
     
     <summary type="html">
     
@@ -173,10 +171,8 @@
     
     </summary>
     
-      <category term="微服务" scheme="http://www.beckjin.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
     
-    
-      <category term=".NET Core" scheme="http://www.beckjin.com/tags/NET-Core/"/>
     
       <category term="gRPC" scheme="http://www.beckjin.com/tags/gRPC/"/>
     
@@ -215,7 +211,7 @@
     <link href="http://www.beckjin.com/2019/09/07/polly-http-client/"/>
     <id>http://www.beckjin.com/2019/09/07/polly-http-client/</id>
     <published>2019-09-07T08:43:17.000Z</published>
-    <updated>2019-12-29T13:35:52.738Z</updated>
+    <updated>2019-12-29T14:11:09.666Z</updated>
     
     <summary type="html">
     
@@ -229,12 +225,10 @@
     
     </summary>
     
-      <category term=".NET Core" scheme="http://www.beckjin.com/categories/NET-Core/"/>
+      <category term="Polly" scheme="http://www.beckjin.com/categories/Polly/"/>
     
     
       <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
-    
-      <category term="Polly" scheme="http://www.beckjin.com/tags/Polly/"/>
     
   </entry>
   
@@ -380,7 +374,7 @@
     <link href="http://www.beckjin.com/2019/05/18/aspnet-consul-discovery/"/>
     <id>http://www.beckjin.com/2019/05/18/aspnet-consul-discovery/</id>
     <published>2019-05-18T15:41:37.000Z</published>
-    <updated>2019-12-29T13:39:46.830Z</updated>
+    <updated>2019-12-29T14:13:57.417Z</updated>
     
     <summary type="html">
     
@@ -397,9 +391,9 @@
       <category term="微服务" scheme="http://www.beckjin.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
     
     
-      <category term=".NET Core" scheme="http://www.beckjin.com/tags/NET-Core/"/>
-    
       <category term="Consul" scheme="http://www.beckjin.com/tags/Consul/"/>
+    
+      <category term="ASP.NET Core" scheme="http://www.beckjin.com/tags/ASP-NET-Core/"/>
     
   </entry>
   
@@ -434,7 +428,7 @@
     <link href="http://www.beckjin.com/2019/03/24/aspnet-jwt/"/>
     <id>http://www.beckjin.com/2019/03/24/aspnet-jwt/</id>
     <published>2019-03-23T16:43:16.000Z</published>
-    <updated>2019-12-29T13:38:21.825Z</updated>
+    <updated>2019-12-29T14:12:31.346Z</updated>
     
     <summary type="html">
     
@@ -448,7 +442,7 @@
     
     </summary>
     
-      <category term=".NET Core" scheme="http://www.beckjin.com/categories/NET-Core/"/>
+      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
     
     
       <category term="JWT" scheme="http://www.beckjin.com/tags/JWT/"/>
@@ -460,7 +454,7 @@
     <link href="http://www.beckjin.com/2019/02/23/aspnet-hystrix/"/>
     <id>http://www.beckjin.com/2019/02/23/aspnet-hystrix/</id>
     <published>2019-02-23T11:05:22.000Z</published>
-    <updated>2019-12-29T13:38:34.172Z</updated>
+    <updated>2019-12-29T14:14:11.904Z</updated>
     
     <summary type="html">
     
@@ -478,13 +472,13 @@
       <category term="微服务" scheme="http://www.beckjin.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
     
     
-      <category term=".NET Core" scheme="http://www.beckjin.com/tags/NET-Core/"/>
-    
       <category term="Steeltoe" scheme="http://www.beckjin.com/tags/Steeltoe/"/>
     
       <category term="Spring Cloud" scheme="http://www.beckjin.com/tags/Spring-Cloud/"/>
     
       <category term="Hystrix" scheme="http://www.beckjin.com/tags/Hystrix/"/>
+    
+      <category term="ASP.NET Core" scheme="http://www.beckjin.com/tags/ASP-NET-Core/"/>
     
   </entry>
   
@@ -493,7 +487,7 @@
     <link href="http://www.beckjin.com/2019/01/26/aspnet-zuul/"/>
     <id>http://www.beckjin.com/2019/01/26/aspnet-zuul/</id>
     <published>2019-01-26T12:34:32.000Z</published>
-    <updated>2019-12-29T13:37:27.689Z</updated>
+    <updated>2019-12-29T14:14:22.398Z</updated>
     
     <summary type="html">
     
@@ -510,13 +504,13 @@
       <category term="微服务" scheme="http://www.beckjin.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
     
     
-      <category term=".NET Core" scheme="http://www.beckjin.com/tags/NET-Core/"/>
-    
       <category term="Steeltoe" scheme="http://www.beckjin.com/tags/Steeltoe/"/>
     
       <category term="Spring Cloud" scheme="http://www.beckjin.com/tags/Spring-Cloud/"/>
     
       <category term="Zuul" scheme="http://www.beckjin.com/tags/Zuul/"/>
+    
+      <category term="ASP.NET Core" scheme="http://www.beckjin.com/tags/ASP-NET-Core/"/>
     
   </entry>
   
@@ -525,7 +519,7 @@
     <link href="http://www.beckjin.com/2019/01/20/aspnet-eureka/"/>
     <id>http://www.beckjin.com/2019/01/20/aspnet-eureka/</id>
     <published>2019-01-20T09:50:22.000Z</published>
-    <updated>2019-12-29T13:39:01.500Z</updated>
+    <updated>2019-12-29T14:14:05.778Z</updated>
     
     <summary type="html">
     
@@ -542,13 +536,13 @@
       <category term="微服务" scheme="http://www.beckjin.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
     
     
-      <category term=".NET Core" scheme="http://www.beckjin.com/tags/NET-Core/"/>
-    
       <category term="Steeltoe" scheme="http://www.beckjin.com/tags/Steeltoe/"/>
     
       <category term="Spring Cloud" scheme="http://www.beckjin.com/tags/Spring-Cloud/"/>
     
       <category term="Eureka" scheme="http://www.beckjin.com/tags/Eureka/"/>
+    
+      <category term="ASP.NET Core" scheme="http://www.beckjin.com/tags/ASP-NET-Core/"/>
     
   </entry>
   
@@ -557,7 +551,7 @@
     <link href="http://www.beckjin.com/2019/01/06/redLock-net/"/>
     <id>http://www.beckjin.com/2019/01/06/redLock-net/</id>
     <published>2019-01-06T13:19:54.000Z</published>
-    <updated>2019-12-29T13:44:56.329Z</updated>
+    <updated>2019-12-29T14:13:20.968Z</updated>
     
     <summary type="html">
     
@@ -571,7 +565,7 @@
     
     </summary>
     
-      <category term=".NET Core" scheme="http://www.beckjin.com/categories/NET-Core/"/>
+      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
     
     
       <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
