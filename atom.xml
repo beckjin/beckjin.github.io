@@ -391,9 +391,9 @@
       <category term="微服务" scheme="http://www.beckjin.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
     
     
-      <category term="Consul" scheme="http://www.beckjin.com/tags/Consul/"/>
-    
       <category term="ASP.NET Core" scheme="http://www.beckjin.com/tags/ASP-NET-Core/"/>
+    
+      <category term="Consul" scheme="http://www.beckjin.com/tags/Consul/"/>
     
   </entry>
   
@@ -472,13 +472,13 @@
       <category term="微服务" scheme="http://www.beckjin.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
     
     
+      <category term="ASP.NET Core" scheme="http://www.beckjin.com/tags/ASP-NET-Core/"/>
+    
       <category term="Steeltoe" scheme="http://www.beckjin.com/tags/Steeltoe/"/>
     
       <category term="Spring Cloud" scheme="http://www.beckjin.com/tags/Spring-Cloud/"/>
     
       <category term="Hystrix" scheme="http://www.beckjin.com/tags/Hystrix/"/>
-    
-      <category term="ASP.NET Core" scheme="http://www.beckjin.com/tags/ASP-NET-Core/"/>
     
   </entry>
   
@@ -504,13 +504,13 @@
       <category term="微服务" scheme="http://www.beckjin.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
     
     
+      <category term="ASP.NET Core" scheme="http://www.beckjin.com/tags/ASP-NET-Core/"/>
+    
       <category term="Steeltoe" scheme="http://www.beckjin.com/tags/Steeltoe/"/>
     
       <category term="Spring Cloud" scheme="http://www.beckjin.com/tags/Spring-Cloud/"/>
     
       <category term="Zuul" scheme="http://www.beckjin.com/tags/Zuul/"/>
-    
-      <category term="ASP.NET Core" scheme="http://www.beckjin.com/tags/ASP-NET-Core/"/>
     
   </entry>
   
@@ -536,13 +536,13 @@
       <category term="微服务" scheme="http://www.beckjin.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
     
     
+      <category term="ASP.NET Core" scheme="http://www.beckjin.com/tags/ASP-NET-Core/"/>
+    
       <category term="Steeltoe" scheme="http://www.beckjin.com/tags/Steeltoe/"/>
     
       <category term="Spring Cloud" scheme="http://www.beckjin.com/tags/Spring-Cloud/"/>
     
       <category term="Eureka" scheme="http://www.beckjin.com/tags/Eureka/"/>
-    
-      <category term="ASP.NET Core" scheme="http://www.beckjin.com/tags/ASP-NET-Core/"/>
     
   </entry>
   
