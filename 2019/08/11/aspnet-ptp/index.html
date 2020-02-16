@@ -81,13 +81,13 @@
 
 
 
-<meta name="description" content="背景一直以来我们使用 gRPC 来进行微服务开发，对 gRPC 有过了解应该清楚它依赖 proto 接口定义文件来实现的，在进行服务调用之前，需要先通过 proto 文件来生成当前服务使用语言的客户端代码，然后就可以实现调用本地方法一样调用远程服务。（目前已存在不用生成客户端代码就可以调用方法的方式，但与本文的重点不一样） 在 .NET 开发中，我们目前的方式是通过  proto 文件生成客户端代">
+<meta name="description" content="一直以来我们使用 gRPC 来进行微服务开发，对 gRPC 有过了解应该清楚它依赖 proto 接口定义文件来实现的，在进行服务调用之前，需要先通过 proto 文件来生成当前服务使用语言的代码，然后就可以实现调用本地方法一样调用远程服务。（.NET Core 3.0 开始已支持不用手动生成代码就可以调用方法，但在多语言的微服务开发中，proto 文件的维护还是比较倾向我们目前的方式） 在 .NE">
 <meta name="keywords" content="VSIX">
 <meta property="og:type" content="article">
 <meta property="og:title" content="VS 扩展开发：Grpc Proto To NuGet Package">
 <meta property="og:url" content="http://www.beckjin.com/2019/08/11/aspnet-ptp/index.html">
 <meta property="og:site_name" content="Beck&#39;s Blog">
-<meta property="og:description" content="背景一直以来我们使用 gRPC 来进行微服务开发，对 gRPC 有过了解应该清楚它依赖 proto 接口定义文件来实现的，在进行服务调用之前，需要先通过 proto 文件来生成当前服务使用语言的客户端代码，然后就可以实现调用本地方法一样调用远程服务。（目前已存在不用生成客户端代码就可以调用方法的方式，但与本文的重点不一样） 在 .NET 开发中，我们目前的方式是通过  proto 文件生成客户端代">
+<meta property="og:description" content="一直以来我们使用 gRPC 来进行微服务开发，对 gRPC 有过了解应该清楚它依赖 proto 接口定义文件来实现的，在进行服务调用之前，需要先通过 proto 文件来生成当前服务使用语言的代码，然后就可以实现调用本地方法一样调用远程服务。（.NET Core 3.0 开始已支持不用手动生成代码就可以调用方法，但在多语言的微服务开发中，proto 文件的维护还是比较倾向我们目前的方式） 在 .NE">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-ptp/templateStructure.png">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-ptp/template.png">
@@ -95,10 +95,10 @@
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-ptp/nugetPackageSetting.png">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-ptp/publishedPackages.png">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-ptp/installMyHelloworld.png">
-<meta property="og:updated_time" content="2019-12-29T13:43:43.632Z">
+<meta property="og:updated_time" content="2020-02-16T11:09:45.376Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="VS 扩展开发：Grpc Proto To NuGet Package">
-<meta name="twitter:description" content="背景一直以来我们使用 gRPC 来进行微服务开发，对 gRPC 有过了解应该清楚它依赖 proto 接口定义文件来实现的，在进行服务调用之前，需要先通过 proto 文件来生成当前服务使用语言的客户端代码，然后就可以实现调用本地方法一样调用远程服务。（目前已存在不用生成客户端代码就可以调用方法的方式，但与本文的重点不一样） 在 .NET 开发中，我们目前的方式是通过  proto 文件生成客户端代">
+<meta name="twitter:description" content="一直以来我们使用 gRPC 来进行微服务开发，对 gRPC 有过了解应该清楚它依赖 proto 接口定义文件来实现的，在进行服务调用之前，需要先通过 proto 文件来生成当前服务使用语言的代码，然后就可以实现调用本地方法一样调用远程服务。（.NET Core 3.0 开始已支持不用手动生成代码就可以调用方法，但在多语言的微服务开发中，proto 文件的维护还是比较倾向我们目前的方式） 在 .NE">
 <meta name="twitter:image" content="http://www.beckjin.com/img/aspnet-ptp/templateStructure.png">
 
 
@@ -364,19 +364,19 @@
       
 
       
-        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>一直以来我们使用 <a href="https://grpc.io/" target="_blank" rel="noopener">gRPC</a> 来进行微服务开发，对 gRPC 有过了解应该清楚它依赖 <code>proto</code> 接口定义文件来实现的，在进行服务调用之前，需要先通过 <code>proto</code> 文件来生成当前服务使用语言的客户端代码，然后就可以实现调用本地方法一样调用远程服务。（<em>目前已存在不用生成客户端代码就可以调用方法的方式，但与本文的重点不一样</em>）</p>
-<p>在 .NET 开发中，我们目前的方式是通过  <code>proto</code> 文件生成客户端代码并建成 NuGet Package ，然后推送到自己的私有 NuGet 仓库，最后在服务内进行 NuGet Package 安装来引用服务，这样不至于需要调用此服务的服务每次都 copy 代码，希望简化一些工作量。</p>
-<p>但问题又来了，要实现推送到自己的私有 NuGet 仓库的步骤实在太多，这样依然效率低下，最后决定团队内决定自己开发一个 VS 插件 <a href="https://marketplace.visualstudio.com/items?itemName=Mingdao.ptp" target="_blank" rel="noopener">Grpc Proto To NuGet Package</a> ，目的是一键生成 NuGet Package 并发布到私有仓库。</p>
+        <p>一直以来我们使用 <a href="https://grpc.io/" target="_blank" rel="noopener">gRPC</a> 来进行微服务开发，对 <code>gRPC</code> 有过了解应该清楚它依赖 <code>proto</code> 接口定义文件来实现的，在进行服务调用之前，需要先通过 <code>proto</code> 文件来生成当前服务使用语言的代码，然后就可以实现调用本地方法一样调用远程服务。（<em>.NET Core 3.0 开始已支持不用手动生成代码就可以调用方法，但在多语言的微服务开发中，<code>proto</code> 文件的维护还是比较倾向我们目前的方式</em>）</p>
+<p>在 .NET 开发中，我们之前的方式还是根据  <code>proto</code> 文件手动生成代码，接着生成 NuGet Package ，然后推送到自己的私有 NuGet 仓库，最后在服务内进行 NuGet Package 安装来引用，这样不至于需要依赖此服务的服务每次都 copy 代码，目的是在服务引用上简化一些步骤。</p>
+<p>但问题又来了，要最终实现推送到自己的私有 NuGet 仓库的步骤实在太多，这样依然效率低下，最后我们决定还是自己开发一个 VS 插件 <a href="https://marketplace.visualstudio.com/items?itemName=Mingdao.ptp" target="_blank" rel="noopener">Grpc Proto To NuGet Package</a> ，功能就是一键生成 NuGet Package 并发布到私有仓库。</p>
 <h3 id="实现方案"><a href="#实现方案" class="headerlink" title="实现方案"></a>实现方案</h3><ol>
-<li><p>创建 Grpc 客户端项目模板，关于 .NET 项目模板创建可参考文章：<a href="http://beckjin.com/2019/08/04/aspnet-template/" target="_blank" rel="noopener">ASP.NET 自定义项目模板</a> ；</p>
+<li><p>创建 <code>gRPC</code> 接口生成的项目模板，关于 .NET 项目模板创建可参考文章：<a href="http://beckjin.com/2019/08/04/aspnet-template/" target="_blank" rel="noopener">ASP.NET 自定义项目模板</a> ；</p>
 </li>
 <li><p>创建 VS 扩展插件 <code>Grpc Proto To NuGet Package</code>；</p>
 </li>
-<li><p>右键选中 <code>protos</code> 文件夹 (<code>proto</code> 接口定义文件存放位置，文件夹名固定为 <code>protos</code> )，在右键菜单中点击 <code>Grpc Proto To NuGet Package</code>，配置私有 NuGet 仓库源地址和 API Key，然后会自动创建基于项目模板的临时项目，同时会把 <code>protos</code> 文件夹复制到临时项目中，执行生成客户端代码命令（<em>注：公共的 <code>proto</code> 文件可放在 <code>protos/common</code> 下，否则都需要放在 <code>protos</code> 文件夹根目录</em>）；</p>
+<li><p>右键选中 <code>proto</code> 接口定义文件所在的文件夹（<em>所有 <code>proto</code> 文件中定义的 <code>package</code> 名暂必须一致，公共 <code>proto</code> 文件暂只能放在根目录的 <code>common</code> 文件夹下</em>），在右键菜单中点击 <code>Grpc Proto To NuGet Package</code>，首次需要配置私有 NuGet 仓库源地址和 API Key，然后根据 <code>package</code> 名自动创建基于项目模板的临时项目，同时会把当前选中文件夹内的 <code>proto</code> 文件复制到临时项目中，执行代码生成命令；</p>
 </li>
-<li><p>介于 Grpc 客户端调用需要对 channel 进行复用，所以同时会基于 T4 模板自动生成复用 channel 的 client 代码，使在调用时不用考虑 channel 复用问题 ；</p>
+<li><p>介于 <code>gRPC</code> 客户端调用需要对 channel 进行复用，所以同时会基于 T4 模板自动生成复用 channel 的 client 代码，调用时就不用再考虑 channel 复用问题 ；</p>
 </li>
-<li><p>最终通过 <code>dotnet build</code> 和 <code>dotnet nuget push</code> 将客户端代码的 NuGet Package 推送到私有仓库；</p>
+<li><p>最终通过 <code>dotnet build</code> 和 <code>dotnet nuget push</code> 自动将生成的 NuGet Package 推送到私有仓库；</p>
 </li>
 <li><p>删除临时项目。</p>
 </li>
@@ -388,16 +388,16 @@
 <p><code>Content/.template.config/template.json</code>:  author<br><code>Grpc.Proto.To.NuGet.Package.nuspec</code>:  authors<br><code>GrpcProtoToNuGetPackage.csproj</code>: Authors、Company、RepositoryUrl，其他看情况修改如：<code>TargetFrameworks</code> .</p>
 <p><img src="/img/aspnet-ptp/templateStructure.png" alt="模板结构"></p>
 </li>
-<li><p>执行 <code>nuget pack Grpc.Proto.To.NuGet.Package.nuspec</code>（nuget 如果不存在，需要下载并将 nuget.exe 添加到环境变量） 生成 <code>Grpc.Proto.To.NuGet.Package.1.0.0.nupkg</code>；</p>
+<li><p>执行 <code>nuget pack Grpc.Proto.To.NuGet.Package.nuspec</code>（<em>nuget 如果不存在，需要下载并将 nuget.exe 添加到环境变量</em>） 生成 <code>Grpc.Proto.To.NuGet.Package.1.0.0.nupkg</code>；</p>
 </li>
 <li><p>执行 <code>dotnet new -i Grpc.Proto.To.NuGet.Package.1.0.0.nupkg</code> 进行模板安装；</p>
 </li>
-<li><p>安装成功后，可通过 <code>dotnew new -u</code> 进行查看现有的项目模板，如下：<code>Grpc.Proto.To.NuGet.Package</code> 即安装的项目模板，如果需要卸载，执行 <code>dotnew new -u Grpc.Proto.To.NuGet.Package</code></p>
+<li><p>安装成功后，可通过 <code>dotnet new -u</code> 进行查看现有的项目模板，如下：<code>Grpc.Proto.To.NuGet.Package</code> 即安装的项目模板，如果需要卸载，执行 <code>dotnet new -u Grpc.Proto.To.NuGet.Package</code></p>
 <p><img src="/img/aspnet-ptp/template.png" alt="Grpc.Proto.To.NuGet.Package.Template"></p>
 </li>
 <li><p>下载最新版 <a href="https://github.com/mingdaocom/GrpcProtoToNuGetPackage/releases" target="_blank" rel="noopener">GrpcProtoToNuGetPackage.vsix</a>，在关闭所有 VS 窗口下安装此插件；</p>
 </li>
-<li><p>安装成功后，VS 中打开含 <code>proto</code> 文件的项目（注：<code>proto</code> 文件必须放在 <code>protos</code> 文件夹下）；</p>
+<li><p>安装成功后，VS 中打开含 <code>proto</code> 接口定义文件的项目（<em>我们目前是将所有 gRPC 服务按文件夹存放到一个公共项目中，统一维护</em>）；</p>
 </li>
 <li><p>在 <code>protos</code> 文件夹右键选择 <code>Grpc Proto To NuGet Package</code>，如下：</p>
 <p><img src="/img/aspnet-ptp/rightmenu.png" alt="Grpc.Proto.To.NuGet.Package"></p>
@@ -406,15 +406,15 @@
 <p><em>可在 <a href="https://www.nuget.org" target="_blank" rel="noopener">https://www.nuget.org</a> 官网注册账号，并创建 API Key 进行测试，不过这样是推送到公共平台上</em></p>
 <p><img src="/img/aspnet-ptp/nugetPackageSetting.png" alt="NuGet Package Setting"></p>
 </li>
-<li><p>设置 NuGet Package 版本号（默认为当前最大版本的 revision 位加 1）</p>
+<li><p>设置 NuGet Package 包名和版本（<em>包名默认是 <code>proto</code> 文件定义的 <code>package</code> 名，版本号默认是当前最大版本的 revision 位加 1</em>），也可完全自定义</p>
 <p>执行过程中使用的资源文件会暂存到 <code>C:\TempGrpcNuGet</code> 目录下。首次会创建 <code>repository.json</code> 保存 NuGet 仓库的配置信息，接下来每次会根据包名创建一个临时项目用于生成对应 NuGet Package，如果有问题，一般是因不符合规范导致编译不通过，这时候可在临时项目中通过 <code>dotnet build</code> 进行编译或通过 VS 添加现有项目查看具体问题。</p>
 </li>
 <li><p>执行，注意执行结果内的输出日志，确保推送到远端仓库 OK</p>
-<p> <img src="/img/aspnet-ptp/publishedPackages.png" alt="Published Packages"></p>
+<p><img src="/img/aspnet-ptp/publishedPackages.png" alt="Published Packages"></p>
 </li>
 <li><p>NuGet Package 安装与使用</p>
-<p><img src="/img/aspnet-ptp/installMyHelloworld.png" alt="Install MyHelloworld"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">static void Main(string[] args)</span><br><span class="line">&#123;</span><br><span class="line">  // client 集合</span><br><span class="line">  var clientContainer = new ClientContainer(&quot;127.0.0.1:1234&quot;);</span><br><span class="line"></span><br><span class="line">  // GreeterClient，如果有多个 Client，也是直接从 clientContainer 中获取</span><br><span class="line">  var greeterClient = clientContainer.GreeterClient;</span><br><span class="line"></span><br><span class="line">  var response = greeterClient.SayHello(new HelloRequest</span><br><span class="line">  &#123;</span><br><span class="line">    Name = &quot;BeckJin&quot;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  Console.WriteLine(response.Message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> <img src="/img/aspnet-ptp/installMyHelloworld.png" alt="Install MyHelloworld"></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">static void Main(string[] args)</span><br><span class="line">&#123;</span><br><span class="line">  // client 集合</span><br><span class="line">  var clientContainer = new ClientContainer(&quot;127.0.0.1:1234&quot;);</span><br><span class="line"></span><br><span class="line">  // GreeterClient，如果有多个 Client，也是直接从 clientContainer 中获取</span><br><span class="line">  var greeterClient = clientContainer.GreeterClient;</span><br><span class="line"></span><br><span class="line">  var response = greeterClient.SayHello(new HelloRequest</span><br><span class="line">  &#123;</span><br><span class="line">    Name = &quot;BeckJin&quot;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  Console.WriteLine(response.Message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>以上主要是实现方案及使用方法的具体说明，实际使用 <code>Grpc Proto To NuGet Package</code> 只需如下 3 步：</p>
@@ -582,7 +582,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-count">56</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -604,7 +604,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-count">51</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -660,7 +660,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x80CC;&#x666F;" class="headerlink" title="&#x80CC;&#x666F;"></a>&#x80CC;&#x666F;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现方案"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x5B9E;&#x73B0;&#x65B9;&#x6848;" class="headerlink" title="&#x5B9E;&#x73B0;&#x65B9;&#x6848;"></a>&#x5B9E;&#x73B0;&#x65B9;&#x6848;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用方法"><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x4F7F;&#x7528;&#x65B9;&#x6CD5;" class="headerlink" title="&#x4F7F;&#x7528;&#x65B9;&#x6CD5;"></a>&#x4F7F;&#x7528;&#x65B9;&#x6CD5;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text"><a href="#&#x603B;&#x7ED3;" class="headerlink" title="&#x603B;&#x7ED3;"></a>&#x603B;&#x7ED3;</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现方案"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x5B9E;&#x73B0;&#x65B9;&#x6848;" class="headerlink" title="&#x5B9E;&#x73B0;&#x65B9;&#x6848;"></a>&#x5B9E;&#x73B0;&#x65B9;&#x6848;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用方法"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x4F7F;&#x7528;&#x65B9;&#x6CD5;" class="headerlink" title="&#x4F7F;&#x7528;&#x65B9;&#x6CD5;"></a>&#x4F7F;&#x7528;&#x65B9;&#x6CD5;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x603B;&#x7ED3;" class="headerlink" title="&#x603B;&#x7ED3;"></a>&#x603B;&#x7ED3;</span></a></li></ol></div>
             
 
           </div>
