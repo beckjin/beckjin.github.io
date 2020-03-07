@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="C#," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Beck's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="在之前的文章 ASP.NET Core 自定义配置源 和 ASP.NET Core etcd 配置源 中主要是介绍如何实现自定义的配置源，但不论内置的和自定义的配置源，都会面临如何使配置修改后实时生效的问题（修改配置后在不重启服务的情况下能马上生效）。在 ASP.NET Core etcd 配置源 的最后部分其实有用到 IOptionsSnapshot Options 快照的方式获取到最新配置，但">
+<meta name="keywords" content="C#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ASP.NET Core 配置源：实时生效">
+<meta property="og:url" content="http://www.beckjin.com/2020/03/07/aspnet-configuration-reload/index.html">
+<meta property="og:site_name" content="Beck&#39;s Blog">
+<meta property="og:description" content="在之前的文章 ASP.NET Core 自定义配置源 和 ASP.NET Core etcd 配置源 中主要是介绍如何实现自定义的配置源，但不论内置的和自定义的配置源，都会面临如何使配置修改后实时生效的问题（修改配置后在不重启服务的情况下能马上生效）。在 ASP.NET Core etcd 配置源 的最后部分其实有用到 IOptionsSnapshot Options 快照的方式获取到最新配置，但">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.beckjin.com/img/aspnet-configuration-reload/providers.png">
+<meta property="og:image" content="http://www.beckjin.com/img/aspnet-configuration-reload/relation.png">
+<meta property="og:updated_time" content="2020-03-07T12:27:07.291Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ASP.NET Core 配置源：实时生效">
+<meta name="twitter:description" content="在之前的文章 ASP.NET Core 自定义配置源 和 ASP.NET Core etcd 配置源 中主要是介绍如何实现自定义的配置源，但不论内置的和自定义的配置源，都会面临如何使配置修改后实时生效的问题（修改配置后在不重启服务的情况下能马上生效）。在 ASP.NET Core etcd 配置源 的最后部分其实有用到 IOptionsSnapshot Options 快照的方式获取到最新配置，但">
+<meta name="twitter:image" content="http://www.beckjin.com/img/aspnet-configuration-reload/providers.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.beckjin.com/2020/03/07/aspnet-configuration-reload/"/>
+
+
+
+
+
+  <title>ASP.NET Core 配置源：实时生效 | Beck's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+	<a href="https://github.com/beckjin" target="_blank" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+	
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Beck's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2020/03/07/aspnet-configuration-reload/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Beck Jin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beck's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">ASP.NET Core 配置源：实时生效</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-07T19:52:09+08:00">
+                2020-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ASP-NET-Core/" itemprop="url" rel="index">
+                    <span itemprop="name">ASP.NET Core</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/03/07/aspnet-configuration-reload/" class="leancloud_visitors" data-flag-title="ASP.NET Core 配置源：实时生效">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在之前的文章 <a href="http://beckjin.com/2019/11/16/aspnet-custom-provider/" target="_blank" rel="noopener">ASP.NET Core 自定义配置源</a> 和 <a href="http://beckjin.com/2019/11/23/aspnet-etcd-provider/" target="_blank" rel="noopener">ASP.NET Core etcd 配置源</a> 中主要是介绍如何实现自定义的配置源，但不论内置的和自定义的配置源，都会面临如何使配置修改后实时生效的问题（修改配置后在不重启服务的情况下能马上生效）。在 <a href="http://beckjin.com/2019/11/23/aspnet-etcd-provider/" target="_blank" rel="noopener">ASP.NET Core etcd 配置源</a> 的最后部分其实有用到 <code>IOptionsSnapshot</code> Options 快照的方式获取到最新配置，但其实这里依然不是实时数据，所以本文将继续深入介绍配置使用方式及内部处理机制。（<em>以下测试代码基于 ASP.NET Core 3.1</em>）。</p>
+<h3 id="Configuration-模式"><a href="#Configuration-模式" class="headerlink" title="Configuration 模式"></a>Configuration 模式</h3><p>在 ASP.NET Core Web API 应用程序中 <code>IConfiguration</code> 服务默认已以单例模式注入到 services 中，含以下 <code>ConfigurationProvider</code> 中的配置信息，同时对 <code>appsettings.json</code> 和 <code>appsettings.Development.json</code> 已设置 <code>reloadOnChange</code> 为 true，即文件内容有变化将自动更新到 <code>IConfiguration</code> 的对象中：</p>
+<p><img src="/img/aspnet-configuration-reload/providers.png" alt="providers"></p>
+<p>代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class TestController : ControllerBase</span><br><span class="line">&#123;</span><br><span class="line">  private readonly IConfiguration _configuration;</span><br><span class="line"></span><br><span class="line">  public TestController(IConfiguration configuration)</span><br><span class="line">  &#123;</span><br><span class="line">    _configuration = configuration;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  [HttpGet]</span><br><span class="line">  public string Get()</span><br><span class="line">  &#123;</span><br><span class="line">    return _configuration[&quot;Name&quot;];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在不重启服务的情况下修改 <code>Name</code> 的值，重新调用接口将会马上获取到最新值，所以通过从 <code>IConfiguration</code> 中获取配置可以做到实时生效，这主要是因为在 <code>JsonConfigurationProvider</code> 的实现中当设置 <code>reloadOnChange</code> 为 true，则会监控文件的变化，一旦有变则重新加载当前 <code>Provider</code> 的配置信息，整个原理和 <a href="http://beckjin.com/2019/11/23/aspnet-etcd-provider/" target="_blank" rel="noopener">ASP.NET Core etcd 配置源</a>  的实现类似，<a href="https://github.com/aspnet/Configuration/blob/master/src/Config.Json/JsonConfigurationProvider.cs" target="_blank" rel="noopener">JsonConfigurationProvider 源码</a> 。</p>
+<h3 id="Options-模式"><a href="#Options-模式" class="headerlink" title="Options 模式"></a>Options 模式</h3><p><strong>Options 模式</strong> 也是比较常用的一种配置使用方式，通过将某个 <code>Section</code> 的配置信息以对象的方式注入到服务中，在程序中使用将更加方便与形象，在 <strong>Options 模式</strong> 主要有 3 种使用方式，分别是：<code>IOptions</code>、<code>IOptionsSnapshot</code>、<code>IOptionsMonitor</code>。</p>
+<h4 id="使用方式及表现"><a href="#使用方式及表现" class="headerlink" title="使用方式及表现"></a>使用方式及表现</h4><p>首先在 <code>appsettings.json</code> 中添加如下配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  &quot;UserOption&quot;: &#123;</span><br><span class="line">    &quot;Name&quot;: &quot;beck&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在 <code>startup.cs</code> 的 <code>ConfigureServices</code> 注册配置服务：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public void ConfigureServices(IServiceCollection services)</span><br><span class="line">&#123;</span><br><span class="line">  services.Configure&lt;UserOption&gt;(Configuration.GetSection(&quot;UserOption&quot;));</span><br><span class="line">  services.AddControllers();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用方式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class TestController : ControllerBase</span><br><span class="line">&#123;</span><br><span class="line">  private readonly IOptions&lt;UserOption&gt; _options;</span><br><span class="line"></span><br><span class="line">  public TestController(IOptions&lt;UserOption&gt; options)</span><br><span class="line">  &#123;</span><br><span class="line">      _options = options;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  [HttpGet]</span><br><span class="line">  public void Get()</span><br><span class="line">  &#123;</span><br><span class="line">      Console.WriteLine(_options.Value.Name);</span><br><span class="line"></span><br><span class="line">      Thread.Sleep(5000); // 等待过程中，手动修改配置文件</span><br><span class="line"></span><br><span class="line">      Console.WriteLine(_options.Value.Name);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>分布使用 <code>IOptions</code>、<code>IOptionsSnapshot</code>、<code>IOptionsMonitor</code>(需改为 <code>_options.CurrentValue</code>) 进行测试，每种测试对配置文件中 <code>Name</code> 的值进行调整，具体表现结果如下：</p>
+<ul>
+<li>IOptions：本次请求内修改不会生效，重新请求也不会生效，需重启服务；</li>
+<li>IOptionsSnapshot：本次请求内修改不会生效，重新请求生效；</li>
+<li>IOptionsMonitor：实时生效；</li>
+</ul>
+<h4 id="处理机制分析"><a href="#处理机制分析" class="headerlink" title="处理机制分析"></a>处理机制分析</h4><p>基于以上表现结果，我们接下来通过 <a href="https://github.com/aspnet/Options/tree/master/src/Microsoft.Extensions.Options" target="_blank" rel="noopener">Options 源码</a> 来分析其本质原因。</p>
+<p>首先在服务启动阶段 HostBuilder 的 Build 方法中调用 <code>services.AddOptions()</code> 进行 <code>Options</code> 相关服务的注册，代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public static IServiceCollection AddOptions(this IServiceCollection services)</span><br><span class="line">&#123;</span><br><span class="line">  if (services == null)</span><br><span class="line">  &#123;</span><br><span class="line">      throw new ArgumentNullException(nameof(services));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  services.TryAdd(ServiceDescriptor.Singleton(typeof(IOptions&lt;&gt;), typeof(OptionsManager&lt;&gt;)));</span><br><span class="line">  services.TryAdd(ServiceDescriptor.Scoped(typeof(IOptionsSnapshot&lt;&gt;), typeof(OptionsManager&lt;&gt;)));</span><br><span class="line">  services.TryAdd(ServiceDescriptor.Singleton(typeof(IOptionsMonitor&lt;&gt;), typeof(OptionsMonitor&lt;&gt;)));</span><br><span class="line">  services.TryAdd(ServiceDescriptor.Transient(typeof(IOptionsFactory&lt;&gt;), typeof(OptionsFactory&lt;&gt;)));</span><br><span class="line">  services.TryAdd(ServiceDescriptor.Singleton(typeof(IOptionsMonitorCache&lt;&gt;), typeof(OptionsCache&lt;&gt;)));</span><br><span class="line">  return services;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>从代码中可以明显的看出 <code>IOptions</code>、<code>IOptionsSnapshot</code> 对应的实现都是<code>OptionsManager</code>，<code>IOptions</code> 的生命周期是 <code>Singleton</code> 模式，<code>IOptionsSnapshot</code> 的生命周期是 <code>Scoped</code> 模式，所以这个就比较好解释为什么 <code>IOptions</code> 方式下配置调整后需要重启才能生效，而 <code>IOptionsSnapshot</code> 是每次请求内不变，重新请求会变化的原因了。</p>
+<p>另外 <code>IOptionsMonitor</code> 的具体实现是 <code>OptionsMonitor</code>，生命周期是 <code>Singleton</code> 模式。同时还包含了 <code>IOptionsFactory</code> 和 <code>IOptionsMonitorCache</code> 两个服务的注册，它们也是 <strong>Options 模式</strong> 下核心部分。</p>
+<p>这几个服务之间的关系如下：</p>
+<p><img src="/img/aspnet-configuration-reload/relation.png" alt="relation"></p>
+<p><code>IOptionsFactory</code> 主要负责创建 <code>TOptions</code> 类型的具体对象，核心代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">public class OptionsFactory&lt;TOptions&gt; : IOptionsFactory&lt;TOptions&gt; where TOptions : class, new()</span><br><span class="line">&#123;</span><br><span class="line">  public TOptions Create(string name)</span><br><span class="line">  &#123;</span><br><span class="line">    var options = new TOptions();</span><br><span class="line">    foreach (var setup in _setups)</span><br><span class="line">    &#123;</span><br><span class="line">      if (setup is IConfigureNamedOptions&lt;TOptions&gt; namedSetup)</span><br><span class="line">      &#123;</span><br><span class="line">        namedSetup.Configure(name, options);</span><br><span class="line">      &#125;</span><br><span class="line">      else if (name == Options.DefaultName)</span><br><span class="line">      &#123;</span><br><span class="line">        setup.Configure(options);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    foreach (var post in _postConfigures)</span><br><span class="line">    &#123;</span><br><span class="line">      post.PostConfigure(name, options);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (_validations != null)</span><br><span class="line">    &#123;</span><br><span class="line">      var failures = new List&lt;string&gt;();</span><br><span class="line">      foreach (var validate in _validations)</span><br><span class="line">      &#123;</span><br><span class="line">        var result = validate.Validate(name, options);</span><br><span class="line">        if (result.Failed)</span><br><span class="line">        &#123;</span><br><span class="line">          failures.Add(result.FailureMessage);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      if (failures.Count &gt; 0)</span><br><span class="line">      &#123;</span><br><span class="line">        throw new OptionsValidationException(name, typeof(TOptions), failures);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return options;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中 <code>_setups</code> 的来源即最开始 <code>services.Configure</code> 注册的配置服务，<code>_postConfigures</code> 的来源是以 <code>services.PostConfigure</code> 方式注册的配置服务（<em>本例中未使用到</em>），它们的区别是 <code>PostConfigure</code> 注册的服务将在 <code>Configure</code> 之后执行。<code>_validations</code> 是参数合法性验证集合，如果有需要，可以在服务注册时指定。 </p>
+<p><code>OptionsManager</code> 同时是 <code>IOptions</code> 和 <code>IOptionsSnapshot</code> 的实现，内部通过 <code>OptionsCache</code> 缓存 <code>IOptionsFactory</code> 创建的具体 <code>TOptions</code> 对象，区别在于创建出的具体对象生命周期不一样，核心代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class OptionsManager&lt;TOptions&gt; : IOptions&lt;TOptions&gt;, IOptionsSnapshot&lt;TOptions&gt; where TOptions : class, new()</span><br><span class="line">&#123;</span><br><span class="line">  public TOptions Value</span><br><span class="line">  &#123;</span><br><span class="line">    get</span><br><span class="line">    &#123;</span><br><span class="line">      return Get(Options.DefaultName);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public virtual TOptions Get(string name)</span><br><span class="line">  &#123;</span><br><span class="line">    name = name ?? Options.DefaultName;</span><br><span class="line">    return _cache.GetOrAdd(name, () =&gt; _factory.Create(name));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>OptionsMonitor</code> 是 <code>IOptionsMonitor</code> 的实现，内部通过 <code>IOptionsMonitorCache</code> 缓存 <code>IOptionsFactory</code> 创建的具体 <code>TOptions</code> 对象，同时对于采用 <code>IConfiguration</code> 作为数据源类型的，通过 <code>ChangeToken.OnChange</code> 监听变化并实时更新配置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">public class OptionsMonitor&lt;TOptions&gt; : IOptionsMonitor&lt;TOptions&gt; where TOptions : class, new()</span><br><span class="line">&#123;</span><br><span class="line">  public OptionsMonitor(IOptionsFactory&lt;TOptions&gt; factory, IEnumerable&lt;IOptionsChangeTokenSource&lt;TOptions&gt;&gt; sources, IOptionsMonitorCache&lt;TOptions&gt; cache)</span><br><span class="line">  &#123;</span><br><span class="line">    foreach (var source in _sources)</span><br><span class="line">    &#123;</span><br><span class="line">      ChangeToken.OnChange&lt;string&gt;(</span><br><span class="line">        () =&gt; source.GetChangeToken(),</span><br><span class="line">        (name) =&gt; InvokeChanged(name),</span><br><span class="line">        source.Name);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  private void InvokeChanged(string name)</span><br><span class="line">  &#123;</span><br><span class="line">    name = name ?? Options.DefaultName;</span><br><span class="line">    _cache.TryRemove(name);</span><br><span class="line">    var options = Get(name);</span><br><span class="line">    if (_onChange != null)</span><br><span class="line">    &#123;</span><br><span class="line">      _onChange.Invoke(options, name);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public TOptions CurrentValue</span><br><span class="line">  &#123;</span><br><span class="line">    get =&gt; Get(Options.DefaultName);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public virtual TOptions Get(string name)</span><br><span class="line">  &#123;</span><br><span class="line">    name = name ?? Options.DefaultName;</span><br><span class="line">    return _cache.GetOrAdd(name, () =&gt; _factory.Create(name));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="自实现-OptionsMonitor"><a href="#自实现-OptionsMonitor" class="headerlink" title="自实现 OptionsMonitor"></a>自实现 OptionsMonitor</h3><p><code>Configuration</code> 对象默认提供了 <code>GetReloadToken</code> 方法，所以我们也可以通过监听 <code>Token</code> 的变化自己实现类似 <code>OptionsMonitor</code> 的效果，毕竟有时候并不会选择 <strong>Configuration 模式</strong> 或 <strong>Options 模式</strong>，以下是在控制台程序中的使用，假设使用 Autofac 作为 DI 容器，<code>SetUserOption</code> 内将可重新注册 <code>UserOption</code> 对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">private static UserOption userOption;</span><br><span class="line"></span><br><span class="line">static void Main(string[] args)</span><br><span class="line">&#123;</span><br><span class="line">  var configurationRoot = GetRoot();</span><br><span class="line"></span><br><span class="line">  ChangeToken.OnChange(() =&gt; configurationRoot.GetReloadToken(), () =&gt;</span><br><span class="line">  &#123;</span><br><span class="line">    SetUserOption(configurationRoot);</span><br><span class="line">    Console.WriteLine(userOption.Name);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  Console.WriteLine(&quot;started&quot;);</span><br><span class="line">  Console.ReadKey();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private static IConfigurationRoot GetRoot()</span><br><span class="line">&#123;</span><br><span class="line">  var builder = new ConfigurationBuilder()</span><br><span class="line">      .SetBasePath(Directory.GetCurrentDirectory())</span><br><span class="line">      .AddJsonFile(&quot;appsettings.json&quot;, true, true);</span><br><span class="line"></span><br><span class="line">    return builder.Build();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private static void SetUserOption(IConfigurationRoot configuration)</span><br><span class="line">&#123;</span><br><span class="line">  userOption = configuration.GetSection(&quot;UserOption&quot;).Get&lt;UserOption&gt;();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果对你有帮助就好</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/img/pay/wechatpay.png" alt="Beck Jin 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/img/pay/alipay.png" alt="Beck Jin 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C#</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/14/aspnet-log-serilog/" rel="next" title="ASP.NET Core 日志框架：Serilog">
+                <i class="fa fa-chevron-left"></i> ASP.NET Core 日志框架：Serilog
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar.png"
+                alt="Beck Jin" />
+            
+              <p class="site-author-name" itemprop="name">Beck Jin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/beckjin" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1798410296@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Configuration-模式"><span class="nav-number">1.</span> <span class="nav-text"><a href="#Configuration-&#x6A21;&#x5F0F;" class="headerlink" title="Configuration &#x6A21;&#x5F0F;"></a>Configuration &#x6A21;&#x5F0F;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Options-模式"><span class="nav-number">2.</span> <span class="nav-text"><a href="#Options-&#x6A21;&#x5F0F;" class="headerlink" title="Options &#x6A21;&#x5F0F;"></a>Options &#x6A21;&#x5F0F;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用方式及表现"><span class="nav-number">2.1.</span> <span class="nav-text"><a href="#&#x4F7F;&#x7528;&#x65B9;&#x5F0F;&#x53CA;&#x8868;&#x73B0;" class="headerlink" title="&#x4F7F;&#x7528;&#x65B9;&#x5F0F;&#x53CA;&#x8868;&#x73B0;"></a>&#x4F7F;&#x7528;&#x65B9;&#x5F0F;&#x53CA;&#x8868;&#x73B0;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#处理机制分析"><span class="nav-number">2.2.</span> <span class="nav-text"><a href="#&#x5904;&#x7406;&#x673A;&#x5236;&#x5206;&#x6790;" class="headerlink" title="&#x5904;&#x7406;&#x673A;&#x5236;&#x5206;&#x6790;"></a>&#x5904;&#x7406;&#x673A;&#x5236;&#x5206;&#x6790;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自实现-OptionsMonitor"><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x81EA;&#x5B9E;&#x73B0;-OptionsMonitor" class="headerlink" title="&#x81EA;&#x5B9E;&#x73B0; OptionsMonitor"></a>&#x81EA;&#x5B9E;&#x73B0; OptionsMonitor</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Beck Jin</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.min.css" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitment.browser.min.js" crossorigin="anonymous"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitment({
+            id: '1583581929000', 
+            owner: 'beckjin',
+            repo: 'beckjin.github.io',
+            
+            oauth: {
+            
+            
+                client_secret: 'f3317552363ce12638c39c095f521db7ecfcb46d',
+            
+                client_id: 'bee5c835ae9ab1ab1fc9'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("FCgGthOl6XN7xRjfK31raebD-gzGzoHsz", "20z736XSuGX562R2ky8uu4EU");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
