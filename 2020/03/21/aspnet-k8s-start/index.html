@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="C#,Kubernetes,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Beck's Blog" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="Kubernetes 是目前非常主流的容器编排工具，在应用创建、应用部署、应用扩容、应用更新等方面都非常的方便，而且在应用故障时，也可以快速自愈。所以基于微服务架构下的产品，了解 Kubernetes 的使用是非常必要的，我猜测很多人都曾经多次打算自己搭建 Kubernetes 环境，部署个服务试试效果，但却因为很多原因一次次从入门到放弃，这里应该有部分原因是因  Kubernetes 的入门成本">
+<meta name="keywords" content="C#,Kubernetes">
+<meta property="og:type" content="article">
+<meta property="og:title" content=".NET Core + Kubernetes：快速体验">
+<meta property="og:url" content="http://www.beckjin.com/2020/03/21/aspnet-k8s-start/index.html">
+<meta property="og:site_name" content="Beck&#39;s Blog">
+<meta property="og:description" content="Kubernetes 是目前非常主流的容器编排工具，在应用创建、应用部署、应用扩容、应用更新等方面都非常的方便，而且在应用故障时，也可以快速自愈。所以基于微服务架构下的产品，了解 Kubernetes 的使用是非常必要的，我猜测很多人都曾经多次打算自己搭建 Kubernetes 环境，部署个服务试试效果，但却因为很多原因一次次从入门到放弃，这里应该有部分原因是因  Kubernetes 的入门成本">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-start/nodes.png">
+<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-start/dockerDesktop.png">
+<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-start/k8sdemoImage.png">
+<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-start/k8sdemoDockerhub.png">
+<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-start/k8sApply.png">
+<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-start/k8sPod.png">
+<meta property="og:updated_time" content="2020-03-21T15:36:42.750Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content=".NET Core + Kubernetes：快速体验">
+<meta name="twitter:description" content="Kubernetes 是目前非常主流的容器编排工具，在应用创建、应用部署、应用扩容、应用更新等方面都非常的方便，而且在应用故障时，也可以快速自愈。所以基于微服务架构下的产品，了解 Kubernetes 的使用是非常必要的，我猜测很多人都曾经多次打算自己搭建 Kubernetes 环境，部署个服务试试效果，但却因为很多原因一次次从入门到放弃，这里应该有部分原因是因  Kubernetes 的入门成本">
+<meta name="twitter:image" content="http://www.beckjin.com/img/aspnet-k8s-start/nodes.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.beckjin.com/2020/03/21/aspnet-k8s-start/">
+
+
+
+
+
+  <title>.NET Core + Kubernetes：快速体验 | Beck's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+	<a href="https://github.com/beckjin" target="_blank" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+	
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Beck's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2020/03/21/aspnet-k8s-start/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Beck Jin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beck's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">.NET Core + Kubernetes：快速体验</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-21T23:00:42+08:00">
+                2020-03-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ASP-NET-Core/" itemprop="url" rel="index">
+                    <span itemprop="name">ASP.NET Core</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/03/21/aspnet-k8s-start/" class="leancloud_visitors" data-flag-title=".NET Core + Kubernetes：快速体验">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="https://kubernetes.io/" target="_blank" rel="noopener">Kubernetes</a> 是目前非常主流的容器编排工具，在应用创建、应用部署、应用扩容、应用更新等方面都非常的方便，而且在应用故障时，也可以快速自愈。所以基于微服务架构下的产品，了解 <code>Kubernetes</code> 的使用是非常必要的，我猜测很多人都曾经多次打算自己搭建 <code>Kubernetes</code> 环境，部署个服务试试效果，但却因为很多原因一次次从入门到放弃，这里应该有部分原因是因  <code>Kubernetes</code> 的入门成本相对较高，概念较多，搭建略复杂，所以往往一开始就死在了环境搭建上，导致很多预定的目标都没能实现。</p>
+<p>关于 <code>Kubernetes</code> 概念上的内容这里不再赘述，但概念的部分又是在使用中必须优先掌握的知识，所以建议先通过查看资料对整体架构和使用方式有一定了解后再动手实际操作。</p>
+<h3 id="集群搭建"><a href="#集群搭建" class="headerlink" title="集群搭建"></a>集群搭建</h3><p>这里将搭建 <code>Kubernetes</code> 集群环境来进行测试，3 台 Linux 服务器（1个Master，2个Node）。网上有很多 <code>Kubernetes</code> 集群搭建的文章，找了很多最终发现还是李振良的基于 kubeadm <a href="https://edu.51cto.com/course/17256.html" target="_blank" rel="noopener">30分钟部署一个Kubernetes集群</a> 视频教程对初学者来说较为靠谱，虽然有些操作命令在实际生产环境需要调整，但作为学习来说问题不大，更多细节的优化还是交给更专业的运维人员吧。</p>
+<p>为了省去操作系统的安装我直接在腾讯云购买了 3台 2C4G 的机器，选择按量计费模式大半天也就几块钱（不是广告，只是人懒）。基于云服务器搭建需提前在控制台的安全组设置好以下几点：</p>
+<ol>
+<li>3台服务器内网互通；</li>
+<li>允许服务器访问外网，需要下载相关依赖内容；</li>
+<li>允许客户端机器通过服务器外网IP访问；</li>
+</ol>
+<p>具体安装操作步骤完全参考视频教程即可，但我能肯定有些人还是可能会出各种奇葩问题，只能祝你好运了，以下几点这里备注一下：</p>
+<ul>
+<li>kubeadm init 和 pod 网络插件只需要在 Master 节点操作；</li>
+<li>kubeadm init 中的 <code>--apiserver-advertise-address</code> 设置为内网地址；</li>
+<li>通过 <code>hostname k8s-master</code> 可修改 hostname 名称；</li>
+</ul>
+<p>最终通过命令 <code>kubectl get nodes</code> 查看集群中各节点是否已全部 Ready。</p>
+<p><img src="/img/aspnet-k8s-start/nodes.png" alt></p>
+<h3 id="构建-NET-Core-服务镜像"><a href="#构建-NET-Core-服务镜像" class="headerlink" title="构建 .NET Core 服务镜像"></a>构建 .NET Core 服务镜像</h3><p>接下来将直接在 Windows  环境（<em>镜像构建基于 Windows 还是 Linux 理论上是没有区别的</em>）下构建 .NET Core 服务的 Docker 镜像，所以首先需要安装 <a href="https://docs.docker.com/docker-for-windows/" target="_blank" rel="noopener">Docker for Windows</a>，安装成功后启动 Docker。</p>
+<p><img src="/img/aspnet-k8s-start/dockerDesktop.png" alt></p>
+<p>创建一个 API 类型 ASP.NET Core  Web 应用程序，<strong>启用 Docker 支持</strong>，会在项目下自动生成 Dockerfile 文件，命令主要涉及 <code>dotnet restore</code>，<code>dotnet publish</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base</span><br><span class="line">WORKDIR /app</span><br><span class="line">EXPOSE 80</span><br><span class="line">EXPOSE 443</span><br><span class="line"></span><br><span class="line">FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build</span><br><span class="line">WORKDIR /src</span><br><span class="line">COPY [&quot;K8SDemo/K8SDemo.csproj&quot;, &quot;K8SDemo/&quot;]</span><br><span class="line">RUN dotnet restore &quot;K8SDemo/K8SDemo.csproj&quot;</span><br><span class="line">COPY . .</span><br><span class="line">WORKDIR &quot;/src/K8SDemo&quot;</span><br><span class="line">RUN dotnet build &quot;K8SDemo.csproj&quot; -c Release -o /app/build</span><br><span class="line"></span><br><span class="line">FROM build AS publish</span><br><span class="line">RUN dotnet publish &quot;K8SDemo.csproj&quot; -c Release -o /app/publish</span><br><span class="line"></span><br><span class="line">FROM base AS final</span><br><span class="line">WORKDIR /app</span><br><span class="line">COPY --from=publish /app/publish .</span><br><span class="line">ENTRYPOINT [&quot;dotnet&quot;, &quot;K8SDemo.dll&quot;]</span><br></pre></td></tr></table></figure>
+<p>在 Dockerfile 文件右键菜单点击生成 Docker 镜像，这与直接在 sln 解决方案文件所在的目录下执行 <code>docker build -f .\K8SDemo\Dockerfile .</code> 本质是一样的，只是 VS 已内置好了，执行成功后在 cmd 窗口中通过 <code>docker images</code> 查看当前存在的 Docker 镜像。</p>
+<p><img src="/img/aspnet-k8s-start/k8sdemoImage.png" alt></p>
+<p>为了能在 <code>Kubernetes</code> 集群中能获取到这个镜像，现将 <code>k8sdemo</code> 镜像推送到个人 docker hub 公开仓库（实际开发中应该是公司的私有镜像仓库）。</p>
+<ol>
+<li>如果还没有 docker hub 账号，需要先 <a href="https://hub.docker.com/signup" target="_blank" rel="noopener">注册</a> ；</li>
+<li>cmd 窗口通过命令 <code>docker login -u 用户名 -p 密码</code> 登录；</li>
+<li>设置 Tag <code>docker tag k8sdemo:latest 用户名/k8sdemo:1.0.0</code>，因为推送目标只能是当前用户下；</li>
+<li>推送到 docker hub 仓库 <code>docker push 用户名/k8sdemo:1.0.0</code>；</li>
+</ol>
+<p><img src="/img/aspnet-k8s-start/k8sdemoDockerhub.png" alt></p>
+<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><p><em>以下操作在 Master 节点进行</em></p>
+<ol>
+<li><p>创建服务配置文件 <code>k8sdemo.yaml</code>，配置暂且不详细介绍，后续再针对性说明，先简单理解为通过镜像 <code>beckjin/k8sdemo:1.0.0</code> 创建了服务，并将容器内 80 端口映射到服务器某个端口上（<code>NodePort</code> 方式映射的端口会在 30000~32767 范围内随机一个）：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: k8sdemo</span><br><span class="line">spec:</span><br><span class="line">  replicas: 1</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      name: k8sdemo</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        name: k8sdemo</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: k8sdemo</span><br><span class="line">        image: beckjin/k8sdemo:1.0.0</span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 80</span><br><span class="line">        imagePullPolicy: Always</span><br><span class="line">---</span><br><span class="line">kind: Service</span><br><span class="line">apiVersion: v1</span><br><span class="line">metadata:</span><br><span class="line">  name: k8sdemo</span><br><span class="line">spec:</span><br><span class="line">  type: NodePort</span><br><span class="line">  ports:</span><br><span class="line">    - port: 80</span><br><span class="line">      targetPort: 80</span><br><span class="line">  selector:</span><br><span class="line">    name: k8sdemo</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过命令 <code>kubectl apply -f k8sdemo.yaml</code> 创建服务</p>
+<p>配置中指定了当依赖的镜像不存在时会自动拉取，但如果拉取资源的速度较慢，启动完成的时间可能会比较久，可通过命令 <code>kubectl get pods</code> 和 <code>kubectl describe pod 名称</code> 查看具体 pod 详细描述。<br><img src="/img/aspnet-k8s-start/k8sApply.png" alt></p>
+</li>
+<li><p>通过命令 <code>kubectl get pod,svc</code> 查看服务运行的端口</p>
+<p><img src="/img/aspnet-k8s-start/k8sPod.png" alt></p>
+<p>接着就可以通过 <code>http://${外网IP}:31741/WeatherForecast</code> 调用 API 接口查看效果。</p>
+</li>
+<li><p>如果需要扩容或缩容，调整配置文件中的  <code>replicas</code> 节点值，重新 <code>kubectl apply -f k8sdemo.yaml</code> 即可；</p>
+</li>
+<li><p>通过命令 <code>kubectl delete -f k8sdemo.yaml</code> 可删除服务；</p>
+</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>其实很长一段时间都在尝试自己把玩一下 <code>Kubernetes</code>，说实话阻力确实不少，特别是看到很多基于二进制文件的搭建介绍，简直了。所以好的指导教程确实可以给我们带来事半功倍的效果，作为入门学习我们并不需要多么强大和安全的测试环境，基本套路都是先玩起来，再深入研究。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果对你有帮助就好</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/img/pay/wechatpay.png" alt="Beck Jin 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/img/pay/alipay.png" alt="Beck Jin 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C#</a>
+          
+            <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/07/aspnet-configuration-reload/" rel="next" title="ASP.NET Core 配置源：实时生效">
+                <i class="fa fa-chevron-left"></i> ASP.NET Core 配置源：实时生效
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Beck Jin">
+            
+              <p class="site-author-name" itemprop="name">Beck Jin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/beckjin" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1798410296@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#集群搭建"><span class="nav-number">1.</span> <span class="nav-text">集群搭建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构建-NET-Core-服务镜像"><span class="nav-number">2.</span> <span class="nav-text">构建 .NET Core 服务镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署"><span class="nav-number">3.</span> <span class="nav-text">部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Beck Jin</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.min.css" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitment.browser.min.js" crossorigin="anonymous"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitment({
+            id: '1584802842000', 
+            owner: 'beckjin',
+            repo: 'beckjin.github.io',
+            
+            oauth: {
+            
+            
+                client_secret: 'f3317552363ce12638c39c095f521db7ecfcb46d',
+            
+                client_id: 'bee5c835ae9ab1ab1fc9'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("FCgGthOl6XN7xRjfK31raebD-gzGzoHsz", "20z736XSuGX562R2ky8uu4EU");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

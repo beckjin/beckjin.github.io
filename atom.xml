@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.beckjin.com/"/>
-  <updated>2020-03-07T12:27:07.291Z</updated>
+  <updated>2020-03-21T15:36:42.750Z</updated>
   <id>http://www.beckjin.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>.NET Core + Kubernetes：快速体验</title>
+    <link href="http://www.beckjin.com/2020/03/21/aspnet-k8s-start/"/>
+    <id>http://www.beckjin.com/2020/03/21/aspnet-k8s-start/</id>
+    <published>2020-03-21T15:00:42.000Z</published>
+    <updated>2020-03-21T15:36:42.750Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;a href=&quot;https://kubernetes.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Kubernetes&lt;/a&gt;
+        
+      
+    
+    </summary>
+    
+      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
+    
+    
+      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+    
+      <category term="Kubernetes" scheme="http://www.beckjin.com/tags/Kubernetes/"/>
+    
+  </entry>
   
   <entry>
     <title>ASP.NET Core 配置源：实时生效</title>
@@ -528,39 +556,6 @@
     
     
       <category term="JWT" scheme="http://www.beckjin.com/tags/JWT/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>.NET Core + Spring Cloud：熔断降级</title>
-    <link href="http://www.beckjin.com/2019/02/23/aspnet-hystrix/"/>
-    <id>http://www.beckjin.com/2019/02/23/aspnet-hystrix/</id>
-    <published>2019-02-23T11:05:22.000Z</published>
-    <updated>2019-12-29T14:14:11.904Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;在微服务架构下，服务之间彼此隔离，服务之间的调用通过网络请求，在众多服务中，可能因为网络或服务本身的原因引起某些接口异常是很常见的现象，接口超时或报错在实际情况下偶发也属正常，但如果短时间内不断的出现并积压，就可能引起服务崩溃。&lt;/p&gt;
-&lt;p&gt;&lt;a
-        
-      
-    
-    </summary>
-    
-      <category term="微服务" scheme="http://www.beckjin.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
-    
-    
-      <category term="ASP.NET Core" scheme="http://www.beckjin.com/tags/ASP-NET-Core/"/>
-    
-      <category term="Steeltoe" scheme="http://www.beckjin.com/tags/Steeltoe/"/>
-    
-      <category term="Spring Cloud" scheme="http://www.beckjin.com/tags/Spring-Cloud/"/>
-    
-      <category term="Hystrix" scheme="http://www.beckjin.com/tags/Hystrix/"/>
     
   </entry>
   
