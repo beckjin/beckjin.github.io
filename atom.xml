@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.beckjin.com/"/>
-  <updated>2020-03-28T04:31:49.178Z</updated>
+  <updated>2020-04-11T17:39:16.154Z</updated>
   <id>http://www.beckjin.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>.NET Core + Kubernetes：Pod</title>
+    <link href="http://www.beckjin.com/2020/04/12/aspnet-k8s-pod/"/>
+    <id>http://www.beckjin.com/2020/04/12/aspnet-k8s-pod/</id>
+    <published>2020-04-11T17:12:57.000Z</published>
+    <updated>2020-04-11T17:39:16.154Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;在 &lt;a href=&quot;http://beckjin.com/2020/03/21/aspnet-k8s-start/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;.NET Core + Kubernetes：快速体验&lt;/a&gt; 文章中，已经实现将一个
+        
+      
+    
+    </summary>
+    
+      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
+    
+    
+      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+    
+      <category term="Kubernetes" scheme="http://www.beckjin.com/tags/Kubernetes/"/>
+    
+  </entry>
   
   <entry>
     <title>.NET Core + Kubernetes：快速体验</title>
@@ -530,32 +558,6 @@
     
     
       <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ASP.NET Core JWT 认证</title>
-    <link href="http://www.beckjin.com/2019/03/24/aspnet-jwt/"/>
-    <id>http://www.beckjin.com/2019/03/24/aspnet-jwt/</id>
-    <published>2019-03-23T16:43:16.000Z</published>
-    <updated>2019-12-29T14:12:31.346Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;JWT-介绍&quot;&gt;&lt;a href=&quot;#JWT-介绍&quot; class=&quot;headerlink&quot; title=&quot;JWT 介绍&quot;&gt;&lt;/a&gt;JWT 介绍&lt;/h3&gt;&lt;p&gt;&lt;a href=&quot;https://jwt.io/&quot; target=&quot;_blank&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
-    
-    
-      <category term="JWT" scheme="http://www.beckjin.com/tags/JWT/"/>
     
   </entry>
   
