@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.beckjin.com/"/>
-  <updated>2020-04-12T07:09:02.370Z</updated>
+  <updated>2020-05-10T09:38:14.201Z</updated>
   <id>http://www.beckjin.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>.NET Core + Kubernetes：Deployment</title>
+    <link href="http://www.beckjin.com/2020/05/10/aspnet-k8s-deployment/"/>
+    <id>http://www.beckjin.com/2020/05/10/aspnet-k8s-deployment/</id>
+    <published>2020-05-10T08:54:54.000Z</published>
+    <updated>2020-05-10T09:38:14.201Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;在上篇文章 &lt;a href=&quot;http://beckjin.com/2020/04/12/aspnet-k8s-pod/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;.NET Core + Kubernetes：Pod&lt;/a&gt; 中，主要介绍了 Pod
+        
+      
+    
+    </summary>
+    
+      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
+    
+    
+      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+    
+      <category term="Kubernetes" scheme="http://www.beckjin.com/tags/Kubernetes/"/>
+    
+  </entry>
   
   <entry>
     <title>.NET Core + Kubernetes：Pod</title>
@@ -532,32 +560,6 @@
       <category term="ASP.NET Core" scheme="http://www.beckjin.com/tags/ASP-NET-Core/"/>
     
       <category term="Consul" scheme="http://www.beckjin.com/tags/Consul/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>算法：零钱兑换</title>
-    <link href="http://www.beckjin.com/2019/04/27/algorithm-coin-change/"/>
-    <id>http://www.beckjin.com/2019/04/27/algorithm-coin-change/</id>
-    <published>2019-04-27T09:58:08.000Z</published>
-    <updated>2019-12-29T13:40:12.588Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h4&gt;&lt;p&gt;给定不同面额的硬币(coins)和一个总金额(amount)
-        
-      
-    
-    </summary>
-    
-      <category term="算法" scheme="http://www.beckjin.com/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
     
   </entry>
   
