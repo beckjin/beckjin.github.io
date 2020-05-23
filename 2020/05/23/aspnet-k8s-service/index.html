@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="C#,Kubernetes,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Beck's Blog" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="通过 .NET Core + Kubernetes：Deployment 文章的介绍，我们可以通过 Deployment 控制器快速创建一组 Pod 来提供服务，每个 Pod 都会被分配一个集群内可见的虚拟 IP 地址，然后通过一个独立的 Endpoint（Pod IP + ContainerPort）进行访问。但在提供服务时，并不能依赖 Pod  的 Endpoint，首先 Pod IP 会随着">
+<meta name="keywords" content="C#,Kubernetes">
+<meta property="og:type" content="article">
+<meta property="og:title" content=".NET Core + Kubernetes：Service">
+<meta property="og:url" content="http://www.beckjin.com/2020/05/23/aspnet-k8s-service/index.html">
+<meta property="og:site_name" content="Beck&#39;s Blog">
+<meta property="og:description" content="通过 .NET Core + Kubernetes：Deployment 文章的介绍，我们可以通过 Deployment 控制器快速创建一组 Pod 来提供服务，每个 Pod 都会被分配一个集群内可见的虚拟 IP 地址，然后通过一个独立的 Endpoint（Pod IP + ContainerPort）进行访问。但在提供服务时，并不能依赖 Pod  的 Endpoint，首先 Pod IP 会随着">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-service/clusterIPService.png">
+<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-service/clusterIPCurl.png">
+<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-service/nodePortService.png">
+<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-service/nodePortCurl.png">
+<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-service/metalLBPod.png">
+<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-service/metallb.jpg">
+<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-service/loadBalancerService.png">
+<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-service/loadBalancerCurl.png">
+<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-service/externalNameCurl.png">
+<meta property="og:updated_time" content="2020-05-23T09:57:36.098Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content=".NET Core + Kubernetes：Service">
+<meta name="twitter:description" content="通过 .NET Core + Kubernetes：Deployment 文章的介绍，我们可以通过 Deployment 控制器快速创建一组 Pod 来提供服务，每个 Pod 都会被分配一个集群内可见的虚拟 IP 地址，然后通过一个独立的 Endpoint（Pod IP + ContainerPort）进行访问。但在提供服务时，并不能依赖 Pod  的 Endpoint，首先 Pod IP 会随着">
+<meta name="twitter:image" content="http://www.beckjin.com/img/aspnet-k8s-service/clusterIPService.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.beckjin.com/2020/05/23/aspnet-k8s-service/">
+
+
+
+
+
+  <title>.NET Core + Kubernetes：Service | Beck's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+	<a href="https://github.com/beckjin" target="_blank" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+	
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Beck's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2020/05/23/aspnet-k8s-service/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Beck Jin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beck's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">.NET Core + Kubernetes：Service</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-23T17:44:48+08:00">
+                2020-05-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ASP-NET-Core/" itemprop="url" rel="index">
+                    <span itemprop="name">ASP.NET Core</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/05/23/aspnet-k8s-service/" class="leancloud_visitors" data-flag-title=".NET Core + Kubernetes：Service">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>通过 <a href="http://beckjin.com/2020/05/10/aspnet-k8s-deployment/" target="_blank" rel="noopener">.NET Core + Kubernetes：Deployment</a> 文章的介绍，我们可以通过 Deployment 控制器快速创建一组 Pod 来提供服务，每个 Pod 都会被分配一个集群内可见的虚拟 IP 地址，然后通过一个独立的 Endpoint（Pod IP + ContainerPort）进行访问。但在提供服务时，并不能依赖 Pod  的 Endpoint，首先 Pod IP 会随着 Pod 的重建而变化，另外同一组 Pod 更希望是以整体对外提供高可用服务，组内的 Pod 在进行动态伸缩、滚动更新等操作后并不能影响服务稳定性。</p>
+<p>因此，Kubernetes 中的 Service 对象就是解决此问题的核心，Service 代理 Pod 集合对外表现是为一个访问入口，它提供了一个虚拟的 IP 地址（ClusterIP）和端口，来自 ClusterIP + 端口  的请求将被负载均衡器 （kube-proxy）转发到后端某个 Pod 中的容器。所以借助 Service 的能力，非常方便的实现了服务发现与负载均衡。</p>
+<p>本文将主要介绍 Kubernetes 中各 Service 类型的使用，目前有以下四种类型：</p>
+<ul>
+<li><p><strong>ClusterIP</strong>：默认类型，自动分配一个仅集群内部可以访问的虚拟 IP，也可使用 ClusterIP 字段指定固定 IP，选择此类型意味着只想这个服务在集群内部才可以被访问</p>
+</li>
+<li><p><strong>NodePort</strong>：在 ClusterIP 基础上，在集群的每一个节点绑定一个端口，这样就可以通过任意的 <nodeip>:NodePort 来访问服务</nodeip></p>
+</li>
+<li><p><strong>LoadBalancer</strong>：在 NodePort 的基础上，通过创建一个外部的负载均衡器，将流量转发到每个节点 <nodeip>:NodePort。因为如果外部所有客户端都访问一个 NodeIP，该节点的压力将会很大，LoadBalancer 则可解决此问题</nodeip></p>
+</li>
+<li><p><strong>ExternalName</strong>：把集群外部的服务引入到集群内部来，在集群内部直接使用。没有任何类型代理被创建，这只有 kubernetes 1.7 或更高版本的 kube-dns 才支持</p>
+</li>
+</ul>
+<p>下面分别对这几种类型的使用方式进行介绍，在创建 Service 之前，还是先通过 Deployment 控制器创建一组 Pod，配置文件 <code>k8sdemo-deployment.yaml</code> 如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: k8sdemo-deployment</span><br><span class="line">spec:</span><br><span class="line">  replicas: 3</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      name: k8sdemo</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        name: k8sdemo</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: k8sdemo</span><br><span class="line">        image: beckjin/k8sdemo:1.0.0</span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 80</span><br><span class="line">        imagePullPolicy: IfNotPresent</span><br></pre></td></tr></table></figure></p>
+<h3 id="ClusterIP-类型"><a href="#ClusterIP-类型" class="headerlink" title="ClusterIP 类型"></a>ClusterIP 类型</h3><p>创建 <code>k8sdemo-service.yaml</code> 文件，配置如下，主要是  <code>ports</code> 和 <code>selector</code> 字段的设置，指定了 80 端口（<em>port</em>） 映射到 Pod ContainerPort （<em>targetPort</em>） 端口，最终将通过 ClusterIP:80 访问服务。<code>selector</code> 字段指定将 label 含 name:k8sdemo 的 Pod 作为这个 Service 指向的目标服务。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: k8sdemo-service</span><br><span class="line">spec:</span><br><span class="line">  ports:</span><br><span class="line">  - port: 80                 # Service Port</span><br><span class="line">    targetPort: 80           # Pod ContainerPort</span><br><span class="line">  selector:</span><br><span class="line">    name: k8sdemo</span><br><span class="line">   # clusterIP: 10.1.19.92   # 取消注释指定IP</span><br></pre></td></tr></table></figure>
+<p>执行命令 <code>kubectl apply -f k8sdemo-service.yaml</code> 创建 Service，然后通过 <code>kubectl  get service</code> 查看服务状态：<br><img src="/img/aspnet-k8s-service/clusterIPService.png" alt></p>
+<p>从上图可以看出 <code>k8sdemo-service</code> 被分配的 ClusterIP 是 <code>10.1.19.96</code>，所以可以在服务器上通过 <code>curl http://10.1.19.96/WeatherForecast</code> 来访问接口。</p>
+<p><img src="/img/aspnet-k8s-service/clusterIPCurl.png" alt></p>
+<p>因为 ClusterIP 默认是自动分配的，所以每次重建会变化，如果需要固定，可通过 ClusterIP 字段设置。对于只需在集群内部提供的服务，ClusterIP 类型已足够。</p>
+<h3 id="NodePort-类型"><a href="#NodePort-类型" class="headerlink" title="NodePort 类型"></a>NodePort 类型</h3><p>基于 ClusterIP 类型中使用的配置文件 <code>k8sdemo-service.yaml</code>，增加 <code>type: NodePort</code> 配置，重新创建 Service，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: k8sdemo-service</span><br><span class="line">spec:</span><br><span class="line">  ports:</span><br><span class="line">  - port: 80</span><br><span class="line">    targetPort: 80</span><br><span class="line">    # nodePort: 30080   # 取消注释指定端口</span><br><span class="line">  selector:</span><br><span class="line">    name: k8sdemo</span><br><span class="line">  type: NodePort</span><br></pre></td></tr></table></figure>
+<p><img src="/img/aspnet-k8s-service/nodePortService.png" alt></p>
+<p>从上图可以看出，除了类型变了， PORT(S）也变成了 <code>80:30231/TCP</code>，即将 Service 的 80 端口与集群中各节点的 30231 端口进行映射，所以最终可以通过集群内任意的 <code>NodeIP:30231</code> 来访问，整个过程为：<code>Client &gt; NodeIP:NodePort &gt; ClusterIP:ServicePort  &gt; PodIP:ContainerPort</code>。NodePort 默认分配的是 30000-32767 范围内随机选择的一个端口，实际使用时可以通过 <code>nodePort</code> 字段指定。请求结果如下：</p>
+<p><img src="/img/aspnet-k8s-service/nodePortCurl.png" alt></p>
+<p><em>注：192.168.124.10 是集群内某一台的 IP</em> </p>
+<h3 id="LoadBalancer-类型"><a href="#LoadBalancer-类型" class="headerlink" title="LoadBalancer 类型"></a>LoadBalancer 类型</h3><p>通过 NodePort 类型的使用介绍，已经了解可以通过 <code>NodeIP:NodePort</code> 方式来服务访问，而且 NodeIP 可以是集群内任意任何一台的 IP。而 LoadBalancer 则是在外层附加的负载均衡器，使请求能分摊到集群内各个节点上。</p>
+<h4 id="MetalLB-搭建"><a href="#MetalLB-搭建" class="headerlink" title="MetalLB 搭建"></a>MetalLB 搭建</h4><p>要使用 LoadBalancer 类型会稍微复杂一些，并不能只单纯的修改配置文件，因为一般自建的 Kubernetes 集群默认并不支持 LoadBalancer，所以它需要借助外部的负载均衡器来实现，这里将使用 <a href="https://metallb.universe.tf/" target="_blank" rel="noopener">MetalLB</a> (<em>v0.9.3</em>)，安装请参考 <a href="https://metallb.universe.tf/installation/#installation-by-manifest" target="_blank" rel="noopener">Installation By Manifest</a> ，步骤不复杂，但需要确保依赖镜像下载顺利，完成后查看 Pod 状态：</p>
+<p><img src="/img/aspnet-k8s-service/metalLBPod.png" alt></p>
+<p>另外需要为 Metallb 设置地址池以及协议相关配置，Metallb 会监控服务对象的变化，当有新的 LoadBalancer 服务运行，但没有可申请的负载均衡器时，就会从配置的地址池中分配一个给该服务。这里以 Metallb Layer2 工作模式为例（<em>Metallb 支持 Layer2/BGP 两种工作模式</em>），创建一个资源类型为 ConfigMap 的配置文件 <code>metallb-layer2-config.yaml</code>，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: ConfigMap</span><br><span class="line">metadata:</span><br><span class="line">  namespace: metallb-system</span><br><span class="line">  name: config</span><br><span class="line">data:</span><br><span class="line">  config: |</span><br><span class="line">    address-pools:</span><br><span class="line">    - name: default</span><br><span class="line">      protocol: layer2</span><br><span class="line">      addresses:</span><br><span class="line">      - 192.168.124.200-192.168.124.210  # IP 地址范围需与自己的集群环境对应</span><br></pre></td></tr></table></figure>
+<p>Layer2  工作模式原理图：</p>
+<p><img src="/img/aspnet-k8s-service/metallb.jpg" alt></p>
+<h4 id="配置修改"><a href="#配置修改" class="headerlink" title="配置修改"></a>配置修改</h4><p>有了以上的准备工作后，只需要在 Service 配置文件将 type 修改为 LoadBalancer ，然后重新创建 Service，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: k8sdemo-service</span><br><span class="line">spec:</span><br><span class="line">  ports:</span><br><span class="line">  - port: 80</span><br><span class="line">    targetPort: 80</span><br><span class="line">  selector:</span><br><span class="line">    name: k8sdemo</span><br><span class="line">  type: LoadBalancer</span><br></pre></td></tr></table></figure>
+<p><img src="/img/aspnet-k8s-service/loadBalancerService.png" alt></p>
+<p>从上图可以看出，TYPE 已是 LoadBalancer，另外 EXTERNAL-IP 被分配为地址池中的 <code>192.168.124.200</code>，接下来就可以通过这个 IP 进行访问了，结果如下：</p>
+<p><img src="/img/aspnet-k8s-service/loadBalancerCurl.png" alt></p>
+<h3 id="ExternalName"><a href="#ExternalName" class="headerlink" title="ExternalName"></a>ExternalName</h3><p>ExternalName 类型比较特殊，它没有 selector，也没有定义任何的端口， 对于运行在集群外部的服务，它通过返回该外部服务的别名这种方式来提供服务，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: k8sdemo-external-service</span><br><span class="line">spec:</span><br><span class="line">  type: ExternalName</span><br><span class="line">  externalName: mingdao.com</span><br></pre></td></tr></table></figure>
+<p>当访问 <code>k8sdemo-external-service.default.svc.cluster.local</code> 时，集群的 DNS 服务将返回值为 <code>mingdao.com</code> 的 CNAME 记录，访问这种类型的服务与其它的唯一不同的是重定向发生在 DNS 层，而且不会进行代理或转发。 </p>
+<p>进入 Kubernetes 集群的任意一个 Pod 中（必须是集群内部才可访问），如： <code>kubectl exec -it k8sdemo-deployment-68cb864ff6-fzzdq -- /bin/bash</code>，执行 <code>curl -L http://k8sdemo-external-service.default.svc.cluster.local/</code> 即会重定向请求到 <code>mingdao.com</code>，结果如下：</p>
+<p><img src="/img/aspnet-k8s-service/externalNameCurl.png" alt></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果对你有帮助就好</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/img/pay/wechatpay.png" alt="Beck Jin 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/img/pay/alipay.png" alt="Beck Jin 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C#</a>
+          
+            <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/10/aspnet-k8s-deployment/" rel="next" title=".NET Core + Kubernetes：Deployment">
+                <i class="fa fa-chevron-left"></i> .NET Core + Kubernetes：Deployment
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Beck Jin">
+            
+              <p class="site-author-name" itemprop="name">Beck Jin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/beckjin" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1798410296@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ClusterIP-类型"><span class="nav-number">1.</span> <span class="nav-text">ClusterIP 类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NodePort-类型"><span class="nav-number">2.</span> <span class="nav-text">NodePort 类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LoadBalancer-类型"><span class="nav-number">3.</span> <span class="nav-text">LoadBalancer 类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MetalLB-搭建"><span class="nav-number">3.1.</span> <span class="nav-text">MetalLB 搭建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置修改"><span class="nav-number">3.2.</span> <span class="nav-text">配置修改</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ExternalName"><span class="nav-number">4.</span> <span class="nav-text">ExternalName</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Beck Jin</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.min.css" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitment.browser.min.js" crossorigin="anonymous"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitment({
+            id: '1590227088000', 
+            owner: 'beckjin',
+            repo: 'beckjin.github.io',
+            
+            oauth: {
+            
+            
+                client_secret: 'f3317552363ce12638c39c095f521db7ecfcb46d',
+            
+                client_id: 'bee5c835ae9ab1ab1fc9'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("FCgGthOl6XN7xRjfK31raebD-gzGzoHsz", "20z736XSuGX562R2ky8uu4EU");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

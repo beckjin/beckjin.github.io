@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.beckjin.com/"/>
-  <updated>2020-05-10T09:38:14.201Z</updated>
+  <updated>2020-05-23T09:57:36.098Z</updated>
   <id>http://www.beckjin.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>.NET Core + Kubernetes：Service</title>
+    <link href="http://www.beckjin.com/2020/05/23/aspnet-k8s-service/"/>
+    <id>http://www.beckjin.com/2020/05/23/aspnet-k8s-service/</id>
+    <published>2020-05-23T09:44:48.000Z</published>
+    <updated>2020-05-23T09:57:36.098Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;通过 &lt;a href=&quot;http://beckjin.com/2020/05/10/aspnet-k8s-deployment/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;.NET Core + Kubernetes：Deployment&lt;/a&gt;
+        
+      
+    
+    </summary>
+    
+      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
+    
+    
+      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+    
+      <category term="Kubernetes" scheme="http://www.beckjin.com/tags/Kubernetes/"/>
+    
+  </entry>
   
   <entry>
     <title>.NET Core + Kubernetes：Deployment</title>
@@ -532,34 +560,6 @@
       <category term="ZooKeeper" scheme="http://www.beckjin.com/tags/ZooKeeper/"/>
     
       <category term="分布式锁" scheme="http://www.beckjin.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>.NET Core + Consul 服务注册与发现</title>
-    <link href="http://www.beckjin.com/2019/05/18/aspnet-consul-discovery/"/>
-    <id>http://www.beckjin.com/2019/05/18/aspnet-consul-discovery/</id>
-    <published>2019-05-18T15:41:37.000Z</published>
-    <updated>2019-12-29T14:13:57.417Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;Consul-介绍&quot;&gt;&lt;a href=&quot;#Consul-介绍&quot; class=&quot;headerlink&quot; title=&quot;Consul 介绍&quot;&gt;&lt;/a&gt;Consul
-        
-      
-    
-    </summary>
-    
-      <category term="微服务" scheme="http://www.beckjin.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
-    
-    
-      <category term="ASP.NET Core" scheme="http://www.beckjin.com/tags/ASP-NET-Core/"/>
-    
-      <category term="Consul" scheme="http://www.beckjin.com/tags/Consul/"/>
     
   </entry>
   
