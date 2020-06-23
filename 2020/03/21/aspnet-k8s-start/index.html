@@ -95,7 +95,7 @@
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-start/k8sdemoDockerhub.png">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-start/k8sApply.png">
 <meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-start/k8sPod.png">
-<meta property="og:updated_time" content="2020-03-28T04:31:49.178Z">
+<meta property="og:updated_time" content="2020-06-14T03:17:56.282Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content=".NET Core + Kubernetes：快速体验">
 <meta name="twitter:description" content="Kubernetes 是目前非常主流的容器编排工具，在应用创建、应用部署、应用扩容、应用更新等方面都非常的方便，而且在应用故障时，也可以快速自愈。所以基于微服务架构下的产品，了解 Kubernetes 的使用是非常必要的，我猜测很多人都曾经多次打算自己搭建 Kubernetes 环境，部署个服务试试效果，但却因为很多原因一次次从入门到放弃，这里应该有部分原因是因  Kubernetes 的入门成本">
@@ -377,7 +377,7 @@
 <ul>
 <li>kubeadm init 和 pod 网络插件只需要在 Master 节点操作；</li>
 <li>kubeadm init 中的 <code>--apiserver-advertise-address</code> 设置为内网地址；</li>
-<li>通过 <code>hostname k8s-master</code> 可修改 hostname 名称；</li>
+<li>通过 <code>hostnamectl set-hostname k8s-master</code> 可修改 hostname 名称；</li>
 </ul>
 <p>最终通过命令 <code>kubectl get nodes</code> 查看集群中各节点是否已全部 Ready。</p>
 <p><img src="/img/aspnet-k8s-start/nodes.png" alt></p>
@@ -572,7 +572,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-count">62</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
