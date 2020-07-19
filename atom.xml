@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.beckjin.com/"/>
-  <updated>2020-06-23T17:05:58.315Z</updated>
+  <updated>2020-07-19T06:43:35.045Z</updated>
   <id>http://www.beckjin.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ASP.NET Core 消息传递：MediatR</title>
+    <link href="http://www.beckjin.com/2020/07/19/aspnet-mediatr/"/>
+    <id>http://www.beckjin.com/2020/07/19/aspnet-mediatr/</id>
+    <published>2020-07-19T06:06:37.000Z</published>
+    <updated>2020-07-19T06:43:35.045Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;a href=&quot;https://github.com/jbogard/MediatR&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;MediatR&lt;/a&gt; 是参考中介者模式实现的一个 .NET
+        
+      
+    
+    </summary>
+    
+      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
+    
+    
+      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+    
+      <category term="MediatR" scheme="http://www.beckjin.com/tags/MediatR/"/>
+    
+  </entry>
   
   <entry>
     <title>.NET Core + Kubernetes：Volume</title>
@@ -531,32 +559,6 @@
       <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
     
       <category term="Java" scheme="http://www.beckjin.com/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Apollo 配置中心：分布式部署</title>
-    <link href="http://www.beckjin.com/2019/07/14/apollo-distributed/"/>
-    <id>http://www.beckjin.com/2019/07/14/apollo-distributed/</id>
-    <published>2019-07-14T12:23:51.000Z</published>
-    <updated>2019-12-29T13:43:10.475Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;a href=&quot;https://github.com/ctripcorp/apollo&quot; target=&quot;_blank&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="Apollo" scheme="http://www.beckjin.com/categories/Apollo/"/>
-    
-    
-      <category term="分布式" scheme="http://www.beckjin.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
   </entry>
   
