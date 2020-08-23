@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.beckjin.com/"/>
-  <updated>2020-08-01T13:27:38.929Z</updated>
+  <updated>2020-08-23T15:20:48.291Z</updated>
   <id>http://www.beckjin.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>.NET Core + Kubernetes：Helm</title>
+    <link href="http://www.beckjin.com/2020/08/23/aspnet-k8s-helm/"/>
+    <id>http://www.beckjin.com/2020/08/23/aspnet-k8s-helm/</id>
+    <published>2020-08-23T14:27:31.000Z</published>
+    <updated>2020-08-23T15:20:48.291Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;a href=&quot;https://helm.sh/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Helm&lt;/a&gt; 作为 Kubernetes 体系的包管理工具，已经逐渐成为了应用分发标准，在 .NET 开发中，可以理解为与 NuGet
+        
+      
+    
+    </summary>
+    
+      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
+    
+    
+      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+    
+      <category term="Kubernetes" scheme="http://www.beckjin.com/tags/Kubernetes/"/>
+    
+  </entry>
   
   <entry>
     <title>.NET Core + Ocelot：API 网关</title>
@@ -534,32 +562,6 @@
     
     
       <category term="VSIX" scheme="http://www.beckjin.com/tags/VSIX/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ASP.NET 自定义项目模板（一）：快速入门</title>
-    <link href="http://www.beckjin.com/2019/08/04/aspnet-template/"/>
-    <id>http://www.beckjin.com/2019/08/04/aspnet-template/</id>
-    <published>2019-08-04T13:43:05.000Z</published>
-    <updated>2019-12-29T13:43:48.520Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="ASP.NET" scheme="http://www.beckjin.com/categories/ASP-NET/"/>
-    
-    
-      <category term="Template" scheme="http://www.beckjin.com/tags/Template/"/>
     
   </entry>
   
