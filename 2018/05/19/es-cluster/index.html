@@ -85,25 +85,25 @@
 <meta name="keywords" content="Elasticsearch">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Elasticsearch 集群">
-<meta property="og:url" content="http://www.beckjin.com/2018/05/19/es-cluster/index.html">
+<meta property="og:url" content="https://www.beckjin.com/2018/05/19/es-cluster/index.html">
 <meta property="og:site_name" content="Beck&#39;s Blog">
 <meta property="og:description" content="Cluster 集群一个 Elasticsearch  集群由一个或多个节点（Node）组成，每个集群都有一个共同的集群名称作为标识。 Node 节点一个 Elasticsearch 实例即一个 Node，一台机器可以有多个实例，正常使用下每个实例应该会部署在不同的机器上。Elasticsearch 的配置文件中可以通过 node.master、node.data 来设置节点类型。 node.ma">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.beckjin.com/img/es-cluster/nodes.png">
-<meta property="og:image" content="http://www.beckjin.com/img/es-cluster/ping.png">
-<meta property="og:image" content="http://www.beckjin.com/img/es-cluster/cluster.png">
-<meta property="og:image" content="http://www.beckjin.com/img/es-cluster/head.png">
-<meta property="og:image" content="http://www.beckjin.com/img/es-cluster/head-test.png">
-<meta property="og:image" content="http://www.beckjin.com/img/es-cluster/head-node-shard.png">
-<meta property="og:image" content="http://www.beckjin.com/img/es-cluster/head-node-kill.png">
-<meta property="og:image" content="http://www.beckjin.com/img/es-cluster/head-node-kill2.png">
-<meta property="og:image" content="http://www.beckjin.com/img/es-cluster/head-index-node-1.png">
-<meta property="og:image" content="http://www.beckjin.com/img/es-cluster/head-node-types.png">
-<meta property="og:updated_time" content="2018-05-19T11:56:18.604Z">
+<meta property="og:image" content="https://www.beckjin.com/img/es-cluster/nodes.png">
+<meta property="og:image" content="https://www.beckjin.com/img/es-cluster/ping.png">
+<meta property="og:image" content="https://www.beckjin.com/img/es-cluster/cluster.png">
+<meta property="og:image" content="https://www.beckjin.com/img/es-cluster/head.png">
+<meta property="og:image" content="https://www.beckjin.com/img/es-cluster/head-test.png">
+<meta property="og:image" content="https://www.beckjin.com/img/es-cluster/head-node-shard.png">
+<meta property="og:image" content="https://www.beckjin.com/img/es-cluster/head-node-kill.png">
+<meta property="og:image" content="https://www.beckjin.com/img/es-cluster/head-node-kill2.png">
+<meta property="og:image" content="https://www.beckjin.com/img/es-cluster/head-index-node-1.png">
+<meta property="og:image" content="https://www.beckjin.com/img/es-cluster/head-node-types.png">
+<meta property="og:updated_time" content="2020-09-12T09:13:53.410Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Elasticsearch 集群">
 <meta name="twitter:description" content="Cluster 集群一个 Elasticsearch  集群由一个或多个节点（Node）组成，每个集群都有一个共同的集群名称作为标识。 Node 节点一个 Elasticsearch 实例即一个 Node，一台机器可以有多个实例，正常使用下每个实例应该会部署在不同的机器上。Elasticsearch 的配置文件中可以通过 node.master、node.data 来设置节点类型。 node.ma">
-<meta name="twitter:image" content="http://www.beckjin.com/img/es-cluster/nodes.png">
+<meta name="twitter:image" content="https://www.beckjin.com/img/es-cluster/nodes.png">
 
 
 
@@ -133,7 +133,7 @@
 
 
 
-  <link rel="canonical" href="http://www.beckjin.com/2018/05/19/es-cluster/">
+  <link rel="canonical" href="https://www.beckjin.com/2018/05/19/es-cluster/">
 
 
 
@@ -268,7 +268,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2018/05/19/es-cluster/">
+    <link itemprop="mainEntityOfPage" href="https://www.beckjin.com/2018/05/19/es-cluster/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
@@ -418,7 +418,7 @@
 <p><img src="/img/es-cluster/ping.png" alt="node1"></p>
 <p>当第二个master节点启动成功时，整个集群状态变为正常。<br><img src="/img/es-cluster/cluster.png" alt="node2"></p>
 <p>3个节点全部启动成功，通过 elasticsearch-head 插件查看集群状态，通过集群健康值：green，表示集群一切正常。目前集群内没有任何数据，所以看不出索引与分片的情况。</p>
-<p>Elasticsearch 一般会配合 Kibana + X-Pack 对集群数据分析、监控等，官方标配。这里使用了 elasticsearch-head 插件，一个比较小巧的工具。插件的安装方法请看：<a href="http://beckjin.com/2018/05/18/es-head/" target="_blank" rel="noopener">elasticsearch-head 安装介绍</a></p>
+<p>Elasticsearch 一般会配合 Kibana + X-Pack 对集群数据分析、监控等，官方标配。这里使用了 elasticsearch-head 插件，一个比较小巧的工具。插件的安装方法请看：<a href="https://beckjin.com/2018/05/18/es-head/" target="_blank" rel="noopener">elasticsearch-head 安装介绍</a></p>
 <p><img src="/img/es-cluster/head.png" alt="elasticsearch-head"></p>
 <p>添加测试数据：<br><img src="/img/es-cluster/head-test.png" alt="添加测试数据"><br><img src="/img/es-cluster/head-node-shard.png" alt="test索引分片分布"></p>
 <p>从截图可以看出，目前一共3个节点，一个索引 test，test 索引有5个主分片（边框加粗），5个复制分片（边框不加粗），分片会别均匀的分布到每个节点中。</p>
@@ -431,7 +431,7 @@
 <p>实际生产环境，每个节点可能设置不同的节点类型，我们在3个节点的基础上再增加两个节点，然后调整 node.master 和node.data 的值，最终设置为2个主节点，2个数据节点，1个客户端节点。</p>
 <p><img src="/img/es-cluster/head-node-types.png" alt="不同节点类型的集群"></p>
 <p>node1 和 node2 是具有主节点选举权限的节点，这里 node1 被选举为master节点。node3 和 node4 是数据节点，所以数据分片只会分配在这两个节点上。node5 是客户端节点，最终是对请求起到负载均衡的作用。</p>
-<p>如果是Linux环境下，启动可能没有这么顺利，可以参考 <a href="http://beckjin.com/2018/05/19/es-error-linux/" target="_blank" rel="noopener">Linux 环境下安装 elasticsearch 5.x、6.x 问题汇总</a> 。</p>
+<p>如果是Linux环境下，启动可能没有这么顺利，可以参考 <a href="https://beckjin.com/2018/05/19/es-error-linux/" target="_blank" rel="noopener">Linux 环境下安装 elasticsearch 5.x、6.x 问题汇总</a> 。</p>
 
       
     </div>

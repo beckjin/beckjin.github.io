@@ -85,35 +85,35 @@
 <meta name="keywords" content="C#,Kubernetes">
 <meta property="og:type" content="article">
 <meta property="og:title" content=".NET Core + Kubernetes：Volume">
-<meta property="og:url" content="http://www.beckjin.com/2020/06/24/aspnet-k8s-volume/index.html">
+<meta property="og:url" content="https://www.beckjin.com/2020/06/24/aspnet-k8s-volume/index.html">
 <meta property="og:site_name" content="Beck&#39;s Blog">
 <meta property="og:description" content="和 Docker 类似，Kubernetes 中也提供了  Volume 来实现数据卷挂载，但 Kubernetes 中 Volume 是基于 Pod，而不是容器，它可被 Pod 中多个容器共享，另外 Kubernetes 中提供比较丰富的 Volume 类型，如：emptyDir、hostPath、nfs、persistentVolumeClaim、downwardAPI、secret、conf">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-volume/emptyDirStructure.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-volume/emptyDirService.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-volume/emptyDirResult.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-volume/hostPathStructure.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-volume/hostPathService.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-volume/hostPathResult.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-volume/nfsStructure.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-volume/nfsMount.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-volume/nfsService.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-volume/nfsResult.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-volume/pvcStructure.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-volume/pvcMount.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-volume/pv.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-volume/pvc.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-volume/pvcService.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-volume/pvcResult.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-volume/configMapStructure.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-volume/configMap.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-volume/configMapService.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-k8s-volume/configMapResult.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-k8s-volume/emptyDirStructure.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-k8s-volume/emptyDirService.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-k8s-volume/emptyDirResult.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-k8s-volume/hostPathStructure.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-k8s-volume/hostPathService.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-k8s-volume/hostPathResult.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-k8s-volume/nfsStructure.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-k8s-volume/nfsMount.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-k8s-volume/nfsService.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-k8s-volume/nfsResult.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-k8s-volume/pvcStructure.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-k8s-volume/pvcMount.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-k8s-volume/pv.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-k8s-volume/pvc.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-k8s-volume/pvcService.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-k8s-volume/pvcResult.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-k8s-volume/configMapStructure.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-k8s-volume/configMap.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-k8s-volume/configMapService.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-k8s-volume/configMapResult.png">
 <meta property="og:updated_time" content="2020-06-23T17:05:58.315Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content=".NET Core + Kubernetes：Volume">
 <meta name="twitter:description" content="和 Docker 类似，Kubernetes 中也提供了  Volume 来实现数据卷挂载，但 Kubernetes 中 Volume 是基于 Pod，而不是容器，它可被 Pod 中多个容器共享，另外 Kubernetes 中提供比较丰富的 Volume 类型，如：emptyDir、hostPath、nfs、persistentVolumeClaim、downwardAPI、secret、conf">
-<meta name="twitter:image" content="http://www.beckjin.com/img/aspnet-k8s-volume/emptyDirStructure.png">
+<meta name="twitter:image" content="https://www.beckjin.com/img/aspnet-k8s-volume/emptyDirStructure.png">
 
 
 
@@ -143,7 +143,7 @@
 
 
 
-  <link rel="canonical" href="http://www.beckjin.com/2020/06/24/aspnet-k8s-volume/">
+  <link rel="canonical" href="https://www.beckjin.com/2020/06/24/aspnet-k8s-volume/">
 
 
 
@@ -278,7 +278,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2020/06/24/aspnet-k8s-volume/">
+    <link itemprop="mainEntityOfPage" href="https://www.beckjin.com/2020/06/24/aspnet-k8s-volume/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">

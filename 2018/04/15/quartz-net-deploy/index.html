@@ -85,18 +85,18 @@
 <meta name="keywords" content="C#,作业调度">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Quartz.NET 作业调度（五）：部署">
-<meta property="og:url" content="http://www.beckjin.com/2018/04/15/quartz-net-deploy/index.html">
+<meta property="og:url" content="https://www.beckjin.com/2018/04/15/quartz-net-deploy/index.html">
 <meta property="og:site_name" content="Beck&#39;s Blog">
 <meta property="og:description" content="目前 Quartz.NET 最新版本已经 3.0.4 ，从 3.0 开始已经支持 .NET Core，所以在 .NET 版本 和 部署环境 上都有更多的选择。下面分别介绍基于.NET Framework 的 Windows 环境部署 和 基于.NET Core 的 Linux 环境部署。 Windows在介绍 Windows 环境部署之前需要先阅读一下 Topshelf 秒建 Windows 服务">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.beckjin.com/img/quartz-net-deploy/wInstall.png">
-<meta property="og:image" content="http://www.beckjin.com/img/quartz-net-deploy/wResult.png">
-<meta property="og:image" content="http://www.beckjin.com/img/quartz-net-deploy/lResult.png">
-<meta property="og:updated_time" content="2019-12-29T13:44:35.806Z">
+<meta property="og:image" content="https://www.beckjin.com/img/quartz-net-deploy/wInstall.png">
+<meta property="og:image" content="https://www.beckjin.com/img/quartz-net-deploy/wResult.png">
+<meta property="og:image" content="https://www.beckjin.com/img/quartz-net-deploy/lResult.png">
+<meta property="og:updated_time" content="2020-09-12T09:14:17.950Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Quartz.NET 作业调度（五）：部署">
 <meta name="twitter:description" content="目前 Quartz.NET 最新版本已经 3.0.4 ，从 3.0 开始已经支持 .NET Core，所以在 .NET 版本 和 部署环境 上都有更多的选择。下面分别介绍基于.NET Framework 的 Windows 环境部署 和 基于.NET Core 的 Linux 环境部署。 Windows在介绍 Windows 环境部署之前需要先阅读一下 Topshelf 秒建 Windows 服务">
-<meta name="twitter:image" content="http://www.beckjin.com/img/quartz-net-deploy/wInstall.png">
+<meta name="twitter:image" content="https://www.beckjin.com/img/quartz-net-deploy/wInstall.png">
 
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <link rel="canonical" href="http://www.beckjin.com/2018/04/15/quartz-net-deploy/">
+  <link rel="canonical" href="https://www.beckjin.com/2018/04/15/quartz-net-deploy/">
 
 
 
@@ -261,7 +261,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2018/04/15/quartz-net-deploy/">
+    <link itemprop="mainEntityOfPage" href="https://www.beckjin.com/2018/04/15/quartz-net-deploy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
@@ -362,7 +362,7 @@
 
       
         <p>目前 Quartz.NET 最新版本已经 3.0.4 ，从 3.0 开始已经支持 .NET Core，所以在 .NET 版本 和 部署环境 上都有更多的选择。下面分别介绍基于.NET Framework 的 Windows 环境部署 和 基于.NET Core 的 Linux 环境部署。</p>
-<h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><p>在介绍 Windows 环境部署之前需要先阅读一下 <a href="http://beckjin.com/2018/04/08/topshelf/" target="_blank" rel="noopener">Topshelf 秒建 Windows 服务</a>。通过 Topshelf 我们非常快速部署一个 Windows 服务。</p>
+<h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><p>在介绍 Windows 环境部署之前需要先阅读一下 <a href="https://beckjin.com/2018/04/08/topshelf/" target="_blank" rel="noopener">Topshelf 秒建 Windows 服务</a>。通过 Topshelf 我们非常快速部署一个 Windows 服务。</p>
 <p>定义 TestSchedule 如下，代码功能和之前的 Demo 没什么区别，只是将里 Start 和 Shutdown 定义在了方法中。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">public class TestSchedule</span><br><span class="line">&#123;</span><br><span class="line">  readonly IScheduler scheduler = null;</span><br><span class="line"></span><br><span class="line">  public TestSchedule()</span><br><span class="line">  &#123;</span><br><span class="line">    // 创建作业调度器</span><br><span class="line">    scheduler = new StdSchedulerFactory().GetScheduler().Result;</span><br><span class="line">    var jobDataMap = new JobDataMap();</span><br><span class="line">    jobDataMap.Add(&quot;times&quot;, &quot;1&quot;);</span><br><span class="line"></span><br><span class="line">    // 创建一个作业</span><br><span class="line">    IJobDetail job = JobBuilder.Create&lt;TestJob&gt;()</span><br><span class="line">      .WithIdentity(&quot;job1&quot;, &quot;jobGroup1&quot;)</span><br><span class="line">      .UsingJobData(jobDataMap)</span><br><span class="line">      .Build();</span><br><span class="line"></span><br><span class="line">    // 创建一个触发器</span><br><span class="line">    ITrigger trigger = TriggerBuilder.Create()</span><br><span class="line">      .WithIdentity(&quot;trigger1&quot;, &quot;triggerGroup1&quot;)</span><br><span class="line">      .StartNow()</span><br><span class="line">      .WithSimpleSchedule(x =&gt; x</span><br><span class="line">        .WithIntervalInSeconds(1)</span><br><span class="line">        .WithRepeatCount(10))</span><br><span class="line">      .Build();</span><br><span class="line"></span><br><span class="line">    scheduler.ScheduleJob(job, trigger).Wait();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public void Start()</span><br><span class="line">  &#123;</span><br><span class="line">    scheduler.Start().Wait();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public void Stop()</span><br><span class="line">  &#123;</span><br><span class="line">    scheduler.Shutdown().Wait();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>Main 方法中添加如下设置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">static void Main(string[] args)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">  // 配置和运行宿主服务</span><br><span class="line">  HostFactory.Run(x =&gt;</span><br><span class="line">  &#123;</span><br><span class="line">    // 指定服务类型。这里设置为 TestSchedule</span><br><span class="line">    x.Service&lt;TestSchedule&gt;(s =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">      // 通过 new TestSchedule() 构建一个服务实例 </span><br><span class="line">      s.ConstructUsing(name =&gt; new TestSchedule());</span><br><span class="line">      // 当服务启动后执行什么</span><br><span class="line">      s.WhenStarted(tc =&gt; tc.Start());</span><br><span class="line">      // 当服务停止后执行什么</span><br><span class="line">      s.WhenStopped(tc =&gt; tc.Stop());</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    // 服务用本地系统账号来运行</span><br><span class="line">    x.RunAsLocalSystem();</span><br><span class="line"></span><br><span class="line">    // 服务描述信息</span><br><span class="line">    x.SetDescription(&quot;TestSchedule&quot;);</span><br><span class="line">    // 服务显示名称</span><br><span class="line">    x.SetDisplayName(&quot;TestScheduleService&quot;);</span><br><span class="line">    // 服务名称</span><br><span class="line">    x.SetServiceName(&quot;TestScheduleService&quot;);</span><br><span class="line"></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>开发环境下直接通过 F5 运行调试。如果希望部署成服务，只需要在 bin 目录下执行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xxx.exe install</span><br></pre></td></tr></table></figure></p>
@@ -384,7 +384,7 @@
 <p><img src="/img/quartz-net-deploy/lResult.png" alt="执行结果"></p>
 <h3 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h3><ul>
 <li><a href="https://www.quartz-scheduler.net/" target="_blank" rel="noopener">Quartz.NET Documentation</a></li>
-<li><a href="http://beckjin.com/2018/04/08/topshelf/" target="_blank" rel="noopener">Topshelf 秒建 Windows 服务</a></li>
+<li><a href="https://beckjin.com/2018/04/08/topshelf/" target="_blank" rel="noopener">Topshelf 秒建 Windows 服务</a></li>
 <li><a href="https://github.com/beckjin/QuartzNetSamples/tree/master/QuartzNetDeploy" target="_blank" rel="noopener">案例 Demo-QuartzNetDeploy</a></li>
 </ul>
 

@@ -85,20 +85,20 @@
 <meta name="keywords" content="C#,Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Apollo 配置中心：客户端接入">
-<meta property="og:url" content="http://www.beckjin.com/2019/07/21/apollo-client/index.html">
+<meta property="og:url" content="https://www.beckjin.com/2019/07/21/apollo-client/index.html">
 <meta property="og:site_name" content="Beck&#39;s Blog">
 <meta property="og:description" content="通过上篇文章 分布式部署 的介绍 ，接下来就可以在程序中接入 Apollo 客户端进行调用，这边文章主要介绍在 Java 和 .NET Core 中如何接入，更多可参考 其它语言客户端接入指南。 创建应用在客户端接入 Apollo 之前，先在  Apollo 管理后台创建一个 demo-apollo 应用，并添加配置项，如下：  创建 Namespace在 Apollo 中，还可以通过建 Name">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.beckjin.com/img/apollo-client/demoApollo.png">
-<meta property="og:image" content="http://www.beckjin.com/img/apollo-client/namespace.png">
-<meta property="og:image" content="http://www.beckjin.com/img/apollo-client/wmOptions.png">
-<meta property="og:image" content="http://www.beckjin.com/img/apollo-client/javaConfigData.png">
-<meta property="og:image" content="http://www.beckjin.com/img/apollo-client/netConfigData.png">
-<meta property="og:updated_time" content="2019-12-29T13:43:12.556Z">
+<meta property="og:image" content="https://www.beckjin.com/img/apollo-client/demoApollo.png">
+<meta property="og:image" content="https://www.beckjin.com/img/apollo-client/namespace.png">
+<meta property="og:image" content="https://www.beckjin.com/img/apollo-client/wmOptions.png">
+<meta property="og:image" content="https://www.beckjin.com/img/apollo-client/javaConfigData.png">
+<meta property="og:image" content="https://www.beckjin.com/img/apollo-client/netConfigData.png">
+<meta property="og:updated_time" content="2020-09-12T09:13:13.920Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Apollo 配置中心：客户端接入">
 <meta name="twitter:description" content="通过上篇文章 分布式部署 的介绍 ，接下来就可以在程序中接入 Apollo 客户端进行调用，这边文章主要介绍在 Java 和 .NET Core 中如何接入，更多可参考 其它语言客户端接入指南。 创建应用在客户端接入 Apollo 之前，先在  Apollo 管理后台创建一个 demo-apollo 应用，并添加配置项，如下：  创建 Namespace在 Apollo 中，还可以通过建 Name">
-<meta name="twitter:image" content="http://www.beckjin.com/img/apollo-client/demoApollo.png">
+<meta name="twitter:image" content="https://www.beckjin.com/img/apollo-client/demoApollo.png">
 
 
 
@@ -128,7 +128,7 @@
 
 
 
-  <link rel="canonical" href="http://www.beckjin.com/2019/07/21/apollo-client/">
+  <link rel="canonical" href="https://www.beckjin.com/2019/07/21/apollo-client/">
 
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2019/07/21/apollo-client/">
+    <link itemprop="mainEntityOfPage" href="https://www.beckjin.com/2019/07/21/apollo-client/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
@@ -363,13 +363,13 @@
       
 
       
-        <p>通过上篇文章 <a href="http://beckjin.com/2019/07/14/apollo-distributed/" target="_blank" rel="noopener">分布式部署</a> 的介绍 ，接下来就可以在程序中接入 Apollo 客户端进行调用，这边文章主要介绍在 Java 和 .NET Core 中如何接入，更多可参考 <a href="https://github.com/ctripcorp/apollo/wiki/%E5%85%B6%E5%AE%83%E8%AF%AD%E8%A8%80%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97" target="_blank" rel="noopener">其它语言客户端接入指南</a>。</p>
+        <p>通过上篇文章 <a href="https://beckjin.com/2019/07/14/apollo-distributed/" target="_blank" rel="noopener">分布式部署</a> 的介绍 ，接下来就可以在程序中接入 Apollo 客户端进行调用，这边文章主要介绍在 Java 和 .NET Core 中如何接入，更多可参考 <a href="https://github.com/ctripcorp/apollo/wiki/%E5%85%B6%E5%AE%83%E8%AF%AD%E8%A8%80%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97" target="_blank" rel="noopener">其它语言客户端接入指南</a>。</p>
 <h3 id="创建应用"><a href="#创建应用" class="headerlink" title="创建应用"></a>创建应用</h3><p>在客户端接入 Apollo 之前，先在  Apollo 管理后台创建一个 <code>demo-apollo</code> 应用，并添加配置项，如下：</p>
 <p><img src="/img/apollo-client/demoApollo.png" alt="demo-apollo 配置信息"></p>
 <h3 id="创建-Namespace"><a href="#创建-Namespace" class="headerlink" title="创建 Namespace"></a>创建 Namespace</h3><p>在 Apollo 中，还可以通过建 Namespace 供应用进行关联使用。比如：有 N 个服务，每个服务有自己的配置信息，那就需要在 Apollo 中建 N 个应用，每个服务引用对应的应用配置，但有的配置可能是所有或部分服务都需要的，这时候就可以考虑创建一个公共的 Namespace 配置，需要这些配置信息的应用引用此 Namespace 即可。</p>
 <p>通过应用右侧的 <strong>添加 Namespace</strong> 或者顶部的 <strong>管理员工具</strong> 进行 Namespace 的创建，然后在 Namespace 中添加配置项。</p>
 <p><img src="/img/apollo-client/namespace.png" alt="namespace"></p>
-<h3 id="nginx-代理-Meta-Server"><a href="#nginx-代理-Meta-Server" class="headerlink" title="nginx 代理 Meta Server"></a>nginx 代理 Meta Server</h3><p>在 <a href="http://beckjin.com/2019/07/14/apollo-distributed/" target="_blank" rel="noopener">分布式部署</a> 介绍中启动了两个 Meta Server 实例，为了接下来客户端配置 Meta Server 方便（<em>测试下来 .NET 下并不支持逗号分隔的方式</em>），通过 nginx 做一层代理（<em>nginx 只是一种选择</em>），后面可直接使用 <code>http://apollo.beckjin.com:8888</code>。</p>
+<h3 id="nginx-代理-Meta-Server"><a href="#nginx-代理-Meta-Server" class="headerlink" title="nginx 代理 Meta Server"></a>nginx 代理 Meta Server</h3><p>在 <a href="https://beckjin.com/2019/07/14/apollo-distributed/" target="_blank" rel="noopener">分布式部署</a> 介绍中启动了两个 Meta Server 实例，为了接下来客户端配置 Meta Server 方便（<em>测试下来 .NET 下并不支持逗号分隔的方式</em>），通过 nginx 做一层代理（<em>nginx 只是一种选择</em>），后面可直接使用 <code>http://apollo.beckjin.com:8888</code>。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">upstream apollo-server&#123;</span><br><span class="line">  server 192.168.199.133:8080;</span><br><span class="line">  server 192.168.199.133:8081;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">  listen       8888;</span><br><span class="line">  # 已在本地 hosts 中添加： 127.0.0.1 apollo.beckjin.com</span><br><span class="line">  server_name  apollo.beckjin.com;</span><br><span class="line"></span><br><span class="line">  location / &#123;</span><br><span class="line">    proxy_pass http://apollo-server;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><ol>
 <li>创建一个 Spring Boot 项目，添加 <code>Spring Web Starter</code> 依赖</li>

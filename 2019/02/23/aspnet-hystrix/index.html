@@ -85,25 +85,25 @@
 <meta name="keywords" content="ASP.NET Core,Steeltoe,Spring Cloud,Hystrix">
 <meta property="og:type" content="article">
 <meta property="og:title" content=".NET Core + Spring Cloud：熔断降级">
-<meta property="og:url" content="http://www.beckjin.com/2019/02/23/aspnet-hystrix/index.html">
+<meta property="og:url" content="https://www.beckjin.com/2019/02/23/aspnet-hystrix/index.html">
 <meta property="og:site_name" content="Beck&#39;s Blog">
 <meta property="og:description" content="在微服务架构下，服务之间彼此隔离，服务之间的调用通过网络请求，在众多服务中，可能因为网络或服务本身的原因引起某些接口异常是很常见的现象，接口超时或报错在实际情况下偶发也属正常，但如果短时间内不断的出现并积压，就可能引起服务崩溃。 Hystrix 是 Spring Cloud 中的核心组件，它提供了熔断、隔离、降级、请求缓存、监控等功能，能够在依赖的服务出现问题时保证系统依然可用。 如下图，当 De">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-hystrix/services.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-hystrix/eureka1.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-hystrix/eureka2.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-hystrix/hystrixDashboard.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-hystrix/hystrixDashboardStream.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-hystrix/success.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-hystrix/timeout.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-hystrix/fallback.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-hystrix/shortCircuited.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-hystrix/failure.png">
-<meta property="og:updated_time" content="2019-12-29T14:14:11.904Z">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-hystrix/services.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-hystrix/eureka1.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-hystrix/eureka2.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-hystrix/hystrixDashboard.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-hystrix/hystrixDashboardStream.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-hystrix/success.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-hystrix/timeout.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-hystrix/fallback.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-hystrix/shortCircuited.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-hystrix/failure.png">
+<meta property="og:updated_time" content="2020-09-12T09:13:13.906Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content=".NET Core + Spring Cloud：熔断降级">
 <meta name="twitter:description" content="在微服务架构下，服务之间彼此隔离，服务之间的调用通过网络请求，在众多服务中，可能因为网络或服务本身的原因引起某些接口异常是很常见的现象，接口超时或报错在实际情况下偶发也属正常，但如果短时间内不断的出现并积压，就可能引起服务崩溃。 Hystrix 是 Spring Cloud 中的核心组件，它提供了熔断、隔离、降级、请求缓存、监控等功能，能够在依赖的服务出现问题时保证系统依然可用。 如下图，当 De">
-<meta name="twitter:image" content="http://www.beckjin.com/img/aspnet-hystrix/services.png">
+<meta name="twitter:image" content="https://www.beckjin.com/img/aspnet-hystrix/services.png">
 
 
 
@@ -133,7 +133,7 @@
 
 
 
-  <link rel="canonical" href="http://www.beckjin.com/2019/02/23/aspnet-hystrix/">
+  <link rel="canonical" href="https://www.beckjin.com/2019/02/23/aspnet-hystrix/">
 
 
 
@@ -268,7 +268,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2019/02/23/aspnet-hystrix/">
+    <link itemprop="mainEntityOfPage" href="https://www.beckjin.com/2019/02/23/aspnet-hystrix/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
@@ -372,7 +372,7 @@
 <p><a href="https://github.com/Netflix/Hystrix" target="_blank" rel="noopener">Hystrix</a> 是 Spring Cloud 中的核心组件，它提供了熔断、隔离、降级、请求缓存、监控等功能，能够在依赖的服务出现问题时保证系统依然可用。</p>
 <p>如下图，当 Dependenccy I 发生故障时，通过 Hystrix 的配置策略决定作出何种响应，如限流拒绝请求、接口异常超过阈值快速返回失败、接口超时发起重试等。</p>
 <p><img src="/img/aspnet-hystrix/services.png" alt="services"></p>
-<h3 id="创建-NET-Core-Hystrix-服务"><a href="#创建-NET-Core-Hystrix-服务" class="headerlink" title="创建 .NET Core Hystrix 服务"></a>创建 .NET Core Hystrix 服务</h3><p>基于 <a href="http://beckjin.com/2019/01/26/aspnet-zuul/" target="_blank" rel="noopener">.NET Core + Spring Cloud：API 网关</a> 的所有服务，对 client-service 进行熔断降级测试。</p>
+<h3 id="创建-NET-Core-Hystrix-服务"><a href="#创建-NET-Core-Hystrix-服务" class="headerlink" title="创建 .NET Core Hystrix 服务"></a>创建 .NET Core Hystrix 服务</h3><p>基于 <a href="https://beckjin.com/2019/01/26/aspnet-zuul/" target="_blank" rel="noopener">.NET Core + Spring Cloud：API 网关</a> 的所有服务，对 client-service 进行熔断降级测试。</p>
 <p><img src="/img/aspnet-hystrix/eureka1.png" alt="eureka"></p>
 <p>修改 client-service ：</p>
 <ol>

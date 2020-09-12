@@ -85,17 +85,17 @@
 <meta name="keywords" content="C#">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Polly 故障处理（二）： 熔断策略">
-<meta property="og:url" content="http://www.beckjin.com/2018/06/30/polly-circuit-breaker/index.html">
+<meta property="og:url" content="https://www.beckjin.com/2018/06/30/polly-circuit-breaker/index.html">
 <meta property="og:site_name" content="Beck&#39;s Blog">
 <meta property="og:description" content="熔断策略（Circuit-breaker）如果调用某个目标服务出现过多超时、异常等情况，可以采取一定时间内熔断该服务的调用，熔断期间的请求将不再继续调用目标服务，而是直接返回，节约资源，提高服务的稳定性，熔断周期结束后如果目标服务情况好转则恢复调用。 注意：为了服务的稳定性，在执行需要多次 Retry（重试策略）的情况下，最好组合熔断策略，预防可能存在的风险。 熔断状态  打开（Open） 熔断器">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.beckjin.com/img/polly-circuit-breaker/status.png">
-<meta property="og:image" content="http://www.beckjin.com/img/polly-circuit-breaker/result.png">
-<meta property="og:updated_time" content="2019-12-29T13:44:19.430Z">
+<meta property="og:image" content="https://www.beckjin.com/img/polly-circuit-breaker/status.png">
+<meta property="og:image" content="https://www.beckjin.com/img/polly-circuit-breaker/result.png">
+<meta property="og:updated_time" content="2020-09-12T09:14:10.333Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Polly 故障处理（二）： 熔断策略">
 <meta name="twitter:description" content="熔断策略（Circuit-breaker）如果调用某个目标服务出现过多超时、异常等情况，可以采取一定时间内熔断该服务的调用，熔断期间的请求将不再继续调用目标服务，而是直接返回，节约资源，提高服务的稳定性，熔断周期结束后如果目标服务情况好转则恢复调用。 注意：为了服务的稳定性，在执行需要多次 Retry（重试策略）的情况下，最好组合熔断策略，预防可能存在的风险。 熔断状态  打开（Open） 熔断器">
-<meta name="twitter:image" content="http://www.beckjin.com/img/polly-circuit-breaker/status.png">
+<meta name="twitter:image" content="https://www.beckjin.com/img/polly-circuit-breaker/status.png">
 
 
 
@@ -125,7 +125,7 @@
 
 
 
-  <link rel="canonical" href="http://www.beckjin.com/2018/06/30/polly-circuit-breaker/">
+  <link rel="canonical" href="https://www.beckjin.com/2018/06/30/polly-circuit-breaker/">
 
 
 
@@ -260,7 +260,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2018/06/30/polly-circuit-breaker/">
+    <link itemprop="mainEntityOfPage" href="https://www.beckjin.com/2018/06/30/polly-circuit-breaker/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
@@ -361,7 +361,7 @@
 
       
         <h3 id="熔断策略（Circuit-breaker）"><a href="#熔断策略（Circuit-breaker）" class="headerlink" title="熔断策略（Circuit-breaker）"></a>熔断策略（Circuit-breaker）</h3><p>如果调用某个目标服务出现过多超时、异常等情况，可以采取一定时间内熔断该服务的调用，熔断期间的请求将不再继续调用目标服务，而是直接返回，节约资源，提高服务的稳定性，熔断周期结束后如果目标服务情况好转则恢复调用。</p>
-<p><strong>注意：</strong>为了服务的稳定性，在执行需要多次 Retry（<a href="http://beckjin.com/2018/05/14/polly-retry/" target="_blank" rel="noopener">重试策略</a>）的情况下，最好组合熔断策略，预防可能存在的风险。</p>
+<p><strong>注意：</strong>为了服务的稳定性，在执行需要多次 Retry（<a href="https://beckjin.com/2018/05/14/polly-retry/" target="_blank" rel="noopener">重试策略</a>）的情况下，最好组合熔断策略，预防可能存在的风险。</p>
 <h4 id="熔断状态"><a href="#熔断状态" class="headerlink" title="熔断状态"></a>熔断状态</h4><p><img src="/img/polly-circuit-breaker/status.png" alt="熔断状态切换流程"></p>
 <ol>
 <li>打开（Open）<blockquote>

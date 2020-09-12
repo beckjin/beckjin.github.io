@@ -85,23 +85,23 @@
 <meta name="keywords" content="Kafka">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kafka 集群">
-<meta property="og:url" content="http://www.beckjin.com/2018/11/18/kafka-cluster/index.html">
+<meta property="og:url" content="https://www.beckjin.com/2018/11/18/kafka-cluster/index.html">
 <meta property="og:site_name" content="Beck&#39;s Blog">
 <meta property="og:description" content="Kafka 是一个分布式消息系统，具有高水平扩展和高吞吐量的特点。在Kafka 集群中，没有 “中心主节点” 的概念，集群中所有的节点都是对等的。  Kafka 几大概念Topic（主题）Kafka 中可将消息分类，每一类的消息称为一个 Topic，消费者可以对不同的 Topic 进行不同的处理。 Broker（代理）每个 Broker 即一个 Kafka 服务实例，多个 Broker 构成一个">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.beckjin.com/img/kafka-cluster/kafka.png">
-<meta property="og:image" content="http://www.beckjin.com/img/kafka-cluster/appendLog.png">
-<meta property="og:image" content="http://www.beckjin.com/img/kafka-cluster/kafkaClusterArchitecture.png">
-<meta property="og:image" content="http://www.beckjin.com/img/kafka-cluster/zookeeperDir.png">
-<meta property="og:image" content="http://www.beckjin.com/img/kafka-cluster/startZookeeperCluster.png">
-<meta property="og:image" content="http://www.beckjin.com/img/kafka-cluster/kafkaDir.png">
-<meta property="og:image" content="http://www.beckjin.com/img/kafka-cluster/startKafkaCluster.png">
-<meta property="og:image" content="http://www.beckjin.com/img/kafka-cluster/testResult.png">
-<meta property="og:updated_time" content="2018-12-04T00:10:19.661Z">
+<meta property="og:image" content="https://www.beckjin.com/img/kafka-cluster/kafka.png">
+<meta property="og:image" content="https://www.beckjin.com/img/kafka-cluster/appendLog.png">
+<meta property="og:image" content="https://www.beckjin.com/img/kafka-cluster/kafkaClusterArchitecture.png">
+<meta property="og:image" content="https://www.beckjin.com/img/kafka-cluster/zookeeperDir.png">
+<meta property="og:image" content="https://www.beckjin.com/img/kafka-cluster/startZookeeperCluster.png">
+<meta property="og:image" content="https://www.beckjin.com/img/kafka-cluster/kafkaDir.png">
+<meta property="og:image" content="https://www.beckjin.com/img/kafka-cluster/startKafkaCluster.png">
+<meta property="og:image" content="https://www.beckjin.com/img/kafka-cluster/testResult.png">
+<meta property="og:updated_time" content="2020-09-12T09:14:05.477Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kafka 集群">
 <meta name="twitter:description" content="Kafka 是一个分布式消息系统，具有高水平扩展和高吞吐量的特点。在Kafka 集群中，没有 “中心主节点” 的概念，集群中所有的节点都是对等的。  Kafka 几大概念Topic（主题）Kafka 中可将消息分类，每一类的消息称为一个 Topic，消费者可以对不同的 Topic 进行不同的处理。 Broker（代理）每个 Broker 即一个 Kafka 服务实例，多个 Broker 构成一个">
-<meta name="twitter:image" content="http://www.beckjin.com/img/kafka-cluster/kafka.png">
+<meta name="twitter:image" content="https://www.beckjin.com/img/kafka-cluster/kafka.png">
 
 
 
@@ -131,7 +131,7 @@
 
 
 
-  <link rel="canonical" href="http://www.beckjin.com/2018/11/18/kafka-cluster/">
+  <link rel="canonical" href="https://www.beckjin.com/2018/11/18/kafka-cluster/">
 
 
 
@@ -266,7 +266,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2018/11/18/kafka-cluster/">
+    <link itemprop="mainEntityOfPage" href="https://www.beckjin.com/2018/11/18/kafka-cluster/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
@@ -371,7 +371,7 @@
 <h3 id="Kafka-几大概念"><a href="#Kafka-几大概念" class="headerlink" title="Kafka 几大概念"></a>Kafka 几大概念</h3><h4 id="Topic（主题）"><a href="#Topic（主题）" class="headerlink" title="Topic（主题）"></a>Topic（主题）</h4><p>Kafka 中可将消息分类，每一类的消息称为一个 Topic，消费者可以对不同的 Topic 进行不同的处理。</p>
 <h4 id="Broker（代理）"><a href="#Broker（代理）" class="headerlink" title="Broker（代理）"></a>Broker（代理）</h4><p>每个 Broker 即一个 Kafka 服务实例，多个 Broker 构成一个 Kafka 集群，生产者发布的消息将保存在 Broker 中，消费者将从 Broker 中拉取消息进行消费。</p>
 <h4 id="Producer（生产者）"><a href="#Producer（生产者）" class="headerlink" title="Producer（生产者）"></a>Producer（生产者）</h4><p>负责生产消息并发送给 Broker 。</p>
-<h4 id="Consumer（生产者）"><a href="#Consumer（生产者）" class="headerlink" title="Consumer（生产者）"></a>Consumer（生产者）</h4><p>负责消费 Broker 中 Topic 消息，每个 Consumer  实例归属于一个 Consumer Group <a href="http://beckjin.com/2018/07/15/kafka-consumer/" target="_blank" rel="noopener">查看更多介绍</a></p>
+<h4 id="Consumer（生产者）"><a href="#Consumer（生产者）" class="headerlink" title="Consumer（生产者）"></a>Consumer（生产者）</h4><p>负责消费 Broker 中 Topic 消息，每个 Consumer  实例归属于一个 Consumer Group <a href="https://beckjin.com/2018/07/15/kafka-consumer/" target="_blank" rel="noopener">查看更多介绍</a></p>
 <h4 id="Partition（分区）"><a href="#Partition（分区）" class="headerlink" title="Partition（分区）"></a>Partition（分区）</h4><p>Partition 是 Kafka 中比较特色的部分，一个 Topic 可以分为多个 Partition，每个 Partition 是一个有序的队列，Partition 中的每条消息都存在一个有序的偏移量（Offest） ，同一个 Consumer Group 中，只有一个  Consumer 实例可消费某个 Partition 的消息。</p>
 <h3 id="Kafka-持久化"><a href="#Kafka-持久化" class="headerlink" title="Kafka 持久化"></a>Kafka 持久化</h3><p>每个 Topic 将消息分成多 Partition，每个 Partition 在存储层面是 append log 文件。任何发布到此 Partition 的消息都会被直接追加到 log 文件的尾部，每条消息在文件中的位置称为 Offest（偏移量），Partition 是以文件的形式存储在文件系统中，log 文件根据 Broker 中的配置保留一定时间后删除来释放磁盘空间。</p>
 <p><img src="/img/kafka-cluster/appendLog.png" alt="append log"></p>

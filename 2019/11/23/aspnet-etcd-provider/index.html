@@ -85,18 +85,18 @@
 <meta name="keywords" content="C#,etcd">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ASP.NET Core etcd 配置源">
-<meta property="og:url" content="http://www.beckjin.com/2019/11/23/aspnet-etcd-provider/index.html">
+<meta property="og:url" content="https://www.beckjin.com/2019/11/23/aspnet-etcd-provider/index.html">
 <meta property="og:site_name" content="Beck&#39;s Blog">
 <meta property="og:description" content="etcd 是一个高可用的 Key/Value 存储系统，主要用于共享配置和服务发现，和目前比较主流的配置中心（如：Spring Cloud Config、Apollo、Consul、Nacos）、注册中心（如：Zookeeper、Eureka、Consul、Nacos）功能上有很多相似之处，关于各框架之间的对比可以网上搜索。 ectd 的搭建不是本文的重点，本文将基于 ectd v3 版本来测试，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-etcd-provider/etcdManage.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-etcd-provider/etcdData.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-etcd-provider/result.png">
-<meta property="og:updated_time" content="2019-12-29T14:11:55.669Z">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-etcd-provider/etcdManage.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-etcd-provider/etcdData.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-etcd-provider/result.png">
+<meta property="og:updated_time" content="2020-09-12T09:13:13.906Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ASP.NET Core etcd 配置源">
 <meta name="twitter:description" content="etcd 是一个高可用的 Key/Value 存储系统，主要用于共享配置和服务发现，和目前比较主流的配置中心（如：Spring Cloud Config、Apollo、Consul、Nacos）、注册中心（如：Zookeeper、Eureka、Consul、Nacos）功能上有很多相似之处，关于各框架之间的对比可以网上搜索。 ectd 的搭建不是本文的重点，本文将基于 ectd v3 版本来测试，">
-<meta name="twitter:image" content="http://www.beckjin.com/img/aspnet-etcd-provider/etcdManage.png">
+<meta name="twitter:image" content="https://www.beckjin.com/img/aspnet-etcd-provider/etcdManage.png">
 
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <link rel="canonical" href="http://www.beckjin.com/2019/11/23/aspnet-etcd-provider/">
+  <link rel="canonical" href="https://www.beckjin.com/2019/11/23/aspnet-etcd-provider/">
 
 
 
@@ -261,7 +261,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2019/11/23/aspnet-etcd-provider/">
+    <link itemprop="mainEntityOfPage" href="https://www.beckjin.com/2019/11/23/aspnet-etcd-provider/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
@@ -365,7 +365,7 @@
 <p>ectd 的搭建不是本文的重点，本文将基于 ectd v3 版本来测试，为了方便查看效果，还将借助  <a href="https://github.com/shiguanghuxian/etcd-manage" target="_blank" rel="noopener">etcd-manage</a> 可视化管理工具。</p>
 <h3 id="etcd-客户端"><a href="#etcd-客户端" class="headerlink" title="etcd 客户端"></a>etcd 客户端</h3><p>既然程序需要获取 etcd 中的配置信息，那就必须有对 etcd 操作的客户端代码。官方提供了调用 etcd 服务的 gRPC 接口定义，而 gRPC 有一个特点就是跨语言，所以如果项目中需要引入 etcd 作为配置或注册中心，完全可以直接基于 gRPC 接口定义文件生成对应语言的客户端代码实现远程调用。而对于目前来说，客户端代码的封装在 Github 上早已有实现，如：Java 的 <a href="https://github.com/etcd-io/jetcd" target="_blank" rel="noopener">jetcd</a>，.NET 的 <a href="https://github.com/shubhamranjan/dotnet-etcd" target="_blank" rel="noopener">dotnet-etcd</a> ，所以我们完全可以站在巨人的肩膀上玩耍。</p>
 <h3 id="NET-Core-集成-etcd"><a href="#NET-Core-集成-etcd" class="headerlink" title=".NET Core 集成 etcd"></a>.NET Core 集成 etcd</h3><p>关于如何在 .NET 中操作 etcd ，我们可以根据 <a href="https://github.com/shubhamranjan/dotnet-etcd" target="_blank" rel="noopener">dotnet-etcd</a> 的介绍来进行一系列测试，本文主要介绍 .NET Core 基于 etcd 实现服务的配置管理。既然客户端代码有现成的，那是不是直接 NuGet 安装 <code>dotnet-etcd</code> 后，通过方法调用拿到某些 key 的值使用就好了？当然这么玩没有任何问题，但个人感觉这样在程序上看来有些松散，毕竟 .NET Core 有可扩展性的配置体系，最终都通过 <code>ConfigurationBuilder</code> 构造供使用。</p>
-<p>基于上篇文章 <a href="http://beckjin.com/2019/11/16/aspnet-custom-provider/" target="_blank" rel="noopener">ASP.NET Core 自定义配置源</a> 的介绍，接下来将使用 etcd 作为自定义配置源，所以为了接下来理解顺利，请 <strong>务必阅读</strong> 过  <a href="http://beckjin.com/2019/11/16/aspnet-custom-provider/" target="_blank" rel="noopener">ASP.NET Core 自定义配置源</a> 。</p>
+<p>基于上篇文章 <a href="https://beckjin.com/2019/11/16/aspnet-custom-provider/" target="_blank" rel="noopener">ASP.NET Core 自定义配置源</a> 的介绍，接下来将使用 etcd 作为自定义配置源，所以为了接下来理解顺利，请 <strong>务必阅读</strong> 过  <a href="https://beckjin.com/2019/11/16/aspnet-custom-provider/" target="_blank" rel="noopener">ASP.NET Core 自定义配置源</a> 。</p>
 <h4 id="实现目标"><a href="#实现目标" class="headerlink" title="实现目标"></a>实现目标</h4><ol>
 <li><p>可通过 Configuration 对象进行配置信息读取；</p>
 </li>
@@ -396,7 +396,7 @@
 <p>etcd 中对 <code>company</code> 值就行修改，在不重启服务情况下，马上生效。</p>
 <p><img src="/img/aspnet-etcd-provider/result.png" alt="result"></p>
 <h3 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h3><ul>
-<li><a href="http://beckjin.com/2019/11/16/aspnet-custom-provider/" target="_blank" rel="noopener">ASP.NET Core 自定义配置源</a></li>
+<li><a href="https://beckjin.com/2019/11/16/aspnet-custom-provider/" target="_blank" rel="noopener">ASP.NET Core 自定义配置源</a></li>
 <li><a href="https://github.com/shubhamranjan/dotnet-etcd" target="_blank" rel="noopener">dotnet-etcd</a></li>
 <li><a href="https://github.com/shiguanghuxian/etcd-manage" target="_blank" rel="noopener">etcd-manage</a> </li>
 <li><a href="https://github.com/beckjin/Etcd.Configuration" target="_blank" rel="noopener">Etcd.Configuration</a></li>

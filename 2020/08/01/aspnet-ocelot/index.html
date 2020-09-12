@@ -85,21 +85,21 @@
 <meta name="keywords" content="ASP.NET Core,Ocelot">
 <meta property="og:type" content="article">
 <meta property="og:title" content=".NET Core + Ocelot：API 网关">
-<meta property="og:url" content="http://www.beckjin.com/2020/08/01/aspnet-ocelot/index.html">
+<meta property="og:url" content="https://www.beckjin.com/2020/08/01/aspnet-ocelot/index.html">
 <meta property="og:site_name" content="Beck&#39;s Blog">
 <meta property="og:description" content="关于 API 网关的作用，核心是 API 请求的收口及控制，如：鉴权、限流、熔断、数据缓存 等都是开发中常见的需求，将此类需求交给网关层处理，可以使每个微服务更聚焦于业务功能开发，同时也可为下游服务的安全及稳定性保驾护航。 在之前的文章  .NET Core + Spring Cloud：API 网关 有介绍过如何基于 Spring Cloud 中的 Zuul 实现 API 网关，功能实现上抛开不">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-ocelot/base.jpg">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-ocelot/roundRobin.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-ocelot/consul.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-ocelot/rateLimit.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-ocelot/qos.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-ocelot/lb.jpg">
-<meta property="og:updated_time" content="2020-08-01T13:27:38.929Z">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-ocelot/base.jpg">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-ocelot/roundRobin.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-ocelot/consul.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-ocelot/rateLimit.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-ocelot/qos.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-ocelot/lb.jpg">
+<meta property="og:updated_time" content="2020-09-12T09:13:29.037Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content=".NET Core + Ocelot：API 网关">
 <meta name="twitter:description" content="关于 API 网关的作用，核心是 API 请求的收口及控制，如：鉴权、限流、熔断、数据缓存 等都是开发中常见的需求，将此类需求交给网关层处理，可以使每个微服务更聚焦于业务功能开发，同时也可为下游服务的安全及稳定性保驾护航。 在之前的文章  .NET Core + Spring Cloud：API 网关 有介绍过如何基于 Spring Cloud 中的 Zuul 实现 API 网关，功能实现上抛开不">
-<meta name="twitter:image" content="http://www.beckjin.com/img/aspnet-ocelot/base.jpg">
+<meta name="twitter:image" content="https://www.beckjin.com/img/aspnet-ocelot/base.jpg">
 
 
 
@@ -129,7 +129,7 @@
 
 
 
-  <link rel="canonical" href="http://www.beckjin.com/2020/08/01/aspnet-ocelot/">
+  <link rel="canonical" href="https://www.beckjin.com/2020/08/01/aspnet-ocelot/">
 
 
 
@@ -264,7 +264,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2020/08/01/aspnet-ocelot/">
+    <link itemprop="mainEntityOfPage" href="https://www.beckjin.com/2020/08/01/aspnet-ocelot/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
@@ -365,7 +365,7 @@
 
       
         <p>关于 API 网关的作用，核心是 API 请求的收口及控制，如：鉴权、限流、熔断、数据缓存 等都是开发中常见的需求，将此类需求交给网关层处理，可以使每个微服务更聚焦于业务功能开发，同时也可为下游服务的安全及稳定性保驾护航。</p>
-<p>在之前的文章  <a href="http://beckjin.com/2019/01/26/aspnet-zuul/" target="_blank" rel="noopener">.NET Core + Spring Cloud：API 网关</a> 有介绍过如何基于 Spring Cloud 中的 Zuul 实现 API 网关，功能实现上抛开不提，另外一个较大的特点是 .NET Core 可以完美的拥抱 Java 体系中的部分能力。本文将主要介绍 .NET Core 体系中的 API 网关框架：<a href="https://github.com/ThreeMammals/Ocelot" target="_blank" rel="noopener">Ocelot</a>，它包含了 路由、鉴权、限流、熔断、服务发现、请求聚合等非常丰富的功能，这些功能大多基于少量的配置实现，使用起来也并不复杂。</p>
+<p>在之前的文章  <a href="https://beckjin.com/2019/01/26/aspnet-zuul/" target="_blank" rel="noopener">.NET Core + Spring Cloud：API 网关</a> 有介绍过如何基于 Spring Cloud 中的 Zuul 实现 API 网关，功能实现上抛开不提，另外一个较大的特点是 .NET Core 可以完美的拥抱 Java 体系中的部分能力。本文将主要介绍 .NET Core 体系中的 API 网关框架：<a href="https://github.com/ThreeMammals/Ocelot" target="_blank" rel="noopener">Ocelot</a>，它包含了 路由、鉴权、限流、熔断、服务发现、请求聚合等非常丰富的功能，这些功能大多基于少量的配置实现，使用起来也并不复杂。</p>
 <p>接下来通过简单例子先跑起来，然后再继续延伸更多特性的介绍，下面是 Ocelot 官方给出的一个最基础的架构图：</p>
 <p><img src="/img/aspnet-ocelot/base.jpg" alt></p>
 <p>外网访问 Ocelot API 网关服务（单实例），通过配置的规则（<code>configuration.json</code>），路由到下游的两个微服务实例（<code>Http Service</code>），这也就是最基本的转发能力。</p>
@@ -394,7 +394,7 @@
 </li>
 </ol>
 <p><img src="/img/aspnet-ocelot/roundRobin.png" alt></p>
-<h3 id="服务发现（Consul）"><a href="#服务发现（Consul）" class="headerlink" title="服务发现（Consul）"></a>服务发现（Consul）</h3><p>Ocelot 支持与具备 <a href="https://ocelot.readthedocs.io/en/latest/features/servicediscovery.html" target="_blank" rel="noopener">服务发现</a> 功能的一些框架相结合，如：<code>Consul</code>、<code>Eureka</code>，下游服务地址可直接从服务注册中心进行获取。接下来将结合 Consul 进行测试，有关 Consul 与 .NET Core 结合请参考文章：<a href="http://beckjin.com/2019/05/18/aspnet-consul-discovery/" target="_blank" rel="noopener">.NET Core + Consul 服务注册与发现</a>，这部分内容这里就不重复介绍了，最终注册中心 <code>service-a</code> 有两个实例，如下：</p>
+<h3 id="服务发现（Consul）"><a href="#服务发现（Consul）" class="headerlink" title="服务发现（Consul）"></a>服务发现（Consul）</h3><p>Ocelot 支持与具备 <a href="https://ocelot.readthedocs.io/en/latest/features/servicediscovery.html" target="_blank" rel="noopener">服务发现</a> 功能的一些框架相结合，如：<code>Consul</code>、<code>Eureka</code>，下游服务地址可直接从服务注册中心进行获取。接下来将结合 Consul 进行测试，有关 Consul 与 .NET Core 结合请参考文章：<a href="https://beckjin.com/2019/05/18/aspnet-consul-discovery/" target="_blank" rel="noopener">.NET Core + Consul 服务注册与发现</a>，这部分内容这里就不重复介绍了，最终注册中心 <code>service-a</code> 有两个实例，如下：</p>
 <p><img src="/img/aspnet-ocelot/consul.png" alt></p>
 <ol>
 <li><p>安装 <code>Ocelot.Provider.Consul</code> NuGet 包；</p>

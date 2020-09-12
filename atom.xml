@@ -5,9 +5,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://www.beckjin.com/"/>
+  <link href="https://www.beckjin.com/"/>
   <updated>2020-09-12T08:51:59.524Z</updated>
-  <id>http://www.beckjin.com/</id>
+  <id>https://www.beckjin.com/</id>
   
   <author>
     <name>Beck Jin</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>ASP.NET Core Cookie SameSite</title>
-    <link href="http://www.beckjin.com/2020/09/12/aspnet-cookie-samesite/"/>
-    <id>http://www.beckjin.com/2020/09/12/aspnet-cookie-samesite/</id>
+    <link href="https://www.beckjin.com/2020/09/12/aspnet-cookie-samesite/"/>
+    <id>https://www.beckjin.com/2020/09/12/aspnet-cookie-samesite/</id>
     <published>2020-09-12T08:19:55.000Z</published>
     <updated>2020-09-12T08:51:59.524Z</updated>
     
@@ -35,19 +35,19 @@
     
     </summary>
     
-      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
+      <category term="ASP.NET Core" scheme="https://www.beckjin.com/categories/ASP-NET-Core/"/>
     
     
-      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+      <category term="C#" scheme="https://www.beckjin.com/tags/C/"/>
     
-      <category term="Cookie" scheme="http://www.beckjin.com/tags/Cookie/"/>
+      <category term="Cookie" scheme="https://www.beckjin.com/tags/Cookie/"/>
     
   </entry>
   
   <entry>
     <title>.NET Core + Kubernetes：Helm</title>
-    <link href="http://www.beckjin.com/2020/08/23/aspnet-k8s-helm/"/>
-    <id>http://www.beckjin.com/2020/08/23/aspnet-k8s-helm/</id>
+    <link href="https://www.beckjin.com/2020/08/23/aspnet-k8s-helm/"/>
+    <id>https://www.beckjin.com/2020/08/23/aspnet-k8s-helm/</id>
     <published>2020-08-23T14:27:31.000Z</published>
     <updated>2020-08-23T15:20:48.291Z</updated>
     
@@ -63,21 +63,21 @@
     
     </summary>
     
-      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
+      <category term="ASP.NET Core" scheme="https://www.beckjin.com/categories/ASP-NET-Core/"/>
     
     
-      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+      <category term="C#" scheme="https://www.beckjin.com/tags/C/"/>
     
-      <category term="Kubernetes" scheme="http://www.beckjin.com/tags/Kubernetes/"/>
+      <category term="Kubernetes" scheme="https://www.beckjin.com/tags/Kubernetes/"/>
     
   </entry>
   
   <entry>
     <title>.NET Core + Ocelot：API 网关</title>
-    <link href="http://www.beckjin.com/2020/08/01/aspnet-ocelot/"/>
-    <id>http://www.beckjin.com/2020/08/01/aspnet-ocelot/</id>
+    <link href="https://www.beckjin.com/2020/08/01/aspnet-ocelot/"/>
+    <id>https://www.beckjin.com/2020/08/01/aspnet-ocelot/</id>
     <published>2020-08-01T12:34:21.000Z</published>
-    <updated>2020-08-01T13:27:38.929Z</updated>
+    <updated>2020-09-12T09:13:29.037Z</updated>
     
     <summary type="html">
     
@@ -92,19 +92,19 @@
     
     </summary>
     
-      <category term="微服务" scheme="http://www.beckjin.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+      <category term="微服务" scheme="https://www.beckjin.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
     
     
-      <category term="ASP.NET Core" scheme="http://www.beckjin.com/tags/ASP-NET-Core/"/>
+      <category term="ASP.NET Core" scheme="https://www.beckjin.com/tags/ASP-NET-Core/"/>
     
-      <category term="Ocelot" scheme="http://www.beckjin.com/tags/Ocelot/"/>
+      <category term="Ocelot" scheme="https://www.beckjin.com/tags/Ocelot/"/>
     
   </entry>
   
   <entry>
     <title>ASP.NET Core 消息传递：MediatR</title>
-    <link href="http://www.beckjin.com/2020/07/19/aspnet-mediatr/"/>
-    <id>http://www.beckjin.com/2020/07/19/aspnet-mediatr/</id>
+    <link href="https://www.beckjin.com/2020/07/19/aspnet-mediatr/"/>
+    <id>https://www.beckjin.com/2020/07/19/aspnet-mediatr/</id>
     <published>2020-07-19T06:06:37.000Z</published>
     <updated>2020-07-19T06:43:35.045Z</updated>
     
@@ -120,19 +120,19 @@
     
     </summary>
     
-      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
+      <category term="ASP.NET Core" scheme="https://www.beckjin.com/categories/ASP-NET-Core/"/>
     
     
-      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+      <category term="C#" scheme="https://www.beckjin.com/tags/C/"/>
     
-      <category term="MediatR" scheme="http://www.beckjin.com/tags/MediatR/"/>
+      <category term="MediatR" scheme="https://www.beckjin.com/tags/MediatR/"/>
     
   </entry>
   
   <entry>
     <title>.NET Core + Kubernetes：Volume</title>
-    <link href="http://www.beckjin.com/2020/06/24/aspnet-k8s-volume/"/>
-    <id>http://www.beckjin.com/2020/06/24/aspnet-k8s-volume/</id>
+    <link href="https://www.beckjin.com/2020/06/24/aspnet-k8s-volume/"/>
+    <id>https://www.beckjin.com/2020/06/24/aspnet-k8s-volume/</id>
     <published>2020-06-23T16:09:27.000Z</published>
     <updated>2020-06-23T17:05:58.315Z</updated>
     
@@ -148,21 +148,21 @@
     
     </summary>
     
-      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
+      <category term="ASP.NET Core" scheme="https://www.beckjin.com/categories/ASP-NET-Core/"/>
     
     
-      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+      <category term="C#" scheme="https://www.beckjin.com/tags/C/"/>
     
-      <category term="Kubernetes" scheme="http://www.beckjin.com/tags/Kubernetes/"/>
+      <category term="Kubernetes" scheme="https://www.beckjin.com/tags/Kubernetes/"/>
     
   </entry>
   
   <entry>
     <title>.NET Core + Kubernetes：Service</title>
-    <link href="http://www.beckjin.com/2020/05/23/aspnet-k8s-service/"/>
-    <id>http://www.beckjin.com/2020/05/23/aspnet-k8s-service/</id>
+    <link href="https://www.beckjin.com/2020/05/23/aspnet-k8s-service/"/>
+    <id>https://www.beckjin.com/2020/05/23/aspnet-k8s-service/</id>
     <published>2020-05-23T09:44:48.000Z</published>
-    <updated>2020-05-23T09:57:36.098Z</updated>
+    <updated>2020-09-12T09:13:13.906Z</updated>
     
     <summary type="html">
     
@@ -170,27 +170,27 @@
       
         
         
-          &lt;p&gt;通过 &lt;a href=&quot;http://beckjin.com/2020/05/10/aspnet-k8s-deployment/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;.NET Core + Kubernetes：Deployment&lt;/a&gt;
+          &lt;p&gt;通过 &lt;a href=&quot;https://beckjin.com/2020/05/10/aspnet-k8s-deployment/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;.NET Core + Kubernetes：Deployment&lt;/a&gt;
         
       
     
     </summary>
     
-      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
+      <category term="ASP.NET Core" scheme="https://www.beckjin.com/categories/ASP-NET-Core/"/>
     
     
-      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+      <category term="C#" scheme="https://www.beckjin.com/tags/C/"/>
     
-      <category term="Kubernetes" scheme="http://www.beckjin.com/tags/Kubernetes/"/>
+      <category term="Kubernetes" scheme="https://www.beckjin.com/tags/Kubernetes/"/>
     
   </entry>
   
   <entry>
     <title>.NET Core + Kubernetes：Deployment</title>
-    <link href="http://www.beckjin.com/2020/05/10/aspnet-k8s-deployment/"/>
-    <id>http://www.beckjin.com/2020/05/10/aspnet-k8s-deployment/</id>
+    <link href="https://www.beckjin.com/2020/05/10/aspnet-k8s-deployment/"/>
+    <id>https://www.beckjin.com/2020/05/10/aspnet-k8s-deployment/</id>
     <published>2020-05-10T08:54:54.000Z</published>
-    <updated>2020-05-10T09:38:14.201Z</updated>
+    <updated>2020-09-12T09:13:13.906Z</updated>
     
     <summary type="html">
     
@@ -198,27 +198,27 @@
       
         
         
-          &lt;p&gt;在上篇文章 &lt;a href=&quot;http://beckjin.com/2020/04/12/aspnet-k8s-pod/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;.NET Core + Kubernetes：Pod&lt;/a&gt; 中，主要介绍了 Pod
+          &lt;p&gt;在上篇文章 &lt;a href=&quot;https://beckjin.com/2020/04/12/aspnet-k8s-pod/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;.NET Core + Kubernetes：Pod&lt;/a&gt; 中，主要介绍了 Pod
         
       
     
     </summary>
     
-      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
+      <category term="ASP.NET Core" scheme="https://www.beckjin.com/categories/ASP-NET-Core/"/>
     
     
-      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+      <category term="C#" scheme="https://www.beckjin.com/tags/C/"/>
     
-      <category term="Kubernetes" scheme="http://www.beckjin.com/tags/Kubernetes/"/>
+      <category term="Kubernetes" scheme="https://www.beckjin.com/tags/Kubernetes/"/>
     
   </entry>
   
   <entry>
     <title>.NET Core + Kubernetes：Pod</title>
-    <link href="http://www.beckjin.com/2020/04/12/aspnet-k8s-pod/"/>
-    <id>http://www.beckjin.com/2020/04/12/aspnet-k8s-pod/</id>
+    <link href="https://www.beckjin.com/2020/04/12/aspnet-k8s-pod/"/>
+    <id>https://www.beckjin.com/2020/04/12/aspnet-k8s-pod/</id>
     <published>2020-04-11T17:12:57.000Z</published>
-    <updated>2020-04-12T07:09:02.370Z</updated>
+    <updated>2020-09-12T09:13:13.906Z</updated>
     
     <summary type="html">
     
@@ -226,25 +226,25 @@
       
         
         
-          &lt;p&gt;在 &lt;a href=&quot;http://beckjin.com/2020/03/21/aspnet-k8s-start/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;.NET Core + Kubernetes：快速体验&lt;/a&gt; 文章中，已经实现将一个
+          &lt;p&gt;在 &lt;a href=&quot;https://beckjin.com/2020/03/21/aspnet-k8s-start/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;.NET Core + Kubernetes：快速体验&lt;/a&gt; 文章中，已经实现将一个
         
       
     
     </summary>
     
-      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
+      <category term="ASP.NET Core" scheme="https://www.beckjin.com/categories/ASP-NET-Core/"/>
     
     
-      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+      <category term="C#" scheme="https://www.beckjin.com/tags/C/"/>
     
-      <category term="Kubernetes" scheme="http://www.beckjin.com/tags/Kubernetes/"/>
+      <category term="Kubernetes" scheme="https://www.beckjin.com/tags/Kubernetes/"/>
     
   </entry>
   
   <entry>
     <title>.NET Core + Kubernetes：快速体验</title>
-    <link href="http://www.beckjin.com/2020/03/21/aspnet-k8s-start/"/>
-    <id>http://www.beckjin.com/2020/03/21/aspnet-k8s-start/</id>
+    <link href="https://www.beckjin.com/2020/03/21/aspnet-k8s-start/"/>
+    <id>https://www.beckjin.com/2020/03/21/aspnet-k8s-start/</id>
     <published>2020-03-21T15:00:42.000Z</published>
     <updated>2020-06-14T03:17:56.282Z</updated>
     
@@ -260,21 +260,21 @@
     
     </summary>
     
-      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
+      <category term="ASP.NET Core" scheme="https://www.beckjin.com/categories/ASP-NET-Core/"/>
     
     
-      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+      <category term="C#" scheme="https://www.beckjin.com/tags/C/"/>
     
-      <category term="Kubernetes" scheme="http://www.beckjin.com/tags/Kubernetes/"/>
+      <category term="Kubernetes" scheme="https://www.beckjin.com/tags/Kubernetes/"/>
     
   </entry>
   
   <entry>
     <title>ASP.NET Core 配置源：实时生效</title>
-    <link href="http://www.beckjin.com/2020/03/07/aspnet-configuration-reload/"/>
-    <id>http://www.beckjin.com/2020/03/07/aspnet-configuration-reload/</id>
+    <link href="https://www.beckjin.com/2020/03/07/aspnet-configuration-reload/"/>
+    <id>https://www.beckjin.com/2020/03/07/aspnet-configuration-reload/</id>
     <published>2020-03-07T11:52:09.000Z</published>
-    <updated>2020-03-07T12:27:07.291Z</updated>
+    <updated>2020-09-12T09:13:13.906Z</updated>
     
     <summary type="html">
     
@@ -282,25 +282,25 @@
       
         
         
-          &lt;p&gt;在之前的文章 &lt;a href=&quot;http://beckjin.com/2019/11/16/aspnet-custom-provider/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;ASP.NET Core 自定义配置源&lt;/a&gt; 和 &lt;a
+          &lt;p&gt;在之前的文章 &lt;a href=&quot;https://beckjin.com/2019/11/16/aspnet-custom-provider/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;ASP.NET Core 自定义配置源&lt;/a&gt; 和 &lt;a
         
       
     
     </summary>
     
-      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
+      <category term="ASP.NET Core" scheme="https://www.beckjin.com/categories/ASP-NET-Core/"/>
     
     
-      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+      <category term="C#" scheme="https://www.beckjin.com/tags/C/"/>
     
   </entry>
   
   <entry>
     <title>ASP.NET Core 日志框架：Serilog</title>
-    <link href="http://www.beckjin.com/2020/02/14/aspnet-log-serilog/"/>
-    <id>http://www.beckjin.com/2020/02/14/aspnet-log-serilog/</id>
+    <link href="https://www.beckjin.com/2020/02/14/aspnet-log-serilog/"/>
+    <id>https://www.beckjin.com/2020/02/14/aspnet-log-serilog/</id>
     <published>2020-02-14T07:37:45.000Z</published>
-    <updated>2020-02-16T11:20:50.690Z</updated>
+    <updated>2020-09-12T09:13:13.906Z</updated>
     
     <summary type="html">
     
@@ -308,25 +308,25 @@
       
         
         
-          &lt;p&gt;在 &lt;a href=&quot;http://beckjin.com/2020/02/09/aspnet-log/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;ASP.NET Core 日志模型&lt;/a&gt;
+          &lt;p&gt;在 &lt;a href=&quot;https://beckjin.com/2020/02/09/aspnet-log/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;ASP.NET Core 日志模型&lt;/a&gt;
         
       
     
     </summary>
     
-      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
+      <category term="ASP.NET Core" scheme="https://www.beckjin.com/categories/ASP-NET-Core/"/>
     
     
-      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+      <category term="C#" scheme="https://www.beckjin.com/tags/C/"/>
     
-      <category term="Log" scheme="http://www.beckjin.com/tags/Log/"/>
+      <category term="Log" scheme="https://www.beckjin.com/tags/Log/"/>
     
   </entry>
   
   <entry>
     <title>ASP.NET Core 日志模型</title>
-    <link href="http://www.beckjin.com/2020/02/09/aspnet-log/"/>
-    <id>http://www.beckjin.com/2020/02/09/aspnet-log/</id>
+    <link href="https://www.beckjin.com/2020/02/09/aspnet-log/"/>
+    <id>https://www.beckjin.com/2020/02/09/aspnet-log/</id>
     <published>2020-02-09T06:46:20.000Z</published>
     <updated>2020-02-16T11:12:30.188Z</updated>
     
@@ -342,19 +342,19 @@
     
     </summary>
     
-      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
+      <category term="ASP.NET Core" scheme="https://www.beckjin.com/categories/ASP-NET-Core/"/>
     
     
-      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+      <category term="C#" scheme="https://www.beckjin.com/tags/C/"/>
     
-      <category term="Log" scheme="http://www.beckjin.com/tags/Log/"/>
+      <category term="Log" scheme="https://www.beckjin.com/tags/Log/"/>
     
   </entry>
   
   <entry>
     <title>ASP.NET Core 诊断跟踪：DiagnosticSource</title>
-    <link href="http://www.beckjin.com/2019/12/29/aspnet-diagnostics/"/>
-    <id>http://www.beckjin.com/2019/12/29/aspnet-diagnostics/</id>
+    <link href="https://www.beckjin.com/2019/12/29/aspnet-diagnostics/"/>
+    <id>https://www.beckjin.com/2019/12/29/aspnet-diagnostics/</id>
     <published>2019-12-29T13:16:50.000Z</published>
     <updated>2019-12-29T14:11:51.133Z</updated>
     
@@ -370,21 +370,21 @@
     
     </summary>
     
-      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
+      <category term="ASP.NET Core" scheme="https://www.beckjin.com/categories/ASP-NET-Core/"/>
     
     
-      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+      <category term="C#" scheme="https://www.beckjin.com/tags/C/"/>
     
-      <category term="DiagnosticSource" scheme="http://www.beckjin.com/tags/DiagnosticSource/"/>
+      <category term="DiagnosticSource" scheme="https://www.beckjin.com/tags/DiagnosticSource/"/>
     
   </entry>
   
   <entry>
     <title>ASP.NET Core gRPC 拦截器</title>
-    <link href="http://www.beckjin.com/2019/12/22/grpc-interceptor/"/>
-    <id>http://www.beckjin.com/2019/12/22/grpc-interceptor/</id>
+    <link href="https://www.beckjin.com/2019/12/22/grpc-interceptor/"/>
+    <id>https://www.beckjin.com/2019/12/22/grpc-interceptor/</id>
     <published>2019-12-22T07:48:41.000Z</published>
-    <updated>2019-12-29T14:18:32.838Z</updated>
+    <updated>2020-09-12T09:13:59.527Z</updated>
     
     <summary type="html">
     
@@ -398,17 +398,17 @@
     
     </summary>
     
-      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
+      <category term="ASP.NET Core" scheme="https://www.beckjin.com/categories/ASP-NET-Core/"/>
     
     
-      <category term="gRPC" scheme="http://www.beckjin.com/tags/gRPC/"/>
+      <category term="gRPC" scheme="https://www.beckjin.com/tags/gRPC/"/>
     
   </entry>
   
   <entry>
     <title>ASP.NET Core 数据验证：FluentValidation</title>
-    <link href="http://www.beckjin.com/2019/12/01/aspnet-fluent-validation/"/>
-    <id>http://www.beckjin.com/2019/12/01/aspnet-fluent-validation/</id>
+    <link href="https://www.beckjin.com/2019/12/01/aspnet-fluent-validation/"/>
+    <id>https://www.beckjin.com/2019/12/01/aspnet-fluent-validation/</id>
     <published>2019-12-01T08:29:28.000Z</published>
     <updated>2019-12-29T14:12:23.019Z</updated>
     
@@ -424,21 +424,21 @@
     
     </summary>
     
-      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
+      <category term="ASP.NET Core" scheme="https://www.beckjin.com/categories/ASP-NET-Core/"/>
     
     
-      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+      <category term="C#" scheme="https://www.beckjin.com/tags/C/"/>
     
-      <category term="FluentValidation" scheme="http://www.beckjin.com/tags/FluentValidation/"/>
+      <category term="FluentValidation" scheme="https://www.beckjin.com/tags/FluentValidation/"/>
     
   </entry>
   
   <entry>
     <title>ASP.NET Core etcd 配置源</title>
-    <link href="http://www.beckjin.com/2019/11/23/aspnet-etcd-provider/"/>
-    <id>http://www.beckjin.com/2019/11/23/aspnet-etcd-provider/</id>
+    <link href="https://www.beckjin.com/2019/11/23/aspnet-etcd-provider/"/>
+    <id>https://www.beckjin.com/2019/11/23/aspnet-etcd-provider/</id>
     <published>2019-11-23T07:37:58.000Z</published>
-    <updated>2019-12-29T14:11:55.669Z</updated>
+    <updated>2020-09-12T09:13:13.906Z</updated>
     
     <summary type="html">
     
@@ -452,19 +452,19 @@
     
     </summary>
     
-      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
+      <category term="ASP.NET Core" scheme="https://www.beckjin.com/categories/ASP-NET-Core/"/>
     
     
-      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+      <category term="C#" scheme="https://www.beckjin.com/tags/C/"/>
     
-      <category term="etcd" scheme="http://www.beckjin.com/tags/etcd/"/>
+      <category term="etcd" scheme="https://www.beckjin.com/tags/etcd/"/>
     
   </entry>
   
   <entry>
     <title>ASP.NET Core 自定义配置源</title>
-    <link href="http://www.beckjin.com/2019/11/16/aspnet-custom-provider/"/>
-    <id>http://www.beckjin.com/2019/11/16/aspnet-custom-provider/</id>
+    <link href="https://www.beckjin.com/2019/11/16/aspnet-custom-provider/"/>
+    <id>https://www.beckjin.com/2019/11/16/aspnet-custom-provider/</id>
     <published>2019-11-16T07:29:49.000Z</published>
     <updated>2019-12-29T14:11:46.361Z</updated>
     
@@ -480,17 +480,17 @@
     
     </summary>
     
-      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
+      <category term="ASP.NET Core" scheme="https://www.beckjin.com/categories/ASP-NET-Core/"/>
     
     
-      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+      <category term="C#" scheme="https://www.beckjin.com/tags/C/"/>
     
   </entry>
   
   <entry>
     <title>ASP.NET Core gRPC 流式调用</title>
-    <link href="http://www.beckjin.com/2019/10/26/grpc-streaming/"/>
-    <id>http://www.beckjin.com/2019/10/26/grpc-streaming/</id>
+    <link href="https://www.beckjin.com/2019/10/26/grpc-streaming/"/>
+    <id>https://www.beckjin.com/2019/10/26/grpc-streaming/</id>
     <published>2019-10-26T09:38:56.000Z</published>
     <updated>2019-12-29T14:18:49.661Z</updated>
     
@@ -506,17 +506,17 @@
     
     </summary>
     
-      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
+      <category term="ASP.NET Core" scheme="https://www.beckjin.com/categories/ASP-NET-Core/"/>
     
     
-      <category term="gRPC" scheme="http://www.beckjin.com/tags/gRPC/"/>
+      <category term="gRPC" scheme="https://www.beckjin.com/tags/gRPC/"/>
     
   </entry>
   
   <entry>
     <title>聊聊 Docker Swarm 部署 gRPC 服务的坑</title>
-    <link href="http://www.beckjin.com/2019/09/25/grpc-docker-swarm/"/>
-    <id>http://www.beckjin.com/2019/09/25/grpc-docker-swarm/</id>
+    <link href="https://www.beckjin.com/2019/09/25/grpc-docker-swarm/"/>
+    <id>https://www.beckjin.com/2019/09/25/grpc-docker-swarm/</id>
     <published>2019-09-25T13:43:48.000Z</published>
     <updated>2019-09-25T14:36:45.551Z</updated>
     
@@ -532,19 +532,19 @@
     
     </summary>
     
-      <category term="微服务" scheme="http://www.beckjin.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+      <category term="微服务" scheme="https://www.beckjin.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
     
     
-      <category term="gRPC" scheme="http://www.beckjin.com/tags/gRPC/"/>
+      <category term="gRPC" scheme="https://www.beckjin.com/tags/gRPC/"/>
     
-      <category term="Docker" scheme="http://www.beckjin.com/tags/Docker/"/>
+      <category term="Docker" scheme="https://www.beckjin.com/tags/Docker/"/>
     
   </entry>
   
   <entry>
     <title>HttpClientFactory + Polly 实现熔断降级</title>
-    <link href="http://www.beckjin.com/2019/09/07/polly-http-client/"/>
-    <id>http://www.beckjin.com/2019/09/07/polly-http-client/</id>
+    <link href="https://www.beckjin.com/2019/09/07/polly-http-client/"/>
+    <id>https://www.beckjin.com/2019/09/07/polly-http-client/</id>
     <published>2019-09-07T08:43:17.000Z</published>
     <updated>2019-12-29T14:11:09.666Z</updated>
     
@@ -560,10 +560,10 @@
     
     </summary>
     
-      <category term="Polly" scheme="http://www.beckjin.com/categories/Polly/"/>
+      <category term="Polly" scheme="https://www.beckjin.com/categories/Polly/"/>
     
     
-      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
+      <category term="C#" scheme="https://www.beckjin.com/tags/C/"/>
     
   </entry>
   

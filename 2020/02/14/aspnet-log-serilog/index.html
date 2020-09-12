@@ -85,21 +85,21 @@
 <meta name="keywords" content="C#,Log">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ASP.NET Core 日志框架：Serilog">
-<meta property="og:url" content="http://www.beckjin.com/2020/02/14/aspnet-log-serilog/index.html">
+<meta property="og:url" content="https://www.beckjin.com/2020/02/14/aspnet-log-serilog/index.html">
 <meta property="og:site_name" content="Beck&#39;s Blog">
 <meta property="og:description" content="在 ASP.NET Core 日志模型 中对日志整体实现方式进行了介绍，通过使用内置日志记录器来实现日志的输出路径。而在实际项目开发中，使用第三方日志框架来记录日志也是非常多的，首先一般基础的内置日志记录器在第三方日志框架中都有实现，然后很多第三方日志框架在功能上更强大和丰富，能满足我们更多的项目分析和诊断的需求。 本文主要介绍 Serilog 这个日志框架的使用，它是目前比较突出和受欢迎的一个日">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-log-serilog/default.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-log-serilog/withSerilog.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-log-serilog/serilog.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-log-serilog/requestSerilog.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-log-serilog/customSerilog.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-log-serilog/enrichSerilog.png">
-<meta property="og:updated_time" content="2020-02-16T11:20:50.690Z">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-log-serilog/default.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-log-serilog/withSerilog.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-log-serilog/serilog.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-log-serilog/requestSerilog.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-log-serilog/customSerilog.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-log-serilog/enrichSerilog.png">
+<meta property="og:updated_time" content="2020-09-12T09:13:13.906Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ASP.NET Core 日志框架：Serilog">
 <meta name="twitter:description" content="在 ASP.NET Core 日志模型 中对日志整体实现方式进行了介绍，通过使用内置日志记录器来实现日志的输出路径。而在实际项目开发中，使用第三方日志框架来记录日志也是非常多的，首先一般基础的内置日志记录器在第三方日志框架中都有实现，然后很多第三方日志框架在功能上更强大和丰富，能满足我们更多的项目分析和诊断的需求。 本文主要介绍 Serilog 这个日志框架的使用，它是目前比较突出和受欢迎的一个日">
-<meta name="twitter:image" content="http://www.beckjin.com/img/aspnet-log-serilog/default.png">
+<meta name="twitter:image" content="https://www.beckjin.com/img/aspnet-log-serilog/default.png">
 
 
 
@@ -129,7 +129,7 @@
 
 
 
-  <link rel="canonical" href="http://www.beckjin.com/2020/02/14/aspnet-log-serilog/">
+  <link rel="canonical" href="https://www.beckjin.com/2020/02/14/aspnet-log-serilog/">
 
 
 
@@ -264,7 +264,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2020/02/14/aspnet-log-serilog/">
+    <link itemprop="mainEntityOfPage" href="https://www.beckjin.com/2020/02/14/aspnet-log-serilog/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
@@ -364,7 +364,7 @@
       
 
       
-        <p>在 <a href="http://beckjin.com/2020/02/09/aspnet-log/" target="_blank" rel="noopener">ASP.NET Core 日志模型</a> 中对日志整体实现方式进行了介绍，通过使用内置日志记录器来实现日志的输出路径。而在实际项目开发中，使用第三方日志框架来记录日志也是非常多的，首先一般基础的内置日志记录器在第三方日志框架中都有实现，然后很多第三方日志框架在功能上更强大和丰富，能满足我们更多的项目分析和诊断的需求。</p>
+        <p>在 <a href="https://beckjin.com/2020/02/09/aspnet-log/" target="_blank" rel="noopener">ASP.NET Core 日志模型</a> 中对日志整体实现方式进行了介绍，通过使用内置日志记录器来实现日志的输出路径。而在实际项目开发中，使用第三方日志框架来记录日志也是非常多的，首先一般基础的内置日志记录器在第三方日志框架中都有实现，然后很多第三方日志框架在功能上更强大和丰富，能满足我们更多的项目分析和诊断的需求。</p>
 <p>本文主要介绍 <a href="https://github.com/serilog/serilog-aspnetcore" target="_blank" rel="noopener">Serilog</a> 这个日志框架的使用，它是目前比较突出和受欢迎的一个日志框架。<code>Serilog</code> 在日志记录上采用 <code>json</code> 的格式，方便日志的快速查询与过滤。</p>
 <h3 id="默认日志行为"><a href="#默认日志行为" class="headerlink" title="默认日志行为"></a>默认日志行为</h3><p>在使用 <code>Serilog</code> 之前我们先看看 ASP.NET Core API 项目默认的日志输出行为。创建基于 ASP.NET Core 3.1 的 API 项目后启动，默认访问会 <code>weatherforecast</code> 接口，然后可以从控制台和调试窗口看到如下输出日志 (<em>ASP.NET Core API 项目模板默认集成了 <code>Console</code> 和 <code>Debug</code> 日志记录器</em>)：<br><img src="/img/aspnet-log-serilog/default.png" alt></p>
 <p>日志输出等级在配置文件中有默认设置参数，<code>appsettings.Development.json</code>（开发环境）和 <code>appsettings.json</code>（生产环境）的 <code>Logging</code> 节点。下面以 <code>appsettings.Development.json</code> 为例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;Logging&quot;: &#123;</span><br><span class="line">    &quot;LogLevel&quot;: &#123;</span><br><span class="line">      &quot;Default&quot;: &quot;Debug&quot;,</span><br><span class="line">      &quot;System&quot;: &quot;Information&quot;,</span><br><span class="line">      &quot;Microsoft&quot;: &quot;Information&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>

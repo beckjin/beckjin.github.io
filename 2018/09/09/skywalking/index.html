@@ -85,26 +85,26 @@
 <meta name="keywords" content="C#,ASP.NET Core,SkyWalking">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SkyWalking 分布式追踪系统">
-<meta property="og:url" content="http://www.beckjin.com/2018/09/09/skywalking/index.html">
+<meta property="og:url" content="https://www.beckjin.com/2018/09/09/skywalking/index.html">
 <meta property="og:site_name" content="Beck&#39;s Blog">
 <meta property="og:description" content="随着微服务架构的流行，一些微服务架构下的问题也会越来越突出，比如一个请求会涉及多个服务，而服务本身可能也会依赖其他服务，整个请求路径就构成了一个网状的调用链，而在整个调用链中一旦某个节点发生异常，整个调用链的稳定性就会受到影响，所以会深深的感受到 “银弹” 这个词是不存在的，每种架构都有其优缺点 。  面对以上情况， 我们就需要一些可以帮助理解系统行为、用于分析性能问题的工具，以便发生故障的时候，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.beckjin.com/img/skywalking/serviceMap.png">
-<meta property="og:image" content="http://www.beckjin.com/img/skywalking/architecture.png">
-<meta property="og:image" content="http://www.beckjin.com/img/skywalking/skywalkingConfig.png">
-<meta property="og:image" content="http://www.beckjin.com/img/skywalking/skywalkingBin.png">
-<meta property="og:image" content="http://www.beckjin.com/img/skywalking/skywalkingUI.png">
-<meta property="og:image" content="http://www.beckjin.com/img/skywalking/skywalkingJavaAgent.png">
-<meta property="og:image" content="http://www.beckjin.com/img/skywalking/hostingStartupAssemblies.png">
-<meta property="og:image" content="http://www.beckjin.com/img/skywalking/skywalkingRequestLog.png">
-<meta property="og:image" content="http://www.beckjin.com/img/skywalking/serviceRequestMap.png">
-<meta property="og:image" content="http://www.beckjin.com/img/skywalking/skywalkingSpans.png">
-<meta property="og:image" content="http://www.beckjin.com/img/skywalking/skywalkingTopologyMap.png">
-<meta property="og:updated_time" content="2019-12-29T14:13:25.577Z">
+<meta property="og:image" content="https://www.beckjin.com/img/skywalking/serviceMap.png">
+<meta property="og:image" content="https://www.beckjin.com/img/skywalking/architecture.png">
+<meta property="og:image" content="https://www.beckjin.com/img/skywalking/skywalkingConfig.png">
+<meta property="og:image" content="https://www.beckjin.com/img/skywalking/skywalkingBin.png">
+<meta property="og:image" content="https://www.beckjin.com/img/skywalking/skywalkingUI.png">
+<meta property="og:image" content="https://www.beckjin.com/img/skywalking/skywalkingJavaAgent.png">
+<meta property="og:image" content="https://www.beckjin.com/img/skywalking/hostingStartupAssemblies.png">
+<meta property="og:image" content="https://www.beckjin.com/img/skywalking/skywalkingRequestLog.png">
+<meta property="og:image" content="https://www.beckjin.com/img/skywalking/serviceRequestMap.png">
+<meta property="og:image" content="https://www.beckjin.com/img/skywalking/skywalkingSpans.png">
+<meta property="og:image" content="https://www.beckjin.com/img/skywalking/skywalkingTopologyMap.png">
+<meta property="og:updated_time" content="2020-09-12T09:14:43.779Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SkyWalking 分布式追踪系统">
 <meta name="twitter:description" content="随着微服务架构的流行，一些微服务架构下的问题也会越来越突出，比如一个请求会涉及多个服务，而服务本身可能也会依赖其他服务，整个请求路径就构成了一个网状的调用链，而在整个调用链中一旦某个节点发生异常，整个调用链的稳定性就会受到影响，所以会深深的感受到 “银弹” 这个词是不存在的，每种架构都有其优缺点 。  面对以上情况， 我们就需要一些可以帮助理解系统行为、用于分析性能问题的工具，以便发生故障的时候，">
-<meta name="twitter:image" content="http://www.beckjin.com/img/skywalking/serviceMap.png">
+<meta name="twitter:image" content="https://www.beckjin.com/img/skywalking/serviceMap.png">
 
 
 
@@ -134,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="http://www.beckjin.com/2018/09/09/skywalking/">
+  <link rel="canonical" href="https://www.beckjin.com/2018/09/09/skywalking/">
 
 
 
@@ -269,7 +269,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2018/09/09/skywalking/">
+    <link itemprop="mainEntityOfPage" href="https://www.beckjin.com/2018/09/09/skywalking/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
@@ -384,7 +384,7 @@
 <li>8080,10800,11800,12800 端口不被占用</li>
 </ol>
 <p><a href="https://www.elastic.co/downloads/elasticsearch" target="_blank" rel="noopener">Elasticsearch下载安装</a> 参考官方教程， 安装完成后需要对 config/elasticsearch.yml 做如下修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 修改</span><br><span class="line"># 如果 cluster.name 不设置为 CollectorDBCluster ，则需要修改 SkyWalking 的配置文件</span><br><span class="line">cluster.name: CollectorDBCluster   </span><br><span class="line">network.host: 0.0.0.0</span><br><span class="line"># 增加</span><br><span class="line">thread_pool.bulk.queue_size: 1000</span><br></pre></td></tr></table></figure></p>
-<p>如果是 linux 环境，Elasticsearch 安装可能没有那么顺利，请参考 <a href="http://beckjin.com/2018/05/19/es-error-linux/" target="_blank" rel="noopener">Linux 环境下安装 Elasticsearch 5.x、6.x 问题汇总</a>。</p>
+<p>如果是 linux 环境，Elasticsearch 安装可能没有那么顺利，请参考 <a href="https://beckjin.com/2018/05/19/es-error-linux/" target="_blank" rel="noopener">Linux 环境下安装 Elasticsearch 5.x、6.x 问题汇总</a>。</p>
 <h3 id="下载-SkyWalking"><a href="#下载-SkyWalking" class="headerlink" title="下载 SkyWalking"></a>下载 SkyWalking</h3><p>SkyWalking 个人建议直接下载官方编译好的，<a href="http://skywalking.apache.org/downloads/" target="_blank" rel="noopener">下载地址</a></p>
 <h3 id="启动-SkyWalking"><a href="#启动-SkyWalking" class="headerlink" title="启动 SkyWalking"></a>启动 SkyWalking</h3><p><img src="/img/skywalking/skywalkingConfig.png" alt="skywalking config"></p>
 <p>config/application.yml 的默认数据存储开启是的 h2，这里我们需要修改数据存储为 Elasticsearch（<strong>在启动 SkyWalking 之前，确保 Elasticsearch 已启动</strong>）</p>

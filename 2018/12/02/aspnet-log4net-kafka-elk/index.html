@@ -85,20 +85,20 @@
 <meta name="keywords" content="C#,WebApi,Kafka,log4net,ELK">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ASP.NET Core 日志收集（log4net+Kafka+ELK）">
-<meta property="og:url" content="http://www.beckjin.com/2018/12/02/aspnet-log4net-kafka-elk/index.html">
+<meta property="og:url" content="https://www.beckjin.com/2018/12/02/aspnet-log4net-kafka-elk/index.html">
 <meta property="og:site_name" content="Beck&#39;s Blog">
 <meta property="og:description" content="在开发环境中，记录日志这件事情常常被忽视，因为我们有强大的 IDE ，可以调试，可以断点，问题出现后一般都能很快解决。但在生产环境，异常一旦发生，如果不能重现，又没有提前做好日志记录，就会非常被动，问题的定位也可能需要花很多时间，问题最终也是不了了之。给对方的回复也许是这样的： 可能你的网络那个时间点有问题。 日志当然不只是为了定位问题，实际我们还可以通过日志进行一系列的分析，通过分析结果我们可以">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-log4net-kafka-elk/architecture.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-log4net-kafka-elk/serviceDir.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-log4net-kafka-elk/elasticsearchInfo.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-log4net-kafka-elk/logstashTest.png">
-<meta property="og:image" content="http://www.beckjin.com/img/aspnet-log4net-kafka-elk/kibanaLog.png">
-<meta property="og:updated_time" content="2019-12-29T14:12:34.564Z">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-log4net-kafka-elk/architecture.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-log4net-kafka-elk/serviceDir.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-log4net-kafka-elk/elasticsearchInfo.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-log4net-kafka-elk/logstashTest.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-log4net-kafka-elk/kibanaLog.png">
+<meta property="og:updated_time" content="2020-09-12T09:13:13.906Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ASP.NET Core 日志收集（log4net+Kafka+ELK）">
 <meta name="twitter:description" content="在开发环境中，记录日志这件事情常常被忽视，因为我们有强大的 IDE ，可以调试，可以断点，问题出现后一般都能很快解决。但在生产环境，异常一旦发生，如果不能重现，又没有提前做好日志记录，就会非常被动，问题的定位也可能需要花很多时间，问题最终也是不了了之。给对方的回复也许是这样的： 可能你的网络那个时间点有问题。 日志当然不只是为了定位问题，实际我们还可以通过日志进行一系列的分析，通过分析结果我们可以">
-<meta name="twitter:image" content="http://www.beckjin.com/img/aspnet-log4net-kafka-elk/architecture.png">
+<meta name="twitter:image" content="https://www.beckjin.com/img/aspnet-log4net-kafka-elk/architecture.png">
 
 
 
@@ -128,7 +128,7 @@
 
 
 
-  <link rel="canonical" href="http://www.beckjin.com/2018/12/02/aspnet-log4net-kafka-elk/">
+  <link rel="canonical" href="https://www.beckjin.com/2018/12/02/aspnet-log4net-kafka-elk/">
 
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.beckjin.com/2018/12/02/aspnet-log4net-kafka-elk/">
+    <link itemprop="mainEntityOfPage" href="https://www.beckjin.com/2018/12/02/aspnet-log4net-kafka-elk/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Beck Jin">
@@ -416,9 +416,9 @@ KafkaAppender 日志写入 Kafka Topic 的格式如下：
 <p>目前 log4net.Kafka.Core 封装的并不完善，后面会继续优化。</p>
 <h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><ul>
 <li><a href="https://www.elastic.co/products" target="_blank" rel="noopener">Elastic Stack</a></li>
-<li><a href="http://beckjin.com/2018/05/19/es-cluster/" target="_blank" rel="noopener">Elasticsearch 集群</a></li>
-<li><a href="http://beckjin.com/2017/12/10/elk/" target="_blank" rel="noopener">ELK + Filebeat 搭建日志系统</a></li>
-<li><a href="http://beckjin.com/2018/11/18/kafka-cluster/" target="_blank" rel="noopener">Kafka 集群</a></li>
+<li><a href="https://beckjin.com/2018/05/19/es-cluster/" target="_blank" rel="noopener">Elasticsearch 集群</a></li>
+<li><a href="https://beckjin.com/2017/12/10/elk/" target="_blank" rel="noopener">ELK + Filebeat 搭建日志系统</a></li>
+<li><a href="https://beckjin.com/2018/11/18/kafka-cluster/" target="_blank" rel="noopener">Kafka 集群</a></li>
 <li><a href="https://www.nuget.org/packages/log4net.Kafka.Core/" target="_blank" rel="noopener">log4net.Kafka.Core-nuget</a></li>
 <li><a href="https://github.com/beckjin/log4net.Kafka.Core" target="_blank" rel="noopener">log4net.Kafka.Core-github</a></li>
 <li><a href="https://github.com/beckjin/log4netSample" target="_blank" rel="noopener">log4netSample</a></li>
