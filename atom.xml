@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.beckjin.com/"/>
-  <updated>2020-09-12T08:44:58.675Z</updated>
+  <updated>2020-09-12T08:51:59.524Z</updated>
   <id>http://www.beckjin.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://www.beckjin.com/2020/09/12/aspnet-cookie-samesite/"/>
     <id>http://www.beckjin.com/2020/09/12/aspnet-cookie-samesite/</id>
     <published>2020-09-12T08:19:55.000Z</published>
-    <updated>2020-09-12T08:44:58.675Z</updated>
+    <updated>2020-09-12T08:51:59.524Z</updated>
     
     <summary type="html">
     
@@ -35,10 +35,10 @@
     
     </summary>
     
-      <category term="微服务" scheme="http://www.beckjin.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+      <category term="ASP.NET Core" scheme="http://www.beckjin.com/categories/ASP-NET-Core/"/>
     
     
-      <category term="ASP.NET Core" scheme="http://www.beckjin.com/tags/ASP-NET-Core/"/>
+      <category term="C#" scheme="http://www.beckjin.com/tags/C/"/>
     
       <category term="Cookie" scheme="http://www.beckjin.com/tags/Cookie/"/>
     
