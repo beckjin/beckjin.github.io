@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.beckjin.com/"/>
-  <updated>2020-09-12T08:51:59.524Z</updated>
+  <updated>2020-09-20T07:38:50.175Z</updated>
   <id>https://www.beckjin.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>.NET Core + Kubernetes：StatefulSet</title>
+    <link href="https://www.beckjin.com/2020/09/20/aspnet-k8s-statefulset/"/>
+    <id>https://www.beckjin.com/2020/09/20/aspnet-k8s-statefulset/</id>
+    <published>2020-09-20T07:08:51.000Z</published>
+    <updated>2020-09-20T07:38:50.175Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;在 Kubernetes 中，Pod 资源的控制器 Deployment、Replicaset、Daemonset 等常用于管理无状态应用，它们所管理的 Pod 对应的 IP、名字，启停顺序等都是随机的，Pod
+        
+      
+    
+    </summary>
+    
+      <category term="ASP.NET Core" scheme="https://www.beckjin.com/categories/ASP-NET-Core/"/>
+    
+    
+      <category term="C#" scheme="https://www.beckjin.com/tags/C/"/>
+    
+      <category term="Kubernetes" scheme="https://www.beckjin.com/tags/Kubernetes/"/>
+    
+  </entry>
   
   <entry>
     <title>ASP.NET Core Cookie SameSite</title>
@@ -538,32 +566,6 @@
       <category term="gRPC" scheme="https://www.beckjin.com/tags/gRPC/"/>
     
       <category term="Docker" scheme="https://www.beckjin.com/tags/Docker/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>HttpClientFactory + Polly 实现熔断降级</title>
-    <link href="https://www.beckjin.com/2019/09/07/polly-http-client/"/>
-    <id>https://www.beckjin.com/2019/09/07/polly-http-client/</id>
-    <published>2019-09-07T08:43:17.000Z</published>
-    <updated>2019-12-29T14:11:09.666Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;code&gt;HttpClientFactory&lt;/code&gt; 是 ASP.NET CORE 2.1 中新增加的功能，目的是为了解决直接使用 &lt;code&gt;HttpClient&lt;/code&gt; 可能带来的一系列问题（&lt;em&gt;&lt;a
-        
-      
-    
-    </summary>
-    
-      <category term="Polly" scheme="https://www.beckjin.com/categories/Polly/"/>
-    
-    
-      <category term="C#" scheme="https://www.beckjin.com/tags/C/"/>
     
   </entry>
   

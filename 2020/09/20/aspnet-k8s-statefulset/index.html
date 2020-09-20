@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="C#,Kubernetes,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Beck's Blog" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="在 Kubernetes 中，Pod 资源的控制器 Deployment、Replicaset、Daemonset 等常用于管理无状态应用，它们所管理的 Pod 对应的 IP、名字，启停顺序等都是随机的，Pod 之间也并不存在任何关联关系。而实际情况下，在应用集群部署时，实例彼此之间可能是需要存在关联关系的（启动顺序、角色），如 MySQL、MongoDB，所以 StatefulSet 就是为了运">
+<meta name="keywords" content="C#,Kubernetes">
+<meta property="og:type" content="article">
+<meta property="og:title" content=".NET Core + Kubernetes：StatefulSet">
+<meta property="og:url" content="https://www.beckjin.com/2020/09/20/aspnet-k8s-statefulset/index.html">
+<meta property="og:site_name" content="Beck&#39;s Blog">
+<meta property="og:description" content="在 Kubernetes 中，Pod 资源的控制器 Deployment、Replicaset、Daemonset 等常用于管理无状态应用，它们所管理的 Pod 对应的 IP、名字，启停顺序等都是随机的，Pod 之间也并不存在任何关联关系。而实际情况下，在应用集群部署时，实例彼此之间可能是需要存在关联关系的（启动顺序、角色），如 MySQL、MongoDB，所以 StatefulSet 就是为了运">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-k8s-statefulset/pod.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-k8s-statefulset/pvc.png">
+<meta property="og:image" content="https://www.beckjin.com/img/aspnet-k8s-statefulset/service.png">
+<meta property="og:updated_time" content="2020-09-20T07:38:50.175Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content=".NET Core + Kubernetes：StatefulSet">
+<meta name="twitter:description" content="在 Kubernetes 中，Pod 资源的控制器 Deployment、Replicaset、Daemonset 等常用于管理无状态应用，它们所管理的 Pod 对应的 IP、名字，启停顺序等都是随机的，Pod 之间也并不存在任何关联关系。而实际情况下，在应用集群部署时，实例彼此之间可能是需要存在关联关系的（启动顺序、角色），如 MySQL、MongoDB，所以 StatefulSet 就是为了运">
+<meta name="twitter:image" content="https://www.beckjin.com/img/aspnet-k8s-statefulset/pod.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.beckjin.com/2020/09/20/aspnet-k8s-statefulset/">
+
+
+
+
+
+  <title>.NET Core + Kubernetes：StatefulSet | Beck's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+	<a href="https://github.com/beckjin" target="_blank" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+	
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Beck's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.beckjin.com/2020/09/20/aspnet-k8s-statefulset/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Beck Jin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beck's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">.NET Core + Kubernetes：StatefulSet</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-20T15:08:51+08:00">
+                2020-09-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ASP-NET-Core/" itemprop="url" rel="index">
+                    <span itemprop="name">ASP.NET Core</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/09/20/aspnet-k8s-statefulset/" class="leancloud_visitors" data-flag-title=".NET Core + Kubernetes：StatefulSet">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在 Kubernetes 中，Pod 资源的控制器 Deployment、Replicaset、Daemonset 等常用于管理无状态应用，它们所管理的 Pod 对应的 IP、名字，启停顺序等都是随机的，Pod 之间也并不存在任何关联关系。而实际情况下，在应用集群部署时，实例彼此之间可能是需要存在关联关系的（启动顺序、角色），如 MySQL、MongoDB，所以 StatefulSet 就是为了运行有状态服务引入的一种资源类型，StatefulSet 为每个 Pod 维持一个唯一且固定的标识符，必要时还会为其创建专用的存储卷，当 Pod 被重建时，也依然能保持原来的标识符和存储卷。 </p>
+<p>完整的 StatefulSet 通常由三部分构成：<code>StatefulSet</code> 、<code>VolumeClaimTemplate</code>、<code>Headless Service</code>。</p>
+<blockquote>
+<p><code>StatefulSet</code> 用于 Pod 资源定义与管控，在 StatefulSet 模式下，Pod 有自己固定的命名规则（<strong>StatfulSet 名称 + Pod 创建时所在的索引</strong>），假设设置的 StatefulSet 名称为 <code>k8sdemo</code>，replicas 为3，则对应的 Pod 名称将分别是 <code>k8sdemo-0</code>、<code>k8sdemo-1</code>、<code>k8sdemo-0</code>，同时在进行 Pod 副本伸缩时也能做到按序号进行升降。</p>
+</blockquote>
+<blockquote>
+<p><code>VolumeClaimTemplate</code> 用于定义 Pod 所需存储的 PVC 声明 ，PVC 与 PV 进行绑定，提供专有固定的存储卷。</p>
+</blockquote>
+<blockquote>
+<p><code>Headless Service</code> （<em>clusterIP: None</em>）用于为 Pod 生成可解析的 DNS 域名记录，基于 Pod 名称的有序规则，Pod 域名是不会变的（<strong>Pod 名称.serviceName</strong>），这也保证了 Pod 网络标识的稳定性。</p>
+</blockquote>
+<p>下面继续以 .NET Core  项目构建的 <code>beckjin/k8sdemo:1.2.0</code> 镜像为例，增加了接口访问日志记录的功能。通过集成 log4net 将接口访问日志进行文件记录，日志将输出到 /Data/ 目录，每个 Pod 都会拥有自己的一份日志文件（<em>这只是一个假设的场景，切勿较真，实际情况下日志记录一般都会使用统一的日志采集工具</em>）。</p>
+<h3 id="定义资源"><a href="#定义资源" class="headerlink" title="定义资源"></a>定义资源</h3><p><code>k8sdemo-statefulset.yaml</code>：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: StatefulSet</span><br><span class="line">metadata:</span><br><span class="line">  name: k8sdemo</span><br><span class="line">spec:</span><br><span class="line">  serviceName: &quot;k8sdemo-service&quot;  # 需要与创建的 service name 一致</span><br><span class="line">  replicas: 3</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      name: k8sdemo</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        name: k8sdemo</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: k8sdemo</span><br><span class="line">        image: beckjin/k8sdemo:1.2.0</span><br><span class="line">        imagePullPolicy: IfNotPresent</span><br><span class="line">        volumeMounts:</span><br><span class="line">        - name: data</span><br><span class="line">          mountPath: /app/Data  # 将容器内的 Data 目录进行挂载</span><br><span class="line">  volumeClaimTemplates:  # 定义模板，自动创建 PVC</span><br><span class="line">    - metadata:</span><br><span class="line">        name: data</span><br><span class="line">      spec:</span><br><span class="line">        accessModes:</span><br><span class="line">          - ReadOnlyMany</span><br><span class="line">        resources:</span><br><span class="line">          requests:</span><br><span class="line">            storage:  100Mi</span><br><span class="line">        storageClassName: &quot;k8sdemo-sc&quot;  # 将自动与集群内 storageClassName 匹配的 PV 进行绑定</span><br></pre></td></tr></table></figure></p>
+<p><code>k8sdemo-service.yaml</code>：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: k8sdemo-service</span><br><span class="line">spec:</span><br><span class="line">  clusterIP: None</span><br><span class="line">  ports:</span><br><span class="line">  - port: 80</span><br><span class="line">    targetPort: 80</span><br><span class="line">  selector:</span><br><span class="line">    name: k8sdemo</span><br></pre></td></tr></table></figure></p>
+<p>StatefulSet 模式下需要设置 <code>serviceName</code> 字段，用来告诉 StatefulSet 控制器具体使用哪个 service 来解析它所管理的 Pod。同时通过 <code>volumeClaimTemplates</code> 字段进行 PVC 定义，StatefulSet 控制器会自动创建与 Pod 对应的 PVC，PVC 的名称为 <strong>(volumeClaimTemplateName)-(podName)</strong>，然后 PVC 会自动与满足要求的 PV 进行绑定，PV 如果不支持自动创建可手动完成。另外当 Pod 被删除时 PVC 与 PV 依然会被保留，Pod 重建时会重新关联之前对应的 PVC 与 PV。</p>
+<p>这里还是使用的 NFS 创建 PV 来实现存储，分别创建 3 个（<em>data-k8sdemo-pv-[1~3]</em>）满足定义要求的 PV，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: PersistentVolume</span><br><span class="line">metadata:</span><br><span class="line">  name: data-k8sdemo-pv-1</span><br><span class="line">spec:</span><br><span class="line">  nfs:</span><br><span class="line">    server: 192.168.124.21</span><br><span class="line">    path: /statefulset/data1</span><br><span class="line">  accessModes:</span><br><span class="line">  - ReadOnlyMany</span><br><span class="line">  capacity:</span><br><span class="line">    storage: 100Mi</span><br><span class="line">  storageClassName: k8sdemo-sc</span><br></pre></td></tr></table></figure>
+<h3 id="部署与测试"><a href="#部署与测试" class="headerlink" title="部署与测试"></a>部署与测试</h3><p>创建 PV 与 StatefulSet：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f k8sdemo-statefulset-pv1.yaml</span><br><span class="line">kubectl apply -f k8sdemo-statefulset-pv2.yaml</span><br><span class="line">kubectl apply -f k8sdemo-statefulset-pv3.yaml</span><br><span class="line">kubectl apply -f k8sdemo-statefulset.yaml</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/aspnet-k8s-statefulset/pod.png" alt></p>
+<p><img src="/img/aspnet-k8s-statefulset/pvc.png" alt></p>
+<p><strong>注意：</strong>： PV 命名顺序并不代表被 PVC 的绑定顺序，这两者没有关系，所以不用对上图的数字编号对应关系有疑问。</p>
+<p>创建 Service：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f k8sdemo-service.yaml</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/aspnet-k8s-statefulset/service.png" alt></p>
+<p>因为 Service 定义的是 Headless 模式，所以需要进去 Pod 内进行接口访问测试，如：<code>kubectl exec -it k8sdemo-0 bash</code> 进入 k8sdemo-0 这个 Pod，通过域名 <strong>Pod 名称.serviceName</strong> 来访问，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl k8sdemo-0.k8sdemo-service/weatherforecast</span><br><span class="line">curl k8sdemo-1.k8sdemo-service/weatherforecast</span><br><span class="line">curl k8sdemo-2.k8sdemo-service/weatherforecast</span><br></pre></td></tr></table></figure></p>
+<p>在 NFS 挂载目录中查看接口访问日志，以下是 Pod  k8sdemo-1 中的日志：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">2020-09-20 06:01:17,451 [17] INFO  [k8sdemo-1] - Request starting HTTP/1.1 GET http://k8sdemo-1.k8sdemo-service/weatherforecast  </span><br><span class="line">2020-09-20 06:01:17,455 [17] INFO  [k8sdemo-1] - Executing endpoint &apos;T.K8SDemo.Controllers.WeatherForecastController.Get (T.K8SDemo)&apos;</span><br><span class="line">2020-09-20 06:01:17,458 [17] INFO  [k8sdemo-1] - Route matched with &#123;action = &quot;Get&quot;, controller = &quot;WeatherForecast&quot;&#125;. Executing controller action with signature System.Collections.Generic.IEnumerable`1[T.K8SDemo.WeatherForecast] Get() on controller T.K8SDemo.Controllers.WeatherForecastController (T.K8SDemo).</span><br><span class="line">2020-09-20 06:01:17,459 [17] INFO  [k8sdemo-1] - Executing ObjectResult, writing value of type &apos;T.K8SDemo.WeatherForecast[]&apos;.</span><br><span class="line">2020-09-20 06:01:17,460 [17] INFO  [k8sdemo-1] - Executed action T.K8SDemo.Controllers.WeatherForecastController.Get (T.K8SDemo) in 2.3627ms</span><br><span class="line">2020-09-20 06:01:17,460 [17] INFO  [k8sdemo-1] - Executed endpoint &apos;T.K8SDemo.Controllers.WeatherForecastController.Get (T.K8SDemo)&apos;</span><br><span class="line">2020-09-20 06:01:17,461 [17] INFO  [k8sdemo-1] - Request finished in 9.9194ms 200 application/json; charset=utf-8</span><br></pre></td></tr></table></figure></p>
+<p>执行 <code>kubectl delete pod k8sdemo-1</code> 删除 Pod k8sdemo-1，等待一会 k8sdemo-1 会自动恢复，然后重新访问 <code>curl k8sdemo-1.k8sdemo-service/weatherforecast</code>，日志依然向原来的文件内追加，也说明保留了原来的状态。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">2020-09-20 06:01:17,451 [17] INFO  [k8sdemo-1] - Request starting HTTP/1.1 GET http://k8sdemo-1.k8sdemo-service/weatherforecast  </span><br><span class="line">2020-09-20 06:01:17,455 [17] INFO  [k8sdemo-1] - Executing endpoint &apos;T.K8SDemo.Controllers.WeatherForecastController.Get (T.K8SDemo)&apos;</span><br><span class="line">2020-09-20 06:01:17,458 [17] INFO  [k8sdemo-1] - Route matched with &#123;action = &quot;Get&quot;, controller = &quot;WeatherForecast&quot;&#125;. Executing controller action with signature System.Collections.Generic.IEnumerable`1[T.K8SDemo.WeatherForecast] Get() on controller T.K8SDemo.Controllers.WeatherForecastController (T.K8SDemo).</span><br><span class="line">2020-09-20 06:01:17,459 [17] INFO  [k8sdemo-1] - Executing ObjectResult, writing value of type &apos;T.K8SDemo.WeatherForecast[]&apos;.</span><br><span class="line">2020-09-20 06:01:17,460 [17] INFO  [k8sdemo-1] - Executed action T.K8SDemo.Controllers.WeatherForecastController.Get (T.K8SDemo) in 2.3627ms</span><br><span class="line">2020-09-20 06:01:17,460 [17] INFO  [k8sdemo-1] - Executed endpoint &apos;T.K8SDemo.Controllers.WeatherForecastController.Get (T.K8SDemo)&apos;</span><br><span class="line">2020-09-20 06:01:17,461 [17] INFO  [k8sdemo-1] - Request finished in 9.9194ms 200 application/json; charset=utf-8</span><br><span class="line">2020-09-20 06:17:06,467 [12] INFO  [k8sdemo-1] - Request starting HTTP/1.1 GET http://k8sdemo-1.k8sdemo-service/weatherforecast  </span><br><span class="line">2020-09-20 06:17:06,494 [12] INFO  [k8sdemo-1] - Executing endpoint &apos;T.K8SDemo.Controllers.WeatherForecastController.Get (T.K8SDemo)&apos;</span><br><span class="line">2020-09-20 06:17:06,527 [12] INFO  [k8sdemo-1] - Route matched with &#123;action = &quot;Get&quot;, controller = &quot;WeatherForecast&quot;&#125;. Executing controller action with signature System.Collections.Generic.IEnumerable`1[T.K8SDemo.WeatherForecast] Get() on controller T.K8SDemo.Controllers.WeatherForecastController (T.K8SDemo).</span><br><span class="line">2020-09-20 06:17:06,533 [12] INFO  [k8sdemo-1] - Executing ObjectResult, writing value of type &apos;T.K8SDemo.WeatherForecast[]&apos;.</span><br><span class="line">2020-09-20 06:17:06,548 [12] INFO  [k8sdemo-1] - Executed action T.K8SDemo.Controllers.WeatherForecastController.Get (T.K8SDemo) in 17.1904ms</span><br><span class="line">2020-09-20 06:17:06,549 [12] INFO  [k8sdemo-1] - Executed endpoint &apos;T.K8SDemo.Controllers.WeatherForecastController.Get (T.K8SDemo)&apos;</span><br><span class="line">2020-09-20 06:17:06,550 [12] INFO  [k8sdemo-1] - Request finished in 84.3414ms 200 application/json; charset=utf-8</span><br></pre></td></tr></table></figure></p>
+<p>另外对 Pod 副本进行伸缩时效果也是一样的，都会保持 Pod 具有的状态。当然文中的例子和一些组件的集群部署不太一样，比如像 MySQL 这类组件，各实例间还会做数据同步来实现数据的一致性，当然最终也是每个实例关联自己的数据存储卷。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果对你有帮助就好</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/img/pay/wechatpay.png" alt="Beck Jin 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/img/pay/alipay.png" alt="Beck Jin 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C#</a>
+          
+            <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/09/12/aspnet-cookie-samesite/" rel="next" title="ASP.NET Core Cookie SameSite">
+                <i class="fa fa-chevron-left"></i> ASP.NET Core Cookie SameSite
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Beck Jin">
+            
+              <p class="site-author-name" itemprop="name">Beck Jin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">55</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/beckjin" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1798410296@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义资源"><span class="nav-number">1.</span> <span class="nav-text">定义资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署与测试"><span class="nav-number">2.</span> <span class="nav-text">部署与测试</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Beck Jin</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.min.css" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitment.browser.min.js" crossorigin="anonymous"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitment({
+            id: '1600585731000', 
+            owner: 'beckjin',
+            repo: 'beckjin.github.io',
+            
+            oauth: {
+            
+            
+                client_secret: 'f3317552363ce12638c39c095f521db7ecfcb46d',
+            
+                client_id: 'bee5c835ae9ab1ab1fc9'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("FCgGthOl6XN7xRjfK31raebD-gzGzoHsz", "20z736XSuGX562R2ky8uu4EU");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
