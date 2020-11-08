@@ -95,7 +95,7 @@
 <meta property="og:image" content="https://www.beckjin.com/img/aspnet-ptp/nugetPackageSetting.png">
 <meta property="og:image" content="https://www.beckjin.com/img/aspnet-ptp/publishedPackages.png">
 <meta property="og:image" content="https://www.beckjin.com/img/aspnet-ptp/installMyHelloworld.png">
-<meta property="og:updated_time" content="2020-09-12T09:13:34.590Z">
+<meta property="og:updated_time" content="2020-11-08T14:52:20.763Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="VS 扩展开发：Grpc Proto To NuGet Package">
 <meta name="twitter:description" content="一直以来我们使用 gRPC 来进行微服务开发，对 gRPC 有过了解应该清楚它依赖 proto 接口定义文件来实现的，在进行服务调用之前，需要先通过 proto 文件来生成当前服务使用语言的代码，然后就可以实现调用本地方法一样调用远程服务。（.NET Core 3.0 开始已支持不用手动生成代码就可以调用方法，但在多语言的微服务开发中，proto 文件的维护还是比较倾向我们目前的方式） 在 .NE">
@@ -316,8 +316,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ASP-NET/" itemprop="url" rel="index">
-                    <span itemprop="name">ASP.NET</span>
+                  <a href="/categories/NET/" itemprop="url" rel="index">
+                    <span itemprop="name">.NET</span>
                   </a>
                 </span>
 
@@ -368,7 +368,7 @@
 <p>在 .NET 开发中，我们之前的方式还是根据  <code>proto</code> 文件手动生成代码，接着生成 NuGet Package ，然后推送到自己的私有 NuGet 仓库，最后在服务内进行 NuGet Package 安装来引用，这样不至于需要依赖此服务的服务每次都 copy 代码，目的是在服务引用上简化一些步骤。</p>
 <p>但问题又来了，要最终实现推送到自己的私有 NuGet 仓库的步骤实在太多，这样依然效率低下，最后我们决定还是自己开发一个 VS 插件 <a href="https://marketplace.visualstudio.com/items?itemName=Mingdao.ptp" target="_blank" rel="noopener">Grpc Proto To NuGet Package</a> ，功能就是一键生成 NuGet Package 并发布到私有仓库。</p>
 <h3 id="实现方案"><a href="#实现方案" class="headerlink" title="实现方案"></a>实现方案</h3><ol>
-<li><p>创建 <code>gRPC</code> 接口生成的项目模板，关于 .NET 项目模板创建可参考文章：<a href="https://beckjin.com/2019/08/04/aspnet-template/" target="_blank" rel="noopener">ASP.NET 自定义项目模板</a> ；</p>
+<li><p>创建 <code>gRPC</code> 接口生成的项目模板，关于 .NET 项目模板创建可参考文章：<a href="https://beckjin.com/2019/08/04/aspnet-template/" target="_blank" rel="noopener">.NET 自定义项目模板</a> ；</p>
 </li>
 <li><p>创建 VS 扩展插件 <code>Grpc Proto To NuGet Package</code>；</p>
 </li>
@@ -382,7 +382,7 @@
 </li>
 </ol>
 <h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><ol>
-<li><p>下载最新 <a href="https://github.com/mingdaocom/GrpcProtoToNuGetPackage/releases" target="_blank" rel="noopener">GrpcProtoToNuGetPackageTemplate.zip</a> ASP.NET 的项目模板；</p>
+<li><p>下载最新 <a href="https://github.com/mingdaocom/GrpcProtoToNuGetPackage/releases" target="_blank" rel="noopener">GrpcProtoToNuGetPackageTemplate.zip</a> .NET 的项目模板；</p>
 </li>
 <li><p>解压 <code>GrpcProtoToNuGetPackageTemplate.zip</code>，在安装之前最好对以下文件进行必要的修改，主要是团队相关信息：</p>
 <p><code>Content/.template.config/template.json</code>:  author<br><code>Grpc.Proto.To.NuGet.Package.nuspec</code>:  authors<br><code>GrpcProtoToNuGetPackage.csproj</code>: Authors、Company、RepositoryUrl，其他看情况修改如：<code>TargetFrameworks</code> .</p>
@@ -482,8 +482,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/04/aspnet-template/" rel="next" title="ASP.NET 自定义项目模板（一）：快速入门">
-                <i class="fa fa-chevron-left"></i> ASP.NET 自定义项目模板（一）：快速入门
+              <a href="/2019/08/04/aspnet-template/" rel="next" title=".NET 自定义项目模板（一）：快速入门">
+                <i class="fa fa-chevron-left"></i> .NET 自定义项目模板（一）：快速入门
               </a>
             
           </div>
@@ -580,7 +580,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-count">68</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

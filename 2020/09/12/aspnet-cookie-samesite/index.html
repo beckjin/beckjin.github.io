@@ -84,7 +84,7 @@
 <meta name="description" content="在较多的项目中，Cookie 是比较常用的一种状态保持的选择。比如常见的例子：用户登录成功后，服务器通过 set-cookie 将会话Id设置到当前域下，前端在调用后端接口时，会自动将同域下的 Cookie 携带上，然后后端接口再获取到会话Id进行用户登录状态的合法性验证。 了解过 Cookie 相关知识的同学都比较清楚，Cookie 的使用上一不小心就会出现安全性问题，如：CSRF（Cross-">
 <meta name="keywords" content="C#,Cookie">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ASP.NET Core Cookie SameSite">
+<meta property="og:title" content=".NET Core Cookie SameSite">
 <meta property="og:url" content="https://www.beckjin.com/2020/09/12/aspnet-cookie-samesite/index.html">
 <meta property="og:site_name" content="Beck&#39;s Blog">
 <meta property="og:description" content="在较多的项目中，Cookie 是比较常用的一种状态保持的选择。比如常见的例子：用户登录成功后，服务器通过 set-cookie 将会话Id设置到当前域下，前端在调用后端接口时，会自动将同域下的 Cookie 携带上，然后后端接口再获取到会话Id进行用户登录状态的合法性验证。 了解过 Cookie 相关知识的同学都比较清楚，Cookie 的使用上一不小心就会出现安全性问题，如：CSRF（Cross-">
@@ -92,9 +92,9 @@
 <meta property="og:image" content="https://www.beckjin.com/img/aspnet-cookie-samesite/lax.png">
 <meta property="og:image" content="https://www.beckjin.com/img/aspnet-cookie-samesite/unspecified.png">
 <meta property="og:image" content="https://www.beckjin.com/img/aspnet-cookie-samesite/none.png">
-<meta property="og:updated_time" content="2020-09-12T08:51:59.524Z">
+<meta property="og:updated_time" content="2020-11-08T14:52:19.395Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ASP.NET Core Cookie SameSite">
+<meta name="twitter:title" content=".NET Core Cookie SameSite">
 <meta name="twitter:description" content="在较多的项目中，Cookie 是比较常用的一种状态保持的选择。比如常见的例子：用户登录成功后，服务器通过 set-cookie 将会话Id设置到当前域下，前端在调用后端接口时，会自动将同域下的 Cookie 携带上，然后后端接口再获取到会话Id进行用户登录状态的合法性验证。 了解过 Cookie 相关知识的同学都比较清楚，Cookie 的使用上一不小心就会出现安全性问题，如：CSRF（Cross-">
 <meta name="twitter:image" content="https://www.beckjin.com/img/aspnet-cookie-samesite/lax.png">
 
@@ -132,7 +132,7 @@
 
 
 
-  <title>ASP.NET Core Cookie SameSite | Beck's Blog</title>
+  <title>.NET Core Cookie SameSite | Beck's Blog</title>
   
 
 
@@ -278,7 +278,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">ASP.NET Core Cookie SameSite</h2>
+          <h2 class="post-title" itemprop="name headline">.NET Core Cookie SameSite</h2>
         
 
         <div class="post-meta">
@@ -313,8 +313,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ASP-NET-Core/" itemprop="url" rel="index">
-                    <span itemprop="name">ASP.NET Core</span>
+                  <a href="/categories/NET-Core/" itemprop="url" rel="index">
+                    <span itemprop="name">.NET Core</span>
                   </a>
                 </span>
 
@@ -330,7 +330,7 @@
 
           
           
-             <span id="/2020/09/12/aspnet-cookie-samesite/" class="leancloud_visitors" data-flag-title="ASP.NET Core Cookie SameSite">
+             <span id="/2020/09/12/aspnet-cookie-samesite/" class="leancloud_visitors" data-flag-title=".NET Core Cookie SameSite">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -370,14 +370,14 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set-cookie: sid=0920770230c103809305605a;samesite=lax</span><br></pre></td></tr></table></figure>
 <h4 id="None"><a href="#None" class="headerlink" title="None"></a>None</h4><p>在实际使用中，也会存在有一些场景确实是需要支持跨域 Cookie 传递（<strong>如比较常见的 A 域中 IFrame 嵌入 B 域链接进行使用</strong>），这时候可以选择将 SameSite 设置为 None，但是使用 None 却是有前提条件的，它要求必须同时设置 Secure 属性为 true，而 Secure 设置 true 又要求 B 域是基于 HTTPS 协议来访问的，否则依然无效。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set-cookie: sid=0920770230c103809305605a; secure; samesite=none</span><br></pre></td></tr></table></figure>
-<h3 id="在-NET-Core-中的使用"><a href="#在-NET-Core-中的使用" class="headerlink" title="在 .NET Core 中的使用"></a>在 .NET Core 中的使用</h3><p><em>下面将以 ASP.NET Core Web 应用程序为例</em></p>
+<h3 id="在-NET-Core-中的使用"><a href="#在-NET-Core-中的使用" class="headerlink" title="在 .NET Core 中的使用"></a>在 .NET Core 中的使用</h3><p><em>下面将以 .NET Core Web 应用程序为例</em></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var options = new CookieOptions</span><br><span class="line">&#123;</span><br><span class="line">  Expires = DateTime.Now.AddHours(1),</span><br><span class="line">&#125;;</span><br><span class="line">_httpContextAccessor.HttpContext.Response.Cookies.Append(&quot;sid&quot;, &quot;0920770230c103809305605a&quot;, options);</span><br></pre></td></tr></table></figure>
 <p>常规情况下，以上代码即可完成 Cookie 的写入，CookieOptions 还支持一些其他的配置，可根据实际情况设定。不过需要注意的是在 .NET Core 2.2 和 .NET Core 3.1 中，Cookie 的 SameSite 属性默认值是不也一样的，升级需要注意。</p>
 <p>2.2 中的默认值是 <code>SameSiteMode.Lax</code> </p>
 <p><img src="/img/aspnet-cookie-samesite/lax.png" alt></p>
 <p>3.1 中的默认值变成了 <code>SameSiteMode.Unspecified</code>（表示不写入 SameSite 属性值，继承浏览器默认的 Cookie 策略）</p>
 <p><img src="/img/aspnet-cookie-samesite/unspecified.png" alt></p>
-<h3 id="IFrame-中如何解决-SameSite-问题"><a href="#IFrame-中如何解决-SameSite-问题" class="headerlink" title="IFrame 中如何解决 SameSite 问题"></a>IFrame 中如何解决 SameSite 问题</h3><p>在基于 ASP.NET Core set-cookie 的情况下，如果需要当前域被其他域的 IFrame 引入使用，最基本的要求是站点必须基于 HTTPS 协议，然后修改代码将 SameSite 属性值设置为 None，Secure 设置为 true。</p>
+<h3 id="IFrame-中如何解决-SameSite-问题"><a href="#IFrame-中如何解决-SameSite-问题" class="headerlink" title="IFrame 中如何解决 SameSite 问题"></a>IFrame 中如何解决 SameSite 问题</h3><p>在基于 .NET Core set-cookie 的情况下，如果需要当前域被其他域的 IFrame 引入使用，最基本的要求是站点必须基于 HTTPS 协议，然后修改代码将 SameSite 属性值设置为 None，Secure 设置为 true。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var options = new CookieOptions</span><br><span class="line">&#123;</span><br><span class="line">    SameSite = SameSiteMode.None,</span><br><span class="line">    Secure = true</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p><img src="/img/aspnet-cookie-samesite/none.png" alt></p>
 
@@ -539,7 +539,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-count">68</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

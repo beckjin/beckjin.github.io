@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="ASP.NET Core,Kubernetes,">
+  <meta name="keywords" content="C#,Kubernetes,">
 
 
 
@@ -82,7 +82,7 @@
 
 
 <meta name="description" content="Kubernetes 是目前非常主流的容器编排工具，在应用创建、应用部署、应用扩容、应用更新等方面都非常的方便，而且在应用故障时，也可以快速自愈。所以基于微服务架构下的产品，了解 Kubernetes 的使用是非常必要的，我猜测很多人都曾经多次打算自己搭建 Kubernetes 环境，部署个服务试试效果，但却因为很多原因一次次从入门到放弃，这里应该有部分原因是因  Kubernetes 的入门成本">
-<meta name="keywords" content="ASP.NET Core,Kubernetes">
+<meta name="keywords" content="C#,Kubernetes">
 <meta property="og:type" content="article">
 <meta property="og:title" content=".NET Core + Kubernetes：快速体验">
 <meta property="og:url" content="https://www.beckjin.com/2020/03/21/aspnet-k8s-start/index.html">
@@ -95,7 +95,7 @@
 <meta property="og:image" content="https://www.beckjin.com/img/aspnet-k8s-start/k8sdemoDockerhub.png">
 <meta property="og:image" content="https://www.beckjin.com/img/aspnet-k8s-start/k8sApply.png">
 <meta property="og:image" content="https://www.beckjin.com/img/aspnet-k8s-start/k8sPod.png">
-<meta property="og:updated_time" content="2020-09-20T07:43:58.673Z">
+<meta property="og:updated_time" content="2020-11-08T14:52:24.170Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content=".NET Core + Kubernetes：快速体验">
 <meta name="twitter:description" content="Kubernetes 是目前非常主流的容器编排工具，在应用创建、应用部署、应用扩容、应用更新等方面都非常的方便，而且在应用故障时，也可以快速自愈。所以基于微服务架构下的产品，了解 Kubernetes 的使用是非常必要的，我猜测很多人都曾经多次打算自己搭建 Kubernetes 环境，部署个服务试试效果，但却因为很多原因一次次从入门到放弃，这里应该有部分原因是因  Kubernetes 的入门成本">
@@ -383,7 +383,7 @@
 <p><img src="/img/aspnet-k8s-start/nodes.png" alt></p>
 <h3 id="构建-NET-Core-服务镜像"><a href="#构建-NET-Core-服务镜像" class="headerlink" title="构建 .NET Core 服务镜像"></a>构建 .NET Core 服务镜像</h3><p>接下来将直接在 Windows  环境（<em>镜像构建基于 Windows 还是 Linux 理论上是没有区别的</em>）下构建 .NET Core 服务的 Docker 镜像，所以首先需要安装 <a href="https://docs.docker.com/docker-for-windows/" target="_blank" rel="noopener">Docker for Windows</a>，安装成功后启动 Docker。</p>
 <p><img src="/img/aspnet-k8s-start/dockerDesktop.png" alt></p>
-<p>创建一个 API 类型 ASP.NET Core  Web 应用程序，<strong>启用 Docker 支持</strong>，会在项目下自动生成 Dockerfile 文件，命令主要涉及 <code>dotnet restore</code>，<code>dotnet publish</code>。</p>
+<p>创建一个 API 类型 .NET Core Web 应用程序，<strong>启用 Docker 支持</strong>，会在项目下自动生成 Dockerfile 文件，命令主要涉及 <code>dotnet restore</code>，<code>dotnet publish</code>。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base</span><br><span class="line">WORKDIR /app</span><br><span class="line">EXPOSE 80</span><br><span class="line">EXPOSE 443</span><br><span class="line"></span><br><span class="line">FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build</span><br><span class="line">WORKDIR /src</span><br><span class="line">COPY [&quot;K8SDemo/K8SDemo.csproj&quot;, &quot;K8SDemo/&quot;]</span><br><span class="line">RUN dotnet restore &quot;K8SDemo/K8SDemo.csproj&quot;</span><br><span class="line">COPY . .</span><br><span class="line">WORKDIR &quot;/src/K8SDemo&quot;</span><br><span class="line">RUN dotnet build &quot;K8SDemo.csproj&quot; -c Release -o /app/build</span><br><span class="line"></span><br><span class="line">FROM build AS publish</span><br><span class="line">RUN dotnet publish &quot;K8SDemo.csproj&quot; -c Release -o /app/publish</span><br><span class="line"></span><br><span class="line">FROM base AS final</span><br><span class="line">WORKDIR /app</span><br><span class="line">COPY --from=publish /app/publish .</span><br><span class="line">ENTRYPOINT [&quot;dotnet&quot;, &quot;K8SDemo.dll&quot;]</span><br></pre></td></tr></table></figure>
 <p>在 Dockerfile 文件右键菜单点击生成 Docker 镜像，这与直接在 sln 解决方案文件所在的目录下执行 <code>docker build -f .\K8SDemo\Dockerfile .</code> 本质是一样的，只是 VS 已内置好了，执行成功后在 cmd 窗口中通过 <code>docker images</code> 查看当前存在的 Docker 镜像。</p>
 <p><img src="/img/aspnet-k8s-start/k8sdemoImage.png" alt></p>
@@ -459,7 +459,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/ASP-NET-Core/" rel="tag"># ASP.NET Core</a>
+            <a href="/tags/C/" rel="tag"># C#</a>
           
             <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
           
@@ -474,8 +474,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/03/07/aspnet-configuration-reload/" rel="next" title="ASP.NET Core 配置源：实时生效">
-                <i class="fa fa-chevron-left"></i> ASP.NET Core 配置源：实时生效
+              <a href="/2020/03/07/aspnet-configuration-reload/" rel="next" title=".NET Core 配置源：实时生效">
+                <i class="fa fa-chevron-left"></i> .NET Core 配置源：实时生效
               </a>
             
           </div>
@@ -572,7 +572,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-count">68</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

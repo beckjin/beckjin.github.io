@@ -81,22 +81,22 @@
 
 
 
-<meta name="description" content="ASP.NET MVC 中的过滤器（Filter）是 AOP（面向切面编程） 思想的一种实现，供我们在执行管道的特定阶段执行代码，通过使用过滤器可以实现 短路请求、缓存请求结果、日志统一记录、参数合法性验证、异常统一处理、返回值格式化 等等，同时使业务代码更加简洁单纯，避免很多重复代码。 过滤器执行流程MVC 在选择要执行的 Action 方法后，会执行过滤器管道，流程如下图：  过滤器作用域过滤">
+<meta name="description" content="MVC 中的过滤器（Filter）是 AOP（面向切面编程） 思想的一种实现，供我们在执行管道的特定阶段执行代码，通过使用过滤器可以实现 短路请求、缓存请求结果、日志统一记录、参数合法性验证、异常统一处理、返回值格式化 等等，同时使业务代码更加简洁单纯，避免很多重复代码。 过滤器执行流程MVC 在选择要执行的 Action 方法后，会执行过滤器管道，流程如下图：  过滤器作用域过滤器作用域设置是">
 <meta name="keywords" content="C#,Filter">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ASP.NET Core Filters">
+<meta property="og:title" content=".NET Core Filters">
 <meta property="og:url" content="https://www.beckjin.com/2018/08/12/aspnet-filter/index.html">
 <meta property="og:site_name" content="Beck&#39;s Blog">
-<meta property="og:description" content="ASP.NET MVC 中的过滤器（Filter）是 AOP（面向切面编程） 思想的一种实现，供我们在执行管道的特定阶段执行代码，通过使用过滤器可以实现 短路请求、缓存请求结果、日志统一记录、参数合法性验证、异常统一处理、返回值格式化 等等，同时使业务代码更加简洁单纯，避免很多重复代码。 过滤器执行流程MVC 在选择要执行的 Action 方法后，会执行过滤器管道，流程如下图：  过滤器作用域过滤">
+<meta property="og:description" content="MVC 中的过滤器（Filter）是 AOP（面向切面编程） 思想的一种实现，供我们在执行管道的特定阶段执行代码，通过使用过滤器可以实现 短路请求、缓存请求结果、日志统一记录、参数合法性验证、异常统一处理、返回值格式化 等等，同时使业务代码更加简洁单纯，避免很多重复代码。 过滤器执行流程MVC 在选择要执行的 Action 方法后，会执行过滤器管道，流程如下图：  过滤器作用域过滤器作用域设置是">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://www.beckjin.com/img/aspnet-filter/mvcProcess.png">
 <meta property="og:image" content="https://www.beckjin.com/img/aspnet-filter/invalid.png">
 <meta property="og:image" content="https://www.beckjin.com/img/aspnet-filter/exception.png">
 <meta property="og:image" content="https://www.beckjin.com/img/aspnet-filter/success.png">
-<meta property="og:updated_time" content="2019-12-29T14:12:20.073Z">
+<meta property="og:updated_time" content="2020-11-08T14:50:20.143Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ASP.NET Core Filters">
-<meta name="twitter:description" content="ASP.NET MVC 中的过滤器（Filter）是 AOP（面向切面编程） 思想的一种实现，供我们在执行管道的特定阶段执行代码，通过使用过滤器可以实现 短路请求、缓存请求结果、日志统一记录、参数合法性验证、异常统一处理、返回值格式化 等等，同时使业务代码更加简洁单纯，避免很多重复代码。 过滤器执行流程MVC 在选择要执行的 Action 方法后，会执行过滤器管道，流程如下图：  过滤器作用域过滤">
+<meta name="twitter:title" content=".NET Core Filters">
+<meta name="twitter:description" content="MVC 中的过滤器（Filter）是 AOP（面向切面编程） 思想的一种实现，供我们在执行管道的特定阶段执行代码，通过使用过滤器可以实现 短路请求、缓存请求结果、日志统一记录、参数合法性验证、异常统一处理、返回值格式化 等等，同时使业务代码更加简洁单纯，避免很多重复代码。 过滤器执行流程MVC 在选择要执行的 Action 方法后，会执行过滤器管道，流程如下图：  过滤器作用域过滤器作用域设置是">
 <meta name="twitter:image" content="https://www.beckjin.com/img/aspnet-filter/mvcProcess.png">
 
 
@@ -133,7 +133,7 @@
 
 
 
-  <title>ASP.NET Core Filters | Beck's Blog</title>
+  <title>.NET Core Filters | Beck's Blog</title>
   
 
 
@@ -279,7 +279,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">ASP.NET Core Filters</h2>
+          <h2 class="post-title" itemprop="name headline">.NET Core Filters</h2>
         
 
         <div class="post-meta">
@@ -314,8 +314,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ASP-NET-Core/" itemprop="url" rel="index">
-                    <span itemprop="name">ASP.NET Core</span>
+                  <a href="/categories/NET-Core/" itemprop="url" rel="index">
+                    <span itemprop="name">.NET Core</span>
                   </a>
                 </span>
 
@@ -331,7 +331,7 @@
 
           
           
-             <span id="/2018/08/12/aspnet-filter/" class="leancloud_visitors" data-flag-title="ASP.NET Core Filters">
+             <span id="/2018/08/12/aspnet-filter/" class="leancloud_visitors" data-flag-title=".NET Core Filters">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -362,7 +362,7 @@
       
 
       
-        <p>ASP.NET MVC 中的过滤器（Filter）是 AOP（面向切面编程） 思想的一种实现，供我们在执行管道的特定阶段执行代码，通过使用过滤器可以实现 短路请求、缓存请求结果、日志统一记录、参数合法性验证、异常统一处理、返回值格式化 等等，同时使业务代码更加简洁单纯，避免很多重复代码。</p>
+        <p> MVC 中的过滤器（Filter）是 AOP（面向切面编程） 思想的一种实现，供我们在执行管道的特定阶段执行代码，通过使用过滤器可以实现 短路请求、缓存请求结果、日志统一记录、参数合法性验证、异常统一处理、返回值格式化 等等，同时使业务代码更加简洁单纯，避免很多重复代码。</p>
 <h3 id="过滤器执行流程"><a href="#过滤器执行流程" class="headerlink" title="过滤器执行流程"></a>过滤器执行流程</h3><p>MVC 在选择要执行的 Action 方法后，会执行过滤器管道，流程如下图：</p>
 <p><img src="/img/aspnet-filter/mvcProcess.png" alt="MVC 调用管道"></p>
 <h3 id="过滤器作用域"><a href="#过滤器作用域" class="headerlink" title="过滤器作用域"></a>过滤器作用域</h3><p>过滤器作用域设置是非常灵活的，可以选择为：</p>
@@ -406,8 +406,8 @@
 <p>其他情况下正常返回：</p>
 <p><img src="/img/aspnet-filter/success.png" alt="success"></p>
 <h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><ul>
-<li><a href="https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters?view=aspnetcore-2.1" target="_blank" rel="noopener">Filters in ASP.NET Core</a></li>
-<li><a href="https://www.cnblogs.com/dotNETCoreSG/p/aspnetcore-4_4_3-filters.html" target="_blank" rel="noopener">ASP.NET Core 中文文档 第四章 MVC（4.3）过滤器</a></li>
+<li><a href="https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters?view=aspnetcore-2.1" target="_blank" rel="noopener">Filters in  Core</a></li>
+<li><a href="https://www.cnblogs.com/dotNETCoreSG/p/aspnetcore-4_4_3-filters.html" target="_blank" rel="noopener"> Core 中文文档 第四章 MVC（4.3）过滤器</a></li>
 </ul>
 
       
@@ -470,8 +470,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/08/04/aspnet-cors/" rel="next" title="ASP.NET Core API CORS">
-                <i class="fa fa-chevron-left"></i> ASP.NET Core API CORS
+              <a href="/2018/08/04/aspnet-cors/" rel="next" title=".NET Core API CORS">
+                <i class="fa fa-chevron-left"></i> .NET Core API CORS
               </a>
             
           </div>
@@ -568,7 +568,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-count">68</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
