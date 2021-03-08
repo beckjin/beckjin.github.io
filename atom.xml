@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.beckjin.com/"/>
-  <updated>2020-11-08T14:39:42.663Z</updated>
+  <updated>2021-03-08T05:00:36.066Z</updated>
   <id>https://www.beckjin.com/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>.NET Core dump 分析</title>
+    <link href="https://www.beckjin.com/2021/03/08/dotnet-dump/"/>
+    <id>https://www.beckjin.com/2021/03/08/dotnet-dump/</id>
+    <published>2021-03-08T04:42:28.000Z</published>
+    <updated>2021-03-08T05:00:36.066Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;服务 CPU 或 内存偶尔飙高是部署环境中经常遇到的问题，一般会采用记录日志的方式来诊断，不过有些情况靠日志可能并不能分析出个所以然，面对实在无头绪的问题也只能暂时使用重启大法先恢复。&lt;/p&gt;
+&lt;p&gt;为了尽可能精准的定位问题，掌握通过 dump
+        
+      
+    
+    </summary>
+    
+      <category term=".NET Core" scheme="https://www.beckjin.com/categories/NET-Core/"/>
+    
+    
+      <category term="C#" scheme="https://www.beckjin.com/tags/C/"/>
+    
+      <category term="dump" scheme="https://www.beckjin.com/tags/dump/"/>
+    
+  </entry>
   
   <entry>
     <title>.NET Core 取消令牌：CancellationToken</title>
@@ -105,7 +134,7 @@
     <link href="https://www.beckjin.com/2020/08/23/aspnet-k8s-helm/"/>
     <id>https://www.beckjin.com/2020/08/23/aspnet-k8s-helm/</id>
     <published>2020-08-23T14:27:31.000Z</published>
-    <updated>2020-11-08T14:42:14.260Z</updated>
+    <updated>2021-03-08T04:55:44.877Z</updated>
     
     <summary type="html">
     
@@ -540,32 +569,6 @@
     
     
       <category term="C#" scheme="https://www.beckjin.com/tags/C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>.NET Core gRPC 流式调用</title>
-    <link href="https://www.beckjin.com/2019/10/26/grpc-streaming/"/>
-    <id>https://www.beckjin.com/2019/10/26/grpc-streaming/</id>
-    <published>2019-10-26T09:38:56.000Z</published>
-    <updated>2020-11-08T14:43:48.770Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;gRPC 使用 &lt;a href=&quot;https://developers.google.com/protocol-buffers/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Protocol buffers&lt;/a&gt;
-        
-      
-    
-    </summary>
-    
-      <category term=".NET Core" scheme="https://www.beckjin.com/categories/NET-Core/"/>
-    
-    
-      <category term="gRPC" scheme="https://www.beckjin.com/tags/gRPC/"/>
     
   </entry>
   

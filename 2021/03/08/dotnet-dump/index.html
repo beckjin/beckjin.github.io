@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="C#,dump,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Beck's Blog" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="服务 CPU 或 内存偶尔飙高是部署环境中经常遇到的问题，一般会采用记录日志的方式来诊断，不过有些情况靠日志可能并不能分析出个所以然，面对实在无头绪的问题也只能暂时使用重启大法先恢复。 为了尽可能精准的定位问题，掌握通过 dump 分析服务运行堆栈信息也是非常必要的，本文将分别介绍如何对 .NET Core 2.2 和 .NET Core 3.1 项目进行 dump 分析（这里只针对 Linux">
+<meta name="keywords" content="C#,dump">
+<meta property="og:type" content="article">
+<meta property="og:title" content=".NET Core dump 分析">
+<meta property="og:url" content="https://www.beckjin.com/2021/03/08/dotnet-dump/index.html">
+<meta property="og:site_name" content="Beck&#39;s Blog">
+<meta property="og:description" content="服务 CPU 或 内存偶尔飙高是部署环境中经常遇到的问题，一般会采用记录日志的方式来诊断，不过有些情况靠日志可能并不能分析出个所以然，面对实在无头绪的问题也只能暂时使用重启大法先恢复。 为了尽可能精准的定位问题，掌握通过 dump 分析服务运行堆栈信息也是非常必要的，本文将分别介绍如何对 .NET Core 2.2 和 .NET Core 3.1 项目进行 dump 分析（这里只针对 Linux">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://www.beckjin.com/img/dotnet-dump/htop.png">
+<meta property="og:image" content="https://www.beckjin.com/img/dotnet-dump/cpu.png">
+<meta property="og:image" content="https://www.beckjin.com/img/dotnet-dump/clrstack.png">
+<meta property="og:image" content="https://www.beckjin.com/img/dotnet-dump/dumpobj.png">
+<meta property="og:updated_time" content="2021-03-08T05:00:36.066Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content=".NET Core dump 分析">
+<meta name="twitter:description" content="服务 CPU 或 内存偶尔飙高是部署环境中经常遇到的问题，一般会采用记录日志的方式来诊断，不过有些情况靠日志可能并不能分析出个所以然，面对实在无头绪的问题也只能暂时使用重启大法先恢复。 为了尽可能精准的定位问题，掌握通过 dump 分析服务运行堆栈信息也是非常必要的，本文将分别介绍如何对 .NET Core 2.2 和 .NET Core 3.1 项目进行 dump 分析（这里只针对 Linux">
+<meta name="twitter:image" content="https://www.beckjin.com/img/dotnet-dump/htop.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.beckjin.com/2021/03/08/dotnet-dump/">
+
+
+
+
+
+  <title>.NET Core dump 分析 | Beck's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+	<a href="https://github.com/beckjin" target="_blank" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+	
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Beck's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.beckjin.com/2021/03/08/dotnet-dump/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Beck Jin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beck's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">.NET Core dump 分析</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-03-08T12:42:28+08:00">
+                2021-03-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NET-Core/" itemprop="url" rel="index">
+                    <span itemprop="name">.NET Core</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2021/03/08/dotnet-dump/" class="leancloud_visitors" data-flag-title=".NET Core dump 分析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>服务 CPU 或 内存偶尔飙高是部署环境中经常遇到的问题，一般会采用记录日志的方式来诊断，不过有些情况靠日志可能并不能分析出个所以然，面对实在无头绪的问题也只能暂时使用重启大法先恢复。</p>
+<p>为了尽可能精准的定位问题，掌握通过 dump 分析服务运行堆栈信息也是非常必要的，本文将分别介绍如何对 .NET Core 2.2 和 .NET Core 3.1 项目进行 dump 分析（<em>这里只针对 Linux 下使用容器部署的方式</em>）。</p>
+<h3 id="创建-dump-文件"><a href="#创建-dump-文件" class="headerlink" title="创建 dump 文件"></a>创建 dump 文件</h3><p>在创建 dump 文件之前，最好先查看具体是服务中哪些线程引发的异常，然后针对特定线程进行分析，不然全扫一遍将是一件非常耗时的工作。</p>
+<p>进入容器后，安装 htop：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br><span class="line">apt-get install htop</span><br></pre></td></tr></table></figure>
+<p>通过 htop 查看资源使用情况：</p>
+<p><img src="/img/dotnet-dump/htop.png" alt></p>
+<p><em>以上是测试程序模拟的状况，可知 PID 12 是需要关注的线程</em></p>
+<p>执行以下命令即可创建 dump 文件（<em>这里以 2.2.8 为例，另外可通过 <code>createdump  --help</code> 查看更多参数设置，容器内默认 dotnet 进程对应 pid 均为 1</em>）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.8/createdump 1</span><br></pre></td></tr></table></figure></p>
+<p>命令执行完成后，将生成 dump 文件 <code>/tmp/coredump.1</code>，我们需要通过 <code>docker cp</code> 或 <code>kubectl cp</code> 将 <code>coredump.1</code>  文件复制到主机目录下，然后下载到用于 dump 分析的机器上。</p>
+<p><strong>注意：</strong>在 Docker 部署模式下，<code>createdump</code> 命令执行需要有容器特权，所以在容器启动时需要加 <code>--privileged = true</code> 参数。另外 dump 文件生成需要使用较大内存，需适当调整容器内存限制参数。</p>
+<h3 id="NET-Core-2-2"><a href="#NET-Core-2-2" class="headerlink" title=".NET Core 2.2"></a>.NET Core 2.2</h3><p>目前大多使用 lldb 进行分析，但从零开始搭建环境实在有些折腾，不推荐。网上已有封装好的镜像可直接使用，如：<a href="https://hub.docker.com/r/6opuc/lldb-netcore" target="_blank" rel="noopener">6opuc/lldb-netcore</a> ，<code>6opuc/lldb-netcore</code> 默认是基于 .NET Core SDK 2.2.8 构建的镜像，如果当前要 dump 的服务 .NET Core 版本非 2.2.8，则需要修改 <a href="https://github.com/6opuc/lldb-netcore" target="_blank" rel="noopener">lldb-netcore 源码</a> 重新构建镜像。</p>
+<p>执行以下命令进入 lldb：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --rm -it -v /root/coredump.1:/tmp/coredump 6opuc/lldb-netcore</span><br></pre></td></tr></table></figure></p>
+<p>查看当时运行的线程：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">clrthreads -live</span><br><span class="line">``` </span><br><span class="line">![](/img/dotnet-dump/clrthreads.png)</span><br><span class="line"></span><br><span class="line">指定需要分析的线程编号（*PID 12 的线程对应的 16 进制为 c，所以找到 OSID 为 c 的记录，对应编号为 7【第一列】*）</span><br></pre></td></tr></table></figure></p>
+<p>thread select 7<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">查看当前线程在托管代码中的堆栈信息</span><br></pre></td></tr></table></figure></p>
+<p>clrstack<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">更多命令可通过执行 soshelp 查看</span><br><span class="line"></span><br><span class="line">![](/img/dotnet-dump/soshelp.png)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### .NET Core 3.1</span><br><span class="line"></span><br><span class="line">.NET Core 3 开始，官方已提供 [dotnet-dump](https://docs.microsoft.com/zh-cn/dotnet/core/diagnostics/dotnet-dump) 工具进行 dump 分析，使用起来也相对简单，当然我们依然可以继续使用 lldb 的方式。</span><br><span class="line"></span><br><span class="line">安装 `dotnet-dump`</span><br></pre></td></tr></table></figure></p>
+<p>dotnet tool install –global dotnet-dump –version 3.1.141901<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">进入分析</span><br></pre></td></tr></table></figure></p>
+<p>dotnet-dump analyze /root/coredump.1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">如果出现以下错误，说明 .NET Core SDK 没有安装到 `/usr/shard/dotnet` 路径下，可通过 DOTNET_ROOT 单独指定或重新安装。</span><br><span class="line"></span><br><span class="line">![](/img/dotnet-dump/libhost.png)</span><br><span class="line"></span><br><span class="line">查看正在运行的托管线程：</span><br></pre></td></tr></table></figure></p>
+<p>clrthreads<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">![](/img/dotnet-dump/clrthreads31.png)</span><br><span class="line"></span><br><span class="line">如果出现以下错误，是因为当前安装的 .NET Core SDK 版本与容器内 createdump 使用的 SDK 版本不一致（*如：createdump 使用 3.1.3，分析使用 3.1.12*）。</span><br><span class="line"></span><br><span class="line">![](/img/dotnet-dump/clrthreadserror.png)</span><br><span class="line"></span><br><span class="line">指定当前需要分析的线程 DBG</span><br></pre></td></tr></table></figure></p>
+<p>setthread 7<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">查看当前线程在托管代码中的堆栈信息</span><br></pre></td></tr></table></figure></p>
+<p>clrstack<br><code>`</code></p>
+<p>更多 dotnet-dump 命令请查看：<a href="https://docs.microsoft.com/zh-cn/dotnet/core/diagnostics/dotnet-dump#analyze-sos-commands" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/dotnet/core/diagnostics/dotnet-dump#analyze-sos-commands</a></p>
+<h3 id="案例说明"><a href="#案例说明" class="headerlink" title="案例说明"></a>案例说明</h3><p>以下是生成环境中遇到的一个具体案例，有一服务运行一段时间就会出现 CPU 100%，而且也降不下来，如下监控：</p>
+<p><img src="/img/dotnet-dump/cpu.png" alt></p>
+<p>通过锁定异常线程后，多次 dump 并对堆栈信息进行分析，发现出问题时都和以下代码相关：</p>
+<p><img src="/img/dotnet-dump/clrstack.png" alt></p>
+<p>这里使用了一个表达式计算的开源组件 <a href="https://github.com/sklose/NCalc2" target="_blank" rel="noopener">NCalc</a> ，初步判断可能是表达式本身的不合法引起的循环解析，通过 dumpobj 对方法参数的查看，发现都是很正常的表达式，所以猜测并不成立。</p>
+<p><img src="/img/dotnet-dump/dumpobj.png" alt></p>
+<p>继续在 Github 项目中的 issues 进行查找可能存在的类似问题，发现在较早版本中，确实存在卡死的现象 <a href="https://github.com/sklose/NCalc2/issues/22" target="_blank" rel="noopener">https://github.com/sklose/NCalc2/issues/22</a> ，这个问题在新版本中已修复，而我们出问题的这个服务使用的 NuGet 包确实是比较老的一个版本，所以问题基本上可以定位，在经过 NuGet 包版本升级后，这种现象终于消失了。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>实际在遇到棘手问题的时候，可能经常毫无头绪，太多问题都不是那么容易定位的。在构建服务支持业务能力的同时，要注意代码本身的健壮性，在使用外部组件时，需要多关注其生态情况，dump 分析只是一种协助解决问题的手段。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果对你有帮助就好</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/img/pay/wechatpay.png" alt="Beck Jin 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/img/pay/alipay.png" alt="Beck Jin 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C#</a>
+          
+            <a href="/tags/dump/" rel="tag"># dump</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/11/08/aspnet-cancellationtoken/" rel="next" title=".NET Core 取消令牌：CancellationToken">
+                <i class="fa fa-chevron-left"></i> .NET Core 取消令牌：CancellationToken
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Beck Jin">
+            
+              <p class="site-author-name" itemprop="name">Beck Jin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/beckjin" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1798410296@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建-dump-文件"><span class="nav-number">1.</span> <span class="nav-text">创建 dump 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NET-Core-2-2"><span class="nav-number">2.</span> <span class="nav-text">.NET Core 2.2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#案例说明"><span class="nav-number">3.</span> <span class="nav-text">案例说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Beck Jin</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.min.css" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitment.browser.min.js" crossorigin="anonymous"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitment({
+            id: '1615178548000', 
+            owner: 'beckjin',
+            repo: 'beckjin.github.io',
+            
+            oauth: {
+            
+            
+                client_secret: 'f3317552363ce12638c39c095f521db7ecfcb46d',
+            
+                client_id: 'bee5c835ae9ab1ab1fc9'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("FCgGthOl6XN7xRjfK31raebD-gzGzoHsz", "20z736XSuGX562R2ky8uu4EU");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
