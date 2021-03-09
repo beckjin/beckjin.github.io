@@ -98,7 +98,7 @@
 <meta property="og:image" content="https://www.beckjin.com/img/dotnet-dump/cpu.png">
 <meta property="og:image" content="https://www.beckjin.com/img/dotnet-dump/clrstack.png">
 <meta property="og:image" content="https://www.beckjin.com/img/dotnet-dump/dumpobj.png">
-<meta property="og:updated_time" content="2021-03-08T05:33:32.359Z">
+<meta property="og:updated_time" content="2021-03-09T02:07:23.327Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content=".NET Core dump 分析">
 <meta name="twitter:description" content="服务 CPU 或 内存偶尔飙高是部署环境中经常遇到的问题，一般会采用记录日志的方式来诊断，不过有些情况靠日志可能并不能分析出个所以然，面对实在无头绪的问题也只能暂时使用重启大法先恢复。 为了尽可能精准的定位问题，掌握通过 dump 分析服务运行堆栈信息也是非常必要的，本文将分别介绍如何对 .NET Core 2.2 和 .NET Core 3.1 项目进行 dump 分析（这里只针对 Linux">
@@ -397,7 +397,7 @@
 <p>指定当前需要分析的线程 DBG<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setthread 7</span><br></pre></td></tr></table></figure></p>
 <p>查看当前线程在托管代码中的堆栈信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clrstack</span><br></pre></td></tr></table></figure></p>
 <p>更多 dotnet-dump 命令请查看：<a href="https://docs.microsoft.com/zh-cn/dotnet/core/diagnostics/dotnet-dump#analyze-sos-commands" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/dotnet/core/diagnostics/dotnet-dump#analyze-sos-commands</a></p>
-<h3 id="案例说明"><a href="#案例说明" class="headerlink" title="案例说明"></a>案例说明</h3><p>以下是生成环境中遇到的一个具体案例，有一服务运行一段时间就会出现 CPU 100%，而且也降不下来，如下监控：</p>
+<h3 id="案例说明"><a href="#案例说明" class="headerlink" title="案例说明"></a>案例说明</h3><p>以下是生产环境中遇到的一个具体案例，有一服务运行一段时间就会出现 CPU 100%，而且也降不下来，如下监控：</p>
 <p><img src="/img/dotnet-dump/cpu.png" alt></p>
 <p>通过锁定异常线程后，多次 dump 并对堆栈信息进行分析，发现出问题时都和以下代码相关：</p>
 <p><img src="/img/dotnet-dump/clrstack.png" alt></p>
