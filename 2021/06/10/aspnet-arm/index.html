@@ -92,7 +92,7 @@
 <meta property="og:image" content="https://www.beckjin.com/img/aspnet-arm/librdkafka.png">
 <meta property="og:image" content="https://www.beckjin.com/img/aspnet-arm/libgrpc_csharp_ext.png">
 <meta property="og:image" content="https://www.beckjin.com/img/aspnet-arm/aspnetcoreRuntime.png">
-<meta property="og:updated_time" content="2021-06-10T09:37:53.999Z">
+<meta property="og:updated_time" content="2021-06-10T11:18:15.059Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content=".NET Core 服务在 ARM64 服务器中的部署">
 <meta name="twitter:description" content="Linux 服务器 CPU 架构主要可分为：X86_64/AMD64、ARM64/AARCH64 两大类，大多情况使用的都是基于 AMD64 CPU 架构的服务器。但随着国产操作系统、CPU 等自主生态打造的应用产品得到越来越多的用户认可和应用，如：华为鲲鹏、统信 UOS 这类服务器不断被采购使用，而它们均有采用 ARM64 CPU 架构，所以 .NET 程序如果需要在更多的国产服务器中运行，适配">
@@ -396,7 +396,7 @@
 <p> 针对此问题的处理方式还是比较果断的，那就是全面升级到 3.1，首先 3.1 是 LTS 版本，且提供了 ARM64 对应的 runtime，另外因为之前已经升级过一波，目前基于 2.2 的服务残留的并不多，当然整个升级改造过程还是需要谨慎，可参考：<a href="https://docs.microsoft.com/zh-cn/aspnet/core/migration/22-to-30?view=aspnetcore-5.0&amp;tabs=visual-studio" target="_blank" rel="noopener">从 ASP.NET Core 2.2 迁移到 3.0 </a> 和 <a href="https://docs.microsoft.com/zh-cn/aspnet/core/migration/30-to-31?view=aspnetcore-5.0&amp;tabs=visual-studio" target="_blank" rel="noopener">从 ASP.NET Core 3.0 迁移到 3.1</a> 。</p>
 </li>
 </ol>
-<p>以上主要是 .NET Core 服务本身适配 ARM64 服务器部署遇到的一些问题，解决后目前来看是一切正常。当然这还不包含其他配套组件的改造，比如：MySQL 替换成 MariaDB 等。</p>
+<p>以上主要是 .NET Core 服务本身适配 ARM64 服务器部署遇到的一些问题，不过不同的项目还是会面对不一样的情况，解决后目前来看一切正常。当然这还不包含其他配套组件的改造，比如：MySQL 替换成 MariaDB 等。</p>
 
       
     </div>
