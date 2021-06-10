@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.beckjin.com/"/>
-  <updated>2021-03-09T02:07:23.327Z</updated>
+  <updated>2021-06-10T09:37:53.999Z</updated>
   <id>https://www.beckjin.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>.NET Core 服务在 ARM64 服务器中的部署</title>
+    <link href="https://www.beckjin.com/2021/06/10/aspnet-arm/"/>
+    <id>https://www.beckjin.com/2021/06/10/aspnet-arm/</id>
+    <published>2021-06-10T09:22:28.000Z</published>
+    <updated>2021-06-10T09:37:53.999Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Linux 服务器 CPU 架构主要可分为：&lt;code&gt;X86_64/AMD64&lt;/code&gt;、&lt;code&gt;ARM64/AARCH64&lt;/code&gt; 两大类，大多情况使用的都是基于 AMD64 CPU 架构的服务器。但随着国产操作系统、CPU
+        
+      
+    
+    </summary>
+    
+      <category term=".NET" scheme="https://www.beckjin.com/categories/NET/"/>
+    
+    
+      <category term="ARM" scheme="https://www.beckjin.com/tags/ARM/"/>
+    
+  </entry>
   
   <entry>
     <title>.NET Core dump 分析</title>
@@ -543,32 +569,6 @@
       <category term="C#" scheme="https://www.beckjin.com/tags/C/"/>
     
       <category term="etcd" scheme="https://www.beckjin.com/tags/etcd/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>.NET Core 自定义配置源</title>
-    <link href="https://www.beckjin.com/2019/11/16/aspnet-custom-provider/"/>
-    <id>https://www.beckjin.com/2019/11/16/aspnet-custom-provider/</id>
-    <published>2019-11-16T07:29:49.000Z</published>
-    <updated>2020-11-08T14:44:40.702Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;正如大家所知，在 .NET Core 中配置文件改成了 &lt;strong&gt;appsettings.json&lt;/strong&gt;，表面上和 .NET Framework 的 &lt;strong&gt;web.config&lt;/strong&gt; 或
-        
-      
-    
-    </summary>
-    
-      <category term=".NET Core" scheme="https://www.beckjin.com/categories/NET-Core/"/>
-    
-    
-      <category term="C#" scheme="https://www.beckjin.com/tags/C/"/>
     
   </entry>
   
